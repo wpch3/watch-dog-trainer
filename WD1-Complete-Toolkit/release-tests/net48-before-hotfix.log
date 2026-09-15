@@ -1,0 +1,10 @@
+MISSING mscorlib: System.String[] System.String::Split(System.Char,System.StringSplitOptions)
+REF System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+REF mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+REF System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+REF System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+REF System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+REF System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+NET48_MEMBERREFS_CHECKED=607
+ARRAY_INTRINSICS=0
+NET48_MISSING=1

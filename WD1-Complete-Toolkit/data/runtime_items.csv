@@ -1,0 +1,219 @@
+﻿id,key,db_path,db_name,label_zh,group,mode,source_category,status,note
+item_2023158576,2023158576,Items.2023158576,Items.Skillpoint,技能点奖励 +1,skill,both,SkillPointReward,IMPLEMENTED_UNVERIFIED,
+item_3244641630,3244641630,Items.3244641630,Items.XP_500,经验奖励 +500,xp,both,ProgressionBonus,IMPLEMENTED_UNVERIFIED,
+item_4155199944,4155199944,Items.4155199944,Items.XP_1000,经验奖励 +1000,xp,both,ProgressionBonus,IMPLEMENTED_UNVERIFIED,
+item_3844013606,3844013606,Items.3844013606,Items.XP_2000,经验奖励 +2000,xp,both,ProgressionBonus,IMPLEMENTED_UNVERIFIED,
+item_2026489503,2026489503,Items.2026489503,Items.XP_5000,经验奖励 +5000,xp,both,ProgressionBonus,IMPLEMENTED_UNVERIFIED,
+item_2269372494,2269372494,Items.2269372494,Items.Pistols.P9mm,P-9mm,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_3058031154,3058031154,Items.3058031154,Items.Pistols.1911,1911,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_1317933865,1317933865,Items.1317933865,Items.Pistols.1911.SpecOps,Spec Ops 1911,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_700442068,700442068,Items.700442068,Items.Pistols.357REX,.357 REX,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_1152216775,1152216775,Items.1152216775,Items.Pistols.D50,D50,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_4108766496,4108766496,Items.4108766496,Items.Pistols.M8M,M8-M,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_3084233885,3084233885,Items.3084233885,Items.Pistols.R33,R-33,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_4099987261,4099987261,Items.4099987261,Items.SMGs.MP9mm,MP-9mm,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_2377767548,2377767548,Items.2377767548,Items.SMGs.SMG11,SMG-11,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_2417314999,2417314999,Items.2417314999,Items.SMGs.SMG11.SpecOps,Spec Ops SMG-11,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_4258700054,4258700054,Items.4258700054,Items.SMGs.MP5,MP5,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_92417902,92417902,Items.92417902,Items.SMGs.Vector45ACP,Vector .45 ACP,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_309961700,309961700,Items.309961700,Items.SMGs.Vector45ACP.SpecOps,Spec Ops Vector .45 ACP,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_3059215197,3059215197,Items.3059215197,Items.SMGs.R2000,R-2000,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_633170941,633170941,Items.633170941,Items.AssaultRifles.416,416,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_3220571773,3220571773,Items.3220571773,Items.AssaultRifles.417,417,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_1236846365,1236846365,Items.1236846365,Items.AssaultRifles.AK47,AK-47,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_2418918813,2418918813,Items.2418918813,Items.AssaultRifles.Goblin,Goblin,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_2468673040,2468673040,Items.2468673040,Items.AssaultRifles.Goblin.SpecOps,Spec Ops Goblin,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_3001183890,3001183890,Items.3001183890,Items.AssaultRifles.ACR,ACR,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_900578036,900578036,Items.900578036,Items.AssaultRifles.U100,U100,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_2207476061,2207476061,Items.2207476061,Items.AssaultRifles.OCP11,OCP-11,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_770883049,770883049,Items.770883049,Items.Shotguns.SG590,SG-90,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_4180379767,4180379767,Items.4180379767,Items.Shotguns.RSG12,SGR-12,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_3514256627,3514256627,Items.3514256627,Items.Shotguns.M1014,M1014,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_2721974924,2721974924,Items.2721974924,Items.Shotguns.D12,D12,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_56535470,56535470,Items.56535470,Items.SniperRifles.SVD,SVD,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_1853148229,1853148229,Items.1853148229,Items.SniperRifles.SR25,SR-25,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_3745523831,3745523831,Items.3745523831,Items.SniperRifles.M107,M107,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_1577674927,1577674927,Items.1577674927,Items.SniperRifles.ACE,AC-AR,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_2234429577,2234429577,Items.2234429577,Items.GrenadeLauncher.G106,G106,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_1683351323,1683351323,Items.1683351323,Items.Pistols.M8M.Sig_Chrome,Chrome,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_2565686443,2565686443,Items.2565686443,Items.Shotguns.SG590.Sig_Piledriver,Piledriver,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_2517217399,2517217399,Items.2517217399,Items.AssaultRifles.416.Sig_Sprayer,Wildfire,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_2343466146,2343466146,Items.2343466146,Items.SniperRifles.M107.Sig_Destroyer,Destroyer,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_1479791293,1479791293,Items.1479791293,Items.SMGs.M1SMG,M1 SMG,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_1128431973,1128431973,Items.1128431973,Items.SMGs.M1SMG.Sig_Gold,Gangster,weapons,both,Weapon,IMPLEMENTED_UNVERIFIED,
+item_3931946971,3931946971,Items.3931946971,Items.Pistols.M8M.ULC_Cyberpunk,Cyberpunk 手枪,dlc_weapons,campaign,Weapon,IMPLEMENTED_UNVERIFIED,仅测试你已拥有的 Complete Edition 内容，不授予 DLC 所有权。
+item_1830466540,1830466540,Items.1830466540,Items.AssaultRifles.ACR.ULC_Biometric,Biometric ACR,dlc_weapons,campaign,Weapon,IMPLEMENTED_UNVERIFIED,仅测试你已拥有的 Complete Edition 内容，不授予 DLC 所有权。
+item_2797606244,2797606244,Items.2797606244,Items.Pistols.R33.ULC_R33b,R-33B,dlc_weapons,campaign,Weapon,IMPLEMENTED_UNVERIFIED,仅测试你已拥有的 Complete Edition 内容，不授予 DLC 所有权。
+item_4158329681,4158329681,Items.4158329681,Items.Pistols.1911.dlc01_With_Light,1911（手电）,bb_weapons,dlc_solo,Weapon,IMPLEMENTED_UNVERIFIED,
+item_806742068,806742068,Items.806742068,Items.Pistols.D50.dlc01_with_Light,D50（手电）,bb_weapons,dlc_solo,Weapon,IMPLEMENTED_UNVERIFIED,
+item_1871022573,1871022573,Items.1871022573,Items.SMGs.R2000.dlc01_With_Light,R-2000（手电）,bb_weapons,dlc_solo,Weapon,IMPLEMENTED_UNVERIFIED,
+item_340852082,340852082,Items.340852082,Items.Shotguns.SG590.dlc01_with_Light,SG-90（手电）,bb_weapons,dlc_solo,Weapon,IMPLEMENTED_UNVERIFIED,
+item_1616184391,1616184391,Items.1616184391,Items.Shotguns.RSG12.dlc01_with_Light,SGR-12（手电）,bb_weapons,dlc_solo,Weapon,IMPLEMENTED_UNVERIFIED,
+item_100796354,100796354,Items.100796354,Items.AssaultRifles.AK47.dlc01__withLight,AK-47（手电）,bb_weapons,dlc_solo,Weapon,IMPLEMENTED_UNVERIFIED,
+item_3686051367,3686051367,Items.3686051367,Items.AssaultRifles.U100.dlc01_with_Light,U100（手电）,bb_weapons,dlc_solo,Weapon,IMPLEMENTED_UNVERIFIED,
+item_2485466735,2485466735,Items.2485466735,Items.SniperRifles.M107.DLC01_SpecOps,Spec Ops M107,bb_weapons,dlc_solo,Weapon,IMPLEMENTED_UNVERIFIED,
+item_2546636026,2546636026,Items.2546636026,Items.BlackOutCC,停电道具,supplies,both,Tech,IMPLEMENTED_UNVERIFIED,
+item_2559303206,2559303206,Items.2559303206,Items.DisruptCommCC,通讯干扰,supplies,both,Tech,IMPLEMENTED_UNVERIFIED,
+item_1174431968,1174431968,Items.1174431968,Items.ctOSScanCC,ctOS 扫描,supplies,both,Tech,IMPLEMENTED_UNVERIFIED,
+item_416387092,416387092,Items.416387092,Items.Attractor_IED,诱饵,supplies,both,Projectiles,IMPLEMENTED_UNVERIFIED,
+item_3651876853,3651876853,Items.3651876853,Items.FragGrenade,破片手榴弹,supplies,both,Projectiles,IMPLEMENTED_UNVERIFIED,
+item_2840708499,2840708499,Items.2840708499,Items.IED,简易爆炸装置,supplies,both,Projectiles,IMPLEMENTED_UNVERIFIED,
+item_2987530112,2987530112,Items.2987530112,Items.Proximity_IED,感应式 IED,supplies,both,Projectiles,IMPLEMENTED_UNVERIFIED,
+item_901132570,901132570,Items.901132570,Items.Focus_InsS_Pill,专注恢复道具,supplies,both,Meds,IMPLEMENTED_UNVERIFIED,
+item_3108044763,3108044763,Items.3108044763,Items.Code_Comp,电子零件,supplies,both,Tech,IMPLEMENTED_UNVERIFIED,
+item_673371641,673371641,Items.673371641,Items.Chem_Comp,化学材料,supplies,both,Explosives,IMPLEMENTED_UNVERIFIED,
+item_4088031736,4088031736,Items.4088031736,Items.Exp_Comp,爆炸材料,supplies,both,Explosives,IMPLEMENTED_UNVERIFIED,
+item_1125886109,1125886109,Items.1125886109,Items.RecycledHardware_Comp,回收零件,supplies,both,Explosives,IMPLEMENTED_UNVERIFIED,
+item_4292418427,4292418427,Items.4292418427,Items.Drug2_Comp,药物材料,supplies,both,Meds,IMPLEMENTED_UNVERIFIED,
+item_2257375190,2257375190,Items.2257375190,Items.Battery,电池补充（奖励项实验）,supplies,both,General,IMPLEMENTED_UNVERIFIED,
+item_2271997318,2271997318,Items.2271997318,Items.DefaultSkin.SP_Cloth_Store_Aiden_01,艾登商店服装 01,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_509787196,509787196,Items.509787196,Items.DefaultSkin.SP_Cloth_Store_Aiden_02,艾登商店服装 02,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_1768262826,1768262826,Items.1768262826,Items.DefaultSkin.SP_Cloth_Store_Aiden_03,艾登商店服装 03,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_4144044297,4144044297,Items.4144044297,Items.DefaultSkin.SP_Cloth_Store_Aiden_04,艾登商店服装 04,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_2147887519,2147887519,Items.2147887519,Items.DefaultSkin.SP_Cloth_Store_Aiden_05,艾登商店服装 05,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_420444197,420444197,Items.420444197,Items.DefaultSkin.SP_Cloth_Store_Aiden_06,艾登商店服装 06,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_1846036659,1846036659,Items.1846036659,Items.DefaultSkin.SP_Cloth_Store_Aiden_07,艾登商店服装 07,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_4273427746,4273427746,Items.4273427746,Items.DefaultSkin.SP_Cloth_Store_Aiden_08,艾登商店服装 08,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_2310038964,2310038964,Items.2310038964,Items.DefaultSkin.SP_Cloth_Store_Aiden_09,艾登商店服装 09,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_3916950609,3916950609,Items.3916950609,Items.DefaultSkin.SP_Cloth_Store_Aiden_10,艾登商店服装 10,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_4241672460,4241672460,Items.4241672460,Items.DefaultSkin.SP_Cloth_Store_Aiden_11,艾登商店服装 11,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_1708890294,1708890294,Items.1708890294,Items.DefaultSkin.SP_Cloth_Store_Aiden_12,艾登商店服装 12,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_316450848,316450848,Items.316450848,Items.DefaultSkin.SP_Cloth_Store_Aiden_13,艾登商店服装 13,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_2360884611,2360884611,Items.2360884611,Items.DefaultSkin.SP_Cloth_Store_Aiden_14,艾登商店服装 14,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_4223601941,4223601941,Items.4223601941,Items.DefaultSkin.SP_Cloth_Store_Aiden_15,艾登商店服装 15,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_1656118447,1656118447,Items.1656118447,Items.DefaultSkin.SP_Cloth_Store_Aiden_16,艾登商店服装 16,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_363949113,363949113,Items.363949113,Items.DefaultSkin.SP_Cloth_Store_Aiden_17,艾登商店服装 17,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_2232316328,2232316328,Items.2232316328,Items.DefaultSkin.SP_Cloth_Store_Aiden_18,艾登商店服装 18,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_4060692798,4060692798,Items.4060692798,Items.DefaultSkin.SP_Cloth_Store_Aiden_19,艾登商店服装 19,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_2700651097,2700651097,Items.2700651097,Items.DefaultSkin.SP_Cloth_Store_Aiden_20,艾登商店服装 20,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_3623852751,3623852751,Items.3623852751,Items.DefaultSkin.SP_Cloth_Store_Aiden_21,艾登商店服装 21,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_1324796789,1324796789,Items.1324796789,Items.DefaultSkin.SP_Cloth_Store_Aiden_22,艾登商店服装 22,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_972159971,972159971,Items.972159971,Items.DefaultSkin.SP_Cloth_Store_Aiden_23,艾登商店服装 23,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_2811588160,2811588160,Items.2811588160,Items.DefaultSkin.SP_Cloth_Store_Aiden_24,艾登商店服装 24,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_3499253462,3499253462,Items.3499253462,Items.DefaultSkin.SP_Cloth_Store_Aiden_25,艾登商店服装 25,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_1234898796,1234898796,Items.1234898796,Items.DefaultSkin.SP_Cloth_Store_Aiden_26,艾登商店服装 26,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_1050427386,1050427386,Items.1050427386,Items.DefaultSkin.SP_Cloth_Store_Aiden_27,艾登商店服装 27,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_2921538155,2921538155,Items.2921538155,Items.DefaultSkin.SP_Cloth_Store_Aiden_28,艾登商店服装 28,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_3643020029,3643020029,Items.3643020029,Items.DefaultSkin.SP_Cloth_Store_Aiden_29,艾登商店服装 29,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_3118701336,3118701336,Items.3118701336,Items.DefaultSkin.SP_Cloth_Store_Aiden_30,艾登商店服装 30,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_3471092622,3471092622,Items.3471092622,Items.DefaultSkin.SP_Cloth_Store_Aiden_31,艾登商店服装 31,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_1475213876,1475213876,Items.1475213876,Items.DefaultSkin.SP_Cloth_Store_Aiden_32,艾登商店服装 32,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_552258210,552258210,Items.552258210,Items.DefaultSkin.SP_Cloth_Store_Aiden_33,艾登商店服装 33,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_3197001473,3197001473,Items.3197001473,Items.DefaultSkin.SP_Cloth_Store_Aiden_34,艾登商店服装 34,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_3381227415,3381227415,Items.3381227415,Items.DefaultSkin.SP_Cloth_Store_Aiden_35,艾登商店服装 35,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_1350581805,1350581805,Items.1350581805,Items.DefaultSkin.SP_Cloth_Store_Aiden_36,艾登商店服装 36,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_663162555,663162555,Items.663162555,Items.DefaultSkin.SP_Cloth_Store_Aiden_37,艾登商店服装 37,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_3073905450,3073905450,Items.3073905450,Items.DefaultSkin.SP_Cloth_Store_Aiden_38,艾登商店服装 38,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_3225363388,3225363388,Items.3225363388,Items.DefaultSkin.SP_Cloth_Store_Aiden_39,艾登商店服装 39,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_4137815519,4137815519,Items.4137815519,Items.DefaultSkin.SP_Cloth_Store_Aiden_40,艾登商店服装 40,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_2175089993,2175089993,Items.2175089993,Items.DefaultSkin.SP_Cloth_Store_Aiden_41,艾登商店服装 41,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_413953267,413953267,Items.413953267,Items.DefaultSkin.SP_Cloth_Store_Aiden_42,艾登商店服装 42,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_1873501285,1873501285,Items.1873501285,Items.DefaultSkin.SP_Cloth_Store_Aiden_43,艾登商店服装 43,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_4056926662,4056926662,Items.4056926662,Items.DefaultSkin.SP_Cloth_Store_Aiden_44,艾登商店服装 44,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_2261317968,2261317968,Items.2261317968,Items.DefaultSkin.SP_Cloth_Store_Aiden_45,艾登商店服装 45,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_532785386,532785386,Items.532785386,Items.DefaultSkin.SP_Cloth_Store_Aiden_46,艾登商店服装 46,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_1757845628,1757845628,Items.1757845628,Items.DefaultSkin.SP_Cloth_Store_Aiden_47,艾登商店服装 47,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_4168713709,4168713709,Items.4168713709,Items.DefaultSkin.SP_Cloth_Store_Aiden_48,艾登商店服装 48,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_2407445883,2407445883,Items.2407445883,Items.DefaultSkin.SP_Cloth_Store_Aiden_49,艾登商店服装 49,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_4021894302,4021894302,Items.4021894302,Items.DefaultSkin.SP_Cloth_Store_Aiden_50,艾登商店服装 50,clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,
+item_2061304640,2061304640,Items.2061304640,Items.dlc01_Cloth_DefaultSkin.dlc01_SP_Cloth_Store_TBone_01,T-Bone 商店服装 01,bb_clothes,dlc_solo,DLC,IMPLEMENTED_UNVERIFIED,
+item_3102623357,3102623357,Items.3102623357,Items.dlc01_Cloth_DefaultSkin.dlc01_SP_Cloth_Store_TBone_02,T-Bone 商店服装 02,bb_clothes,dlc_solo,DLC,IMPLEMENTED_UNVERIFIED,
+item_3488184043,3488184043,Items.3488184043,Items.dlc01_Cloth_DefaultSkin.dlc01_SP_Cloth_Store_TBone_03,T-Bone 商店服装 03,bb_clothes,dlc_solo,DLC,IMPLEMENTED_UNVERIFIED,
+item_1368253256,1368253256,Items.1368253256,Items.dlc01_Cloth_DefaultSkin.dlc01_SP_Cloth_Store_TBone_04,T-Bone 商店服装 04,bb_clothes,dlc_solo,DLC,IMPLEMENTED_UNVERIFIED,
+item_646632414,646632414,Items.646632414,Items.dlc01_Cloth_DefaultSkin.dlc01_SP_Cloth_Store_TBone_05,T-Bone 商店服装 05,bb_clothes,dlc_solo,DLC,IMPLEMENTED_UNVERIFIED,
+item_3213066852,3213066852,Items.3213066852,Items.dlc01_Cloth_DefaultSkin.dlc01_SP_Cloth_Store_TBone_06,T-Bone 商店服装 06,bb_clothes,dlc_solo,DLC,IMPLEMENTED_UNVERIFIED,
+item_3364139762,3364139762,Items.3364139762,Items.dlc01_Cloth_DefaultSkin.dlc01_SP_Cloth_Store_TBone_07,T-Bone 商店服装 07,bb_clothes,dlc_solo,DLC,IMPLEMENTED_UNVERIFIED,
+item_1480306531,1480306531,Items.1480306531,Items.dlc01_Cloth_DefaultSkin.dlc01_SP_Cloth_Store_TBone_08,T-Bone 商店服装 08,bb_clothes,dlc_solo,DLC,IMPLEMENTED_UNVERIFIED,
+item_792502261,792502261,Items.792502261,Items.dlc01_Cloth_DefaultSkin.dlc01_SP_Cloth_Store_TBone_09,T-Bone 商店服装 09,bb_clothes,dlc_solo,DLC,IMPLEMENTED_UNVERIFIED,
+item_1341855248,1341855248,Items.1341855248,Items.dlc01_Cloth_DefaultSkin.dlc01_SP_Cloth_Store_TBone_10,T-Bone 商店服装 10,bb_clothes,dlc_solo,DLC,IMPLEMENTED_UNVERIFIED,
+item_956049030,956049030,Items.956049030,Items.dlc01_Cloth_DefaultSkin.dlc01_SP_Cloth_Store_TBone_11,T-Bone 商店服装 11,bb_clothes,dlc_solo,DLC,IMPLEMENTED_UNVERIFIED,
+item_3623566901,3623566901,Items.3623566901,Items.DefaultSkin.Pills.Alone,孤独奖励服装,trip_clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,给予候选；不伪造数字之旅通关计数。
+item_3816380433,3816380433,Items.3816380433,Items.DefaultSkin.Pills.Madness,疯狂奖励服装,trip_clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,给予候选；不伪造数字之旅通关计数。
+item_1815691869,1815691869,Items.1815691869,Items.DefaultSkin.Pills.SpiderTank,蜘蛛坦克奖励服装,trip_clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,给予候选；不伪造数字之旅通关计数。
+item_2804586448,2804586448,Items.2804586448,Items.DefaultSkin.Pills.Psychedelic,迷幻奖励服装,trip_clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,给予候选；不伪造数字之旅通关计数。
+item_389492496,389492496,Items.389492496,Items.DefaultSkin.Pills.Conspiracy,阴谋奖励服装,trip_clothes,campaign,Clothing_SP,IMPLEMENTED_UNVERIFIED,给予候选；不伪造数字之旅通关计数。
+item_2156459794,2156459794,Items.2156459794,Items.Pistols.D50.Uplay_Gold,Golden D50（本地物品候选）,dlc_weapons,campaign,Weapon,IMPLEMENTED_UNVERIFIED,
+item_1843219819,1843219819,Items.1843219819,Items.Dedsec,Dedsec 服装,dlc_clothes,campaign,Clothing_ULC,IMPLEMENTED_UNVERIFIED,仅物品项；不绕过 DLC 授权。
+item_2227103838,2227103838,Items.2227103838,Items.ChicagoClub,ChicagoClub 服装,dlc_clothes,campaign,Clothing_ULC,IMPLEMENTED_UNVERIFIED,仅物品项；不绕过 DLC 授权。
+item_113925047,113925047,Items.113925047,Items.Whitehat,Whitehat 服装,dlc_clothes,campaign,Clothing_ULC,IMPLEMENTED_UNVERIFIED,仅物品项；不绕过 DLC 授权。
+item_2211654727,2211654727,Items.2211654727,Items.Retro,Retro 服装,dlc_clothes,campaign,Clothing_ULC,IMPLEMENTED_UNVERIFIED,仅物品项；不绕过 DLC 授权。
+item_450526717,450526717,Items.450526717,Items.Cyberpunk,Cyberpunk 服装,dlc_clothes,campaign,Clothing_ULC,IMPLEMENTED_UNVERIFIED,仅物品项；不绕过 DLC 授权。
+item_2483697972,2483697972,Items.2483697972,Items.Glitch,Glitch 服装,dlc_clothes,campaign,Clothing_ULC,IMPLEMENTED_UNVERIFIED,仅物品项；不绕过 DLC 授权。
+item_4089043144,4089043144,Items.4089043144,Items.Blume,Blume 服装,dlc_clothes,campaign,Clothing_ULC,IMPLEMENTED_UNVERIFIED,仅物品项；不绕过 DLC 授权。
+item_2290193700,2290193700,Items.2290193700,Items.Viceroys,Viceroys 服装,dlc_clothes,campaign,Clothing_ULC,IMPLEMENTED_UNVERIFIED,仅物品项；不绕过 DLC 授权。
+item_973421002,973421002,Items.973421002,Items.Generic.Speed.Speed_01,Scafati GT（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_2735499376,2735499376,Items.2735499376,Items.Generic.Speed.Speed_02,Amargosa Turbo（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3557513446,3557513446,Items.3557513446,Items.Generic.Speed.Speed_03,336-TT（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1248841029,1248841029,Items.1248841029,Items.Generic.Speed.Speed_04,550S（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1030290899,1030290899,Items.1030290899,Items.Generic.Speed.Speed_05,Livraga 350（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_678076169,678076169,Items.678076169,Items.Generic.Speed.Speed_05_Reward,Livraga LE（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_2757864553,2757864553,Items.2757864553,Items.Generic.Speed.Speed_06,Papavero（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_4189416026,4189416026,Items.4189416026,Items.Generic.Speed.Speed_06_Stealth,Papavero Stealth Edition（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3546717439,3546717439,Items.3546717439,Items.Generic.Speed.Speed_07,Boxberg R1（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1783601268,1783601268,Items.1783601268,Items.Generic.Speed.Speed_07_Reward,Boxberg LE（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1718896871,1718896871,Items.1718896871,Items.Generic.Agile.Agile_01,Zusume R（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_581466480,581466480,Items.581466480,Items.Generic.Agile.Agile_02,Kirscher（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1437551078,1437551078,Items.1437551078,Items.Generic.Agile.Agile_03,Sunrim（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3419135045,3419135045,Items.3419135045,Items.Generic.Agile.Agile_04,Rotor（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3167546579,3167546579,Items.3167546579,Items.Generic.Agile.Agile_05,Carrozza（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_633716073,633716073,Items.633716073,Items.Generic.Agile.Agile_06,Core-T（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_2584458734,2584458734,Items.2584458734,Items.Generic.Bike.Bike_01,Sayonara（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_217841595,217841595,Items.217841595,Items.Generic.Bike.Bike_01_Reward,Sayonara LE（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_50521172,50521172,Items.50521172,Items.Generic.Bike.Bike_02,Kuruhawa Motorsport 450（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1946539202,1946539202,Items.1946539202,Items.Generic.Bike.Bike_03,Kodachi（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3932242273,3932242273,Items.3932242273,Items.Generic.Bike.Bike_04,Chopper（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1444405640,1444405640,Items.1444405640,Items.Generic.Offroad.Offroad_01,Polar（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3474894898,3474894898,Items.3474894898,Items.Generic.Offroad.Offroad_02,Tributary 1500（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3088679076,3088679076,Items.3088679076,Items.Generic.Offroad.Offroad_03,Steadfast 3000（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_645731591,645731591,Items.645731591,Items.Generic.Offroad.Offroad_04,Tributary 3500（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_2028062005,2028062005,Items.2028062005,Items.Generic.Muscle.Muscle_01,Vespid 5.2（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3790115983,3790115983,Items.3790115983,Items.Generic.Muscle.Muscle_02,Hailkal R（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_2532287513,2532287513,Items.2532287513,Items.Generic.Muscle.Muscle_03,Adamant S-Series（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_143339962,143339962,Items.143339962,Items.Generic.Muscle.Muscle_04,Sonarus LX（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3314376394,3314376394,Items.3314376394,Items.Generic.Muscle.Retro_01,Vespid HMI（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3863106483,3863106483,Items.3863106483,Items.Generic.Muscle.Retro_01_Reward,Vespid LE（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1552158576,1552158576,Items.1552158576,Items.Generic.Muscle.Retro_02,571（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_730021862,730021862,Items.730021862,Items.Generic.Muscle.Retro_03,3.9T（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3825529972,3825529972,Items.3825529972,Items.Generic.Muscle.Luxury_02,Magnate（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_2331463550,2331463550,Items.2331463550,Items.Generic.Muscle.Luxury_02_Reward,Magnate LE（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3274662842,3274662842,Items.3274662842,Items.Generic.Budget.Compact_01,Zusume（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1512452608,1512452608,Items.1512452608,Items.Generic.Budget.Compact_02,Sumitzu Auto 1.6（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_757138070,757138070,Items.757138070,Items.Generic.Budget.Compact_03,Sculptor 2.5R（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1912201071,1912201071,Items.1912201071,Items.Generic.Budget.Crossover_01,Talos（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1181940009,1181940009,Items.1181940009,Items.Generic.Budget.DeliveryTruck_01,Relegater（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1691143800,1691143800,Items.1691143800,Items.Generic.Budget.Large_01,Cavale（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_4257587138,4257587138,Items.4257587138,Items.Generic.Budget.Large_02,Leo（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_2328014676,2328014676,Items.2328014676,Items.Generic.Budget.Large_03,Vessel（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_346438391,346438391,Items.346438391,Items.Generic.Budget.Large_04,Relegate V6（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1671498337,1671498337,Items.1671498337,Items.Generic.Budget.Large_05,Woodie（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_754876024,754876024,Items.754876024,Items.Generic.Budget.Luxury_03,Koln 500S（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_2307007173,2307007173,Items.2307007173,Items.Generic.Budget.Minivan_01,Crosscountry Series（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_4072014718,4072014718,Items.4072014718,Items.Generic.Budget.Subcompact_01,Fasto（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1807700676,1807700676,Items.1807700676,Items.Generic.Budget.Subcompact_02,Lithium SP（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_481845842,481845842,Items.481845842,Items.Generic.Budget.Subcompact_03,Bogen 200（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_2863852732,2863852732,Items.2863852732,Items.Generic.Budget.SUV_01,Kigan AWD（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1990164259,1990164259,Items.1990164259,Items.Generic.Budget.Workvan_01,Landrock Van 2500（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_4019596953,4019596953,Items.4019596953,Items.Generic.Budget.Workvan_02,Landrock Van 1500（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_3754247527,3754247527,Items.3754247527,Items.Generic.Budget.Limo_01,Philandra（叫车奖励候选）,cars,campaign,CarHackingRewards,IMPLEMENTED_UNVERIFIED,Items 键来自上游；显示名与实体命名交叉映射，叫车解锁及持久性未验证。
+item_1158118865,1158118865,Items.1158118865,Items.song.AlarmClocks,AlarmClocks,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_3093266093,3093266093,Items.3093266093,Items.song.blvckandwhite,blvckandwhite,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_3093266091,3093266091,Items.3093266091,Items.song.BrightIdea,BrightIdea,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_3478670909,3478670909,Items.3478670909,Items.song.ClujNapoca,ClujNapoca,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_1420203115,1420203115,Items.1420203115,Items.song.Conduction,Conduction,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_3478670911,3478670911,Items.3478670911,Items.song.CREAM,CREAM,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_3650203895,3650203895,Items.3650203895,Items.song.Dance,Dance,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_3958968813,3958968813,Items.3958968813,Items.song.DarkSteering,DarkSteering,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_911495893,911495893,Items.911495893,Items.song.FuneralSinger,FuneralSinger,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_3358951973,3358951973,Items.3358951973,Items.song.GoingDownHigh,GoingDownHigh,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_1448157064,1448157064,Items.1448157064,Items.song.HighClassSlimcamefloatingin,HighClassSlimcamefloatingin,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_559296274,559296274,Items.559296274,Items.song.Jesusbuiltmyhotrod,Jesusbuiltmyhotrod,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_3207772850,3207772850,Items.3207772850,Items.song.LostBoys,LostBoys,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_1270825139,1270825139,Items.1270825139,Items.song.MsCrumby,MsCrumby,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_1362942878,1362942878,Items.1362942878,Items.song.MyMyMy,MyMyMy,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_2176775932,2176775932,Items.2176775932,Items.song.NeverAgain,NeverAgain,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_636035282,636035282,Items.636035282,Items.song.Outtolunch,Outtolunch,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_3207772851,3207772851,Items.3207772851,Items.song.Simplify,Simplify,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_641461001,641461001,Items.641461001,Items.song.Talk,Talk,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_972390497,972390497,Items.972390497,Items.song.TheBottom,TheBottom,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_3526322101,3526322101,Items.3526322101,Items.song.Wherethesidewalkends,Wherethesidewalkends,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。
+item_797812516,797812516,Items.797812516,Items.song.Youburntme,Youburntme,songs,campaign,Song,IMPLEMENTED_UNVERIFIED,歌曲物品授予不等于 SongSneak 计数或成就完成。

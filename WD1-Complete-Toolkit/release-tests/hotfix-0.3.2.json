@@ -1,0 +1,25 @@
+{
+  "version": "0.3.2-alpha",
+  "reported_error": "连接失败:可执行节范围异常",
+  "root_trigger_on_user_machine": "Not yet determined; original error conflated section-end and 64MiB-total checks and exported no sizes",
+  "changes": [
+    "verified disk PE32+ header and runtime-header diagnostic comparison",
+    "VirtualQueryEx ownership/state/protection checks",
+    "bounded streaming reads instead of allocating full executable sections",
+    "same-image executable read ranges also gate patches",
+    "chunk-boundary overlap with unique address deduplication",
+    "incomplete snapshots refuse every capture/write",
+    "failed connections retain exportable diagnostics and dispose handles"
+  ],
+  "target_framework": ".NETFramework,Version=v4.8",
+  "framework_memberrefs_checked": 682,
+  "missing_framework_members": 0,
+  "image_scan_fixture_checks": 48,
+  "core_checks": 47,
+  "native_checks": 51,
+  "lua_checks": 335,
+  "payload_and_plan_unchanged_files": 17,
+  "tested_on_user_windows": false,
+  "game_runtime_verified": false,
+  "needs_user_feedback": "Export WD1-Native-Probe.json after the next read-only scan, whether it succeeds or fails."
+}

@@ -1,0 +1,1371 @@
+{
+  "active_game_menu": "en-ASCII",
+  "chinese_desktop_unchanged": true,
+  "reason": "User reports question marks in custom game menu; source UTF-8 is valid. Exact host font/conversion cause not yet isolated.",
+  "strings": [
+    {
+      "zh_CN": "WD1 KIT - 本体 [TEST]",
+      "en_ASCII": "WD1 KIT - Main [TEST]"
+    },
+    {
+      "zh_CN": "WD1KIT 0.3 alpha：游戏行为尚未在你的构建实测。",
+      "en_ASCII": "WD1KIT ALPHA: game behavior is not yet verified on your build."
+    },
+    {
+      "zh_CN": "只设置本工具输入值；点击对应按钮才执行。",
+      "en_ASCII": "Input only. Use the separate action button to apply."
+    },
+    {
+      "zh_CN": "须先在自由探索、断开联机后手动 ARM；重载/暂停会关闭。",
+      "en_ASCII": "ARM in offline free roam first. Reload or host pause disables effects."
+    },
+    {
+      "zh_CN": "[ARM] 我已断开联机，且正在单机自由探索",
+      "en_ASCII": "[ARM] I am offline and in single-player free roam"
+    },
+    {
+      "zh_CN": "[STOP] 关闭持续效果并取消待执行请求",
+      "en_ASCII": "[STOP] Disable effects and cancel pending requests"
+    },
+    {
+      "zh_CN": "[CONFIRM] 确认上一笔物品 / 现金请求",
+      "en_ASCII": "[CONFIRM] Apply the prepared item or cash request"
+    },
+    {
+      "zh_CN": "[CANCEL] 取消物品 / 现金队列",
+      "en_ASCII": "[CANCEL] Cancel item or cash queue"
+    },
+    {
+      "zh_CN": "[REPORT] 导出只读接口能力到宿主日志",
+      "en_ASCII": "[REPORT] Write read-only capabilities to host log"
+    },
+    {
+      "zh_CN": "God mode / 持续无敌",
+      "en_ASCII": "God Mode"
+    },
+    {
+      "zh_CN": "Ammo / 无限弹药（持续补给）",
+      "en_ASCII": "Infinite Ammo - continuous refill"
+    },
+    {
+      "zh_CN": "[ADD AMMO] 只补给弹药一次",
+      "en_ASCII": "[ADD AMMO] Refill ammo once"
+    },
+    {
+      "zh_CN": "增加材料/消耗品的数量（与无限开关独立）",
+      "en_ASCII": "Item / material quantity to add - separate from infinite"
+    },
+    {
+      "zh_CN": "Focus / 持续专注补充",
+      "en_ASCII": "Infinite Focus - continuous refill"
+    },
+    {
+      "zh_CN": "Police / 暂停通缉系统",
+      "en_ASCII": "Disable Wanted System"
+    },
+    {
+      "zh_CN": "通缉热度输入 0–100",
+      "en_ASCII": "Wanted Heat input 0-100"
+    },
+    {
+      "zh_CN": "应用通缉热度输入",
+      "en_ASCII": "Apply Wanted Heat"
+    },
+    {
+      "zh_CN": "现金增加量（默认 1000，最大 100 万）",
+      "en_ASCII": "Cash to add - default 1000, maximum 1000000"
+    },
+    {
+      "zh_CN": "准备增加现金 → 再点 CONFIRM",
+      "en_ASCII": "Prepare Cash - then CONFIRM"
+    },
+    {
+      "zh_CN": "技能点奖励数量 1–100（先测 +1）",
+      "en_ASCII": "Normal Skill Point rewards 1-100 - test +1 first"
+    },
+    {
+      "zh_CN": "准备技能点奖励 → 再点 CONFIRM",
+      "en_ASCII": "Prepare Skill Point reward - then CONFIRM"
+    },
+    {
+      "zh_CN": "小时",
+      "en_ASCII": "Hour"
+    },
+    {
+      "zh_CN": "分钟",
+      "en_ASCII": "Minute"
+    },
+    {
+      "zh_CN": "应用时刻（重启游戏解除脚本时钟）",
+      "en_ASCII": "Apply Time - restart the game to release scripted clock"
+    },
+    {
+      "zh_CN": "0.2 ALPHA — 调用完成 ≠ 已解锁 / 已保存",
+      "en_ASCII": "ASCII MENU - ALPHA: request sent is NOT verified unlock or persistence"
+    },
+    {
+      "zh_CN": "01 / 安全与报告",
+      "en_ASCII": "01 / Safety and Report"
+    },
+    {
+      "zh_CN": "只在单机自由探索测试；不要在在线合约、入侵、比赛、合作或任务演出中启用。",
+      "en_ASCII": "Offline free roam only. No online contracts, invasions, races, co-op or cutscenes."
+    },
+    {
+      "zh_CN": "没有真实的联机状态回读。本插件依靠你的单机确认 + 宿主 OnPause 通知；该通知在本机尚待验证。",
+      "en_ASCII": "No reliable session-state readback. Manual offline confirmation and host pause callback are required."
+    },
+    {
+      "zh_CN": "物品、现金、技能奖励需要桌面工具生成的两小时备份回执。回执不是游戏存档识别器。",
+      "en_ASCII": "Persistent grants need the companion backup receipt. It lasts two hours and does not identify the active save."
+    },
+    {
+      "zh_CN": "主线、调查、收集计数、线上合约次数与 Ubisoft 服务端记录：本版没有改写。游戏内进度计数接口仍待适配。",
+      "en_ASCII": "Story, investigations, collectible counters and online records are not rewritten. Progress adapters remain pending."
+    },
+    {
+      "zh_CN": "02 / 玩家与通缉",
+      "en_ASCII": "02 / Player and Police"
+    },
+    {
+      "zh_CN": "03 / 点数与现金",
+      "en_ASCII": "03 / Skill Points and Cash"
+    },
+    {
+      "zh_CN": "先备份，再一次只测一项。技能点通过真实 Skillpoint 奖励键，不是虚构 SetSkillPoints。",
+      "en_ASCII": "Back up and test one item at a time. Skill points use the actual Skillpoint reward key, not an invented API."
+    },
+    {
+      "zh_CN": " → 准备",
+      "en_ASCII": " - prepare"
+    },
+    {
+      "zh_CN": "04 / 线上门槛的本地奖励",
+      "en_ASCII": "04 / Local Rewards Behind Online Requirements"
+    },
+    {
+      "zh_CN": "这些是本地物品请求，不增加入侵 / 尾随 / 比赛次数，也不增加游戏内对应活动计数。",
+      "en_ASCII": "These are local item requests. They do not complete online hacking, tailing, races or activity counters."
+    },
+    {
+      "zh_CN": "先测试单件；拿到后正常存档并重启，才可确认持久性。",
+      "en_ASCII": "Test one item first. Save normally and restart to verify persistence."
+    },
+    {
+      "zh_CN": "准备四件线上奖励武器（不包含车辆）",
+      "en_ASCII": "Prepare the four online-reward weapons - no vehicle"
+    },
+    {
+      "zh_CN": "解密战的 Chicago Way / Firepower / Heavy Duty 配装仍未接入；不能用单机枪械冒充。",
+      "en_ASCII": "Decryption loadouts are not implemented. Single-player weapons do not replace those records."
+    },
+    {
+      "zh_CN": "常规与特殊武器",
+      "en_ASCII": "Standard and Special Weapons"
+    },
+    {
+      "zh_CN": "已拥有的 ULC 武器",
+      "en_ASCII": "Owned ULC Weapon Candidates"
+    },
+    {
+      "zh_CN": "Bad Blood 武器",
+      "en_ASCII": "Bad Blood Weapon Candidates"
+    },
+    {
+      "zh_CN": "消耗品与材料",
+      "en_ASCII": "Consumables and Materials"
+    },
+    {
+      "zh_CN": "艾登商店服装",
+      "en_ASCII": "Aiden Shop Outfits"
+    },
+    {
+      "zh_CN": "已拥有的 ULC 服装",
+      "en_ASCII": "Owned ULC Outfit Candidates"
+    },
+    {
+      "zh_CN": "数字之旅奖励服装",
+      "en_ASCII": "Digital Trip Reward Outfits"
+    },
+    {
+      "zh_CN": "T-Bone 服装",
+      "en_ASCII": "T-Bone Outfits"
+    },
+    {
+      "zh_CN": "本体叫车奖励候选",
+      "en_ASCII": "Main Campaign Car On Demand Reward Candidates"
+    },
+    {
+      "zh_CN": "22 首曲目奖励候选",
+      "en_ASCII": "22 Song Reward Candidates"
+    },
+    {
+      "zh_CN": "05 / 白名单物品目录",
+      "en_ASCII": "05 / Item Whitelist"
+    },
+    {
+      "zh_CN": "全武器 / 全服装 / 全物品为当前模式白名单批次；实际拥有与持久解锁仍须核对。",
+      "en_ASCII": "ALL batches mean the current-mode whitelist. Actual ownership and persistent unlocks need verification."
+    },
+    {
+      "zh_CN": "不含任务令牌、AccessIds、NPC/联机武器或 MOD 项。增加资源不会打开无限开关。",
+      "en_ASCII": "No mission tokens, AccessIds, NPC/MP weapons or mod items. Adding resources does not enable infinite effects."
+    },
+    {
+      "zh_CN": "[ALL WEAPONS] 准备全部武器候选",
+      "en_ASCII": "[ALL WEAPONS] Prepare all weapon candidates"
+    },
+    {
+      "zh_CN": "[ALL CLOTHES] 准备全部服装候选",
+      "en_ASCII": "[ALL CLOTHES] Prepare all outfit candidates"
+    },
+    {
+      "zh_CN": "[ALL ITEMS] 准备全部可用物品候选",
+      "en_ASCII": "[ALL ITEMS] Prepare all current-mode item candidates"
+    },
+    {
+      "zh_CN": "准备本组（每项 1 件）",
+      "en_ASCII": "Prepare this group - one of each"
+    },
+    {
+      "zh_CN": "歌曲只有 22 个明确对应的键；Wake Up Sunshine 的映射未定，因此未伪装成 23/23。",
+      "en_ASCII": "Only 22 song keys are mapped. Wake Up Sunshine remains unresolved; this is not a claim of 23/23."
+    },
+    {
+      "zh_CN": "06 / 车辆与世界",
+      "en_ASCII": "06 / Vehicles and World"
+    },
+    {
+      "zh_CN": "生成车辆仅供本次世界使用，最多 5 辆；不自动入座、不删除世界实体，不等于叫车解锁。",
+      "en_ASCII": "Spawn at most five vehicles per session. No auto-seat or entity deletion. Spawning is not a delivery unlock."
+    },
+    {
+      "zh_CN": "已激活本次单机测试；所有持续开关仍为关闭。",
+      "en_ASCII": "Single-player test armed. All continuous effects remain OFF."
+    },
+    {
+      "zh_CN": "待确认：",
+      "en_ASCII": "Prepared: "
+    },
+    {
+      "zh_CN": " 项，每项 ",
+      "en_ASCII": " entries, each "
+    },
+    {
+      "zh_CN": "。点击 [CONFIRM] 才会给予；[CANCEL] 取消。",
+      "en_ASCII": ". Press [CONFIRM] to grant, or [CANCEL] to cancel."
+    },
+    {
+      "zh_CN": "待确认：现金 +",
+      "en_ASCII": "Prepared: cash +"
+    },
+    {
+      "zh_CN": "。点击 [CONFIRM] 执行。",
+      "en_ASCII": ". Press [CONFIRM] to apply."
+    },
+    {
+      "zh_CN": "已请求生成车辆；这不是叫车解锁，也不增加线上比赛次数。",
+      "en_ASCII": "Vehicle spawn requested. This is not a delivery unlock or an online race completion."
+    },
+    {
+      "zh_CN": "本批调用已提交，未回读。请核对物品/点数，再正常存档、重启验证。",
+      "en_ASCII": "Batch submitted without readback. Check items or points, save normally, then restart to verify."
+    },
+    {
+      "zh_CN": "只读能力报告已写入宿主日志，仅列函数名，不扫描内存或读取账号。",
+      "en_ASCII": "Read-only capability names logged. No memory scan or account data is exported."
+    }
+  ],
+  "item_labels": [
+    {
+      "id": "item_2023158576",
+      "zh_CN": "技能点奖励 +1",
+      "en_ASCII": "Normal Skill Point reward +1"
+    },
+    {
+      "id": "item_3244641630",
+      "zh_CN": "经验奖励 +500",
+      "en_ASCII": "XP reward +500"
+    },
+    {
+      "id": "item_4155199944",
+      "zh_CN": "经验奖励 +1000",
+      "en_ASCII": "XP reward +1000"
+    },
+    {
+      "id": "item_3844013606",
+      "zh_CN": "经验奖励 +2000",
+      "en_ASCII": "XP reward +2000"
+    },
+    {
+      "id": "item_2026489503",
+      "zh_CN": "经验奖励 +5000",
+      "en_ASCII": "XP reward +5000"
+    },
+    {
+      "id": "item_2269372494",
+      "zh_CN": "P-9mm",
+      "en_ASCII": "P-9mm"
+    },
+    {
+      "id": "item_3058031154",
+      "zh_CN": "1911",
+      "en_ASCII": "1911"
+    },
+    {
+      "id": "item_1317933865",
+      "zh_CN": "Spec Ops 1911",
+      "en_ASCII": "Spec Ops 1911"
+    },
+    {
+      "id": "item_700442068",
+      "zh_CN": ".357 REX",
+      "en_ASCII": ".357 REX"
+    },
+    {
+      "id": "item_1152216775",
+      "zh_CN": "D50",
+      "en_ASCII": "D50"
+    },
+    {
+      "id": "item_4108766496",
+      "zh_CN": "M8-M",
+      "en_ASCII": "M8-M"
+    },
+    {
+      "id": "item_3084233885",
+      "zh_CN": "R-33",
+      "en_ASCII": "R-33"
+    },
+    {
+      "id": "item_4099987261",
+      "zh_CN": "MP-9mm",
+      "en_ASCII": "MP-9mm"
+    },
+    {
+      "id": "item_2377767548",
+      "zh_CN": "SMG-11",
+      "en_ASCII": "SMG-11"
+    },
+    {
+      "id": "item_2417314999",
+      "zh_CN": "Spec Ops SMG-11",
+      "en_ASCII": "Spec Ops SMG-11"
+    },
+    {
+      "id": "item_4258700054",
+      "zh_CN": "MP5",
+      "en_ASCII": "MP5"
+    },
+    {
+      "id": "item_92417902",
+      "zh_CN": "Vector .45 ACP",
+      "en_ASCII": "Vector .45 ACP"
+    },
+    {
+      "id": "item_309961700",
+      "zh_CN": "Spec Ops Vector .45 ACP",
+      "en_ASCII": "Spec Ops Vector .45 ACP"
+    },
+    {
+      "id": "item_3059215197",
+      "zh_CN": "R-2000",
+      "en_ASCII": "R-2000"
+    },
+    {
+      "id": "item_633170941",
+      "zh_CN": "416",
+      "en_ASCII": "416"
+    },
+    {
+      "id": "item_3220571773",
+      "zh_CN": "417",
+      "en_ASCII": "417"
+    },
+    {
+      "id": "item_1236846365",
+      "zh_CN": "AK-47",
+      "en_ASCII": "AK-47"
+    },
+    {
+      "id": "item_2418918813",
+      "zh_CN": "Goblin",
+      "en_ASCII": "Goblin"
+    },
+    {
+      "id": "item_2468673040",
+      "zh_CN": "Spec Ops Goblin",
+      "en_ASCII": "Spec Ops Goblin"
+    },
+    {
+      "id": "item_3001183890",
+      "zh_CN": "ACR",
+      "en_ASCII": "ACR"
+    },
+    {
+      "id": "item_900578036",
+      "zh_CN": "U100",
+      "en_ASCII": "U100"
+    },
+    {
+      "id": "item_2207476061",
+      "zh_CN": "OCP-11",
+      "en_ASCII": "OCP-11"
+    },
+    {
+      "id": "item_770883049",
+      "zh_CN": "SG-90",
+      "en_ASCII": "SG-90"
+    },
+    {
+      "id": "item_4180379767",
+      "zh_CN": "SGR-12",
+      "en_ASCII": "SGR-12"
+    },
+    {
+      "id": "item_3514256627",
+      "zh_CN": "M1014",
+      "en_ASCII": "M1014"
+    },
+    {
+      "id": "item_2721974924",
+      "zh_CN": "D12",
+      "en_ASCII": "D12"
+    },
+    {
+      "id": "item_56535470",
+      "zh_CN": "SVD",
+      "en_ASCII": "SVD"
+    },
+    {
+      "id": "item_1853148229",
+      "zh_CN": "SR-25",
+      "en_ASCII": "SR-25"
+    },
+    {
+      "id": "item_3745523831",
+      "zh_CN": "M107",
+      "en_ASCII": "M107"
+    },
+    {
+      "id": "item_1577674927",
+      "zh_CN": "AC-AR",
+      "en_ASCII": "AC-AR"
+    },
+    {
+      "id": "item_2234429577",
+      "zh_CN": "G106",
+      "en_ASCII": "G106"
+    },
+    {
+      "id": "item_1683351323",
+      "zh_CN": "Chrome",
+      "en_ASCII": "Chrome"
+    },
+    {
+      "id": "item_2565686443",
+      "zh_CN": "Piledriver",
+      "en_ASCII": "Piledriver"
+    },
+    {
+      "id": "item_2517217399",
+      "zh_CN": "Wildfire",
+      "en_ASCII": "Wildfire"
+    },
+    {
+      "id": "item_2343466146",
+      "zh_CN": "Destroyer",
+      "en_ASCII": "Destroyer"
+    },
+    {
+      "id": "item_1479791293",
+      "zh_CN": "M1 SMG",
+      "en_ASCII": "M1 SMG"
+    },
+    {
+      "id": "item_1128431973",
+      "zh_CN": "Gangster",
+      "en_ASCII": "Gangster"
+    },
+    {
+      "id": "item_3931946971",
+      "zh_CN": "Cyberpunk 手枪",
+      "en_ASCII": "Pistols.M8M.ULC_Cyberpunk - candidate"
+    },
+    {
+      "id": "item_1830466540",
+      "zh_CN": "Biometric ACR",
+      "en_ASCII": "Biometric ACR"
+    },
+    {
+      "id": "item_2797606244",
+      "zh_CN": "R-33B",
+      "en_ASCII": "R-33B"
+    },
+    {
+      "id": "item_4158329681",
+      "zh_CN": "1911（手电）",
+      "en_ASCII": "Pistols.1911.dlc01_With_Light - candidate"
+    },
+    {
+      "id": "item_806742068",
+      "zh_CN": "D50（手电）",
+      "en_ASCII": "Pistols.D50.dlc01_with_Light - candidate"
+    },
+    {
+      "id": "item_1871022573",
+      "zh_CN": "R-2000（手电）",
+      "en_ASCII": "SMGs.R2000.dlc01_With_Light - candidate"
+    },
+    {
+      "id": "item_340852082",
+      "zh_CN": "SG-90（手电）",
+      "en_ASCII": "Shotguns.SG590.dlc01_with_Light - candidate"
+    },
+    {
+      "id": "item_1616184391",
+      "zh_CN": "SGR-12（手电）",
+      "en_ASCII": "Shotguns.RSG12.dlc01_with_Light - candidate"
+    },
+    {
+      "id": "item_100796354",
+      "zh_CN": "AK-47（手电）",
+      "en_ASCII": "AssaultRifles.AK47.dlc01__withLight - candidate"
+    },
+    {
+      "id": "item_3686051367",
+      "zh_CN": "U100（手电）",
+      "en_ASCII": "AssaultRifles.U100.dlc01_with_Light - candidate"
+    },
+    {
+      "id": "item_2485466735",
+      "zh_CN": "Spec Ops M107",
+      "en_ASCII": "Spec Ops M107"
+    },
+    {
+      "id": "item_2546636026",
+      "zh_CN": "停电道具",
+      "en_ASCII": "Blackout device"
+    },
+    {
+      "id": "item_2559303206",
+      "zh_CN": "通讯干扰",
+      "en_ASCII": "Jam Comms"
+    },
+    {
+      "id": "item_1174431968",
+      "zh_CN": "ctOS 扫描",
+      "en_ASCII": "ctOS Scan"
+    },
+    {
+      "id": "item_416387092",
+      "zh_CN": "诱饵",
+      "en_ASCII": "Lure"
+    },
+    {
+      "id": "item_3651876853",
+      "zh_CN": "破片手榴弹",
+      "en_ASCII": "Frag Grenade"
+    },
+    {
+      "id": "item_2840708499",
+      "zh_CN": "简易爆炸装置",
+      "en_ASCII": "IED"
+    },
+    {
+      "id": "item_2987530112",
+      "zh_CN": "感应式 IED",
+      "en_ASCII": "Proximity IED"
+    },
+    {
+      "id": "item_901132570",
+      "zh_CN": "专注恢复道具",
+      "en_ASCII": "Focus recovery pill"
+    },
+    {
+      "id": "item_3108044763",
+      "zh_CN": "电子零件",
+      "en_ASCII": "Electronic parts"
+    },
+    {
+      "id": "item_673371641",
+      "zh_CN": "化学材料",
+      "en_ASCII": "Chemical components"
+    },
+    {
+      "id": "item_4088031736",
+      "zh_CN": "爆炸材料",
+      "en_ASCII": "Explosive components"
+    },
+    {
+      "id": "item_1125886109",
+      "zh_CN": "回收零件",
+      "en_ASCII": "Recycled hardware"
+    },
+    {
+      "id": "item_4292418427",
+      "zh_CN": "药物材料",
+      "en_ASCII": "Pharmaceutical components"
+    },
+    {
+      "id": "item_2257375190",
+      "zh_CN": "电池补充（奖励项实验）",
+      "en_ASCII": "Battery reward - experimental"
+    },
+    {
+      "id": "item_2271997318",
+      "zh_CN": "艾登商店服装 01",
+      "en_ASCII": "Aiden shop outfit 01"
+    },
+    {
+      "id": "item_509787196",
+      "zh_CN": "艾登商店服装 02",
+      "en_ASCII": "Aiden shop outfit 02"
+    },
+    {
+      "id": "item_1768262826",
+      "zh_CN": "艾登商店服装 03",
+      "en_ASCII": "Aiden shop outfit 03"
+    },
+    {
+      "id": "item_4144044297",
+      "zh_CN": "艾登商店服装 04",
+      "en_ASCII": "Aiden shop outfit 04"
+    },
+    {
+      "id": "item_2147887519",
+      "zh_CN": "艾登商店服装 05",
+      "en_ASCII": "Aiden shop outfit 05"
+    },
+    {
+      "id": "item_420444197",
+      "zh_CN": "艾登商店服装 06",
+      "en_ASCII": "Aiden shop outfit 06"
+    },
+    {
+      "id": "item_1846036659",
+      "zh_CN": "艾登商店服装 07",
+      "en_ASCII": "Aiden shop outfit 07"
+    },
+    {
+      "id": "item_4273427746",
+      "zh_CN": "艾登商店服装 08",
+      "en_ASCII": "Aiden shop outfit 08"
+    },
+    {
+      "id": "item_2310038964",
+      "zh_CN": "艾登商店服装 09",
+      "en_ASCII": "Aiden shop outfit 09"
+    },
+    {
+      "id": "item_3916950609",
+      "zh_CN": "艾登商店服装 10",
+      "en_ASCII": "Aiden shop outfit 10"
+    },
+    {
+      "id": "item_4241672460",
+      "zh_CN": "艾登商店服装 11",
+      "en_ASCII": "Aiden shop outfit 11"
+    },
+    {
+      "id": "item_1708890294",
+      "zh_CN": "艾登商店服装 12",
+      "en_ASCII": "Aiden shop outfit 12"
+    },
+    {
+      "id": "item_316450848",
+      "zh_CN": "艾登商店服装 13",
+      "en_ASCII": "Aiden shop outfit 13"
+    },
+    {
+      "id": "item_2360884611",
+      "zh_CN": "艾登商店服装 14",
+      "en_ASCII": "Aiden shop outfit 14"
+    },
+    {
+      "id": "item_4223601941",
+      "zh_CN": "艾登商店服装 15",
+      "en_ASCII": "Aiden shop outfit 15"
+    },
+    {
+      "id": "item_1656118447",
+      "zh_CN": "艾登商店服装 16",
+      "en_ASCII": "Aiden shop outfit 16"
+    },
+    {
+      "id": "item_363949113",
+      "zh_CN": "艾登商店服装 17",
+      "en_ASCII": "Aiden shop outfit 17"
+    },
+    {
+      "id": "item_2232316328",
+      "zh_CN": "艾登商店服装 18",
+      "en_ASCII": "Aiden shop outfit 18"
+    },
+    {
+      "id": "item_4060692798",
+      "zh_CN": "艾登商店服装 19",
+      "en_ASCII": "Aiden shop outfit 19"
+    },
+    {
+      "id": "item_2700651097",
+      "zh_CN": "艾登商店服装 20",
+      "en_ASCII": "Aiden shop outfit 20"
+    },
+    {
+      "id": "item_3623852751",
+      "zh_CN": "艾登商店服装 21",
+      "en_ASCII": "Aiden shop outfit 21"
+    },
+    {
+      "id": "item_1324796789",
+      "zh_CN": "艾登商店服装 22",
+      "en_ASCII": "Aiden shop outfit 22"
+    },
+    {
+      "id": "item_972159971",
+      "zh_CN": "艾登商店服装 23",
+      "en_ASCII": "Aiden shop outfit 23"
+    },
+    {
+      "id": "item_2811588160",
+      "zh_CN": "艾登商店服装 24",
+      "en_ASCII": "Aiden shop outfit 24"
+    },
+    {
+      "id": "item_3499253462",
+      "zh_CN": "艾登商店服装 25",
+      "en_ASCII": "Aiden shop outfit 25"
+    },
+    {
+      "id": "item_1234898796",
+      "zh_CN": "艾登商店服装 26",
+      "en_ASCII": "Aiden shop outfit 26"
+    },
+    {
+      "id": "item_1050427386",
+      "zh_CN": "艾登商店服装 27",
+      "en_ASCII": "Aiden shop outfit 27"
+    },
+    {
+      "id": "item_2921538155",
+      "zh_CN": "艾登商店服装 28",
+      "en_ASCII": "Aiden shop outfit 28"
+    },
+    {
+      "id": "item_3643020029",
+      "zh_CN": "艾登商店服装 29",
+      "en_ASCII": "Aiden shop outfit 29"
+    },
+    {
+      "id": "item_3118701336",
+      "zh_CN": "艾登商店服装 30",
+      "en_ASCII": "Aiden shop outfit 30"
+    },
+    {
+      "id": "item_3471092622",
+      "zh_CN": "艾登商店服装 31",
+      "en_ASCII": "Aiden shop outfit 31"
+    },
+    {
+      "id": "item_1475213876",
+      "zh_CN": "艾登商店服装 32",
+      "en_ASCII": "Aiden shop outfit 32"
+    },
+    {
+      "id": "item_552258210",
+      "zh_CN": "艾登商店服装 33",
+      "en_ASCII": "Aiden shop outfit 33"
+    },
+    {
+      "id": "item_3197001473",
+      "zh_CN": "艾登商店服装 34",
+      "en_ASCII": "Aiden shop outfit 34"
+    },
+    {
+      "id": "item_3381227415",
+      "zh_CN": "艾登商店服装 35",
+      "en_ASCII": "Aiden shop outfit 35"
+    },
+    {
+      "id": "item_1350581805",
+      "zh_CN": "艾登商店服装 36",
+      "en_ASCII": "Aiden shop outfit 36"
+    },
+    {
+      "id": "item_663162555",
+      "zh_CN": "艾登商店服装 37",
+      "en_ASCII": "Aiden shop outfit 37"
+    },
+    {
+      "id": "item_3073905450",
+      "zh_CN": "艾登商店服装 38",
+      "en_ASCII": "Aiden shop outfit 38"
+    },
+    {
+      "id": "item_3225363388",
+      "zh_CN": "艾登商店服装 39",
+      "en_ASCII": "Aiden shop outfit 39"
+    },
+    {
+      "id": "item_4137815519",
+      "zh_CN": "艾登商店服装 40",
+      "en_ASCII": "Aiden shop outfit 40"
+    },
+    {
+      "id": "item_2175089993",
+      "zh_CN": "艾登商店服装 41",
+      "en_ASCII": "Aiden shop outfit 41"
+    },
+    {
+      "id": "item_413953267",
+      "zh_CN": "艾登商店服装 42",
+      "en_ASCII": "Aiden shop outfit 42"
+    },
+    {
+      "id": "item_1873501285",
+      "zh_CN": "艾登商店服装 43",
+      "en_ASCII": "Aiden shop outfit 43"
+    },
+    {
+      "id": "item_4056926662",
+      "zh_CN": "艾登商店服装 44",
+      "en_ASCII": "Aiden shop outfit 44"
+    },
+    {
+      "id": "item_2261317968",
+      "zh_CN": "艾登商店服装 45",
+      "en_ASCII": "Aiden shop outfit 45"
+    },
+    {
+      "id": "item_532785386",
+      "zh_CN": "艾登商店服装 46",
+      "en_ASCII": "Aiden shop outfit 46"
+    },
+    {
+      "id": "item_1757845628",
+      "zh_CN": "艾登商店服装 47",
+      "en_ASCII": "Aiden shop outfit 47"
+    },
+    {
+      "id": "item_4168713709",
+      "zh_CN": "艾登商店服装 48",
+      "en_ASCII": "Aiden shop outfit 48"
+    },
+    {
+      "id": "item_2407445883",
+      "zh_CN": "艾登商店服装 49",
+      "en_ASCII": "Aiden shop outfit 49"
+    },
+    {
+      "id": "item_4021894302",
+      "zh_CN": "艾登商店服装 50",
+      "en_ASCII": "Aiden shop outfit 50"
+    },
+    {
+      "id": "item_2061304640",
+      "zh_CN": "T-Bone 商店服装 01",
+      "en_ASCII": "T-Bone shop outfit 01"
+    },
+    {
+      "id": "item_3102623357",
+      "zh_CN": "T-Bone 商店服装 02",
+      "en_ASCII": "T-Bone shop outfit 02"
+    },
+    {
+      "id": "item_3488184043",
+      "zh_CN": "T-Bone 商店服装 03",
+      "en_ASCII": "T-Bone shop outfit 03"
+    },
+    {
+      "id": "item_1368253256",
+      "zh_CN": "T-Bone 商店服装 04",
+      "en_ASCII": "T-Bone shop outfit 04"
+    },
+    {
+      "id": "item_646632414",
+      "zh_CN": "T-Bone 商店服装 05",
+      "en_ASCII": "T-Bone shop outfit 05"
+    },
+    {
+      "id": "item_3213066852",
+      "zh_CN": "T-Bone 商店服装 06",
+      "en_ASCII": "T-Bone shop outfit 06"
+    },
+    {
+      "id": "item_3364139762",
+      "zh_CN": "T-Bone 商店服装 07",
+      "en_ASCII": "T-Bone shop outfit 07"
+    },
+    {
+      "id": "item_1480306531",
+      "zh_CN": "T-Bone 商店服装 08",
+      "en_ASCII": "T-Bone shop outfit 08"
+    },
+    {
+      "id": "item_792502261",
+      "zh_CN": "T-Bone 商店服装 09",
+      "en_ASCII": "T-Bone shop outfit 09"
+    },
+    {
+      "id": "item_1341855248",
+      "zh_CN": "T-Bone 商店服装 10",
+      "en_ASCII": "T-Bone shop outfit 10"
+    },
+    {
+      "id": "item_956049030",
+      "zh_CN": "T-Bone 商店服装 11",
+      "en_ASCII": "T-Bone shop outfit 11"
+    },
+    {
+      "id": "item_3623566901",
+      "zh_CN": "孤独奖励服装",
+      "en_ASCII": "Alone reward outfit"
+    },
+    {
+      "id": "item_3816380433",
+      "zh_CN": "疯狂奖励服装",
+      "en_ASCII": "Madness reward outfit"
+    },
+    {
+      "id": "item_1815691869",
+      "zh_CN": "蜘蛛坦克奖励服装",
+      "en_ASCII": "Spider-Tank reward outfit"
+    },
+    {
+      "id": "item_2804586448",
+      "zh_CN": "迷幻奖励服装",
+      "en_ASCII": "Psychedelic reward outfit"
+    },
+    {
+      "id": "item_389492496",
+      "zh_CN": "阴谋奖励服装",
+      "en_ASCII": "Conspiracy reward outfit"
+    },
+    {
+      "id": "item_2156459794",
+      "zh_CN": "Golden D50（本地物品候选）",
+      "en_ASCII": "Pistols.D50.Uplay_Gold - candidate"
+    },
+    {
+      "id": "item_1843219819",
+      "zh_CN": "Dedsec 服装",
+      "en_ASCII": "Dedsec outfit candidate"
+    },
+    {
+      "id": "item_2227103838",
+      "zh_CN": "ChicagoClub 服装",
+      "en_ASCII": "ChicagoClub outfit candidate"
+    },
+    {
+      "id": "item_113925047",
+      "zh_CN": "Whitehat 服装",
+      "en_ASCII": "Whitehat outfit candidate"
+    },
+    {
+      "id": "item_2211654727",
+      "zh_CN": "Retro 服装",
+      "en_ASCII": "Retro outfit candidate"
+    },
+    {
+      "id": "item_450526717",
+      "zh_CN": "Cyberpunk 服装",
+      "en_ASCII": "Cyberpunk outfit candidate"
+    },
+    {
+      "id": "item_2483697972",
+      "zh_CN": "Glitch 服装",
+      "en_ASCII": "Glitch outfit candidate"
+    },
+    {
+      "id": "item_4089043144",
+      "zh_CN": "Blume 服装",
+      "en_ASCII": "Blume outfit candidate"
+    },
+    {
+      "id": "item_2290193700",
+      "zh_CN": "Viceroys 服装",
+      "en_ASCII": "Viceroys outfit candidate"
+    },
+    {
+      "id": "item_973421002",
+      "zh_CN": "Scafati GT（叫车奖励候选）",
+      "en_ASCII": "Scafati GT - delivery reward candidate"
+    },
+    {
+      "id": "item_2735499376",
+      "zh_CN": "Amargosa Turbo（叫车奖励候选）",
+      "en_ASCII": "Amargosa Turbo - delivery reward candidate"
+    },
+    {
+      "id": "item_3557513446",
+      "zh_CN": "336-TT（叫车奖励候选）",
+      "en_ASCII": "336-TT - delivery reward candidate"
+    },
+    {
+      "id": "item_1248841029",
+      "zh_CN": "550S（叫车奖励候选）",
+      "en_ASCII": "550S - delivery reward candidate"
+    },
+    {
+      "id": "item_1030290899",
+      "zh_CN": "Livraga 350（叫车奖励候选）",
+      "en_ASCII": "Livraga 350 - delivery reward candidate"
+    },
+    {
+      "id": "item_678076169",
+      "zh_CN": "Livraga LE（叫车奖励候选）",
+      "en_ASCII": "Livraga LE - delivery reward candidate"
+    },
+    {
+      "id": "item_2757864553",
+      "zh_CN": "Papavero（叫车奖励候选）",
+      "en_ASCII": "Papavero - delivery reward candidate"
+    },
+    {
+      "id": "item_4189416026",
+      "zh_CN": "Papavero Stealth Edition（叫车奖励候选）",
+      "en_ASCII": "Papavero Stealth Edition - delivery reward candidate"
+    },
+    {
+      "id": "item_3546717439",
+      "zh_CN": "Boxberg R1（叫车奖励候选）",
+      "en_ASCII": "Boxberg R1 - delivery reward candidate"
+    },
+    {
+      "id": "item_1783601268",
+      "zh_CN": "Boxberg LE（叫车奖励候选）",
+      "en_ASCII": "Boxberg LE - delivery reward candidate"
+    },
+    {
+      "id": "item_1718896871",
+      "zh_CN": "Zusume R（叫车奖励候选）",
+      "en_ASCII": "Zusume R - delivery reward candidate"
+    },
+    {
+      "id": "item_581466480",
+      "zh_CN": "Kirscher（叫车奖励候选）",
+      "en_ASCII": "Kirscher - delivery reward candidate"
+    },
+    {
+      "id": "item_1437551078",
+      "zh_CN": "Sunrim（叫车奖励候选）",
+      "en_ASCII": "Sunrim - delivery reward candidate"
+    },
+    {
+      "id": "item_3419135045",
+      "zh_CN": "Rotor（叫车奖励候选）",
+      "en_ASCII": "Rotor - delivery reward candidate"
+    },
+    {
+      "id": "item_3167546579",
+      "zh_CN": "Carrozza（叫车奖励候选）",
+      "en_ASCII": "Carrozza - delivery reward candidate"
+    },
+    {
+      "id": "item_633716073",
+      "zh_CN": "Core-T（叫车奖励候选）",
+      "en_ASCII": "Core-T - delivery reward candidate"
+    },
+    {
+      "id": "item_2584458734",
+      "zh_CN": "Sayonara（叫车奖励候选）",
+      "en_ASCII": "Sayonara - delivery reward candidate"
+    },
+    {
+      "id": "item_217841595",
+      "zh_CN": "Sayonara LE（叫车奖励候选）",
+      "en_ASCII": "Sayonara LE - delivery reward candidate"
+    },
+    {
+      "id": "item_50521172",
+      "zh_CN": "Kuruhawa Motorsport 450（叫车奖励候选）",
+      "en_ASCII": "Kuruhawa Motorsport 450 - delivery reward candidate"
+    },
+    {
+      "id": "item_1946539202",
+      "zh_CN": "Kodachi（叫车奖励候选）",
+      "en_ASCII": "Kodachi - delivery reward candidate"
+    },
+    {
+      "id": "item_3932242273",
+      "zh_CN": "Chopper（叫车奖励候选）",
+      "en_ASCII": "Chopper - delivery reward candidate"
+    },
+    {
+      "id": "item_1444405640",
+      "zh_CN": "Polar（叫车奖励候选）",
+      "en_ASCII": "Polar - delivery reward candidate"
+    },
+    {
+      "id": "item_3474894898",
+      "zh_CN": "Tributary 1500（叫车奖励候选）",
+      "en_ASCII": "Tributary 1500 - delivery reward candidate"
+    },
+    {
+      "id": "item_3088679076",
+      "zh_CN": "Steadfast 3000（叫车奖励候选）",
+      "en_ASCII": "Steadfast 3000 - delivery reward candidate"
+    },
+    {
+      "id": "item_645731591",
+      "zh_CN": "Tributary 3500（叫车奖励候选）",
+      "en_ASCII": "Tributary 3500 - delivery reward candidate"
+    },
+    {
+      "id": "item_2028062005",
+      "zh_CN": "Vespid 5.2（叫车奖励候选）",
+      "en_ASCII": "Vespid 5.2 - delivery reward candidate"
+    },
+    {
+      "id": "item_3790115983",
+      "zh_CN": "Hailkal R（叫车奖励候选）",
+      "en_ASCII": "Hailkal R - delivery reward candidate"
+    },
+    {
+      "id": "item_2532287513",
+      "zh_CN": "Adamant S-Series（叫车奖励候选）",
+      "en_ASCII": "Adamant S-Series - delivery reward candidate"
+    },
+    {
+      "id": "item_143339962",
+      "zh_CN": "Sonarus LX（叫车奖励候选）",
+      "en_ASCII": "Sonarus LX - delivery reward candidate"
+    },
+    {
+      "id": "item_3314376394",
+      "zh_CN": "Vespid HMI（叫车奖励候选）",
+      "en_ASCII": "Vespid HMI - delivery reward candidate"
+    },
+    {
+      "id": "item_3863106483",
+      "zh_CN": "Vespid LE（叫车奖励候选）",
+      "en_ASCII": "Vespid LE - delivery reward candidate"
+    },
+    {
+      "id": "item_1552158576",
+      "zh_CN": "571（叫车奖励候选）",
+      "en_ASCII": "571 - delivery reward candidate"
+    },
+    {
+      "id": "item_730021862",
+      "zh_CN": "3.9T（叫车奖励候选）",
+      "en_ASCII": "3.9T - delivery reward candidate"
+    },
+    {
+      "id": "item_3825529972",
+      "zh_CN": "Magnate（叫车奖励候选）",
+      "en_ASCII": "Magnate - delivery reward candidate"
+    },
+    {
+      "id": "item_2331463550",
+      "zh_CN": "Magnate LE（叫车奖励候选）",
+      "en_ASCII": "Magnate LE - delivery reward candidate"
+    },
+    {
+      "id": "item_3274662842",
+      "zh_CN": "Zusume（叫车奖励候选）",
+      "en_ASCII": "Zusume - delivery reward candidate"
+    },
+    {
+      "id": "item_1512452608",
+      "zh_CN": "Sumitzu Auto 1.6（叫车奖励候选）",
+      "en_ASCII": "Sumitzu Auto 1.6 - delivery reward candidate"
+    },
+    {
+      "id": "item_757138070",
+      "zh_CN": "Sculptor 2.5R（叫车奖励候选）",
+      "en_ASCII": "Sculptor 2.5R - delivery reward candidate"
+    },
+    {
+      "id": "item_1912201071",
+      "zh_CN": "Talos（叫车奖励候选）",
+      "en_ASCII": "Talos - delivery reward candidate"
+    },
+    {
+      "id": "item_1181940009",
+      "zh_CN": "Relegater（叫车奖励候选）",
+      "en_ASCII": "Relegater - delivery reward candidate"
+    },
+    {
+      "id": "item_1691143800",
+      "zh_CN": "Cavale（叫车奖励候选）",
+      "en_ASCII": "Cavale - delivery reward candidate"
+    },
+    {
+      "id": "item_4257587138",
+      "zh_CN": "Leo（叫车奖励候选）",
+      "en_ASCII": "Leo - delivery reward candidate"
+    },
+    {
+      "id": "item_2328014676",
+      "zh_CN": "Vessel（叫车奖励候选）",
+      "en_ASCII": "Vessel - delivery reward candidate"
+    },
+    {
+      "id": "item_346438391",
+      "zh_CN": "Relegate V6（叫车奖励候选）",
+      "en_ASCII": "Relegate V6 - delivery reward candidate"
+    },
+    {
+      "id": "item_1671498337",
+      "zh_CN": "Woodie（叫车奖励候选）",
+      "en_ASCII": "Woodie - delivery reward candidate"
+    },
+    {
+      "id": "item_754876024",
+      "zh_CN": "Koln 500S（叫车奖励候选）",
+      "en_ASCII": "Koln 500S - delivery reward candidate"
+    },
+    {
+      "id": "item_2307007173",
+      "zh_CN": "Crosscountry Series（叫车奖励候选）",
+      "en_ASCII": "Crosscountry Series - delivery reward candidate"
+    },
+    {
+      "id": "item_4072014718",
+      "zh_CN": "Fasto（叫车奖励候选）",
+      "en_ASCII": "Fasto - delivery reward candidate"
+    },
+    {
+      "id": "item_1807700676",
+      "zh_CN": "Lithium SP（叫车奖励候选）",
+      "en_ASCII": "Lithium SP - delivery reward candidate"
+    },
+    {
+      "id": "item_481845842",
+      "zh_CN": "Bogen 200（叫车奖励候选）",
+      "en_ASCII": "Bogen 200 - delivery reward candidate"
+    },
+    {
+      "id": "item_2863852732",
+      "zh_CN": "Kigan AWD（叫车奖励候选）",
+      "en_ASCII": "Kigan AWD - delivery reward candidate"
+    },
+    {
+      "id": "item_1990164259",
+      "zh_CN": "Landrock Van 2500（叫车奖励候选）",
+      "en_ASCII": "Landrock Van 2500 - delivery reward candidate"
+    },
+    {
+      "id": "item_4019596953",
+      "zh_CN": "Landrock Van 1500（叫车奖励候选）",
+      "en_ASCII": "Landrock Van 1500 - delivery reward candidate"
+    },
+    {
+      "id": "item_3754247527",
+      "zh_CN": "Philandra（叫车奖励候选）",
+      "en_ASCII": "Philandra - delivery reward candidate"
+    },
+    {
+      "id": "item_1158118865",
+      "zh_CN": "AlarmClocks",
+      "en_ASCII": "AlarmClocks"
+    },
+    {
+      "id": "item_3093266093",
+      "zh_CN": "blvckandwhite",
+      "en_ASCII": "blvckandwhite"
+    },
+    {
+      "id": "item_3093266091",
+      "zh_CN": "BrightIdea",
+      "en_ASCII": "BrightIdea"
+    },
+    {
+      "id": "item_3478670909",
+      "zh_CN": "ClujNapoca",
+      "en_ASCII": "ClujNapoca"
+    },
+    {
+      "id": "item_1420203115",
+      "zh_CN": "Conduction",
+      "en_ASCII": "Conduction"
+    },
+    {
+      "id": "item_3478670911",
+      "zh_CN": "CREAM",
+      "en_ASCII": "CREAM"
+    },
+    {
+      "id": "item_3650203895",
+      "zh_CN": "Dance",
+      "en_ASCII": "Dance"
+    },
+    {
+      "id": "item_3958968813",
+      "zh_CN": "DarkSteering",
+      "en_ASCII": "DarkSteering"
+    },
+    {
+      "id": "item_911495893",
+      "zh_CN": "FuneralSinger",
+      "en_ASCII": "FuneralSinger"
+    },
+    {
+      "id": "item_3358951973",
+      "zh_CN": "GoingDownHigh",
+      "en_ASCII": "GoingDownHigh"
+    },
+    {
+      "id": "item_1448157064",
+      "zh_CN": "HighClassSlimcamefloatingin",
+      "en_ASCII": "HighClassSlimcamefloatingin"
+    },
+    {
+      "id": "item_559296274",
+      "zh_CN": "Jesusbuiltmyhotrod",
+      "en_ASCII": "Jesusbuiltmyhotrod"
+    },
+    {
+      "id": "item_3207772850",
+      "zh_CN": "LostBoys",
+      "en_ASCII": "LostBoys"
+    },
+    {
+      "id": "item_1270825139",
+      "zh_CN": "MsCrumby",
+      "en_ASCII": "MsCrumby"
+    },
+    {
+      "id": "item_1362942878",
+      "zh_CN": "MyMyMy",
+      "en_ASCII": "MyMyMy"
+    },
+    {
+      "id": "item_2176775932",
+      "zh_CN": "NeverAgain",
+      "en_ASCII": "NeverAgain"
+    },
+    {
+      "id": "item_636035282",
+      "zh_CN": "Outtolunch",
+      "en_ASCII": "Outtolunch"
+    },
+    {
+      "id": "item_3207772851",
+      "zh_CN": "Simplify",
+      "en_ASCII": "Simplify"
+    },
+    {
+      "id": "item_641461001",
+      "zh_CN": "Talk",
+      "en_ASCII": "Talk"
+    },
+    {
+      "id": "item_972390497",
+      "zh_CN": "TheBottom",
+      "en_ASCII": "TheBottom"
+    },
+    {
+      "id": "item_3526322101",
+      "zh_CN": "Wherethesidewalkends",
+      "en_ASCII": "Wherethesidewalkends"
+    },
+    {
+      "id": "item_797812516",
+      "zh_CN": "Youburntme",
+      "en_ASCII": "Youburntme"
+    }
+  ]
+}

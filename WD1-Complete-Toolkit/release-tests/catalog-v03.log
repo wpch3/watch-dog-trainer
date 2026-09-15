@@ -1,0 +1,7 @@
+PASS: platform-achievement code/dependencies removed; one Windows x64 executable.
+PASS: complete 169-entry plan + 142 retained gameplay requirements; infinite/add independent.
+PASS: 218 whitelist keys; three distinct all-item batches; per-mode payload parity.
+PASS: native candidate/byte/thread/object guards, fake-process tests, no real-game certification claims.
+PASS: explicit Microsoft net48 build contract; no single-char Split calls; framework MemberRefs resolved.
+PASS: stream/image-page bounds, partial-scan write refusal, and failed-connection export regression checks.
+PASS: actionable capture states, cached-only preview, same-object next-heartbeat queue, cancellation tests.

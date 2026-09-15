@@ -1,0 +1,16 @@
+{
+  "version": "0.3.3-alpha",
+  "target_framework": ".NETFramework,Version=v4.8",
+  "reference_pack": "Microsoft.NETFramework.ReferenceAssemblies.net48 / 1.0.3 (or an equivalent Microsoft net48 SDK reference directory)",
+  "compiler_driver": "mcs",
+  "no_default_framework_references": true,
+  "references": {
+    "mscorlib": "6b35530467b914b0b195146ca1d1485ddd219afaad6461103f16f54e952f75a9",
+    "System": "2fe343569f794f2ca92ee14a41875571a9f21bf92637b8f8ee86306534209cca",
+    "System.Core": "94a1fc97eb0d36f13acd209bb7207da504c8be10caf7e5096b2c46e671dc6fe2",
+    "System.Drawing": "65a42d3e5bd4508e3c75133cd1967301a84b5dae6698f300cd831ff79c54b611",
+    "System.Windows.Forms": "0b0bc1f2ebfefe0cf827b2e2a0caa3fb8c772d84df26ab8e40abe98e0f2eb300",
+    "System.Web.Extensions": "7512218c4a6a83de0cdbb8a25240b8b5ee542f93ff9b31acfbf9f7399394450e"
+  },
+  "game_runtime_verified": false
+}

@@ -1,0 +1,15 @@
+{
+  "version": "0.3.3-alpha",
+  "date": "2026-09-14",
+  "compiler": "Mono mcs C# 7.2 + Microsoft .NET Framework 4.8 reference assemblies (explicit, no default stdlib)",
+  "environment": "Linux + Mono + Lua 5.1 + Xvfb",
+  "lua_checks": 335,
+  "core_checks": 47,
+  "native_checks": 51,
+  "image_scan_checks": 48,
+  "capture_checks": 39,
+  "ui_smoke_windows": 2,
+  "real_game_test": false,
+  "windows_runtime_test": false,
+  "platform_account_connection": false
+}

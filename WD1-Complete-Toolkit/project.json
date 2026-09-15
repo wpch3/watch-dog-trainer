@@ -1,0 +1,83 @@
+{
+  "name": "WD1 Chinese In-Game Toolkit",
+  "version": "0.3.3-alpha",
+  "as_of": "2026-09-14",
+  "is_finished_trainer": false,
+  "scope": "game-internal progression, resources, minigames, inventory; no platform-achievement module",
+  "steam_appid_for_game_identity_only": 243470,
+  "observed_build": "11241563",
+  "observed_profile": "profiles/steam-11241563-observed.json",
+  "supported_game_fingerprints": [],
+  "runtime_game_tests_completed": false,
+  "platform_achievement_module": {
+    "included": false,
+    "source_and_binaries_removed": true
+  },
+  "user_plan": "plan/用户确认的完整计划.md",
+  "structured_plan": "data/complete_plan.json",
+  "original_gameplay_acceptance_retained": "plan/original_gameplay_requirements.json",
+  "infinite_and_add_are_independent": true,
+  "native_candidate_controls": 24,
+  "curated_item_keys": 218,
+  "complete_plan_entries": 169,
+  "unbound_entries": 112,
+  "candidate_warning": "Candidate implementation is not game verification or guaranteed complete semantic coverage.",
+  "runtime_dependencies": {
+    "desktop": ".NET Framework 4.8 family / Windows x64",
+    "native_panel": "none beyond Windows/.NET; no CE needed",
+    "lua_plugin": "NexusTools >=1.1.12, separately installed, unverified on user build"
+  },
+  "safety": {
+    "no_auto_enable": true,
+    "native_scan_readonly": true,
+    "native_capture_modifies_code": true,
+    "native_and_persistent_lua_require_backup": true,
+    "activity_detection": "manual scope, not automatic identification",
+    "native_object_capture": "stable fresh pointer only; semantic ownership not certified",
+    "unknown_binary_rejected": true
+  },
+  "test_counts": {
+    "lua_fixture_assertions": 335,
+    "core_file_checks": 47,
+    "native_fake_process_checks": 51,
+    "image_scan_checks": 48,
+    "capture_checks": 39,
+    "live_game_or_windows_testing": false
+  },
+  "user_confirmed_context": {
+    "os": "Windows 11 Pro 24H2 26100 x64",
+    "edition": "Steam Complete Edition",
+    "bad_blood_starts": true,
+    "initial_mods": "none",
+    "dlc": [
+      "dlc_exclusive",
+      "dlc_pill_people",
+      "dlc_seasonpass",
+      "dlc_solo",
+      "ulc_pack"
+    ],
+    "online_game_progress": "all unfinished, user statement",
+    "diagnostic_save_candidates": 0
+  },
+  "remaining_input": "Optional read-only WD1-Native-Probe.json and verbal results; no screenshots, credentials or memory dumps requested.",
+  "user_reported_gameplay_observations": [
+    {
+      "feature": "native.cash_add",
+      "status": "USER_REPORTED_SUCCESS_AND_PERSISTENCE",
+      "version": "0.3.3-alpha",
+      "evidence": "profiles/steam-11241563-cash-success-20260914.json",
+      "scope": "Queued +50000, ATM trigger; user confirmed money retained after restart. Other features remain unverified."
+    }
+  ],
+  "latest_host_status": "User saw WD1 KIT menu in NexusTools; Chinese labels rendered as question marks. Lua game effects not yet verified.",
+  "game_menu_display": {
+    "active_payload": "en-ASCII compatibility text",
+    "desktop_language": "zh-CN unchanged",
+    "chinese_source_preserved": "locales/zh-CN/Plugin",
+    "native_executable_changed": false,
+    "host_exact_font_or_conversion_cause": "not yet isolated",
+    "ui_revision": "UI2",
+    "previous_observed_problem": "UI1 Player/Police shows heading and STOP only; exact host exception not captured",
+    "ui2_runtime_verified": false
+  }
+}

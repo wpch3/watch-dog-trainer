@@ -1,0 +1,252 @@
+﻿{
+    "schema_version":  "1.0",
+    "tool_version":  "0.1.0",
+    "generated_at_utc":  "2026-09-13T15:33:34.6451024Z",
+    "privacy":  {
+                    "network_used":  false,
+                    "uploaded":  false,
+                    "game_or_save_writes":  false,
+                    "save_contents_exported":  false,
+                    "absolute_paths_exported":  false,
+                    "account_ids_exported":  false,
+                    "note":  "Inspect before sharing: custom mod/file labels may still contain personal text."
+                },
+    "environment":  {
+                        "windows_name":  "Windows 11 Pro",
+                        "windows_build":  "26100",
+                        "display_version":  "24H2",
+                        "os_64_bit":  true,
+                        "powershell_version":  "5.1.26100.7462"
+                    },
+    "game":  {
+                 "requested_steam_appid":  "243470",
+                 "steam_manifest":  {
+                                        "appid":  "243470",
+                                        "build_id":  "11241563",
+                                        "state_flags":  "4"
+                                    },
+                 "compatibility":  "NOT_YET_VERIFIED",
+                 "edition_ownership":  "NOT_DETECTED_BY_THIS_TOOL",
+                 "key_files":  [
+                                   {
+                                       "relative_path":  "bin/Watch_Dogs.exe",
+                                       "size_bytes":  473088,
+                                       "last_write_utc":  "2014-05-30T18:59:06.0048894Z",
+                                       "file_version":  "",
+                                       "pe_machine":  "x64",
+                                       "sha256":  "844E4A85FD1D1AFE61BE2B75F451FA4A1BE91C83732731CC5ED2C36FF551E0CD",
+                                       "status":  "read"
+                                   },
+                                   {
+                                       "relative_path":  "bin/Disrupt_b64.dll",
+                                       "size_bytes":  31776104,
+                                       "last_write_utc":  "2026-09-12T13:10:53.5221314Z",
+                                       "file_version":  "",
+                                       "pe_machine":  "x64",
+                                       "sha256":  "A4EEAD7A645AB4340A67622DA4BFC91789E8CECFD53F605499A0E4B09B3EE60A",
+                                       "status":  "read"
+                                   },
+                                   {
+                                       "relative_path":  "bin/uplay_r1_loader64.dll",
+                                       "size_bytes":  528184,
+                                       "last_write_utc":  "2026-09-12T13:10:53.5241332Z",
+                                       "file_version":  "",
+                                       "pe_machine":  "x64",
+                                       "sha256":  "4325FFDE93C453F68E5B13CFD225D90359FCF73331C65F23894128CEA6DCD116",
+                                       "status":  "read"
+                                   },
+                                   {
+                                       "relative_path":  "bin/systemdetection64.dll",
+                                       "size_bytes":  298712,
+                                       "last_write_utc":  "2026-09-12T13:10:53.5231313Z",
+                                       "file_version":  "1, 0, 0, 10",
+                                       "pe_machine":  "x64",
+                                       "sha256":  "C1E90B0F7D0EB22A2AD5ABEC22CD694323E2F9A13130A64C79D2CA8DE0F05C11",
+                                       "status":  "read"
+                                   }
+                               ],
+                 "archive_metadata":  [
+                                          {
+                                              "relative_path":  "data_win64/common.dat",
+                                              "size_bytes":  109476518,
+                                              "last_write_utc":  "2026-09-12T13:10:53.5170663Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  null,
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/common.fat",
+                                              "size_bytes":  163812,
+                                              "last_write_utc":  "2026-09-12T13:39:06.7441351Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  "D0AE4F28D9B2A4DE53E31A31C1E08B276F2C631979DA3823FBCD6A76FEF06CC3",
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/patch.dat",
+                                              "size_bytes":  24291832,
+                                              "last_write_utc":  "2026-09-12T13:10:53.5241332Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  null,
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/patch.fat",
+                                              "size_bytes":  15204,
+                                              "last_write_utc":  "2026-09-12T13:39:40.2193816Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  "8A83AEB0FE01A1A52D3FB619D679A73653A7550B2C24EE94DA91489A2932DBC5",
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/patch1.dat",
+                                              "size_bytes":  19873526,
+                                              "last_write_utc":  "2026-09-12T13:10:53.5251328Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  null,
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/patch1.fat",
+                                              "size_bytes":  3764,
+                                              "last_write_utc":  "2026-09-12T13:39:49.3439549Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  "AC55999E7F944420F6340D9CA4862F1C8AE7A048C1B0E5D4A473497E32A8095D",
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/shaders.dat",
+                                              "size_bytes":  2603912,
+                                              "last_write_utc":  "2026-09-12T13:10:53.5261297Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  null,
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/shaders.fat",
+                                              "size_bytes":  12420,
+                                              "last_write_utc":  "2026-09-12T13:39:45.5259769Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  "CC1F942F3CFE672195CB2619B30464590E7D645F1DDCB849B56F92A48E33F8C3",
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/shadersobj.dat",
+                                              "size_bytes":  112735862,
+                                              "last_write_utc":  "2026-09-12T13:10:53.5281310Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  null,
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/shadersobj.fat",
+                                              "size_bytes":  629940,
+                                              "last_write_utc":  "2026-09-12T13:10:53.5286425Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  "B346AA9374C7C7B4653EEB657EF09B6712DB5CEAD82C8B254AF3E2A8ABA97C15",
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/skuconfig.dat",
+                                              "size_bytes":  1286,
+                                              "last_write_utc":  "2026-09-12T13:39:04.4626435Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  null,
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/sound.dat",
+                                              "size_bytes":  2401097600,
+                                              "last_write_utc":  "2026-09-12T13:10:53.5321729Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  null,
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/sound.fat",
+                                              "size_bytes":  125860,
+                                              "last_write_utc":  "2026-09-12T13:53:17.3581916Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  "FBEFCF7985DC20EBD436A9E30053EF16493D140C33B3CEE1A32D038D501E24EA",
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/sound_english.dat",
+                                              "size_bytes":  1612257491,
+                                              "last_write_utc":  "2026-09-12T13:10:53.5605669Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  null,
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/sound_english.fat",
+                                              "size_bytes":  727636,
+                                              "last_write_utc":  "2026-09-12T13:10:53.5605669Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  "6ABACD59E9BA2B9EEA751CE003C5A3A59AFFD710E220B16357ADCAF3722113F0",
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/videos.dat",
+                                              "size_bytes":  4296511668,
+                                              "last_write_utc":  "2026-09-12T13:10:53.5396982Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  null,
+                                              "status":  "read"
+                                          },
+                                          {
+                                              "relative_path":  "data_win64/videos.fat",
+                                              "size_bytes":  4356,
+                                              "last_write_utc":  "2026-09-12T14:13:14.4572936Z",
+                                              "file_version":  null,
+                                              "pe_machine":  null,
+                                              "sha256":  "0F2EDC133EB1C8ECA91CCD773C44841F5379FB570B04E5DCFAAA3DA0691EB6FC",
+                                              "status":  "read"
+                                          }
+                                      ],
+                 "mod_folder_names":  [
+
+                                      ],
+                 "asi_file_names":  [
+
+                                    ]
+             },
+    "saves":  [
+
+              ],
+    "configs":  [
+                    {
+                        "location":  "\u003cDOCUMENTS\u003e/My Games/Watch_Dogs/\u003cPROFILE_01\u003e/GamerProfile.xml",
+                        "size_bytes":  8573,
+                        "last_write_utc":  "2026-09-13T15:31:35.0487171Z",
+                        "contents_exported":  false
+                    }
+                ],
+    "running_relevant_process_names":  [
+                                           "Watch_Dogs"
+                                       ],
+    "cloud_sync":  "NOT_DETECTED: do not infer cloud state from this report",
+    "notes":  [
+                  "Save folder presence does not prove which save is currently active.",
+                  "DLC archive presence does not prove ownership or successful DLC activation.",
+                  "File fingerprints identify this installation; no game compatibility is certified.",
+                  "Only 541/274 save folders under known launchers or an explicit selection are inspected.",
+                  "No Steam/Ubisoft credentials, keys, login config, registry exports or process memory are collected."
+              ]
+}

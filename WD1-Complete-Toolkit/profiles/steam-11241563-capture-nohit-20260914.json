@@ -1,0 +1,64 @@
+{
+  "observed_scan_utc": "2026-09-14T08:34:49.2266335Z",
+  "source_report_sha256": "32f6ea6f06ed06827bef2de1958aa3d1091677a8b64c27648ac920a592a8256b",
+  "tool_version": "0.3.3-alpha",
+  "scan_complete": true,
+  "current_scope": "freeroam",
+  "resource_binding_status": "OBSERVED_NO_CAPTURE_HITS",
+  "hook_installed_intact": true,
+  "buffer_readable_coherent": true,
+  "captured_pointer_observed": false,
+  "hit_count": 0,
+  "freshness_timeout_is_not_current_blocker": true,
+  "binding_or_instrumentation_failure_exact_cause": "UNDETERMINED",
+  "site_changes_vs_prior_report": [
+    {
+      "site": "battery",
+      "before": {
+        "id": "battery",
+        "matches": 1,
+        "rva": 24513762,
+        "exact": true,
+        "historical": false
+      },
+      "after": {
+        "id": "battery",
+        "matches": 0,
+        "rva": null,
+        "exact": false,
+        "historical": false
+      }
+    },
+    {
+      "site": "reload",
+      "before": {
+        "id": "reload",
+        "matches": 1,
+        "rva": 16771482,
+        "exact": true,
+        "historical": false
+      },
+      "after": {
+        "id": "reload",
+        "matches": 0,
+        "rva": null,
+        "exact": false,
+        "historical": false
+      }
+    }
+  ],
+  "affected_controls": [
+    "money_floor",
+    "skill_floor",
+    "cash_add",
+    "skill_add",
+    "xp_add"
+  ],
+  "gameplay_writes_verified": false,
+  "next_evidence_needed": "Establish clean process and validate actual resource entry/capture stub; do not invent replacement addresses or ask for repeated purchases.",
+  "user_confirmed_same_game_session_tools": "Only current v0.3.3; no old-version or other trainer reported",
+  "user_confirmed_lua_host": "NexusTools not installed",
+  "next_route": "Native queued cash addition has subsequently worked by user report; NexusTools is not required for this route.",
+  "later_user_success": "steam-11241563-cash-success-20260914.json",
+  "scope_of_nohit_observation": "Snapshot at export time only; do not infer persistent resource binding failure"
+}

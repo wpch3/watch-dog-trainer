@@ -1,0 +1,116 @@
+{
+  "observed_at_utc": "2026-09-14T07:19:05.4326002Z",
+  "source_report_sha256": "39145c62ab418b4527d5c5dacbf882f49ca8daea0883fdedc0a49809082a2ba6",
+  "tool_version": "0.3.2-alpha",
+  "game_build_observed": "11241563",
+  "read_only_scan_verified_by_user_report": true,
+  "gameplay_modifications_verified": false,
+  "module_bytes": 106516480,
+  "declared_executable_bytes": 85279343,
+  "read_executable_bytes": 85254767,
+  "skipped_nonexecutable_bytes": 24576,
+  "disk_and_runtime_headers_agree": true,
+  "failure_count": 0,
+  "confirmed_previous_failure": "64 MiB executable-section total cap, not section bounds or wrong module size",
+  "site_observations": [
+    {
+      "id": "resources",
+      "matches": 1,
+      "rva": 18055859,
+      "exact": true,
+      "historical": false
+    },
+    {
+      "id": "battery",
+      "matches": 1,
+      "rva": 24513762,
+      "exact": true,
+      "historical": false
+    },
+    {
+      "id": "car",
+      "matches": 1,
+      "rva": 24383457,
+      "exact": true,
+      "historical": false
+    },
+    {
+      "id": "spider",
+      "matches": 1,
+      "rva": 20973507,
+      "exact": true,
+      "historical": false
+    },
+    {
+      "id": "reputation",
+      "matches": 1,
+      "rva": 23861899,
+      "exact": true,
+      "historical": false
+    },
+    {
+      "id": "police",
+      "matches": 1,
+      "rva": 24258221,
+      "exact": true,
+      "historical": false
+    },
+    {
+      "id": "wanted",
+      "matches": 1,
+      "rva": 23860219,
+      "exact": true,
+      "historical": false
+    },
+    {
+      "id": "trip",
+      "matches": 1,
+      "rva": 21469384,
+      "exact": true,
+      "historical": false
+    },
+    {
+      "id": "inventory_decrement",
+      "matches": 0,
+      "rva": null,
+      "exact": false,
+      "historical": true
+    },
+    {
+      "id": "reload",
+      "matches": 1,
+      "rva": 16771482,
+      "exact": true,
+      "historical": false
+    },
+    {
+      "id": "hacking_timer",
+      "matches": 1,
+      "rva": 21318763,
+      "exact": true,
+      "historical": false
+    },
+    {
+      "id": "stealth",
+      "matches": 1,
+      "rva": 32210464,
+      "exact": true,
+      "historical": false
+    },
+    {
+      "id": "drink_a",
+      "matches": 1,
+      "rva": 33849395,
+      "exact": true,
+      "historical": true
+    },
+    {
+      "id": "drink_b",
+      "matches": 0,
+      "rva": null,
+      "exact": false,
+      "historical": true
+    }
+  ],
+  "all_toggles_off": true
+}

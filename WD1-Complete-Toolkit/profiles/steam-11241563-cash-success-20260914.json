@@ -1,0 +1,17 @@
+{
+  "date": "2026-09-14",
+  "tool_version": "0.3.3-alpha",
+  "game_build_observed": "11241563",
+  "feature_id": "native.cash_add",
+  "route": "native queued increment",
+  "verification": "USER_REPORTED_GAMEPLAY_AND_PERSISTENCE_SUCCESS",
+  "requested_delta": 50000,
+  "balance_before_approx": 210000,
+  "balance_after_approx": 260000,
+  "trigger": "ATM withdrawal after queueing",
+  "host_installed": false,
+  "persistence_after_game_restart": "USER_CONFIRMED_RETAINED",
+  "other_features_verified_by_this_test": false,
+  "correction": "Earlier HOOK_NOT_HIT report was a point-in-time observation, not proof that the resources entry is permanently unusable. User later completed queue + ATM trigger successfully.",
+  "nexustools_status_after_cash_test": "User has now installed NexusTools and opened its interface; WD1 KIT plugin menu not yet confirmed"
+}

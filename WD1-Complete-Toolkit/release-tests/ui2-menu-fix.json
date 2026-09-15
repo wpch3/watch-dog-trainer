@@ -1,0 +1,23 @@
+{
+  "patch": "UI2 menu completion and fallback",
+  "date": "2026-09-14",
+  "observed_issue": "Player/Police category displays only ASCII heading and STOP",
+  "exact_host_exception_observed": false,
+  "root_cause_status": "Not confirmed without actual host UI exception log; fixes avoid captured builder-function upvalues, repeated shared action widgets and silent downstream failures",
+  "changes": [
+    "ASCII text retained",
+    "explicit layout callbacks with no captured builder upvalue",
+    "actions bound by primitive IDs to a global strong-reference registry",
+    "plain ARM/STOP/God ON/God OFF before optional typed widgets",
+    "optional legacy Quick Controls independent of Layout/CommandWidget",
+    "widget-level error logging and visible UI errors",
+    "script lifecycle registered before optional GUI building"
+  ],
+  "game_action_code_changed": false,
+  "original_command_ids_retained": true,
+  "native_executable_changed": false,
+  "lua_regression_assertions": 335,
+  "ascii_ui_assertions": 1884,
+  "ui2_deferred_failure_assertions": 106,
+  "user_runtime_verified": false
+}

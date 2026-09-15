@@ -1,0 +1,16 @@
+{
+  "version": "0.3.1-alpha",
+  "issue": "MissingMethodException: System.String.Split(Char, StringSplitOptions)",
+  "cause_confirmed_by_metadata": true,
+  "old_binary_missing_net48_memberrefs": 1,
+  "new_binary_missing_net48_memberrefs": 0,
+  "framework_memberrefs_checked": 607,
+  "target_framework": ".NETFramework,Version=v4.8",
+  "reference_pack": "Microsoft.NETFramework.ReferenceAssemblies.net48.1.0.3",
+  "reference_pack_sha256": "8a7e348538e7eb91351696911689f49e3d4f63f8bab517432bbe159b8b1104a2",
+  "source_change": "explicit char[] Split overloads in Contracts, Engine, NativeForm and test fixtures",
+  "payload_plan_files_compared_unchanged": 17,
+  "ui_smoke": "Linux Mono/Xvfb; no game connection",
+  "user_windows_hotfix_verified": false,
+  "live_game_verified": false
+}

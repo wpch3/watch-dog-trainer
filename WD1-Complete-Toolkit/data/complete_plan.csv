@@ -1,0 +1,170 @@
+﻿id,name,group,control,scope,backend,implementation,runtime_verified,note
+native.money_floor,无限金钱（最低余额）,金钱 / 成长,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.skill_floor,本体 / DLC 普通技能点最低值,金钱 / 成长,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,不是蜘蛛坦克 / 疯狂 / 孤独技能树；这些独立记录尚未确定。
+native.cash_add,增加金钱,金钱 / 成长,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.skill_add,增加普通技能点,金钱 / 成长,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.xp_add,增加普通经验,金钱 / 成长,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.battery_full,无限电池（补到当前容量）,玩家 / 资源,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.car_health,载具生命锁定,载具,TOGGLE,vehicle,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,锁定当前稳定捕获的对象。不能据此证明仅作用玩家车辆；离车前先关闭。
+native.spider_energy,蜘蛛坦克无限能量,数字之旅,TOGGLE,spider,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.rep_good,好声誉（锁定 +600）,声誉 / 警察,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.rep_bad,坏名声（锁定 -600）,声誉 / 警察,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.rep_up,声誉增加,声誉 / 警察,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.rep_down,声誉减少,声誉 / 警察,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.police_detection,无警方侦测,声誉 / 警察,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,与清除通缉分开；报警 / 剧情强制发现不保证屏蔽。
+native.heat_clear,消除当前通缉,声誉 / 警察,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.heat_hold,锁定无通缉,声誉 / 警察,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.heat_up,增加通缉热度,声誉 / 警察,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.heat_down,减少通缉热度,声誉 / 警察,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.inventory_infinite,无限库存资源（材料 / 道具 / 备弹）,材料 / 资源,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,公共库存扣减保护，包含备弹；不是仅材料专用。与增加资源完全独立。旧签名须唯一匹配，当前槽位弹匣仍由独立弹药功能控制。
+native.no_reload,无需换弹,玩家 / 资源,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,停止扣减弹匣的候选代码路径；NPC 波及尚未实测排除。
+native.stealth,潜行 / 无探查（任务路径）,声誉 / 警察,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,不是全局物理隐身；剧情强制事件另行验收。
+native.hack_timer,无限黑客计时器,计时器,TOGGLE,hacking,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.drink_timer,冻结饮酒游戏计时器,计时器,TOGGLE,drinking,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,含两个独立计时路径；旧版签名，须两处均唯一且原字节匹配。不是冻结鼠标。
+native.spider_timer,蜘蛛坦克：冻结当前计时,计时器,TOGGLE,spider,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,共享数字之旅计时器候选；活动类型由你选择，不是自动识别。对象变化即停止。
+native.madness_timer,疯狂：冻结当前计时,计时器,TOGGLE,madness,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,与蜘蛛计时独立控制但共用一个解析器；切换活动会先停全部。映射待实测。
+lua.god,上帝模式 / 无敌,玩家 / 资源,TOGGLE,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+lua.focus,无限专注,玩家 / 资源,TOGGLE,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+lua.ammo,无限弹药（持续补给）,玩家 / 资源,TOGGLE,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+lua.ammo_once,单次补给弹药,玩家 / 资源,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+lua.police,暂停通缉系统,声誉 / 警察,TOGGLE,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+lua.cash,增加金钱（奖励接口）,金钱 / 成长,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+lua.skill,增加普通技能点（奖励接口）,金钱 / 成长,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+lua.xp,增加经验（奖励接口）,金钱 / 成长,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+lua.all_weapons,全武器解锁 / 给予候选,物品 / 解锁,ACTION,mode-whitelist,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,物品仅限已分类白名单；不等同进度完成、全库安全或持久拥有。
+lua.all_clothes,全衣服解锁 / 给予候选,物品 / 解锁,ACTION,mode-whitelist,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,物品仅限已分类白名单；不等同进度完成、全库安全或持久拥有。
+lua.all_items,全物品解锁 / 给予候选,物品 / 解锁,ACTION,mode-whitelist,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,物品仅限已分类白名单；不等同进度完成、全库安全或持久拥有。
+lua.item_select,按名称单件选择 / 增加数量,物品 / 解锁,ACTION,mode-whitelist,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,物品仅限已分类白名单；不等同进度完成、全库安全或持久拥有。
+lua.vehicles,六类车辆生成,载具,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+lua.clock,世界时刻设置,世界,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+resource.electronic.infinite,无限电子零件,材料 / 资源,TOGGLE,campaign,UNBOUND,UNBOUND,False,必须保留。尚未确认按物品分类的不扣减/锁定路径，不用增加按钮替代。
+resource.electronic.add,增加电子零件,材料 / 资源,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,独立数量输入；Items.3108044763
+resource.chemical.infinite,无限化学材料,材料 / 资源,TOGGLE,campaign,UNBOUND,UNBOUND,False,必须保留。尚未确认按物品分类的不扣减/锁定路径，不用增加按钮替代。
+resource.chemical.add,增加化学材料,材料 / 资源,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,独立数量输入；Items.673371641
+resource.explosive.infinite,无限爆炸材料,材料 / 资源,TOGGLE,campaign,UNBOUND,UNBOUND,False,必须保留。尚未确认按物品分类的不扣减/锁定路径，不用增加按钮替代。
+resource.explosive.add,增加爆炸材料,材料 / 资源,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,独立数量输入；Items.4088031736
+resource.hardware.infinite,无限回收零件,材料 / 资源,TOGGLE,campaign,UNBOUND,UNBOUND,False,必须保留。尚未确认按物品分类的不扣减/锁定路径，不用增加按钮替代。
+resource.hardware.add,增加回收零件,材料 / 资源,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,独立数量输入；Items.1125886109
+resource.medicine.infinite,无限药物材料,材料 / 资源,TOGGLE,campaign,UNBOUND,UNBOUND,False,必须保留。尚未确认按物品分类的不扣减/锁定路径，不用增加按钮替代。
+resource.medicine.add,增加药物材料,材料 / 资源,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,独立数量输入；Items.4292418427
+consumable.blackout.infinite,无限停电道具,消耗品,TOGGLE,campaign,UNBOUND,UNBOUND,False,持续不扣减功能独立保留；不能用批量给予冒充。
+consumable.blackout.add,增加停电道具,消耗品,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,使用白名单物品键，与无限开关无联动。
+consumable.jam.infinite,无限通讯干扰,消耗品,TOGGLE,campaign,UNBOUND,UNBOUND,False,持续不扣减功能独立保留；不能用批量给予冒充。
+consumable.jam.add,增加通讯干扰,消耗品,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,使用白名单物品键，与无限开关无联动。
+consumable.ctos.infinite,无限ctOS 扫描,消耗品,TOGGLE,campaign,UNBOUND,UNBOUND,False,持续不扣减功能独立保留；不能用批量给予冒充。
+consumable.ctos.add,增加ctOS 扫描,消耗品,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,使用白名单物品键，与无限开关无联动。
+consumable.lure.infinite,无限诱饵,消耗品,TOGGLE,campaign,UNBOUND,UNBOUND,False,持续不扣减功能独立保留；不能用批量给予冒充。
+consumable.lure.add,增加诱饵,消耗品,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,使用白名单物品键，与无限开关无联动。
+consumable.grenade.infinite,无限手榴弹,消耗品,TOGGLE,campaign,UNBOUND,UNBOUND,False,持续不扣减功能独立保留；不能用批量给予冒充。
+consumable.grenade.add,增加手榴弹,消耗品,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,使用白名单物品键，与无限开关无联动。
+consumable.ied.infinite,无限IED,消耗品,TOGGLE,campaign,UNBOUND,UNBOUND,False,持续不扣减功能独立保留；不能用批量给予冒充。
+consumable.ied.add,增加IED,消耗品,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,使用白名单物品键，与无限开关无联动。
+consumable.proximity.infinite,无限感应 IED,消耗品,TOGGLE,campaign,UNBOUND,UNBOUND,False,持续不扣减功能独立保留；不能用批量给予冒充。
+consumable.proximity.add,增加感应 IED,消耗品,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,使用白名单物品键，与无限开关无联动。
+consumable.focuspill.infinite,无限专注恢复道具,消耗品,TOGGLE,campaign,UNBOUND,UNBOUND,False,持续不扣减功能独立保留；不能用批量给予冒充。
+consumable.focuspill.add,增加专注恢复道具,消耗品,ACTION,campaign+dlc_solo,LUA_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,使用白名单物品键，与无限开关无联动。
+extra.materials_infinite,无限全部材料,材料 / 资源,TOGGLE,campaign,UNBOUND,UNBOUND,False,完整计划保留，未绑定项不允许假启用。
+extra.resources_infinite_selective,各材料无限效果单独选择,材料 / 资源,TOGGLE,campaign,UNBOUND,UNBOUND,False,完整计划保留，未绑定项不允许假启用。
+extra.money_set,金钱设值,物品 / 解锁,ACTION,campaign,UNBOUND,UNBOUND,False,完整计划保留，未绑定项不允许假启用。
+extra.money_sub,减少金钱,物品 / 解锁,ACTION,campaign,UNBOUND,UNBOUND,False,完整计划保留，未绑定项不允许假启用。
+extra.item_readback,拥有状态 / 数量 / 解锁条件回读,物品 / 解锁,READ,campaign,UNBOUND,UNBOUND,False,完整计划保留，未绑定项不允许假启用。
+extra.recipes,全制作配方解锁,物品 / 解锁,ACTION,campaign,UNBOUND,UNBOUND,False,完整计划保留，未绑定项不允许假启用。
+extra.ownership_unlock,物品永久拥有与商店可购状态,物品 / 解锁,ACTION,campaign,UNBOUND,UNBOUND,False,完整计划保留，未绑定项不允许假启用。
+growth.spider.skill_add,蜘蛛坦克：技能点增加,各模式成长,ACTION,spider,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.spider.skill_infinite,蜘蛛坦克：无限技能点,各模式成长,TOGGLE,spider,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.spider.xp_add,蜘蛛坦克：经验增加,各模式成长,ACTION,spider,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.spider.xp_multiplier,蜘蛛坦克：经验倍率,各模式成长,TOGGLE,spider,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.spider.unlock_tree,蜘蛛坦克：全技能 / 前置解锁,各模式成长,ACTION,spider,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.madness.skill_add,疯狂：技能点增加,各模式成长,ACTION,madness,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.madness.skill_infinite,疯狂：无限技能点,各模式成长,TOGGLE,madness,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.madness.xp_add,疯狂：经验增加,各模式成长,ACTION,madness,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.madness.xp_multiplier,疯狂：经验倍率,各模式成长,TOGGLE,madness,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.madness.unlock_tree,疯狂：全技能 / 前置解锁,各模式成长,ACTION,madness,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.alone.skill_add,孤独：技能点增加,各模式成长,ACTION,alone,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.alone.skill_infinite,孤独：无限技能点,各模式成长,TOGGLE,alone,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.alone.xp_add,孤独：经验增加,各模式成长,ACTION,alone,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.alone.xp_multiplier,孤独：经验倍率,各模式成长,TOGGLE,alone,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.alone.unlock_tree,孤独：全技能 / 前置解锁,各模式成长,ACTION,alone,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.dlc_solo.skill_add,T-Bone 独立技能树：技能点增加,各模式成长,ACTION,dlc_solo,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.dlc_solo.skill_infinite,T-Bone 独立技能树：无限技能点,各模式成长,TOGGLE,dlc_solo,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.dlc_solo.xp_add,T-Bone 独立技能树：经验增加,各模式成长,ACTION,dlc_solo,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.dlc_solo.xp_multiplier,T-Bone 独立技能树：经验倍率,各模式成长,TOGGLE,dlc_solo,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+growth.dlc_solo.unlock_tree,T-Bone 独立技能树：全技能 / 前置解锁,各模式成长,ACTION,dlc_solo,UNBOUND,UNBOUND,False,各模式独立记录；不复用本体 Skillpoint 键伪装已实现。
+mode.super_health,超级健康 / 生命上限,人物 / 数字之旅,TOGGLE,freeroam,UNBOUND,UNBOUND,False,
+mode.heal,生命补满,人物 / 数字之旅,ACTION,freeroam,UNBOUND,UNBOUND,False,
+mode.fall,坠落保护,人物 / 数字之旅,TOGGLE,freeroam,UNBOUND,UNBOUND,False,
+mode.damage,玩家伤害倍率 / 一击,人物 / 数字之旅,TOGGLE,freeroam,UNBOUND,UNBOUND,False,
+mode.move,移动速度倍率,人物 / 数字之旅,TOGGLE,freeroam,UNBOUND,UNBOUND,False,
+mode.recoil,无后坐力,人物 / 数字之旅,TOGGLE,freeroam,UNBOUND,UNBOUND,False,
+mode.spread,散布 / 稳定性,人物 / 数字之旅,TOGGLE,freeroam,UNBOUND,UNBOUND,False,
+mode.firerate,射速,人物 / 数字之旅,TOGGLE,freeroam,UNBOUND,UNBOUND,False,
+mode.spider_god,蜘蛛坦克上帝模式 / 无限生命,人物 / 数字之旅,TOGGLE,spider,UNBOUND,UNBOUND,False,
+mode.spider_ammo,蜘蛛坦克无限弹药 / 导弹,人物 / 数字之旅,TOGGLE,spider,UNBOUND,UNBOUND,False,
+mode.spider_cooldown,蜘蛛坦克技能冷却,人物 / 数字之旅,TOGGLE,spider,UNBOUND,UNBOUND,False,
+mode.madness_soul,疯狂：无限灵力,人物 / 数字之旅,TOGGLE,madness,UNBOUND,UNBOUND,False,
+mode.madness_god,疯狂：上帝模式 / 车辆生命,人物 / 数字之旅,TOGGLE,madness,UNBOUND,UNBOUND,False,
+mode.madness_combo,疯狂：连击 / 分数,人物 / 数字之旅,TOGGLE,madness,UNBOUND,UNBOUND,False,
+mode.alone_god,孤独：上帝模式,人物 / 数字之旅,TOGGLE,alone,UNBOUND,UNBOUND,False,
+mode.alone_stealth,孤独：无探查,人物 / 数字之旅,TOGGLE,alone,UNBOUND,UNBOUND,False,
+mode.nvzn_lives,NVZN 无限生命 / 次数,人物 / 数字之旅,TOGGLE,nvzn,UNBOUND,UNBOUND,False,
+mode.nvzn_score,NVZN 分数 / 波次,人物 / 数字之旅,TOGGLE,nvzn,UNBOUND,UNBOUND,False,
+mode.psychedelic_score,迷幻：分数 / 连击,人物 / 数字之旅,TOGGLE,psychedelic,UNBOUND,UNBOUND,False,
+mode.conspiracy_detector,阴谋：无限探测器,人物 / 数字之旅,TOGGLE,conspiracy,UNBOUND,UNBOUND,False,
+timer.drinking_cursor,冻结饮酒游戏光标,独立小游戏计时器,TOGGLE,drinking,UNBOUND,UNBOUND,False,不冻结整个游戏；饮酒光标不锁操作系统鼠标。没有证据时不复用其他模式计时器。
+timer.cashrun,冻结 Cash Run 计时器,独立小游戏计时器,TOGGLE,cashrun,UNBOUND,UNBOUND,False,不冻结整个游戏；饮酒光标不锁操作系统鼠标。没有证据时不复用其他模式计时器。
+timer.vehicle_20min,将车辆计时器设置为 20 分钟,独立小游戏计时器,ACTION,vehicle_activity,UNBOUND,UNBOUND,False,不冻结整个游戏；饮酒光标不锁操作系统鼠标。没有证据时不复用其他模式计时器。
+timer.racing,无限赛车计时器（不减少）,独立小游戏计时器,TOGGLE,racing,UNBOUND,UNBOUND,False,不冻结整个游戏；饮酒光标不锁操作系统鼠标。没有证据时不复用其他模式计时器。
+timer.nvzn,冻结 NVZN 计时器,独立小游戏计时器,TOGGLE,nvzn,UNBOUND,UNBOUND,False,不冻结整个游戏；饮酒光标不锁操作系统鼠标。没有证据时不复用其他模式计时器。
+player.1.add,玩家 1：金钱 / 筹码增加,玩家 1–4,ACTION,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.1.set,玩家 1：金钱 / 筹码设值,玩家 1–4,ACTION,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.1.infinite,玩家 1：金钱 / 筹码无限,玩家 1–4,TOGGLE,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.1.target,玩家 1：其他资源/生命目标绑定,玩家 1–4,READ,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.2.add,玩家 2：金钱 / 筹码增加,玩家 1–4,ACTION,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.2.set,玩家 2：金钱 / 筹码设值,玩家 1–4,ACTION,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.2.infinite,玩家 2：金钱 / 筹码无限,玩家 1–4,TOGGLE,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.2.target,玩家 2：其他资源/生命目标绑定,玩家 1–4,READ,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.3.add,玩家 3：金钱 / 筹码增加,玩家 1–4,ACTION,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.3.set,玩家 3：金钱 / 筹码设值,玩家 1–4,ACTION,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.3.infinite,玩家 3：金钱 / 筹码无限,玩家 1–4,TOGGLE,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.3.target,玩家 3：其他资源/生命目标绑定,玩家 1–4,READ,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.4.add,玩家 4：金钱 / 筹码增加,玩家 1–4,ACTION,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.4.set,玩家 4：金钱 / 筹码设值,玩家 1–4,ACTION,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.4.infinite,玩家 4：金钱 / 筹码无限,玩家 1–4,TOGGLE,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+player.4.target,玩家 4：其他资源/生命目标绑定,玩家 1–4,READ,unresolved_target,UNBOUND,UNBOUND,False,保留四个独立目标。公开同名功能很可能指扑克三名 NPC 与玩家席位，尚未确认对象，不复制同一钱包四遍。
+advanced.repair,当前载具修复,载具 / 世界 / 小游戏,ACTION,campaign,UNBOUND,UNBOUND,False,
+advanced.tires,轮胎不爆,载具 / 世界 / 小游戏,TOGGLE,campaign,UNBOUND,UNBOUND,False,
+advanced.handling,刹车 / 抓地 / 转向参数,载具 / 世界 / 小游戏,TOGGLE,campaign,UNBOUND,UNBOUND,False,
+advanced.speed,车辆加速度 / 极速,载具 / 世界 / 小游戏,TOGGLE,campaign,UNBOUND,UNBOUND,False,
+advanced.escort,任务护送车辆保护,载具 / 世界 / 小游戏,TOGGLE,campaign,UNBOUND,UNBOUND,False,
+advanced.teleport,地图标记传送,载具 / 世界 / 小游戏,ACTION,campaign,UNBOUND,UNBOUND,False,
+advanced.position,保存 / 返回坐标,载具 / 世界 / 小游戏,ACTION,campaign,UNBOUND,UNBOUND,False,
+advanced.noclip,穿墙 / 自由移动,载具 / 世界 / 小游戏,TOGGLE,campaign,UNBOUND,UNBOUND,False,
+advanced.fov,视野调整,载具 / 世界 / 小游戏,TOGGLE,campaign,UNBOUND,UNBOUND,False,
+advanced.time_scale,游戏速度,载具 / 世界 / 小游戏,TOGGLE,campaign,UNBOUND,UNBOUND,False,
+advanced.blackout,全城停电与持续时间,载具 / 世界 / 小游戏,ACTION,campaign,UNBOUND,UNBOUND,False,
+advanced.hacking_cooldown,黑客冷却 / 范围,载具 / 世界 / 小游戏,TOGGLE,campaign,UNBOUND,UNBOUND,False,
+advanced.chess,国际象棋挑战辅助,载具 / 世界 / 小游戏,ACTION,campaign,UNBOUND,UNBOUND,False,
+advanced.poker,扑克小游戏辅助,载具 / 世界 / 小游戏,ACTION,campaign,UNBOUND,UNBOUND,False,
+advanced.cups,猜杯辅助,载具 / 世界 / 小游戏,ACTION,campaign,UNBOUND,UNBOUND,False,
+progress.story,主任务 / 主线依赖,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.side,支线任务 / 中间人合约,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.investigation,调查线索与最终任务,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.collectibles,收集品 / 音频 / 歌曲 / 热点,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.minigames,小游戏挑战与奖励,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.online,游戏内在线合约计数与奖励,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.hideout,帮派据点,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.convoy,犯罪车队,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.crimes,犯罪侦测,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.ctos,ctOS 控制中心 / 塔 / 入侵,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.privacy,隐私入侵,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.notoriety,Notoriety / 恶名及本地奖励,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.coop,Bad Blood 合作与合约进度,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.rc,Eugene 升级链 / 冷却 / 电击 / C4,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.achievements,游戏内完成项 / 进度轮（不是平台成就）,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+tool.search,搜索 / 分类 / 收藏,便利 / 保护,UI,all,TOOL_IMPLEMENTED,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+tool.hotkey,每项快捷键与冲突提示,便利 / 保护,UI,all,TOOL_IMPLEMENTED,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+tool.presets,按模式预设（载入不自动启用）,便利 / 保护,UI,all,UNBOUND,UNBOUND,False,
+tool.stop,总停止 + 单项停止,便利 / 保护,UI,all,TOOL_IMPLEMENTED,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+tool.backup,备份 / 校验 / 恢复,便利 / 保护,UI,all,TOOL_IMPLEMENTED,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+tool.profile,构建指纹与未知版本拒绝,便利 / 保护,UI,all,TOOL_IMPLEMENTED,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+tool.logs,逐项错误与脱敏反馈,便利 / 保护,UI,all,TOOL_IMPLEMENTED,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,

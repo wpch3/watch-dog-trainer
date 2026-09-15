@@ -1,0 +1,19 @@
+{
+  "friendlyId": "wd1kit_dlc_solo",
+  "name": "WD1 中文工具箱 Bad Blood Alpha",
+  "author": "WD1 Toolkit project",
+  "priority": 10,
+  "description": "Original game-only test plugin; not runtime certified.",
+  "packs": [],
+  "enabled": true,
+  "version": "0.3.0",
+  "configVersion": 1,
+  "luaAutoStart": [
+    "wd1kit_dlc_solo/entrypoint.lua"
+  ],
+  "dominoAutoStart": [],
+  "minTntVersion": "1.1.12",
+  "compatibleGameModes": [
+    "dlc_solo"
+  ]
+}

@@ -1,0 +1,100 @@
+PASS SHA-256 known vector
+PASS recognized saves and upload sidecar only
+PASS profile is not a save
+PASS DLL is not a save
+PASS empty candidate is not a backup
+PASS cannot back up own storage recursively
+PASS path traversal rejected
+PASS alternate data stream / drive prefix rejected
+PASS backslash traversal rejected
+PASS path root preserved
+PASS backup snapshots exact list
+PASS backup leaves originals unchanged
+PASS backup identity and hashes validated
+PASS missing explicit backup product marker rejected
+PASS verified backup authorizes receipt
+PASS receipt contains no private save path
+PASS corrupted backup rejected
+PASS old backup cannot mint fresh receipt
+PASS cross-directory restore rejected
+PASS read-only destination refused before restore writes
+PASS read-only preflight leaves other files unchanged
+PASS injected restore failure returns error
+PASS partial restore rolled back
+PASS rollback preserves extra slot
+PASS restore succeeds
+PASS extra recognized slot removed only after backup
+PASS unrelated files untouched
+PASS pre-restore snapshots retained
+PASS unknown real binary hashes rejected
+PASS identity fail closed
+PASS host not confirmed rejects fixture installation
+PASS temporary plugin installed
+PASS temporary install has no persistent permission
+PASS two-module swap failure detected
+PASS failed update restores old custom files
+PASS second module restored after transaction failure
+PASS persistent install gets validated receipt
+PASS new unbacked save file blocks installation
+PASS changed save blocks stale backup authorization
+PASS restore workflow can revoke both plugin receipts
+PASS uninstall removes own plugin only
+PASS game binary untouched through install/update/uninstall
+PASS foreign same-name plugin refused
+PASS foreign directory untouched
+PASS only restricted plugin lines exported
+PASS host log path/account strings excluded
+PASS actual release executable keeps version gate
+CORE_FIXTURE_CHECKS=47
+PASS wildcard finds all occurrences
+PASS pattern longer than section handled
+PASS ambiguous results bounded
+PASS out-of-range rel32 jump rejected
+PASS rel32 jump and padding correct
+PASS capture preserves flags and scratch register rax
+PASS capture preserves flags and scratch register rcx
+PASS capture preserves flags and scratch register rdx
+PASS capture preserves flags and scratch register rbx
+PASS capture preserves flags and scratch register r14
+PASS unverified capture register rejected
+PASS fixture signatures all uniquely validated
+PASS connect/scan zero writes
+PASS no authorization refuses patch
+PASS no authorization refuses capture
+PASS individual patch enabled
+PASS no-reload candidate instruction suppressed
+PASS disable restores exact original bytes
+PASS unlimited inventory distinct from money and increase
+PASS drinking timer uses both admitted paths
+PASS busy thread refusal propagated
+PASS failed patch cannot show enabled
+PASS foreign-modified instructions refused
+PASS expired authorization restores code switches
+PASS unknown object cannot activate data writes
+PASS capture alone does not enable money
+PASS readback uses captured current object
+PASS money floor maintained
+PASS money lock leaves skill field untouched
+PASS increase remains separate and blocked only by conflicting lock
+PASS increase works after independent lock off
+PASS increase does not turn on unlimited money
+PASS normal skill floor distinct from money
+PASS independent experience action
+PASS pointer change stops affected writers
+PASS stale capture suppresses writes
+PASS good reputation fixed to bounded +600
+PASS good/bad mutually exclusive not two conflicting writers
+PASS reputation increase independent
+PASS reputation increment clamped to valid range
+PASS heat uses 16-bit value
+PASS heat update preserves adjacent fields
+PASS clear heat is one shot
+PASS battery uses separate capacity field
+PASS NaN object rejected
+PASS wrong manual scope refuses activity feature
+PASS timer freezes captured value not global game time
+PASS mode change stops prior activity
+PASS mode change requires fresh capture evidence
+PASS cannot dispose while live capture remains
+PASS disconnect restores then releases handle
+NATIVE_FIXTURE_CHECKS=51

@@ -1,0 +1,22 @@
+{
+  "source": "user diagnostic report, plus user statements; not a compatibility certificate",
+  "steam_appid": 243470,
+  "steam_build_id": "11241563",
+  "compatibility": "NOT_RUNTIME_VERIFIED",
+  "binary_sha256": {
+    "bin/Watch_Dogs.exe": "844E4A85FD1D1AFE61BE2B75F451FA4A1BE91C83732731CC5ED2C36FF551E0CD",
+    "bin/Disrupt_b64.dll": "A4EEAD7A645AB4340A67622DA4BFC91789E8CECFD53F605499A0E4B09B3EE60A",
+    "bin/uplay_r1_loader64.dll": "4325FFDE93C453F68E5B13CFD225D90359FCF73331C65F23894128CEA6DCD116"
+  },
+  "user_confirmed_dlc": [
+    "dlc_exclusive",
+    "dlc_pill_people",
+    "dlc_seasonpass",
+    "dlc_solo",
+    "ulc_pack"
+  ],
+  "bad_blood_starts": "user_confirmed",
+  "online_progress": "all_unfinished_user_statement",
+  "diagnostic_save_candidates": 0,
+  "progression_counters_in_report": false
+}

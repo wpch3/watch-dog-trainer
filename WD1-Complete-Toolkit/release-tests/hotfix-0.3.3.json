@@ -1,0 +1,21 @@
+{
+  "version": "0.3.3-alpha",
+  "user_issue": "Captured first, then earned/spent money, still generic fresh/stable failure",
+  "root_cause_on_user_machine": "Not yet confirmed; 0.3.2 reports contain no capture state/heartbeat/value telemetry",
+  "confirmed_design_bugs": [
+    "all capture failures collapsed into same error",
+    "2-second freshness also blocks read-only preview",
+    "detail value only refreshed on selection change"
+  ],
+  "write_freshness_seconds": 2,
+  "cache_review_arm_limit_seconds": 120,
+  "single_action_queue_timeout_seconds": 30,
+  "queue_requires_new_same_object_heartbeat": true,
+  "captured_pointer_exported": false,
+  "unchanged_payload_plan_contract_files": 18,
+  "capture_fixture_checks": 39,
+  "framework_memberrefs": 728,
+  "missing_framework_members": 0,
+  "user_windows_tested": false,
+  "game_modifications_verified": false
+}

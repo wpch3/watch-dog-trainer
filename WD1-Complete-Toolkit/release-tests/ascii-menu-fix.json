@@ -1,0 +1,13 @@
+{
+  "patch": "game-menu-en-ASCII-1",
+  "date": "2026-09-14",
+  "desktop_executable_changed": false,
+  "source_was_valid_utf8": true,
+  "exact_questionmark_root_cause": "Not isolated between host font/glyph/character-conversion path",
+  "fallback": "ASCII-only UI labels and notifications; Chinese desktop unchanged",
+  "logic_and_command_ids_changed": false,
+  "whitelisted_item_identity_count": 218,
+  "user_game_font_verified": false,
+  "host_observation": "NexusTools menu and WD1 KIT menu loaded by user; Chinese text displays question marks",
+  "prior_gameplay_observation": "Native queued cash plus persistence succeeded; Lua god-mode game test still pending"
+}

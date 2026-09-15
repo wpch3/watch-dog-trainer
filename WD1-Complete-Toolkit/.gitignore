@@ -1,0 +1,20 @@
+reports/
+backups/
+private-saves/
+*.save
+*.save.upload
+*.dmp
+*.exe
+*.dll
+*.asi
+.venv/
+__pycache__/
+node_modules/
+
+# Deliberately delivered original compiled release artifacts
+!/WD1-Toolkit.exe
+release-tests/Test-Core.exe
+ui-companion.png
+ui-steam.png
+
+ui-native.png
