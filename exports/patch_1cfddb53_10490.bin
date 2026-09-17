@@ -1,0 +1,273 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua") --loaded global variables
+  cbox:RegisterBox("Domino/System/GetPlayerID.lua")
+  cbox:RegisterBox("Domino/System/InteractionScriptMonitor.lua")
+  cbox:RegisterBox("Domino/System/InvasionMonitor.lua")
+  cbox:RegisterBox("Domino/System/MapPointController_v3.lua")
+  cbox:RegisterBox("Domino/System/MissionLayer_v2.lua")
+  cbox:RegisterBox("Domino/System/MissionMonitor.lua")
+  cbox:RegisterBox("Domino/System/ProximityMonitor.lua")
+  cbox:RegisterBox("Domino/System/StandaloneLoaderController.lua")
+end
+function export:Init(cbox)
+  local l0
+  self.Layer_Name = "custom_limbik"
+  self.Interior_Marker = "2081000000000000003"
+  self.Interaction_ENTER = "2081000000000000010"
+  self.Destination_In = "2081000000000000011"
+  self.Interaction_EXIT = "2081000000000000012"
+  self.Destination_Out = "2081000000000000013"
+  self.Standalone_Loader = "2081000000000000054"
+  self.PlayerPawn = nil
+  self.RequiresCompleted = "MissionList.3079995801" --execute if this completed (available after A04_M03 completion)
+  self[0] = cbox:CreateBox("Domino/System/InteractionScriptMonitor.lua") --ENTER
+  l0 = self[0]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = self.Enable_Interaction_EXIT
+  l0.Disabled = DummyFunction
+  l0.OnSuccess = DummyFunction
+  l0.OnFail = DummyFunction
+  l0.InteractionStarted = self.Check_Completed
+  l0.InteractionFinished = DummyFunction
+  l0.AnimationStarted = DummyFunction
+  l0.AnimationFinished = DummyFunction
+  self[1] = cbox:CreateBox("Domino/System/InteractionScriptMonitor.lua") --EXIT
+  l0 = self[1]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnSuccess = DummyFunction
+  l0.OnFail = DummyFunction
+  l0.InteractionStarted = self.Teleport_Out
+  l0.InteractionFinished = DummyFunction
+  l0.AnimationStarted = DummyFunction
+  l0.AnimationFinished = DummyFunction
+  self[5] = cbox:CreateBox("Domino/System/StandaloneLoaderController.lua")
+  l0 = self[5]
+  l0._graph = self
+  l0.LoadingStarted = DummyFunction
+  l0.Loaded = self.Teleport_In
+  l0.PreviousZoneUnloaded = DummyFunction
+  self[1000] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[1000]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = self.Loaded_Markers
+  self[2000] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[2000]
+  l0._graph = self
+  l0.Shown = DummyFunction --self.Enable_ProximityFarAway NOT NEEDED BECAUSE StandaloneLoaderController BLOCKS FASTTRAVEL ANYWAY
+  l0.Hidden = DummyFunction
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[3000] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[3000]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = DummyFunction
+  l0.ExitRadius = self.Check_Completed_Unload
+  self[4000] = cbox:CreateBox("Domino/System/InvasionMonitor.lua")
+  l0 = self[4000]
+  l0._graph = self
+  l0.CurrentlyIsInvasionVictim = DummyFunction
+  l0.NotInvasionVictim = self.Load_Layer
+  l0.Out = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  local l0
+--self.Entity_Destination = SpawnEntityFromArchetype("{787873A0-B779-459F-93EA-C9654A449448}", -448, -1132, 69, 0, 0, 45)
+--TeleportEntity(GetLocalPlayerEntityId(), self.Entity_Destination, 0, 0)
+  l0 = self[1000]
+  l0.LayerName = self.Layer_Name
+  l0:Reset()
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Enable_Interaction_ENTER
+  l0:In()
+end
+function export:Loaded_Markers()
+  local l0
+  self = self._graph
+--TeleportEntity(GetLocalPlayerEntityId(), self.Destination_Out, 0, 0)
+HideCameraClippedEntity("2081000000000000048") --Interactive.Interactive_Door.Bar_Door_SportsBar_Front.Locked
+-- HideCameraClippedEntity("2081000000000000049") --Hideouts.Hideout_Ingredients.ChangeCloth_HQ
+HideCameraClippedEntity("2081000000000000050") --Hideouts.Hideout_Ingredients.Sleep_Motel
+HideCameraClippedEntity("2081000000000000051") --Pickup.Ammo.AmmoRefillBox
+SetPhysicsEnabled("2081000000000000051", 0) --Pickup.Ammo.AmmoRefillBox
+-- HideCameraClippedEntity("2081000000000000052") --Pickup.CraftingComponents_Pickup.Electronic
+  l0 = Boxes[PathID("Domino/System/MissionMonitor.lua")]
+  l0.Mission = self.RequiresCompleted
+  l0._graph = self
+  l0.Completed = self.Show_Marker
+  l0.NotCompleted = self.Hide_Marker
+  l0:CheckCompletion()
+end
+function export:Show_Marker()
+  local l0
+  self = self._graph
+  l0 = self[2000]
+  l0.MapPoint = self.Interior_Marker
+  -- l0.LocMapMarkerTitle = {
+    -- section = "MISSIONS.COMMON.OBJECTIVELABELS",
+    -- item = "Title",
+    -- id = "14566" --"City Hotspots"
+  -- }
+  -- l0.LocMapMarkerDescription = {
+    -- section = "MISSIONS.SIDE.OBJECTIVES",
+    -- item = "Description",
+    -- id = "186921" --"THE RAT'S LAIR"
+  -- }
+  l0:Show()
+end
+function export:Hide_Marker()
+  local l0
+  self = self._graph
+  l0 = self[2000]
+  l0.MapPoint = self.Interior_Marker
+  l0:Hide()
+SetInteractionScriptState(self.Interaction_ENTER, 0)
+SetInteractionScriptState(self.Interaction_EXIT, 0)
+end
+
+function export:Enable_Interaction_ENTER()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  self.PlayerPawn = l0.PlayerID
+  l0 = self[0]
+  l0.InteractionScriptEntity = self.Interaction_ENTER
+  l0.AutoDisable = 0
+  l0:Enable()
+end
+function export:Enable_Interaction_EXIT()
+  local l0
+  self = self._graph
+  l0 = self[1]
+  l0.InteractionScriptEntity = self.Interaction_EXIT
+  l0.AutoDisable = 0
+  l0:Enable()
+end
+
+function export:Check_Completed()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionMonitor.lua")]
+  l0.Mission = self.RequiresCompleted
+  l0._graph = self
+  l0.Completed = self.Check_Invasion
+  l0.NotCompleted = DummyFunction
+  l0:CheckCompletion()
+end
+function export:Check_Invasion()
+  local l0
+  self = self._graph
+  l0 = self[4000]
+  l0:CheckInvasionStatus()
+end
+function export:Load_Layer()
+  local l0
+  self = self._graph
+  --checking IF not chased AND not other multiplayer mode AND zone mission layer not loaded AND NOT Alone Madness p30ple Spidertank Bouncing LAYERS
+  if FelonyGetType(GetLocalPlayerEntityId()) == 8 and GetNumberOfPlayers() == 1.000000 and GetEntityPosition("2082749083256125756", 2) == 0 and GetEntityPosition("2080711752735150797", 2) == 0 and GetEntityPosition("2082563707426260037", 2) == 0 and GetEntityPosition("2082371120201204534", 2) == 0 and GetEntityPosition("2081694354673681048", 2) == 0 and GetEntityPosition("2080282882919629347", 2) == 0 then
+    if Globals._CUSTOM_SCRIPTS._In_Mission == 0 and Globals._CUSTOM_SCRIPTS._Gameplay_Context == 0 then
+      Globals._CUSTOM_SCRIPTS._Gameplay_Context = 1
+      SetDensityContextOverride("GameplayContextSpec.4012897103") --CUSTOM gameplaycontextspec.lib REQUIRED
+    end
+    l0 = self[5]
+    l0:UnregisterCallback()
+    l0.StandaloneLoader = self.Standalone_Loader
+    l0.LayerName = "02g_vrhack_limbikoffice"
+    l0:Load()
+  end
+end
+function export:Teleport_In()
+  local l0
+  self = self._graph
+-- SetHackable("2081321588434822941", 0)
+-- SetHackable("2082017193796574783", 0)
+ShowCameraClippedEntity("2081000000000000048") --Interactive.Interactive_Door.Bar_Door_SportsBar_Front.Locked
+ShowCameraClippedEntity("2081000000000000051") --Pickup.Ammo.AmmoRefillBox
+-- EnableDisplay("Minimap", 0) <- Disabled for The Fox Mod 
+-- SetPlayerMaxLocomotionSpeedTypeOverride(GetLocalPlayerEntityId(), 2)
+-- SetCombatAllowedOverride(GetLocalPlayerEntityId(), 0)
+-- SetCoverAllowedOverride(GetLocalPlayerEntityId(), 0)
+-- SetCoverToCoverAllowedOverride(GetLocalPlayerEntityId(), 0)
+-- SetClimbInteractionAllowedOverride(GetLocalPlayerEntityId(), 0)
+-- ActivateDominoCameraContext(GetLocalPlayerEntityId(), "CameraContext.18897969", "CameraBlendListDB.991156136") --Avatar.Default.Interior --Missions.Generic_FAST
+TeleportEntity(GetLocalPlayerEntityId(), self.Destination_In, 0, 1)
+end
+
+function export:Teleport_Out()
+  local l0
+  self = self._graph
+TeleportEntity(GetLocalPlayerEntityId(), self.Destination_Out, 0, 1)
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Check_Completed_Unload
+  l0:In()
+end
+function export:Check_Completed_Unload()
+  local l0
+  self = self._graph
+  if Globals._CUSTOM_SCRIPTS._In_Mission == 0 and Globals._CUSTOM_SCRIPTS._Gameplay_Context == 1 then
+    Globals._CUSTOM_SCRIPTS._Gameplay_Context = 0
+    SetDensityContextOverride("") --enabling invasions
+  end
+HideCameraClippedEntity("2081000000000000048") --Interactive.Interactive_Door.Bar_Door_SportsBar_Front.Locked
+HideCameraClippedEntity("2081000000000000051") --Pickup.Ammo.AmmoRefillBox
+-- EnableDisplay("Minimap", 1) <- Disabled for The Fox Mod 
+-- ResetPlayerMaxLocomotionSpeedTypeOverride(GetLocalPlayerEntityId())
+-- ResetCombatAllowedOverride(GetLocalPlayerEntityId())
+-- ResetCoverAllowedOverride(GetLocalPlayerEntityId())
+-- ResetCoverToCoverAllowedOverride(GetLocalPlayerEntityId())
+-- ResetClimbInteractionAllowedOverride(GetLocalPlayerEntityId())
+-- ReleaseDominoCameraContext(GetLocalPlayerEntityId(), "CameraBlendListDB.991156136") --Missions.Generic_FAST
+  l0 = Boxes[PathID("Domino/System/MissionMonitor.lua")]
+  l0.Mission = self.RequiresCompleted
+  l0._graph = self
+  l0.Completed = self.Unload_Layer
+  l0.NotCompleted = DummyFunction
+  l0:CheckCompletion()
+end
+function export:Unload_Layer()
+  local l0
+  self = self._graph
+  l0 = self[5]
+  l0:UnregisterCallback()
+  l0.StandaloneLoader = self.Standalone_Loader
+  l0.LayerName = ""
+  l0:Load()
+end
+
+
+function export:Enable_ProximityFarAway()
+  local l0
+  self = self._graph
+  self:ProximityFarAway()
+  l0 = self[3000]
+  l0:Enable()
+end
+function export:ProximityFarAway()
+  local l0
+  l0 = self[3000]
+  l0.Entity1 = self.Interior_Marker
+  l0.Entity2 = GetLocalPlayerEntityId()
+  l0.Radius = 160
+  --l0.CheckNow = 1
+end
+_compilerVersion = 4

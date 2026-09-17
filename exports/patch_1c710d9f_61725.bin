@@ -1,0 +1,2350 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterBox("Domino/System/AgentStateMonitor_v2.lua")
+  cbox:RegisterBox("Domino/System/AIGeneratorController.lua")
+  cbox:RegisterBox("Domino/System/AssignPatrol_v2.lua")
+  cbox:RegisterBox("Domino/System/CityLifeObjectController.lua")
+  cbox:RegisterBox("Domino/Library/common/NPCMisc.CombatReinforcement.lua")
+  cbox:RegisterBox("Domino/System/CompareBoolean_v2.lua")
+  cbox:RegisterBox("Domino/System/HackableController.lua")
+  cbox:RegisterBox("Domino/System/HackableMonitor.lua")
+  cbox:RegisterBox("Domino/System/HackableNPCGameplayController.lua")
+  cbox:RegisterBox("Domino/Library/common/HiddenCamera.HiddenCameraSetup.lua")
+  cbox:RegisterBox("Domino/System/Lists/ListWriter.lua")
+  cbox:RegisterBox("Domino/System/Lists/ListWriter_SoundID.lua")
+  cbox:RegisterBox("Domino/System/LogicGate_v2.lua")
+  cbox:RegisterBox("Domino/System/MultipleAND.lua")
+  cbox:RegisterBox("Domino/System/NPCSquad_v2.lua")
+  cbox:RegisterBox("Domino/System/OnceOnly_v2.lua")
+  cbox:RegisterBox("Domino/System/PatrolPointMonitor_v2.lua")
+  cbox:RegisterBox("Domino/System/PawnHealthMonitor_v3.lua")
+  cbox:RegisterBox("Domino/System/PlayDialog_v2.lua")
+  cbox:RegisterBox("Domino/System/RewardPhoneCallMonitor.lua")
+  cbox:RegisterBox("Domino/System/RewardComponentController.lua")
+  cbox:RegisterBox("Domino/System/SetBoolean_v2.lua")
+  cbox:RegisterBox("Domino/System/SimpleNode.lua")
+  cbox:RegisterBox("Domino/System/Timer_v2.lua")
+  cbox:RegisterBox("Domino/System/TriggerMonitor_v2.lua")
+  cbox:LoadResource("sndres0x000eaf02", "CSoundResource")
+  cbox:LoadResource("sndres0x000eae5d", "CSoundResource")
+  cbox:LoadResource("sndres0x000d7fae", "CSoundResource")
+  cbox:LoadResource("sndres0x000d7f8a", "CSoundResource")
+  cbox:LoadResource("sndres0x000eae6f", "CSoundResource")
+  cbox:LoadResource("sndres0x000eae9f", "CSoundResource")
+  cbox:LoadResource("sndres0x000d7fc6", "CSoundResource")
+  cbox:LoadResource("sndres0x000d7f71", "CSoundResource")
+  cbox:LoadResource("sndres0x000d7fbe", "CSoundResource")
+end
+function export:Init(cbox)
+  local l0
+  self.Spawned = DummyFunction
+  self.Unspawned = DummyFunction
+  self.AllDead = DummyFunction
+  self.InCombatState = DummyFunction
+  self.ReinfCalled = DummyFunction
+  self.InSoftAlert = DummyFunction
+  self.InHardAlert = DummyFunction
+  self.GuardList = {}
+  self.Guard_01 = nil
+  self.Guard_06 = nil
+  self.Guard_07 = nil
+  self.Guard_04 = nil
+  self.Guard_02 = nil
+  self.Guard_03 = nil
+  self.Guard_05 = nil
+  self.Guard_08 = nil
+  self.PlayerEntity = nil
+  self.Guard_List_Redzone = {}
+  self.EnticersWave_1 = 0
+  self.Enticers_Wave_2 = 0
+  self.Guard_EntranceList = {}
+  self.WarningZoneList = {}
+  self.ForbiddenZoneList = {}
+  self.SecSystemHackedDiagList = {}
+  self.Reinf_01 = nil
+  self.Reinf_02 = nil
+  self.LocalReinfCallerList = {}
+  self.LocalReinfList = {}
+  self.Guard_09 = nil
+  self.ReinfSpawnerList = {}
+  self.LocalTempEntity = nil
+  self[21] = cbox:CreateBox("Domino/System/AgentStateMonitor_v2.lua")
+  l0 = self[21]
+  l0._graph = self
+  l0.Enabled = self.f_21_Enabled
+  l0.Disabled = DummyFunction
+  l0.PauseState = DummyFunction
+  l0.InterruptibleCinematicState = DummyFunction
+  l0.UnawareState = DummyFunction
+  l0.AwareState = DummyFunction
+  l0.AlertSoftState = self.f_21_AlertSoftState
+  l0.AlertHardState = self.f_21_AlertHardState
+  l0.FleeState = DummyFunction
+  l0.CombatState = self.f_21_CombatState
+  l0.ScriptedState = DummyFunction
+  l0.InvestigateState = DummyFunction
+  l0.PostCombatSearchState = DummyFunction
+  l0.CinematicMode_Interrupted = DummyFunction
+  l0.DetectionIntuitionStarted = DummyFunction
+  l0.DetectionIntuitionStopped = DummyFunction
+  l0.DetectionIntuitionFull = DummyFunction
+  l0.DetectionAlertStarted = DummyFunction
+  l0.DetectionAlertStopped = DummyFunction
+  l0.DetectionAlertFull = DummyFunction
+  l0.IsDistracted = DummyFunction
+  self[92] = cbox:CreateBox("Domino/System/PlayDialog_v2.lua")
+  l0 = self[92]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.ListStarted = DummyFunction
+  l0.PriorityFailed = DummyFunction
+  l0.Interrupted = DummyFunction
+  l0.Queued = DummyFunction
+  l0.Finished = self.f_92_Finished
+  l0.ListFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[63] = cbox:CreateBox("Domino/System/AssignPatrol_v2.lua")
+  l0 = self[63]
+  l0._graph = self
+  l0.Assigned = DummyFunction
+  l0.Unassigned = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Failed = DummyFunction
+  l0.SpeedSet = DummyFunction
+  l0.Out = DummyFunction
+  self[42] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[42]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.f_42_TimeElapsed
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[66] = cbox:CreateBox("Domino/Library/common/HiddenCamera.HiddenCameraSetup.lua")
+  l0 = self[66]
+  l0._graph = self
+  l0.Out = self.f_66_Out
+  self[80] = cbox:CreateBox("Domino/System/HackableController.lua")
+  l0 = self[80]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.ProfileAssigned = DummyFunction
+  l0.ProfileReset = DummyFunction
+  l0.ProfilingEnabled = DummyFunction
+  l0.ProfilingDisabled = DummyFunction
+  l0.HackSecurityLevelSet = DummyFunction
+  l0.OccludableSet = DummyFunction
+  l0.HackForced = self.f_80_HackForced
+  l0.OutFakePlayerHoldButton = DummyFunction
+  l0.OutFakePlayerUnholdButton = DummyFunction
+  l0.NoTextSet = DummyFunction
+  self[99] = cbox:CreateBox("Domino/System/CityLifeObjectController.lua")
+  l0 = self[99]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.IsSet = DummyFunction
+  l0.Toggled = DummyFunction
+  l0.Out = self.f_99_Out
+  l0.OnUserInPlace = DummyFunction
+  l0.OnReserve = DummyFunction
+  self[89] = cbox:CreateBox("Domino/System/OnceOnly_v2.lua")
+  l0 = self[89]
+  l0._graph = self
+  l0._DynamicAnchors = {In = 1, Out = 1}
+  l0.Out[0] = self.f_89_Out_0
+  l0.ResetOut = DummyFunction
+  self[104] = cbox:CreateBox("Domino/System/HackableNPCGameplayController.lua")
+  l0 = self[104]
+  l0._graph = self
+  l0.SystemEnabled = DummyFunction
+  l0.SystemDisabled = DummyFunction
+  l0.NpcHackable = DummyFunction
+  l0.NpcUnhackable = DummyFunction
+  self[101] = cbox:CreateBox("Domino/System/OnceOnly_v2.lua")
+  l0 = self[101]
+  l0._graph = self
+  l0._DynamicAnchors = {In = 1, Out = 1}
+  l0.Out[0] = self.f_101_Out_0
+  l0.ResetOut = DummyFunction
+  self[35] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[35]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 2}
+  l0.Out = self.f_35_Out
+  self[23] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[23]
+  l0._graph = self
+  l0.Spawned = self.f_23_Spawned
+  l0.UnSpawned = DummyFunction
+  self[8] = cbox:CreateBox("Domino/System/AgentStateMonitor_v2.lua")
+  l0 = self[8]
+  l0._graph = self
+  l0.Enabled = self.f_8_Enabled
+  l0.Disabled = DummyFunction
+  l0.PauseState = DummyFunction
+  l0.InterruptibleCinematicState = DummyFunction
+  l0.UnawareState = DummyFunction
+  l0.AwareState = DummyFunction
+  l0.AlertSoftState = self.f_8_AlertSoftState
+  l0.AlertHardState = self.f_8_AlertHardState
+  l0.FleeState = DummyFunction
+  l0.CombatState = self.f_8_CombatState
+  l0.ScriptedState = DummyFunction
+  l0.InvestigateState = DummyFunction
+  l0.PostCombatSearchState = DummyFunction
+  l0.CinematicMode_Interrupted = DummyFunction
+  l0.DetectionIntuitionStarted = DummyFunction
+  l0.DetectionIntuitionStopped = DummyFunction
+  l0.DetectionIntuitionFull = DummyFunction
+  l0.DetectionAlertStarted = DummyFunction
+  l0.DetectionAlertStopped = DummyFunction
+  l0.DetectionAlertFull = DummyFunction
+  l0.IsDistracted = DummyFunction
+  self[3] = cbox:CreateBox("Domino/System/CityLifeObjectController.lua")
+  l0 = self[3]
+  l0._graph = self
+  l0.Enabled = self.f_3_Enabled
+  l0.Disabled = DummyFunction
+  l0.IsSet = DummyFunction
+  l0.Toggled = DummyFunction
+  l0.Out = self.f_3_Out
+  l0.OnUserInPlace = self.f_3_OnUserInPlace
+  l0.OnReserve = DummyFunction
+  self[15] = cbox:CreateBox("Domino/System/PlayDialog_v2.lua")
+  l0 = self[15]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.ListStarted = DummyFunction
+  l0.PriorityFailed = DummyFunction
+  l0.Interrupted = DummyFunction
+  l0.Queued = DummyFunction
+  l0.Finished = self.f_15_Finished
+  l0.ListFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[81] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[81]
+  l0._graph = self
+  l0.Spawned = self.f_81_Spawned
+  l0.UnSpawned = DummyFunction
+  self[90] = cbox:CreateBox("Domino/System/PlayDialog_v2.lua")
+  l0 = self[90]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.ListStarted = DummyFunction
+  l0.PriorityFailed = DummyFunction
+  l0.Interrupted = DummyFunction
+  l0.Queued = DummyFunction
+  l0.Finished = self.f_90_Finished
+  l0.ListFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[70] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[70]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 2}
+  l0.Out = self.f_70_Out
+  self[83] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[83]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.f_83_HackSuccess
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[78] = cbox:CreateBox("Domino/System/LogicGate_v2.lua")
+  l0 = self[78]
+  l0._graph = self
+  l0.Out = self.f_78_Out
+  l0.Opened = DummyFunction
+  l0.Closed = self.f_78_Closed
+  self[64] = cbox:CreateBox("Domino/Library/common/HiddenCamera.HiddenCameraSetup.lua")
+  l0 = self[64]
+  l0._graph = self
+  l0.Out = self.f_64_Out
+  self[40] = cbox:CreateBox("Domino/System/SetBoolean_v2.lua")
+  l0 = self[40]
+  l0._graph = self
+  l0.Out = self.f_40_Out
+  l0.SetTrue = self.f_40_SetTrue
+  l0.SetFalse = self.f_40_SetFalse
+  l0.Toggled = self.f_40_Toggled
+  l0.SetFromBool = self.f_40_SetFromBool
+  self[103] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[103]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 2}
+  l0.Out = self.f_103_Out
+  self[19] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[19]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.f_19_HackSuccess
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[17] = cbox:CreateBox("Domino/System/NPCSquad_v2.lua")
+  l0 = self[17]
+  l0._graph = self
+  l0.Started = self.f_17_Started
+  l0.Stopped = DummyFunction
+  l0.ConfigAdded = DummyFunction
+  l0.ConfigRemoved = DummyFunction
+  l0.NPCAdded = DummyFunction
+  l0.NPCRemoved = DummyFunction
+  l0.LKPGroupAdded = DummyFunction
+  l0.ZoneAdded = DummyFunction
+  l0.ZoneRemoved = DummyFunction
+  l0.DefendPointAdded = DummyFunction
+  l0.DefendPointRemoved = DummyFunction
+  l0.AssaultPointAdded = DummyFunction
+  l0.AssaultPointRemoved = DummyFunction
+  l0.Out = DummyFunction
+  self[12] = cbox:CreateBox("Domino/System/NPCSquad_v2.lua")
+  l0 = self[12]
+  l0._graph = self
+  l0.Started = self.f_12_Started
+  l0.Stopped = DummyFunction
+  l0.ConfigAdded = DummyFunction
+  l0.ConfigRemoved = DummyFunction
+  l0.NPCAdded = DummyFunction
+  l0.NPCRemoved = DummyFunction
+  l0.LKPGroupAdded = DummyFunction
+  l0.ZoneAdded = DummyFunction
+  l0.ZoneRemoved = DummyFunction
+  l0.DefendPointAdded = DummyFunction
+  l0.DefendPointRemoved = DummyFunction
+  l0.AssaultPointAdded = DummyFunction
+  l0.AssaultPointRemoved = DummyFunction
+  l0.Out = DummyFunction
+  self[37] = cbox:CreateBox("Domino/System/RewardPhoneCallMonitor.lua")
+  l0 = self[37]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnPhoneCallEnded = self.f_37_OnPhoneCallEnded
+  self[91] = cbox:CreateBox("Domino/System/LogicGate_v2.lua")
+  l0 = self[91]
+  l0._graph = self
+  l0.Out = self.f_91_Out
+  l0.Opened = DummyFunction
+  l0.Closed = self.f_91_Closed
+  self[9] = cbox:CreateBox("Domino/System/OnceOnly_v2.lua")
+  l0 = self[9]
+  l0._graph = self
+  l0._DynamicAnchors = {In = 1, Out = 1}
+  l0.Out[0] = self.f_9_Out_0
+  l0.ResetOut = DummyFunction
+  self[4] = cbox:CreateBox("Domino/System/AssignPatrol_v2.lua")
+  l0 = self[4]
+  l0._graph = self
+  l0.Assigned = self.f_4_Assigned
+  l0.Unassigned = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Failed = DummyFunction
+  l0.SpeedSet = DummyFunction
+  l0.Out = DummyFunction
+  self[62] = cbox:CreateBox("Domino/System/PatrolPointMonitor_v2.lua")
+  l0 = self[62]
+  l0._graph = self
+  l0.Enabled = self.f_62_Enabled
+  l0.Disabled = DummyFunction
+  l0.SpecificPointReached = DummyFunction
+  l0.CurrentPointReached = DummyFunction
+  l0.EndPointReached = self.f_62_EndPointReached
+  self[96] = cbox:CreateBox("Domino/System/TriggerMonitor_v2.lua")
+  l0 = self[96]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Enter = DummyFunction
+  l0.Leave = self.f_96_Leave
+  l0.Use = DummyFunction
+  self[106] = cbox:CreateBox("Domino/System/HackableNPCGameplayController.lua")
+  l0 = self[106]
+  l0._graph = self
+  l0.SystemEnabled = DummyFunction
+  l0.SystemDisabled = DummyFunction
+  l0.NpcHackable = DummyFunction
+  l0.NpcUnhackable = DummyFunction
+  self[14] = cbox:CreateBox("Domino/System/AssignPatrol_v2.lua")
+  l0 = self[14]
+  l0._graph = self
+  l0.Assigned = self.f_14_Assigned
+  l0.Unassigned = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Failed = DummyFunction
+  l0.SpeedSet = DummyFunction
+  l0.Out = DummyFunction
+  self[46] = cbox:CreateBox("Domino/System/Lists/ListWriter.lua")
+  l0 = self[46]
+  l0._graph = self
+  l0._DynamicAnchors = {Data = 3}
+  l0.Added = self.f_46_Added
+  l0.Removed = self.f_46_Removed
+  l0.Out = self.f_46_Out
+  self[2] = cbox:CreateBox("Domino/System/SetBoolean_v2.lua")
+  l0 = self[2]
+  l0._graph = self
+  l0.Out = self.f_2_Out
+  l0.SetTrue = self.f_2_SetTrue
+  l0.SetFalse = self.f_2_SetFalse
+  l0.Toggled = self.f_2_Toggled
+  l0.SetFromBool = self.f_2_SetFromBool
+  self[48] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua")
+  l0 = self[48]
+  l0._graph = self
+  l0.Enabled = self.f_48_Enabled
+  l0.Disabled = DummyFunction
+  l0.Damaged = DummyFunction
+  l0.Killed = self.f_48_Killed
+  l0.AllDead = self.f_48_AllDead
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[97] = cbox:CreateBox("Domino/System/OnceOnly_v2.lua")
+  l0 = self[97]
+  l0._graph = self
+  l0._DynamicAnchors = {In = 1, Out = 1}
+  l0.Out[0] = self.f_97_Out_0
+  l0.ResetOut = DummyFunction
+  self[5] = cbox:CreateBox("Domino/System/AssignPatrol_v2.lua")
+  l0 = self[5]
+  l0._graph = self
+  l0.Assigned = self.f_5_Assigned
+  l0.Unassigned = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Failed = DummyFunction
+  l0.SpeedSet = DummyFunction
+  l0.Out = DummyFunction
+  self[50] = cbox:CreateBox("Domino/System/PlayDialog_v2.lua")
+  l0 = self[50]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.ListStarted = DummyFunction
+  l0.PriorityFailed = DummyFunction
+  l0.Interrupted = DummyFunction
+  l0.Queued = DummyFunction
+  l0.Finished = self.f_50_Finished
+  l0.ListFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[102] = cbox:CreateBox("Domino/System/OnceOnly_v2.lua")
+  l0 = self[102]
+  l0._graph = self
+  l0._DynamicAnchors = {In = 1, Out = 1}
+  l0.Out[0] = self.f_102_Out_0
+  l0.ResetOut = DummyFunction
+  self[72] = cbox:CreateBox("Domino/System/Lists/ListWriter.lua")
+  l0 = self[72]
+  l0._graph = self
+  l0._DynamicAnchors = {Data = 2}
+  l0.Added = self.f_72_Added
+  l0.Removed = self.f_72_Removed
+  l0.Out = self.f_72_Out
+  self[65] = cbox:CreateBox("Domino/System/CityLifeObjectController.lua")
+  l0 = self[65]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.IsSet = DummyFunction
+  l0.Toggled = DummyFunction
+  l0.Out = self.f_65_Out
+  l0.OnUserInPlace = DummyFunction
+  l0.OnReserve = DummyFunction
+  self[44] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[44]
+  l0._graph = self
+  l0.Spawned = self.f_44_Spawned
+  l0.UnSpawned = DummyFunction
+  self[31] = cbox:CreateBox("Domino/System/Lists/ListWriter.lua")
+  l0 = self[31]
+  l0._graph = self
+  l0._DynamicAnchors = {Data = 8}
+  l0.Added = self.f_31_Added
+  l0.Removed = self.f_31_Removed
+  l0.Out = self.f_31_Out
+  self[25] = cbox:CreateBox("Domino/System/CityLifeObjectController.lua")
+  l0 = self[25]
+  l0._graph = self
+  l0.Enabled = self.f_25_Enabled
+  l0.Disabled = DummyFunction
+  l0.IsSet = DummyFunction
+  l0.Toggled = DummyFunction
+  l0.Out = DummyFunction
+  l0.OnUserInPlace = self.f_25_OnUserInPlace
+  l0.OnReserve = DummyFunction
+  self[39] = cbox:CreateBox("Domino/System/TriggerMonitor_v2.lua")
+  l0 = self[39]
+  l0._graph = self
+  l0.Enabled = self.f_39_Enabled
+  l0.Disabled = DummyFunction
+  l0.Enter = self.f_39_Enter
+  l0.Leave = DummyFunction
+  l0.Use = DummyFunction
+  self[43] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[43]
+  l0._graph = self
+  l0.Spawned = self.f_43_Spawned
+  l0.UnSpawned = DummyFunction
+  self[55] = cbox:CreateBox("Domino/System/AssignPatrol_v2.lua")
+  l0 = self[55]
+  l0._graph = self
+  l0.Assigned = self.f_55_Assigned
+  l0.Unassigned = self.f_55_Unassigned
+  l0.Aborted = DummyFunction
+  l0.Failed = DummyFunction
+  l0.SpeedSet = DummyFunction
+  l0.Out = DummyFunction
+  self[26] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[26]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.f_26_HackSuccess
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[16] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua")
+  l0 = self[16]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Damaged = DummyFunction
+  l0.Killed = DummyFunction
+  l0.AllDead = self.f_16_AllDead
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[105] = cbox:CreateBox("Domino/System/HackableNPCGameplayController.lua")
+  l0 = self[105]
+  l0._graph = self
+  l0.SystemEnabled = DummyFunction
+  l0.SystemDisabled = DummyFunction
+  l0.NpcHackable = DummyFunction
+  l0.NpcUnhackable = DummyFunction
+  self[69] = cbox:CreateBox("Domino/System/Lists/ListWriter.lua")
+  l0 = self[69]
+  l0._graph = self
+  l0._DynamicAnchors = {Data = 2}
+  l0.Added = self.f_69_Added
+  l0.Removed = self.f_69_Removed
+  l0.Out = self.f_69_Out
+  self[95] = cbox:CreateBox("Domino/System/LogicGate_v2.lua")
+  l0 = self[95]
+  l0._graph = self
+  l0.Out = self.f_95_Out
+  l0.Opened = DummyFunction
+  l0.Closed = DummyFunction
+  self[79] = cbox:CreateBox("Domino/System/HackableController.lua")
+  l0 = self[79]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.ProfileAssigned = DummyFunction
+  l0.ProfileReset = DummyFunction
+  l0.ProfilingEnabled = DummyFunction
+  l0.ProfilingDisabled = DummyFunction
+  l0.HackSecurityLevelSet = DummyFunction
+  l0.OccludableSet = DummyFunction
+  l0.HackForced = self.f_79_HackForced
+  l0.OutFakePlayerHoldButton = DummyFunction
+  l0.OutFakePlayerUnholdButton = DummyFunction
+  l0.NoTextSet = DummyFunction
+  self[30] = cbox:CreateBox("Domino/System/TriggerMonitor_v2.lua")
+  l0 = self[30]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Enter = self.f_30_Enter
+  l0.Leave = DummyFunction
+  l0.Use = DummyFunction
+  self[22] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[22]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 2}
+  l0.Out = self.f_22_Out
+  self[71] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[71]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.f_71_TimeElapsed
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[98] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[98]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 9}
+  l0.Out = self.f_98_Out
+  self[1] = cbox:CreateBox("Domino/Library/common/HiddenCamera.HiddenCameraSetup.lua")
+  l0 = self[1]
+  l0._graph = self
+  l0.Out = self.f_1_Out
+  self[85] = cbox:CreateBox("Domino/System/OnceOnly_v2.lua")
+  l0 = self[85]
+  l0._graph = self
+  l0._DynamicAnchors = {In = 1, Out = 1}
+  l0.Out[0] = self.f_85_Out_0
+  l0.ResetOut = DummyFunction
+  self[68] = cbox:CreateBox("Domino/Library/common/NPCMisc.CombatReinforcement.lua")
+  l0 = self[68]
+  l0._graph = self
+  l0.Prepped = self.f_68_Prepped
+  l0.Disabled = DummyFunction
+  l0.Wave_Sent = self.f_68_Wave_Sent
+  l0.Final_Wave_Sent = self.f_68_Final_Wave_Sent
+  l0.Spawn_Failed = DummyFunction
+  l0.NPC_List_Updated = self.f_68_NPC_List_Updated
+  l0.NPC_Killed = self.f_68_NPC_Killed
+  l0.All_Dead = self.f_68_All_Dead
+  self[18] = cbox:CreateBox("Domino/System/Lists/ListWriter.lua")
+  l0 = self[18]
+  l0._graph = self
+  l0._DynamicAnchors = {Data = 5}
+  l0.Added = self.f_18_Added
+  l0.Removed = self.f_18_Removed
+  l0.Out = self.f_18_Out
+  self[32] = cbox:CreateBox("Domino/System/SetBoolean_v2.lua")
+  l0 = self[32]
+  l0._graph = self
+  l0.Out = self.f_32_Out
+  l0.SetTrue = self.f_32_SetTrue
+  l0.SetFalse = self.f_32_SetFalse
+  l0.Toggled = self.f_32_Toggled
+  l0.SetFromBool = self.f_32_SetFromBool
+  self[13] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[13]
+  l0._graph = self
+  l0.Spawned = self.f_13_Spawned
+  l0.UnSpawned = DummyFunction
+  self[20] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[20]
+  l0._graph = self
+  l0.Spawned = self.f_20_Spawned
+  l0.UnSpawned = DummyFunction
+  self[52] = cbox:CreateBox("Domino/System/PlayDialog_v2.lua")
+  l0 = self[52]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.ListStarted = DummyFunction
+  l0.PriorityFailed = DummyFunction
+  l0.Interrupted = DummyFunction
+  l0.Queued = DummyFunction
+  l0.Finished = DummyFunction
+  l0.ListFinished = self.f_52_ListFinished
+  l0.Out = DummyFunction
+  self[54] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[54]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.f_54_TimeElapsed
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[24] = cbox:CreateBox("Domino/System/TriggerMonitor_v2.lua")
+  l0 = self[24]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Enter = self.f_24_Enter
+  l0.Leave = DummyFunction
+  l0.Use = DummyFunction
+  self[61] = cbox:CreateBox("Domino/System/AssignPatrol_v2.lua")
+  l0 = self[61]
+  l0._graph = self
+  l0.Assigned = self.f_61_Assigned
+  l0.Unassigned = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Failed = DummyFunction
+  l0.SpeedSet = DummyFunction
+  l0.Out = DummyFunction
+  self[7] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[7]
+  l0._graph = self
+  l0.Spawned = self.f_7_Spawned
+  l0.UnSpawned = DummyFunction
+  self[53] = cbox:CreateBox("Domino/System/PlayDialog_v2.lua")
+  l0 = self[53]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.ListStarted = DummyFunction
+  l0.PriorityFailed = DummyFunction
+  l0.Interrupted = DummyFunction
+  l0.Queued = DummyFunction
+  l0.Finished = DummyFunction
+  l0.ListFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[11] = cbox:CreateBox("Domino/System/Lists/ListWriter.lua")
+  l0 = self[11]
+  l0._graph = self
+  l0._DynamicAnchors = {Data = 4}
+  l0.Added = self.f_11_Added
+  l0.Removed = self.f_11_Removed
+  l0.Out = self.f_11_Out
+  self[60] = cbox:CreateBox("Domino/System/AgentStateMonitor_v2.lua")
+  l0 = self[60]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.PauseState = DummyFunction
+  l0.InterruptibleCinematicState = DummyFunction
+  l0.UnawareState = DummyFunction
+  l0.AwareState = DummyFunction
+  l0.AlertSoftState = DummyFunction
+  l0.AlertHardState = DummyFunction
+  l0.FleeState = DummyFunction
+  l0.CombatState = self.f_60_CombatState
+  l0.ScriptedState = DummyFunction
+  l0.InvestigateState = DummyFunction
+  l0.PostCombatSearchState = DummyFunction
+  l0.CinematicMode_Interrupted = DummyFunction
+  l0.DetectionIntuitionStarted = DummyFunction
+  l0.DetectionIntuitionStopped = DummyFunction
+  l0.DetectionIntuitionFull = DummyFunction
+  l0.DetectionAlertStarted = DummyFunction
+  l0.DetectionAlertStopped = DummyFunction
+  l0.DetectionAlertFull = DummyFunction
+  l0.IsDistracted = DummyFunction
+  self[10] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[10]
+  l0._graph = self
+  l0.Spawned = self.f_10_Spawned
+  l0.UnSpawned = DummyFunction
+  self[29] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[29]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 2}
+  l0.Out = self.f_29_Out
+  self[82] = cbox:CreateBox("Domino/System/HackableController.lua")
+  l0 = self[82]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.ProfileAssigned = DummyFunction
+  l0.ProfileReset = DummyFunction
+  l0.ProfilingEnabled = DummyFunction
+  l0.ProfilingDisabled = DummyFunction
+  l0.HackSecurityLevelSet = DummyFunction
+  l0.OccludableSet = DummyFunction
+  l0.HackForced = self.f_82_HackForced
+  l0.OutFakePlayerHoldButton = DummyFunction
+  l0.OutFakePlayerUnholdButton = DummyFunction
+  l0.NoTextSet = DummyFunction
+  self[38] = cbox:CreateBox("Domino/System/CityLifeObjectController.lua")
+  l0 = self[38]
+  l0._graph = self
+  l0.Enabled = self.f_38_Enabled
+  l0.Disabled = DummyFunction
+  l0.IsSet = DummyFunction
+  l0.Toggled = DummyFunction
+  l0.Out = DummyFunction
+  l0.OnUserInPlace = self.f_38_OnUserInPlace
+  l0.OnReserve = DummyFunction
+  self[49] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[49]
+  l0._graph = self
+  l0.Enabled = self.f_49_Enabled
+  l0.Disabled = self.f_49_Disabled
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.f_49_HackSuccess
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[77] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[77]
+  l0._graph = self
+  l0.Spawned = DummyFunction
+  l0.UnSpawned = self.f_77_UnSpawned
+  self[74] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[74]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.f_74_HackSuccess
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[94] = cbox:CreateBox("Domino/System/PlayDialog_v2.lua")
+  l0 = self[94]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.ListStarted = DummyFunction
+  l0.PriorityFailed = DummyFunction
+  l0.Interrupted = DummyFunction
+  l0.Queued = DummyFunction
+  l0.Finished = DummyFunction
+  l0.ListFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[93] = cbox:CreateBox("Domino/System/LogicGate_v2.lua")
+  l0 = self[93]
+  l0._graph = self
+  l0.Out = self.f_93_Out
+  l0.Opened = DummyFunction
+  l0.Closed = self.f_93_Closed
+  self[34] = cbox:CreateBox("Domino/System/CityLifeObjectController.lua")
+  l0 = self[34]
+  l0._graph = self
+  l0.Enabled = self.f_34_Enabled
+  l0.Disabled = DummyFunction
+  l0.IsSet = DummyFunction
+  l0.Toggled = DummyFunction
+  l0.Out = self.f_34_Out
+  l0.OnUserInPlace = self.f_34_OnUserInPlace
+  l0.OnReserve = DummyFunction
+  self[58] = cbox:CreateBox("Domino/System/HackableController.lua")
+  l0 = self[58]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.ProfileAssigned = DummyFunction
+  l0.ProfileReset = DummyFunction
+  l0.ProfilingEnabled = DummyFunction
+  l0.ProfilingDisabled = DummyFunction
+  l0.HackSecurityLevelSet = DummyFunction
+  l0.OccludableSet = DummyFunction
+  l0.HackForced = self.f_58_HackForced
+  l0.OutFakePlayerHoldButton = DummyFunction
+  l0.OutFakePlayerUnholdButton = DummyFunction
+  l0.NoTextSet = DummyFunction
+  self[56] = cbox:CreateBox("Domino/System/RewardPhoneCallMonitor.lua")
+  l0 = self[56]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnPhoneCallEnded = self.f_56_OnPhoneCallEnded
+  self[33] = cbox:CreateBox("Domino/System/RewardPhoneCallMonitor.lua")
+  l0 = self[33]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnPhoneCallEnded = self.f_33_OnPhoneCallEnded
+  self[41] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[41]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.f_41_HackSuccess
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[45] = cbox:CreateBox("Domino/System/Lists/ListWriter.lua")
+  l0 = self[45]
+  l0._graph = self
+  l0._DynamicAnchors = {Data = 3}
+  l0.Added = self.f_45_Added
+  l0.Removed = self.f_45_Removed
+  l0.Out = self.f_45_Out
+  self[51] = cbox:CreateBox("Domino/System/Lists/ListWriter_SoundID.lua")
+  l0 = self[51]
+  l0._graph = self
+  l0._DynamicAnchors = {SoundID = 3}
+  l0.Added = self.f_51_Added
+  l0.Removed = self.f_51_Removed
+  l0.Out = self.f_51_Out
+  self[6] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[6]
+  l0._graph = self
+  l0.Spawned = self.f_6_Spawned
+  l0.UnSpawned = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:Spawn()
+  local l0
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_76_Out
+  l0:In()
+end
+function export:Stop_Monitors()
+  local l0
+  self:en_21()
+  l0 = self[21]
+  l0:Disable()
+  self:en_8()
+  l0 = self[8]
+  l0:Disable()
+end
+function export:Unspawn()
+  local l0
+  l0 = self[77]
+  l0.UnSpawnedEntityList = self.Guard_List_Redzone
+  l0:UnSpawn()
+end
+function export:f_21_AlertHardState()
+  local l0
+  self = self._graph
+  l0 = self[89]
+  l0:In(0)
+end
+function export:f_21_AlertSoftState()
+  local l0
+  self = self._graph
+  l0 = self[85]
+  l0:In(0)
+end
+function export:f_21_CombatState()
+  local l0
+  self = self._graph
+  l0 = self[22]
+  l0:Condition(0)
+  l0 = self[9]
+  l0:In(0)
+  l0 = self[29]
+  l0:Condition(1)
+  l0 = self[35]
+  l0:Condition(1)
+end
+function export:f_21_Enabled()
+  local l0
+  self = self._graph
+  l0 = self[103]
+  l0:Condition(1)
+end
+function export:f_92_Finished()
+  local l0
+  self = self._graph
+  l0 = self[95]
+  l0:In()
+end
+function export:f_42_TimeElapsed()
+  local l0
+  self = self._graph
+  l0 = self[15]
+  l0.Entity = self.Guard_08
+  l0.SoundId = "0x000d7f8a"
+  l0.Queue = 1
+  l0:Start()
+end
+function export:f_66_Out()
+  local l0
+  self = self._graph
+  l0 = self[105]
+  l0.NPC = self.Guard_07
+  l0:ForceNpcUnhackable()
+end
+function export:f_80_HackForced()
+  local l0
+  self = self._graph
+  self:en_68()
+  l0 = self[68]
+  l0:Start()
+  self:en_80()
+  l0 = self[80]
+  l0:DisableHack()
+end
+function export:f_99_Out()
+  local l0
+  self = self._graph
+  l0 = self[52]
+  l0.Entity = self.Guard_08
+  l0.SoundIdList = self.SecSystemHackedDiagList
+  l0.Queue = 1
+  l0:Start()
+end
+function export:f_89_Out_0()
+  self = self._graph
+  self:InHardAlert()
+end
+function export:f_101_Out_0()
+  self = self._graph
+  self:AllDead()
+end
+function export:f_28_A_is_False()
+  local l0
+  self = self._graph
+  self:en_3()
+  l0 = self[3]
+  l0:Enable()
+end
+function export:f_35_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/CompareBoolean_v2.lua")]
+  l0.A = self.Enticers_Wave_2
+  l0.B = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.A_is_True = DummyFunction
+  l0.A_is_False = self.f_36_A_is_False
+  l0.A_and_B = DummyFunction
+  l0.notA_and_notB = DummyFunction
+  l0.A_or_B = DummyFunction
+  l0.A_xor_B = DummyFunction
+  l0:In()
+end
+function export:f_23_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[23]
+  self.Guard_01 = l0.SpawnedEntity
+  l0 = self[98]
+  l0:Condition(0)
+end
+function export:f_100_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_67_Out
+  l0:In()
+end
+function export:f_8_AlertHardState()
+  local l0
+  self = self._graph
+  l0 = self[89]
+  l0:In(0)
+end
+function export:f_8_AlertSoftState()
+  local l0
+  self = self._graph
+  l0 = self[85]
+  l0:In(0)
+end
+function export:f_8_CombatState()
+  local l0
+  self = self._graph
+  l0 = self[9]
+  l0:In(0)
+end
+function export:f_8_Enabled()
+  local l0
+  self = self._graph
+  l0 = self[103]
+  l0:Condition(0)
+end
+function export:f_3_Enabled()
+  local l0
+  self = self._graph
+  self:en_25()
+  l0 = self[25]
+  l0:Enable()
+end
+function export:f_3_OnUserInPlace()
+  local l0
+  self = self._graph
+  self:en_3()
+  l0 = self[3]
+  l0:Disable()
+end
+function export:f_3_Out()
+  local l0
+  self = self._graph
+  self:en_25()
+  l0 = self[25]
+  l0:Unspawn()
+end
+function export:f_15_Finished()
+  local l0
+  self = self._graph
+  l0 = self[78]
+  l0:In()
+end
+function export:f_81_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[81]
+  self.Guard_09 = l0.SpawnedEntity
+  l0 = self[98]
+  l0:Condition(5)
+end
+function export:f_90_Finished()
+  local l0
+  self = self._graph
+  l0 = self[93]
+  l0:In()
+end
+function export:f_70_Out()
+  local l0
+  self = self._graph
+  l0 = self[71]
+  l0.Seconds = 15
+  l0:Start()
+end
+function export:f_83_HackSuccess()
+  local l0
+  self = self._graph
+  l0 = self[56]
+  l0:Enable()
+end
+function export:f_78_Closed()
+  local l0
+  self = self._graph
+  l0 = self[91]
+  l0:Close()
+end
+function export:f_78_Out()
+  local l0
+  self = self._graph
+  l0 = self[50]
+  l0.Entity = self.Guard_08
+  l0.SoundId = "0x000d7f71"
+  l0.Queue = 1
+  l0:Start()
+end
+function export:f_64_Out()
+  local l0
+  self = self._graph
+  l0 = self[104]
+  l0.NPC = self.Guard_08
+  l0:ForceNpcUnhackable()
+end
+function export:f_76_Out()
+  local l0
+  self = self._graph
+  l0 = self[23]
+  l0.AIGenerator = "2080935543077752854"
+  l0:Spawn()
+  l0 = self[13]
+  l0.AIGenerator = "2082403124928058012"
+  l0:Spawn()
+  l0 = self[81]
+  l0.AIGenerator = "2081805971975478016"
+  l0:Spawn()
+  l0 = self[10]
+  l0.AIGenerator = "2080935652767191167"
+  l0:Spawn()
+  l0 = self[7]
+  l0.AIGenerator = "2081215750808288954"
+  l0:Spawn()
+  l0 = self[20]
+  l0.AIGenerator = "2081806153496566534"
+  l0:Spawn()
+  l0 = self[6]
+  l0.AIGenerator = "2081216460090263398"
+  l0:Spawn()
+  l0 = self[43]
+  l0.AIGenerator = "2080935457694306134"
+  l0:Spawn()
+  l0 = self[44]
+  l0.AIGenerator = "2080935649038454898"
+  l0:Spawn()
+end
+function export:f_40_Out()
+  local l0
+  self = self._graph
+  l0 = self[40]
+  self.Enticers_Wave_2 = l0.Target
+end
+function export:f_40_SetFalse()
+  local l0
+  self = self._graph
+  l0 = self[40]
+  self.Enticers_Wave_2 = l0.Target
+end
+function export:f_40_SetFromBool()
+  local l0
+  self = self._graph
+  l0 = self[40]
+  self.Enticers_Wave_2 = l0.Target
+end
+function export:f_40_SetTrue()
+  local l0
+  self = self._graph
+  l0 = self[40]
+  self.Enticers_Wave_2 = l0.Target
+  self:en_24()
+  l0 = self[24]
+  l0:Disable()
+  self:en_34()
+  l0 = self[34]
+  l0:Unspawn()
+  self:en_30()
+  l0 = self[30]
+  l0:Disable()
+  self:en_3()
+  l0 = self[3]
+  l0:Unspawn()
+end
+function export:f_40_Toggled()
+  local l0
+  self = self._graph
+  l0 = self[40]
+  self.Enticers_Wave_2 = l0.Target
+end
+function export:f_103_Out()
+  local l0
+  self = self._graph
+  l0 = self[102]
+  l0:In(0)
+end
+function export:f_75_Out()
+  local l0
+  self = self._graph
+  self:en_68()
+  l0 = self[68]
+  l0:Disable()
+end
+function export:f_19_HackSuccess()
+  local l0
+  self = self._graph
+  l0 = self[78]
+  l0:Close()
+  self:en_58()
+  l0 = self[58]
+  l0:ForceHack()
+  l0 = self[82]
+  l0.HackableEntity = "2081589394807981587"
+  l0:ForceHack()
+end
+function export:f_17_Started()
+  local l0
+  self = self._graph
+  l0 = self[16]
+  l0.PawnList = self.GuardList
+  l0:Enable()
+  self:en_21()
+  l0 = self[21]
+  l0:Enable()
+end
+function export:f_12_Started()
+  local l0
+  self = self._graph
+  self:en_8()
+  l0 = self[8]
+  l0:Enable()
+end
+function export:f_37_OnPhoneCallEnded()
+  local l0
+  self = self._graph
+  l0 = self[37]
+  l0:Disable()
+end
+function export:f_91_Closed()
+  local l0
+  self = self._graph
+  l0 = self[93]
+  l0:Close()
+end
+function export:f_91_Out()
+  local l0
+  self = self._graph
+  l0 = self[90]
+  l0.Entity = self.Guard_08
+  l0.SoundId = "0x000d7fbe"
+  l0.Queue = 1
+  l0:Start()
+end
+function export:f_9_Out_0()
+  local l0
+  self = self._graph
+  l0 = self[70]
+  l0:Condition(0)
+  self:InCombatState()
+end
+function export:f_4_Assigned()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/RewardComponentController.lua")]
+  l0.entity = self.Guard_04
+  l0.ClearRewardsBeforeRegister = 0
+  l0.ItemDB = "Items.824564200"
+  l0.ItemDBList = nil
+  l0.RewardEvent = "OnHackSuccess"
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0:RegisterRewards()
+end
+function export:f_62_Enabled()
+  local l0
+  self = self._graph
+  l0 = self[54]
+  l0.Seconds = 15
+  l0:Start()
+end
+function export:f_62_EndPointReached()
+  local l0
+  self = self._graph
+  self:en_55()
+  l0 = self[55]
+  l0:Unassign()
+end
+function export:f_96_Leave()
+  local l0
+  self = self._graph
+  self:en_3()
+  l0 = self[3]
+  l0:Unspawn()
+  self:en_25()
+  l0 = self[25]
+  l0:Unspawn()
+  self:en_38()
+  l0 = self[38]
+  l0:Unspawn()
+  self:en_34()
+  l0 = self[34]
+  l0:Unspawn()
+end
+function export:f_14_Assigned()
+  local l0
+  self = self._graph
+  l0 = self[66]
+  l0.NPC = self.Guard_07
+  l0.HiddenCamera = "2082765439458376690"
+  l0.Profile = {
+    section = "PROFILER_SPECIFIC.PEOPLE.HiddenCamNPC.HiddenCamNPC_A04_M06_1",
+    item = "",
+    id = "4294976038"
+  }
+  l0:In()
+end
+function export:f_46_Added()
+  local l0
+  self = self._graph
+  l0 = self[46]
+  self.WarningZoneList = l0.Target
+  l0 = self[45]
+  l0.Input = self.ForbiddenZoneList
+  l0.Data[0] = "2082681012397077529"
+  l0.Data[1] = "2082681053350261876"
+  l0.Data[2] = "2082689982555927867"
+  l0:Add()
+end
+function export:f_46_Out()
+  local l0
+  self = self._graph
+  l0 = self[46]
+  self.WarningZoneList = l0.Target
+end
+function export:f_46_Removed()
+  local l0
+  self = self._graph
+  l0 = self[46]
+  self.WarningZoneList = l0.Target
+end
+function export:f_2_Out()
+  local l0
+  self = self._graph
+  l0 = self[2]
+  self.EnticersWave_1 = l0.Target
+end
+function export:f_2_SetFalse()
+  local l0
+  self = self._graph
+  l0 = self[2]
+  self.EnticersWave_1 = l0.Target
+end
+function export:f_2_SetFromBool()
+  local l0
+  self = self._graph
+  l0 = self[2]
+  self.EnticersWave_1 = l0.Target
+end
+function export:f_2_SetTrue()
+  local l0
+  self = self._graph
+  l0 = self[2]
+  self.EnticersWave_1 = l0.Target
+  l0 = self[40]
+  l0:True()
+end
+function export:f_2_Toggled()
+  local l0
+  self = self._graph
+  l0 = self[2]
+  self.EnticersWave_1 = l0.Target
+end
+function export:f_48_AllDead()
+  local l0
+  self = self._graph
+  self:en_49()
+  l0 = self[49]
+  l0:Disable()
+end
+function export:f_48_Enabled()
+  local l0
+  self = self._graph
+  self:en_49()
+  l0 = self[49]
+  l0:Enable()
+end
+function export:f_48_Killed()
+  local l0
+  self = self._graph
+  self:en_49()
+  l0 = self[49]
+  l0:Disable()
+end
+function export:f_47_Out()
+  local l0
+  self = self._graph
+  l0 = self[99]
+  l0.CLOEntity = "2082886856657078785"
+  l0:Disable()
+end
+function export:f_97_Out_0()
+  local l0
+  self = self._graph
+  l0 = self[96]
+  l0.Trigger = "2080965505266498700"
+  l0.CheckNow = 1
+  l0.AutoDisable = 1
+  l0:Enable()
+end
+function export:f_36_A_is_False()
+  local l0
+  self = self._graph
+  self:en_34()
+  l0 = self[34]
+  l0:Enable()
+end
+function export:f_57_Out()
+  local l0
+  self = self._graph
+  self:en_55()
+  l0 = self[55]
+  l0:Assign()
+  self:en_58()
+  l0 = self[58]
+  l0:ForceHack()
+end
+function export:f_5_Assigned()
+  local l0
+  self = self._graph
+  l0 = self[1]
+  l0.NPC = self.Guard_06
+  l0.HiddenCamera = "2082320029335947531"
+  l0.Profile = {
+    section = "PROFILER_SPECIFIC.PEOPLE.HiddenCamNPC.HiddenCamNPC_A04_M06_2",
+    item = "",
+    id = "4294976040"
+  }
+  l0:In()
+end
+function export:f_50_Finished()
+  local l0
+  self = self._graph
+  l0 = self[91]
+  l0:In()
+end
+function export:f_102_Out_0()
+  self = self._graph
+  self:Spawned()
+end
+function export:f_72_Added()
+  local l0
+  self = self._graph
+  l0 = self[72]
+  self.ReinfSpawnerList = l0.Target
+  l0 = self[69]
+  l0.Input = self.LocalReinfCallerList
+  l0.Data[0] = self.Guard_04
+  l0.Data[1] = self.Guard_09
+  l0:Add()
+end
+function export:f_72_Out()
+  local l0
+  self = self._graph
+  l0 = self[72]
+  self.ReinfSpawnerList = l0.Target
+end
+function export:f_72_Removed()
+  local l0
+  self = self._graph
+  l0 = self[72]
+  self.ReinfSpawnerList = l0.Target
+end
+function export:f_73_Out()
+  local l0
+  self = self._graph
+  l0 = self[61]
+  l0.NPC = self.Guard_03
+  l0.Patrol = "2081326257320152535"
+  l0.Speed = 1
+  l0:Assign()
+  l0 = self[4]
+  l0.NPC = self.Guard_04
+  l0.Patrol = "2081338774257667128"
+  l0.Speed = 1
+  l0:Assign()
+  l0 = Boxes[PathID("Domino/System/RewardComponentController.lua")]
+  l0.entity = self.Guard_09
+  l0.ClearRewardsBeforeRegister = 0
+  l0.ItemDB = "Items.1176693118"
+  l0.ItemDBList = nil
+  l0.RewardEvent = "OnHackSuccess"
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0:RegisterRewards()
+  l0 = self[64]
+  l0.NPC = self.Guard_08
+  l0.HiddenCamera = "2082761333123590353"
+  l0.Profile = {
+    section = "PROFILER_SPECIFIC.PEOPLE.HiddenCamNPC.HiddenCamNPC_A04_M06_1",
+    item = "",
+    id = "4294976038"
+  }
+  l0:In()
+  l0 = Boxes[PathID("Domino/System/RewardComponentController.lua")]
+  l0.entity = self.Guard_01
+  l0.ClearRewardsBeforeRegister = 0
+  l0.ItemDB = "Items.4123411553"
+  l0.ItemDBList = nil
+  l0.RewardEvent = "OnHackSuccess"
+  l0._graph = self
+  l0.Out = self.f_84_Out
+  l0:RegisterRewards()
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_100_Out
+  l0:In()
+  l0 = Boxes[PathID("Domino/System/RewardComponentController.lua")]
+  l0.entity = self.Guard_02
+  l0.ClearRewardsBeforeRegister = 0
+  l0.ItemDB = "Items.1825510875"
+  l0.ItemDBList = nil
+  l0.RewardEvent = "OnHackSuccess"
+  l0._graph = self
+  l0.Out = self.f_27_Out
+  l0:RegisterRewards()
+  l0 = self[14]
+  l0.NPC = self.Guard_07
+  l0.Patrol = "2081216484597581674"
+  l0.Speed = 1
+  l0:Assign()
+  l0 = self[5]
+  l0.NPC = self.Guard_06
+  l0.Patrol = "2081215801299320525"
+  l0.Speed = 1
+  l0:Assign()
+end
+function export:f_65_Out()
+  local l0
+  self = self._graph
+  l0 = self[60]
+  l0.NPC = self.Guard_08
+  l0:Enable()
+end
+function export:f_44_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[44]
+  self.Guard_03 = l0.SpawnedEntity
+  l0 = self[98]
+  l0:Condition(2)
+end
+function export:f_31_Added()
+  local l0
+  self = self._graph
+  l0 = self[31]
+  self.Guard_List_Redzone = l0.Target
+  l0 = self[11]
+  l0.Input = self.Guard_EntranceList
+  l0.Data[0] = self.Guard_07
+  l0.Data[1] = self.Guard_01
+  l0.Data[2] = self.Guard_02
+  l0.Data[3] = self.Guard_03
+  l0:Add()
+end
+function export:f_31_Out()
+  local l0
+  self = self._graph
+  l0 = self[31]
+  self.Guard_List_Redzone = l0.Target
+end
+function export:f_31_Removed()
+  local l0
+  self = self._graph
+  l0 = self[31]
+  self.Guard_List_Redzone = l0.Target
+end
+function export:f_25_Enabled()
+  local l0
+  self = self._graph
+  l0 = self[97]
+  l0:In(0)
+end
+function export:f_25_OnUserInPlace()
+  local l0
+  self = self._graph
+  self:en_25()
+  l0 = self[25]
+  l0:Disable()
+end
+function export:f_39_Enabled()
+  local l0
+  self = self._graph
+  self:en_24()
+  l0 = self[24]
+  l0:Enable()
+  self:en_30()
+  l0 = self[30]
+  l0:Enable()
+end
+function export:f_39_Enter()
+  local l0
+  self = self._graph
+  l0 = self[2]
+  l0:True()
+end
+function export:f_43_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[43]
+  self.Guard_02 = l0.SpawnedEntity
+  l0 = self[98]
+  l0:Condition(1)
+end
+function export:f_55_Assigned()
+  local l0
+  self = self._graph
+  l0 = self[62]
+  l0.NPC = self.Guard_08
+  l0:Enable()
+end
+function export:f_55_Unassigned()
+  local l0
+  self = self._graph
+  l0 = self[63]
+  l0.NPC = self.Guard_08
+  l0.Patrol = "2082747257509126792"
+  l0:Assign()
+end
+function export:f_59_A_is_False()
+  local l0
+  self = self._graph
+  l0 = self[48]
+  l0.Pawn = self.Guard_08
+  l0:Enable()
+  l0 = self[65]
+  l0.CLOEntity = "2082886856657078785"
+  l0:Enable()
+end
+function export:f_59_A_is_True()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_57_Out
+  l0:In()
+end
+function export:f_26_HackSuccess()
+  local l0
+  self = self._graph
+  l0 = self[33]
+  l0:Enable()
+end
+function export:f_16_AllDead()
+  local l0
+  self = self._graph
+  l0 = self[22]
+  l0:Condition(1)
+end
+function export:f_69_Added()
+  local l0
+  self = self._graph
+  l0 = self[69]
+  self.LocalReinfCallerList = l0.Target
+  self:en_68()
+  l0 = self[68]
+  l0:Prep()
+end
+function export:f_69_Out()
+  local l0
+  self = self._graph
+  l0 = self[69]
+  self.LocalReinfCallerList = l0.Target
+end
+function export:f_69_Removed()
+  local l0
+  self = self._graph
+  l0 = self[69]
+  self.LocalReinfCallerList = l0.Target
+end
+function export:f_95_Out()
+  local l0
+  self = self._graph
+  l0 = self[94]
+  l0.Entity = self.Guard_08
+  l0.SoundId = "0x000d7fc6"
+  l0.Queue = 1
+  l0:Start()
+end
+function export:f_79_HackForced()
+  local l0
+  self = self._graph
+  self:en_80()
+  l0 = self[80]
+  l0:ForceHack()
+  self:en_79()
+  l0 = self[79]
+  l0:DisableHack()
+end
+function export:f_30_Enter()
+  local l0
+  self = self._graph
+  l0 = self[32]
+  l0:True()
+end
+function export:f_22_Out()
+  local l0
+  self = self._graph
+  l0 = self[101]
+  l0:In(0)
+end
+function export:f_71_TimeElapsed()
+  local l0
+  self = self._graph
+  self:en_79()
+  l0 = self[79]
+  l0:ForceHack()
+end
+function export:f_98_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_73_Out
+  l0:In()
+end
+function export:f_1_Out()
+  local l0
+  self = self._graph
+  l0 = self[106]
+  l0.NPC = self.Guard_06
+  l0:ForceNpcUnhackable()
+end
+function export:f_85_Out_0()
+  self = self._graph
+  self:InSoftAlert()
+end
+function export:f_68_All_Dead()
+  local l0
+  self = self._graph
+  l0 = self[68]
+  self.Guard_List_Redzone = l0.UpdatedNPCList
+end
+function export:f_68_Final_Wave_Sent()
+  local l0
+  self = self._graph
+  l0 = self[68]
+  self.LocalReinfList = l0.SpawnedNPCs
+  self.Guard_List_Redzone = l0.UpdatedNPCList
+end
+function export:f_68_NPC_Killed()
+  local l0
+  self = self._graph
+  l0 = self[68]
+  self.Guard_List_Redzone = l0.UpdatedNPCList
+end
+function export:f_68_NPC_List_Updated()
+  local l0
+  self = self._graph
+  l0 = self[68]
+  self.LocalReinfList = l0.SpawnedNPCs
+  self.Guard_List_Redzone = l0.UpdatedNPCList
+  self:ReinfCalled()
+end
+function export:f_68_Prepped()
+  local l0
+  self = self._graph
+  l0 = self[68]
+  self.Guard_List_Redzone = l0.UpdatedNPCList
+  l0 = self[70]
+  l0:Condition(1)
+end
+function export:f_68_Wave_Sent()
+  local l0
+  self = self._graph
+  l0 = self[68]
+  self.LocalReinfList = l0.SpawnedNPCs
+  self.Guard_List_Redzone = l0.UpdatedNPCList
+end
+function export:f_18_Added()
+  local l0
+  self = self._graph
+  l0 = self[18]
+  self.GuardList = l0.Target
+  self:en_17()
+  l0 = self[17]
+  l0:Start()
+end
+function export:f_18_Out()
+  local l0
+  self = self._graph
+  l0 = self[18]
+  self.GuardList = l0.Target
+end
+function export:f_18_Removed()
+  local l0
+  self = self._graph
+  l0 = self[18]
+  self.GuardList = l0.Target
+end
+function export:f_32_Out()
+  local l0
+  self = self._graph
+  l0 = self[32]
+  self.EnticersWave_1 = l0.Target
+  l0 = self[35]
+  l0:Condition(0)
+end
+function export:f_32_SetFalse()
+  local l0
+  self = self._graph
+  l0 = self[32]
+  self.EnticersWave_1 = l0.Target
+end
+function export:f_32_SetFromBool()
+  local l0
+  self = self._graph
+  l0 = self[32]
+  self.EnticersWave_1 = l0.Target
+end
+function export:f_32_SetTrue()
+  local l0
+  self = self._graph
+  l0 = self[32]
+  self.EnticersWave_1 = l0.Target
+end
+function export:f_32_Toggled()
+  local l0
+  self = self._graph
+  l0 = self[32]
+  self.EnticersWave_1 = l0.Target
+end
+function export:f_13_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[13]
+  self.Guard_08 = l0.SpawnedEntity
+  l0 = self[98]
+  l0:Condition(4)
+end
+function export:f_20_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[20]
+  self.Guard_05 = l0.SpawnedEntity
+  l0 = self[98]
+  l0:Condition(6)
+end
+function export:f_52_ListFinished()
+  local l0
+  self = self._graph
+  self:en_55()
+  l0 = self[55]
+  l0:Assign()
+end
+function export:f_67_Out()
+  local l0
+  self = self._graph
+  l0 = self[39]
+  l0.Trigger = "2082405347842234621"
+  l0.CheckNow = 1
+  l0.AutoDisable = 1
+  l0:Enable()
+  l0 = self[31]
+  l0.Input = self.Guard_List_Redzone
+  l0.Data[0] = self.Guard_01
+  l0.Data[1] = self.Guard_02
+  l0.Data[2] = self.Guard_03
+  l0.Data[3] = self.Guard_04
+  l0.Data[4] = self.Guard_05
+  l0.Data[5] = self.Guard_06
+  l0.Data[6] = self.Guard_07
+  l0.Data[7] = self.Guard_08
+  l0:Add()
+  l0 = self[18]
+  l0.Input = self.GuardList
+  l0.Data[0] = self.Guard_04
+  l0.Data[1] = self.Guard_06
+  l0.Data[2] = self.Guard_05
+  l0.Data[3] = self.Guard_08
+  l0.Data[4] = self.Guard_09
+  l0:Add()
+  l0 = self[72]
+  l0.Input = self.ReinfSpawnerList
+  l0.Data[0] = "2080935437754584912"
+  l0.Data[1] = "2081197314440954538"
+  l0:Add()
+  l0 = Boxes[PathID("Domino/System/CompareBoolean_v2.lua")]
+  l0.A = self.SpawnOnLoad
+  l0.B = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.A_is_True = self.f_59_A_is_True
+  l0.A_is_False = self.f_59_A_is_False
+  l0.A_and_B = DummyFunction
+  l0.notA_and_notB = DummyFunction
+  l0.A_or_B = DummyFunction
+  l0.A_xor_B = DummyFunction
+  l0:In()
+  l0 = self[74]
+  l0.HackableEntity = "2082319673889657096"
+  l0.AutoDisable = 1
+  l0:Enable()
+end
+function export:f_54_TimeElapsed()
+  local l0
+  self = self._graph
+  l0 = self[53]
+  l0.Entity = self.Guard_08
+  l0.SoundId = "0x000eae6f"
+  l0:Start()
+end
+function export:f_84_Out()
+  local l0
+  self = self._graph
+  l0 = self[41]
+  l0.HackableEntity = self.Guard_01
+  l0.AutoDisable = 1
+  l0:Enable()
+end
+function export:f_24_Enter()
+  local l0
+  self = self._graph
+  l0 = self[29]
+  l0:Condition(0)
+end
+function export:f_61_Assigned()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/RewardComponentController.lua")]
+  l0.entity = self.Guard_03
+  l0.ClearRewardsBeforeRegister = 0
+  l0.ItemDB = "Items.466101581"
+  l0.ItemDBList = nil
+  l0.RewardEvent = "OnHackSuccess"
+  l0._graph = self
+  l0.Out = self.f_86_Out
+  l0:RegisterRewards()
+end
+function export:f_7_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[7]
+  self.Guard_06 = l0.SpawnedEntity
+  l0 = self[98]
+  l0:Condition(7)
+end
+function export:f_11_Added()
+  local l0
+  self = self._graph
+  l0 = self[11]
+  self.Guard_EntranceList = l0.Target
+  l0 = self[46]
+  l0.Input = self.WarningZoneList
+  l0.Data[0] = "2082680172171022734"
+  l0.Data[1] = "2082680827350674660"
+  l0.Data[2] = "2082689956643517752"
+  l0:Add()
+end
+function export:f_11_Out()
+  local l0
+  self = self._graph
+  l0 = self[11]
+  self.Guard_EntranceList = l0.Target
+end
+function export:f_11_Removed()
+  local l0
+  self = self._graph
+  l0 = self[11]
+  self.Guard_EntranceList = l0.Target
+end
+function export:f_60_CombatState()
+  local l0
+  self = self._graph
+  self:en_49()
+  l0 = self[49]
+  l0:Disable()
+end
+function export:f_86_Out()
+  local l0
+  self = self._graph
+  l0 = self[83]
+  l0.HackableEntity = self.Guard_03
+  l0.AutoDisable = 1
+  l0:Enable()
+end
+function export:f_10_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[10]
+  self.Guard_04 = l0.SpawnedEntity
+  l0 = self[98]
+  l0:Condition(8)
+end
+function export:f_29_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/CompareBoolean_v2.lua")]
+  l0.A = self.EnticersWave_1
+  l0.B = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.A_is_True = DummyFunction
+  l0.A_is_False = self.f_28_A_is_False
+  l0.A_and_B = DummyFunction
+  l0.notA_and_notB = DummyFunction
+  l0.A_or_B = DummyFunction
+  l0.A_xor_B = DummyFunction
+  l0:In()
+end
+function export:f_82_HackForced()
+  local l0
+  self = self._graph
+  l0 = self[51]
+  l0.Input = self.SecSystemHackedDiagList
+  l0.SoundID[0] = "0x000eaf02"
+  l0.SoundID[1] = "0x000eae9f"
+  l0.SoundID[2] = "0x000eae5d"
+  l0:Add()
+end
+function export:f_38_Enabled()
+  local l0
+  self = self._graph
+  l0 = self[97]
+  l0:In(0)
+end
+function export:f_38_OnUserInPlace()
+  local l0
+  self = self._graph
+  self:en_38()
+  l0 = self[38]
+  l0:Disable()
+end
+function export:f_49_Disabled()
+  local l0
+  self = self._graph
+  self:en_19()
+  l0 = self[19]
+  l0:Disable()
+end
+function export:f_49_Enabled()
+  local l0
+  self = self._graph
+  self:en_19()
+  l0 = self[19]
+  l0:Enable()
+end
+function export:f_49_HackSuccess()
+  local l0
+  self = self._graph
+  l0 = self[42]
+  l0.Seconds = 2
+  l0:Start()
+end
+function export:f_77_UnSpawned()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_75_Out
+  l0:In()
+  self:Unspawned()
+end
+function export:f_74_HackSuccess()
+  local l0
+  self = self._graph
+  self:en_17()
+  l0 = self[17]
+  l0:RemoveZone()
+  self:en_12()
+  l0 = self[12]
+  l0:RemoveZone()
+end
+function export:f_93_Closed()
+  local l0
+  self = self._graph
+  l0 = self[95]
+  l0:Close()
+end
+function export:f_93_Out()
+  local l0
+  self = self._graph
+  l0 = self[92]
+  l0.Entity = self.Guard_08
+  l0.SoundId = "0x000d7fae"
+  l0.Queue = 1
+  l0:Start()
+end
+function export:f_34_Enabled()
+  local l0
+  self = self._graph
+  self:en_38()
+  l0 = self[38]
+  l0:Enable()
+end
+function export:f_34_OnUserInPlace()
+  local l0
+  self = self._graph
+  self:en_34()
+  l0 = self[34]
+  l0:Disable()
+end
+function export:f_34_Out()
+  local l0
+  self = self._graph
+  self:en_38()
+  l0 = self[38]
+  l0:Unspawn()
+end
+function export:f_58_HackForced()
+  local l0
+  self = self._graph
+  self:en_58()
+  l0 = self[58]
+  l0:DisableHack()
+end
+function export:f_56_OnPhoneCallEnded()
+  local l0
+  self = self._graph
+  l0 = self[56]
+  l0:Disable()
+end
+function export:f_33_OnPhoneCallEnded()
+  local l0
+  self = self._graph
+  l0 = self[33]
+  l0:Disable()
+end
+function export:f_27_Out()
+  local l0
+  self = self._graph
+  l0 = self[26]
+  l0.HackableEntity = self.Guard_02
+  l0.AutoDisable = 1
+  l0:Enable()
+end
+function export:f_41_HackSuccess()
+  local l0
+  self = self._graph
+  l0 = self[37]
+  l0:Enable()
+end
+function export:f_45_Added()
+  local l0
+  self = self._graph
+  l0 = self[45]
+  self.ForbiddenZoneList = l0.Target
+  self:en_12()
+  l0 = self[12]
+  l0:Start()
+end
+function export:f_45_Out()
+  local l0
+  self = self._graph
+  l0 = self[45]
+  self.ForbiddenZoneList = l0.Target
+end
+function export:f_45_Removed()
+  local l0
+  self = self._graph
+  l0 = self[45]
+  self.ForbiddenZoneList = l0.Target
+end
+function export:f_51_Added()
+  local l0
+  self = self._graph
+  l0 = self[51]
+  self.SecSystemHackedDiagList = l0.Target
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_47_Out
+  l0:In()
+end
+function export:f_51_Out()
+  local l0
+  self = self._graph
+  l0 = self[51]
+  self.SecSystemHackedDiagList = l0.Target
+end
+function export:f_51_Removed()
+  local l0
+  self = self._graph
+  l0 = self[51]
+  self.SecSystemHackedDiagList = l0.Target
+end
+function export:f_6_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[6]
+  self.Guard_07 = l0.SpawnedEntity
+  l0 = self[98]
+  l0:Condition(3)
+end
+function export:en_21()
+  local l0
+  l0 = self[21]
+  l0.NPCList = self.GuardList
+end
+function export:en_80()
+  local l0
+  l0 = self[80]
+  l0.HackableEntity = "2082941594037678738"
+end
+function export:en_8()
+  local l0
+  l0 = self[8]
+  l0.NPCList = self.Guard_EntranceList
+end
+function export:en_3()
+  local l0
+  l0 = self[3]
+  l0.CLOEntity = "2082405199399524324"
+end
+function export:en_19()
+  local l0
+  l0 = self[19]
+  l0.HackableEntity = "2083051197402808667"
+  l0.AutoDisable = 1
+end
+function export:en_17()
+  local l0
+  l0 = self[17]
+  l0.SquadName = "A04_M06_BackDoorSquad"
+  l0.Config = "NPCOverrideConfig.3952559719" --was 3456007471
+  l0.NPCList = self.GuardList
+  l0.LKPGroup = "LKP_INSIDE"
+  l0.Zone = "2081584938420798338"
+  l0.ForbiddenZone = "2082746686588853772"
+  l0.WarningZoneList = self.WarningZoneList
+end
+function export:en_12()
+  local l0
+  l0 = self[12]
+  l0.SquadName = "A04_M06_EntranceDoorSquad"
+  l0.Config = "NPCOverrideConfig.3952559719" --was 3456007471
+  l0.NPCList = self.Guard_EntranceList
+  l0.LKPGroup = "LKP_INSIDE"
+  l0.ForbiddenZone = "2082746686588853772"
+  l0.WarningZoneList = self.WarningZoneList
+end
+function export:en_25()
+  local l0
+  l0 = self[25]
+  l0.CLOEntity = "2082405209239361765"
+end
+function export:en_55()
+  local l0
+  l0 = self[55]
+  l0.NPC = self.Guard_08
+  l0.Patrol = "2082692305348725492"
+end
+function export:en_79()
+  local l0
+  l0 = self[79]
+  l0.HackableEntity = "2082941278296758039"
+end
+function export:en_30()
+  local l0
+  l0 = self[30]
+  l0.Trigger = "2082405330232449276"
+  l0.CheckNow = 1
+  l0.AutoDisable = 1
+end
+function export:en_68()
+  local l0
+  l0 = self[68]
+  l0.SpawnerList = self.ReinfSpawnerList
+  l0.NPCList = self.Guard_List_Redzone
+  l0.NPCCallers = self.LocalReinfCallerList
+  l0.CallerMission = "MissionList.1993428646"
+  l0.Threshold = 7
+  l0.Limit = 9
+  l0.Min = 2
+  l0.Max = 2
+  l0.SquadName = "A04_M06_BackDoorSquad"
+  l0.LKPGroup = "LKP_INSIDE"
+  l0.Attacking = 1
+  l0.Waves = 4
+  l0.SpawnFurthest = 0
+end
+function export:en_24()
+  local l0
+  l0 = self[24]
+  l0.Trigger = "2080965505266498700"
+  l0.CheckNow = 1
+  l0.AutoDisable = 1
+end
+function export:en_38()
+  local l0
+  l0 = self[38]
+  l0.CLOEntity = "2082405221170059501"
+end
+function export:en_49()
+  local l0
+  l0 = self[49]
+  l0.HackableEntity = "2082000067245548709"
+  l0.AutoDisable = 1
+end
+function export:en_34()
+  local l0
+  l0 = self[34]
+  l0.CLOEntity = "2082405211841927403"
+end
+function export:en_58()
+  local l0
+  l0 = self[58]
+  l0.HackableEntity = "2082941476674758996"
+end
+function export:Spawned()
+end
+function export:Unspawned()
+end
+function export:AllDead()
+end
+function export:InCombatState()
+end
+function export:ReinfCalled()
+end
+function export:InSoftAlert()
+end
+function export:InHardAlert()
+end
+_compilerVersion = 4

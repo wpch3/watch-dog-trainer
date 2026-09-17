@@ -1,0 +1,1526 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua")
+  cbox:RegisterBox("domino/user/windycity/custom_scripts/function_inputlistenermonitor.lua")
+  cbox:RegisterBox("Domino/System/BinkVideoPlayer_v3.lua")
+  cbox:RegisterBox("Domino/System/GetPlayerID.lua")
+  cbox:RegisterBox("Domino/System/HackableMonitor.lua")
+  cbox:RegisterBox("Domino/System/InteractionScriptMonitor.lua")
+  cbox:RegisterBox("Domino/System/InventoryMonitor.lua")
+  cbox:RegisterBox("Domino/System/MissionLayer_v2.lua")
+  cbox:RegisterBox("Domino/System/MissionModuleBox_v3.lua")
+  cbox:RegisterBox("Domino/System/PawnHealthMonitor_v3.lua")
+  cbox:RegisterBox("Domino/System/PickupMonitor.lua")
+  cbox:RegisterBox("Domino/System/PlaySound_v2.lua")
+  cbox:RegisterBox("Domino/System/ProfilerMonitor_v2.lua")
+  cbox:RegisterBox("Domino/System/ProximityMonitor.lua")
+  cbox:RegisterBox("Domino/System/SecurityCameraMonitor.lua")
+  cbox:RegisterBox("Domino/System/Timer_v2.lua")
+  cbox:LoadResource("sndres0x0001b16d", "CSoundResource") --pickup
+  cbox:LoadResource("sndres0x000fad6f", "CSoundResource") --glitch
+  cbox:LoadResource("sndres0x00102575", "CSoundResource") --destroyer
+  cbox:LoadResource("sndres0x00101316", "CSoundResource") --sr25
+end
+function export:Init(cbox)
+  self.This_Script = cbox:GetParentEntity()
+  local l0
+  self.Layer_Name = "custom_Turret"
+  self.Reference_Entity = "2480000000000000000"
+  self.Turret_NPC = "2480000000000000001"
+  self.Turret_Camera = "2480000000000000002"
+  self.Turret_Weapon = "2480000000000000003"
+  self.Turret_Tripod = "2480000000000000004"
+  self.Turret_Scope = "2480000000000000005"
+  self.Turret_RETRIEVE = "2480000000000000006"
+  self.Turret_Blood = "2480000000000000007"
+  self.Turret_Hack = "2480000000000000008"
+  self.Turret_Stunned = "2480000000000000009"
+  self.Turret_Salvage = "2480000000000000010"
+  self.Turret_Muzzleflash = "2480000000000000011"
+  self.Turret_Cooldown = "2480000000000000012"
+  self.Turret_Disk = "2480000000000000013"
+  self.Turret_Silencer = "2480000000000000014"
+  self.Turret_Muzzlesmoke = "2480000000000000015"
+  self.Target_MARK = "2480000000000000016"
+  self.Target_MARKED = { "2480000000000000017", "2480000000000000018", "2480000000000000019", "2480000000000000020", "2480000000000000021", "2480000000000000022", "2480000000000000023", "2480000000000000024", "2480000000000000025", "2480000000000000026" }
+  self.Target_ELIMINATE = { "2480000000000000033", "2480000000000000034", "2480000000000000035", "2480000000000000036", "2480000000000000037", "2480000000000000038", "2480000000000000039", "2480000000000000040", "2480000000000000041", "2480000000000000042" }
+  self.Target_ICON = { "2480000000000000049", "2480000000000000050", "2480000000000000051", "2480000000000000052", "2480000000000000053", "2480000000000000054", "2480000000000000055", "2480000000000000056", "2480000000000000057", "2480000000000000058" }
+  self.PlayerPawn = nil
+  self.Loop_Delay = 1.0 --check despawn every
+  self.Item_AccessID = "AccessId.1113288855" --_None.Prototypes
+  self.Item_Schematic = "Items.675574868" --Tech.TurretSchematic
+  self.Item_Power = "Items.2559303204" --Tech.Turret
+  self.Upgrade_Silencer = "Items.2559303217" --Tech.Turret_UpgradeSilencer
+  self.Upgrade_Range = "Items.2559303218" --Tech.Turret_UpgradeRange
+  self.Upgrade_Tags = "Items.2559303219" --Tech.Turret_UpgradeTags
+  self.Upgrade_Cooldown = "Items.2559303220" --Tech.Turret_UpgradeCooldown
+  self[1000] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[1000]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = self.Layer_Unloaded
+  l0.Reseted = self.Layer_Loaded
+  self[100] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[100]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = self.Shops_Loaded
+  self[0] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua") --player health
+  l0 = self[0]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Damaged = DummyFunction
+  l0.Killed = self.Despawn_Everything
+  l0.AllDead = DummyFunction
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[1] = cbox:CreateBox("domino/user/windycity/custom_scripts/function_inputlistenermonitor.lua")
+  l0 = self[1]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.InputReceived = self.Controls_Camera
+  self[21] = cbox:CreateBox("Domino/System/InventoryMonitor.lua")
+  l0 = self[21]
+  l0._graph = self
+  l0.True = DummyFunction
+  l0.False = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnItemAdded = self.Turret_Armed
+  l0.OnItemRemoved = DummyFunction
+  l0.OnItemEquipped = DummyFunction
+  l0.InWheelTrue = DummyFunction
+  l0.InWheelFalse = DummyFunction
+  self[22] = cbox:CreateBox("Domino/System/InventoryMonitor.lua")
+  l0 = self[22]
+  l0._graph = self
+  l0.True = DummyFunction
+  l0.False = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnItemAdded = self.Turret_Armed
+  l0.OnItemRemoved = DummyFunction
+  l0.OnItemEquipped = DummyFunction
+  l0.InWheelTrue = DummyFunction
+  l0.InWheelFalse = DummyFunction
+  self[23] = cbox:CreateBox("Domino/System/InventoryMonitor.lua")
+  l0 = self[23]
+  l0._graph = self
+  l0.True = DummyFunction
+  l0.False = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnItemAdded = self.Turret_Armed
+  l0.OnItemRemoved = DummyFunction
+  l0.OnItemEquipped = DummyFunction
+  l0.InWheelTrue = DummyFunction
+  l0.InWheelFalse = DummyFunction
+  self[24] = cbox:CreateBox("Domino/System/InventoryMonitor.lua")
+  l0 = self[24]
+  l0._graph = self
+  l0.True = DummyFunction
+  l0.False = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnItemAdded = self.Turret_Armed
+  l0.OnItemRemoved = DummyFunction
+  l0.OnItemEquipped = DummyFunction
+  l0.InWheelTrue = DummyFunction
+  l0.InWheelFalse = DummyFunction
+  self[5] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[5]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.Acquire_Target
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[6] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[6]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.Remove_Target
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[7] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[7]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.Kill_Targets
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[25] = cbox:CreateBox("Domino/System/ProfilerMonitor_v2.lua")
+  l0 = self[25]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.InfoDisplayed = self.Acquisition_Started
+  l0.ListInfoDisplayed = DummyFunction
+  l0.IsOn = DummyFunction
+  l0.IsOff = DummyFunction
+  l0.DelayBeforeSendingEventSet = DummyFunction
+  l0.DelayBeforeSendingEventReset = DummyFunction
+  self[27] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[27]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Follow_Target
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[28] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[28]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Rotate_Weapon
+  l0.LoopingEnded = self.Kill_Target
+  l0.GotTime = DummyFunction
+  self[29] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[29]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Cooldown_Update
+  l0.LoopingEnded = self.Cooldown_Finished
+  l0.GotTime = DummyFunction
+  self[33] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[33]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Tag_Count
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[15] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[15]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = DummyFunction
+  l0.ExitRadius = self.Despawn_Everything
+  self[17] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[17]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Turret_Arming
+  l0.LoopingEnded = self.Turret_Armed
+  l0.GotTime = DummyFunction
+  self[30] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[30]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Enter_Allowed
+  l0.ExitRadius = self.Enter_Prevented
+  self[88] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[88]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.Force_Enter
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[89] = cbox:CreateBox("Domino/System/SecurityCameraMonitor.lua")
+  l0 = self[89]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnStartAccessCamera = DummyFunction
+  l0.OnEndAccessCamera = self.Camera_Entered
+  l0.OnStartExitCamera = self.Camera_Exiting
+  l0.OnEndExitCamera = DummyFunction
+  l0.OnPlayerDetectionStartCamera = DummyFunction
+  l0.OnPlayerDetectionStopCamera = DummyFunction
+  l0.CameraHostile = DummyFunction
+  l0.CameraNotHostile = DummyFunction
+  self[10] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua")
+  l0 = self[10]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Damaged = self.Turret_Destroyed
+  l0.Killed = self.Turret_Destroyed
+  l0.AllDead = DummyFunction
+  l0.IsUnderwater = self.Turret_Destroyed
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[99] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[99]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Turret_Tilt
+  l0.LoopingEnded = self.Force_Exit
+  l0.GotTime = DummyFunction
+  self[40] = cbox:CreateBox("Domino/System/InteractionScriptMonitor.lua")
+  l0 = self[40]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnSuccess = DummyFunction
+  l0.OnFail = DummyFunction
+  l0.InteractionStarted = self.Shop_Interacted
+  l0.InteractionFinished = DummyFunction
+  l0.AnimationStarted = DummyFunction
+  l0.AnimationFinished = DummyFunction
+  self[50] = cbox:CreateBox("Domino/System/PickupMonitor.lua")
+  l0 = self[50]
+  l0._graph = self
+  l0.PickedUp = self.Despawn_Everything
+  self[300] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[300]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[82] = cbox:CreateBox("Domino/System/InteractionScriptMonitor.lua")
+  l0 = self[82]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnSuccess = DummyFunction
+  l0.OnFail = DummyFunction
+  l0.InteractionStarted = self.Despawn_Everything
+  l0.InteractionFinished = DummyFunction
+  l0.AnimationStarted = DummyFunction
+  l0.AnimationFinished = DummyFunction
+  self[45] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[45]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction --self.Restore_Item
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[70] = cbox:CreateBox("Domino/System/PlaySound_v2.lua")
+  l0 = self[70]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Finished = DummyFunction
+  self[111] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[111]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Check_Targets
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[1111] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[1111]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Check_Existence
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[11111] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[11111]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Check_Mission
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  local l0
+  math.randomseed(Globals._CUSTOM_SCRIPTS._Random_Seed+math.floor(GetGameTime())) --set the global variable as math seed
+  math.random(); math.random(); math.random() --pop some random numbers before using them for real
+--getting player entity id for next functions
+self.PlayerPawn = GetLocalPlayerEntityId()
+-- self.Entity_Teleport = SpawnEntityFromArchetype("{787873A0-B779-459F-93EA-C9654A449448}", 1188.1, 1457.6, 62.6, 0, 0, 270)
+-- TeleportEntity(GetLocalPlayerEntityId(), self.Entity_Teleport, 0, 0)
+  --checking if player respawned
+  if Globals._CUSTOM_SCRIPTS._Player_Respawned == GetLocalPlayerEntityId() then
+    --loading the custom layer
+    l0 = self[1000]
+    l0.LayerName = self.Layer_Name
+    l0:Reset() --Layer_Loaded
+  else
+    --unloading the custom layer
+    l0 = self[1000]
+    l0.LayerName = self.Layer_Name
+    l0:Unload() --Layer_Unloaded
+  end
+end
+function export:Layer_Loaded()
+  local l0
+  self = self._graph
+--forcing player exit cover
+-- ForceExitCover(GetLocalPlayerEntityId())
+--calculating spawn position front right of player character
+self.Spawn_X = GetEntityPosition(GetLocalPlayerEntityId(), 0) + 0.1 * math.cos(math.rad(GetEntityAngle(GetLocalPlayerEntityId(), 2) + 45))
+self.Spawn_Y = GetEntityPosition(GetLocalPlayerEntityId(), 1) + 0.1 * math.sin(math.rad(GetEntityAngle(GetLocalPlayerEntityId(), 2) + 45))
+self.Spawn_Z = GetEntityPosition(GetLocalPlayerEntityId(), 2) + 0.1
+--collision
+SetEntityPosition(self.Turret_NPC, self.Spawn_X, self.Spawn_Y, self.Spawn_Z)
+SetEntityAngle(self.Turret_NPC, 0, 0, GetEntityAngle(GetLocalPlayerEntityId(), 2))
+RemoveInvincibility(self.Turret_NPC)
+ForceHideTagIndicator(self.Turret_NPC, 1)
+EnableDialogs(self.Turret_NPC, 1, 1, 1, 1, 0)
+DisableTakedownOnPawn(self.Turret_NPC)
+SetHackable(self.Turret_NPC, 0)
+SetProfilingEnabled(self.Turret_NPC, 0)
+HideProfilingPath(self.Turret_NPC)
+AssignNPCOverrideConfig(self.Turret_NPC, "NPCOverrideConfig.2696485279") --"Ally.A03_M02_TBone"
+SendAICmdBHVstateV2(self.Turret_NPC, "Unaware", "0", 1, 1, 0)
+-- AgentDrawWeaponType(self.Turret_NPC, -1)
+HideEntity(self.Turret_NPC)
+--props
+SetEntityPosition(self.Turret_Weapon, GetEntityPosition(self.Turret_NPC, 0) - 0.05 * math.cos(math.rad(GetEntityAngle(self.Turret_NPC, 2) + 90)), GetEntityPosition(self.Turret_NPC, 1) - 0.05 * math.sin(math.rad(GetEntityAngle(self.Turret_NPC, 2) + 90)), GetEntityPosition(self.Turret_NPC, 2) + 1.0575)
+SetEntityAngle(self.Turret_Weapon, 0, 0, GetEntityAngle(self.Turret_NPC, 2))
+SetPhysicsEnabled(self.Turret_Weapon, 0)
+Bind(self.Turret_NPC, self.Turret_Weapon, "", 0)
+-- SetEntityPosition(self.Turret_Scope, GetEntityPosition(self.Turret_Weapon, 0) + 0.01 * math.cos(math.rad(GetEntityAngle(GetLocalPlayerEntityId(), 2) + 90.25)), GetEntityPosition(self.Turret_Weapon, 1) + 0.01 * math.sin(math.rad(GetEntityAngle(GetLocalPlayerEntityId(), 2) + 90.25)), GetEntityPosition(self.Turret_Weapon, 2) + 0.3) --Weapons.Accessories.SniperScope
+-- SetEntityPosition(self.Turret_Scope, GetEntityPosition(self.Turret_Weapon, 0) - 0.27 * math.cos(math.rad(GetEntityAngle(GetLocalPlayerEntityId(), 2) + 90)), GetEntityPosition(self.Turret_Weapon, 1) - 0.27 * math.sin(math.rad(GetEntityAngle(GetLocalPlayerEntityId(), 2) + 90)), GetEntityPosition(self.Turret_Weapon, 2)+0.01) --GamePlay.Security_Camera_Friendly.Pawnee_Only.NoMove
+SetEntityPosition(self.Turret_Scope, GetEntityPosition(self.Turret_Weapon, 0) + 0.12 * math.cos(math.rad(GetEntityAngle(GetLocalPlayerEntityId(), 2) + 90.25)), GetEntityPosition(self.Turret_Weapon, 1) + 0.12 * math.sin(math.rad(GetEntityAngle(GetLocalPlayerEntityId(), 2) + 90.25)), GetEntityPosition(self.Turret_Weapon, 2) + 0.1875) --props.Props.Damien_Camera
+SetEntityAngle(self.Turret_Scope, 0, 0, GetEntityAngle(self.Turret_Weapon, 2))
+SetPhysicsEnabled(self.Turret_Scope, 0)
+Bind(self.Turret_Weapon, self.Turret_Scope, "", 0)
+SetEntityPosition(self.Turret_Tripod, GetEntityPosition(self.Turret_NPC, 0), GetEntityPosition(self.Turret_NPC, 1), GetEntityPosition(self.Turret_NPC, 2))
+SetEntityAngle(self.Turret_Tripod, 0, 0, GetEntityAngle(self.Turret_NPC, 2)-90)
+SetPhysicsEnabled(self.Turret_Tripod, 0)
+Bind(self.Turret_NPC, self.Turret_Tripod, "", 0)
+--muzzleflash
+SetEntityPosition(self.Turret_Muzzleflash, GetEntityPosition(self.Turret_Weapon, 0) + 0.89 * math.cos(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 90)), GetEntityPosition(self.Turret_Weapon, 1) + 0.89 * math.sin(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 90)), GetEntityPosition(self.Turret_Weapon, 2) + 0.11)
+SetEntityAngle(self.Turret_Muzzleflash, 0, 0, GetEntityAngle(self.Turret_Weapon, 2))
+Bind(self.Turret_Weapon, self.Turret_Muzzleflash, "", 0)
+--muzzlesmoke
+SetEntityPosition(self.Turret_Muzzlesmoke, GetEntityPosition(self.Turret_Weapon, 0) + 0.99 * math.cos(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 90)), GetEntityPosition(self.Turret_Weapon, 1) + 0.99 * math.sin(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 90)), GetEntityPosition(self.Turret_Weapon, 2) + 0.11)
+SetEntityAngle(self.Turret_Muzzlesmoke, 0, 0, GetEntityAngle(self.Turret_Weapon, 2))
+Bind(self.Turret_Weapon, self.Turret_Muzzlesmoke, "", 0)
+--camera
+SetEntityPosition(self.Turret_Camera, GetEntityPosition(self.Turret_Weapon, 0) - 0.025 * math.cos(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 90)), GetEntityPosition(self.Turret_Weapon, 1) - 0.025 * math.sin(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 90)), GetEntityPosition(self.Turret_Weapon, 2) + 0.275)
+SetEntityAngle(self.Turret_Camera, 0, 0, GetEntityAngle(self.Turret_Weapon, 2))
+SetPhysicsEnabled(self.Turret_Camera, 0)
+Bind(self.Turret_Weapon, self.Turret_Camera, "", 0)
+ForceElectricPowerOn(self.Turret_Camera, 1)
+SetPowerIngredientOverrideAvailability(self.Turret_Camera, 1)
+SetProfilingEnabled(self.Turret_Camera, 1)
+--other
+Bind(self.Turret_Tripod, self.Turret_RETRIEVE, "", 1)
+Bind(self.Turret_Camera, self.Turret_Cooldown, "", 1)
+Bind(self.Turret_Camera, self.Turret_Hack, "", 1)
+ForceElectricPowerOn(self.Turret_Hack, 1)
+SetPowerIngredientOverrideAvailability(self.Turret_Hack, 1)
+ForceElectricPowerOn(self.Target_MARK, 1)
+SetPowerIngredientOverrideAvailability(self.Target_MARK, 1)
+  for i=1, #self.Target_MARKED do
+    ForceElectricPowerOn(self.Target_MARKED[i], 1)
+    SetPowerIngredientOverrideAvailability(self.Target_MARKED[i], 1)
+    ForceElectricPowerOn(self.Target_ELIMINATE[i], 1)
+    SetPowerIngredientOverrideAvailability(self.Target_ELIMINATE[i], 1)
+  end
+  --start monitoring player
+  l0 = self[0]
+  l0.Pawn = GetLocalPlayerEntityId()
+  l0:Enable()
+  --starting looping timer to monitor targets
+  l0 = self[111]
+  l0.Seconds = 0.3
+  l0:Start()
+  --starting looping timer to detect despawn
+  l0 = self[1111]
+  l0.Seconds = 0.2
+  l0:Start()
+  --starting looping timer to detect mission
+  l0 = self[11111]
+  l0.Seconds = 0.1
+  l0:Start()
+  --enabling turret health monitor
+  l0 = self[10]
+  l0.Pawn = self.Turret_NPC
+  l0:Enable()
+  --enabling camera monitor
+  l0 = self[89]
+  l0.PlayerEntity = GetLocalPlayerEntityId()
+  l0.CameraEntity = self.Turret_Camera
+  l0:Enable() --Camera_Entered --Camera_Exiting
+  --enabling despawn range
+  l0 = self[15]
+  l0.Entity1 = GetLocalPlayerEntityId()
+  l0.Entity2 = self.Turret_Camera
+  l0.Radius = 175
+  l0.CheckNow = 0
+  l0:Enable() --Despawn_Everything
+  --loading the shops layer
+  l0 = self[100]
+  if GetEntityPosition(self.Turret_Tripod, 0) > 0 and GetEntityPosition(self.Turret_Tripod, 1) < 0 then
+    self.Sector_ID = "248000000000001"
+    l0.LayerName = self.Layer_Name.."_Shops_1"
+  elseif GetEntityPosition(self.Turret_Tripod, 0) < 0 and GetEntityPosition(self.Turret_Tripod, 1) < 0 then
+    self.Sector_ID = "248000000000002"
+    l0.LayerName = self.Layer_Name.."_Shops_2"
+  elseif GetEntityPosition(self.Turret_Tripod, 0) < 0 and GetEntityPosition(self.Turret_Tripod, 1) > 0 then
+    self.Sector_ID = "248000000000003"
+    l0.LayerName = self.Layer_Name.."_Shops_3"
+  else
+    self.Sector_ID = "248000000000004"
+    l0.LayerName = self.Layer_Name.."_Shops_4"
+  end
+  l0:Reset() --Shops_Loaded
+  -- --activation anim
+  -- l0 = self[17]
+  -- l0.Seconds = 1/60
+  -- l0.Loop = 1
+  -- l0.nbLoop = 1.0 * 60
+  -- l0:Start() --Turret_Arming --Turret_Armed
+-- end
+-- function export:Turret_Arming()
+  -- local l0
+  -- self = self._graph
+  -- l0 = self[17]
+  -- UnBind(self.Turret_Weapon)
+  -- --preparing rotation
+  -- if l0.currentLoop == 6 then
+    -- SetEntityAngle(self.Turret_Weapon, -90, 0, GetEntityAngle(GetLocalPlayerEntityId(), 2)+90)
+  -- end
+  -- --tilting turret up
+  -- if l0.currentLoop > 6 then
+    -- SetEntityAngle(self.Turret_Weapon, GetEntityAngle(self.Turret_Weapon, 0) + 90/(l0.nbLoop-6), GetEntityAngle(self.Turret_Weapon, 1), GetEntityAngle(self.Turret_Weapon, 2) - 90/(l0.nbLoop-6))
+  -- end
+  -- Bind(self.Turret_NPC, self.Turret_Weapon, "", 0)
+  --skipping activation anim
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Turret_Armed
+  l0:In()
+end
+function export:Turret_Armed()
+  local l0
+  self = self._graph
+  --base upgrades
+  if GetItemCount(GetLocalPlayerEntityId(), self.Upgrade_Tags) < 1 then
+    ExecuteReward_V2(GetLocalPlayerEntityId(), self.Upgrade_Tags, 0)
+  end
+--turret upgrades
+self.Silenced = GetItemCount(GetLocalPlayerEntityId(), self.Upgrade_Silencer) --only 1
+self.Multiplier_Range = GetItemCount(GetLocalPlayerEntityId(), self.Upgrade_Range) --25 units each (max 175)
+self.Multiplier_Targets = GetItemCount(GetLocalPlayerEntityId(), self.Upgrade_Tags) --targets cap (max 10)
+self.Multiplier_Cooldown = GetItemCount(GetLocalPlayerEntityId(), self.Upgrade_Cooldown) --10s reduction each (from 60s)
+self.Multiplier_Killrate = 2 --kills per second
+--turret hack/kill range
+self.Turret_Range = 50 + 25 * self.Multiplier_Range
+--max targets amount
+self.Max_Targets = 1 * self.Multiplier_Targets
+--cooldown deciseconds
+self.Cooldown_Time =  60 - 10 * self.Multiplier_Cooldown
+--time between kills
+self.Kill_Rate = 60 / self.Multiplier_Killrate
+  --silencer
+  if self.Silenced ~= 0 then
+    UnBind(self.Turret_Silencer)
+    SetPhysicsEnabled(self.Turret_Silencer, 0)
+    SetEntityPosition(self.Turret_Silencer, GetEntityPosition(self.Turret_Weapon, 0) + 0.89 * math.cos(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 90.3)), GetEntityPosition(self.Turret_Weapon, 1) + 0.89 * math.sin(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 90.3)), GetEntityPosition(self.Turret_Weapon, 2) + 0.11)
+    SetEntityAngle(self.Turret_Silencer, 0, 0, GetEntityAngle(self.Turret_Weapon, 2))
+    Bind(self.Turret_Weapon, self.Turret_Silencer, "", 1) --1 for Weapons.SniperRifles.SR25.JordiSniper --0 for Weapons.Melee.Baton
+  end
+--disk
+UnBind(self.Turret_Disk)
+SetEntityPosition(self.Turret_Disk, GetEntityPosition(self.Turret_Camera, 0), GetEntityPosition(self.Turret_Camera, 1), GetEntityPosition(self.Turret_Camera, 2))
+Bind(self.Turret_Camera, self.Turret_Disk, "", 0)
+SetMissionAreaColor(self.Turret_Disk, 0.2, 0.78, 0.96)
+SetMissionAreaColorAlpha(self.Turret_Disk, 0.15)
+SetMissionAreaDrawType(self.Turret_Disk, "Inside")
+SetMissionAreaShapeType(self.Turret_Disk, "CMissionCircleDescriptor")
+SetMissionAreaRadius(self.Turret_Disk, self.Turret_Range)
+MissionAreaActivation(self.Turret_Disk, 1)
+--laser
+UnBind(self.Turret_Laser)
+RemoveEntity(self.Turret_Laser)
+self.Turret_Laser = SpawnEntityFromArchetype("{991DCBB0-AA68-4EC9-89C2-907799AF2139}", GetEntityPosition(self.Turret_Weapon, 0) + 0.59 * math.cos(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 90)), GetEntityPosition(self.Turret_Weapon, 1) + 0.59 * math.sin(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 90)), GetEntityPosition(self.Turret_Weapon, 2) + 0.06, GetEntityAngle(self.Turret_Weapon, 0), 0, GetEntityAngle(self.Turret_Weapon, 2)) --DLC_Laser.DLC_Laser.LaserTripwireTrigger
+Bind(self.Turret_Weapon, self.Turret_Laser, "", 0)
+  --initializing targets acquisition
+  SetHackable(self.Target_MARK, 0)
+  IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_MARK, 0)
+  for i=1, #self.Target_MARKED do
+    SetHackable(self.Target_MARKED[i], 0)
+    SetHackable(self.Target_ELIMINATE[i], 0)
+    SendMapPointControllerEvent(self.Target_ICON[i], 0)
+    IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_ICON[i], 0)
+  end
+  if type(self.Acquired_Targets) == "table" then
+    for i=1, #self.Acquired_Targets do
+      ResetKeyIntel(self.Acquired_Targets[i])
+    end
+  end
+  self.Acquired_Targets = {}
+  --enabling retrieve interaction
+SetInteractionScriptState(self.Turret_RETRIEVE, 1)
+  l0 = self[82]
+  l0.InteractionScriptEntity = self.Turret_RETRIEVE
+  l0.AutoDisable = 1
+  l0:Enable() --Despawn_Everything
+  --enabling turret range
+  l0 = self[30]
+  l0.Entity1 = GetLocalPlayerEntityId()
+  l0.Entity2 = self.Turret_Camera
+  l0.Radius = self.Turret_Range
+  l0.CheckNow = 1
+  l0.CheckDistance3D = 0 --because disk is 2D
+  l0:Enable() --Enter_Allowed --Enter_Prevented
+end
+function export:Shops_Loaded()
+  local l0
+  self = self._graph
+  --selecting closest shop
+  self.Selected_Shop = self.Sector_ID.."0500"
+  self.Distance_Last = 9999
+  for n=1, 1000 do
+    local Entity_ID = self.Sector_ID..string.format("%04d", n) --parsing IDs like this because of lua precision
+    local Distance_Player = GetDistance3D(Entity_ID, self.Turret_Tripod)
+    ShopEnable(Entity_ID, 0)
+    if Distance_Player > 0 and Distance_Player < self.Distance_Last then
+      self.Distance_Last = Distance_Player
+      self.Selected_Shop = Entity_ID
+    end
+  end
+-- ShowMissionTextMessageLocalPlayer("MissionDebug", "DefaultIcon", tostring(GetDistance3D(self.Selected_Shop, GetLocalPlayerEntityId())), self.Selected_Shop, "", "", 5, 0, self, "OnFinished", "OnDisplayed")
+  --enabling shop interaction
+UnBind(self.Selected_Shop)
+Bind(self.Turret_Tripod, self.Selected_Shop, "", 1)
+ShopEnable(self.Selected_Shop, 1)
+  l0 = self[40]
+  l0.InteractionScriptEntity = self.Selected_Shop
+  l0.AutoDisable = 0
+  l0:Enable() --Shop_Interacted
+end
+function export:Shop_Interacted()
+  local l0
+  self = self._graph
+  --alligning shop to player
+  self.Cathetus_A = GetEntityPosition(self.Turret_Tripod, 0) - GetEntityPosition(GetLocalPlayerEntityId(), 0)
+  self.Cathetus_B = - ( GetEntityPosition(self.Turret_Tripod, 1) - GetEntityPosition(GetLocalPlayerEntityId(), 1) )
+  if GetEntityPosition(self.Turret_Tripod, 1) < GetEntityPosition(GetLocalPlayerEntityId(), 1) then
+    self.Angle_Z = ( math.deg( math.atan(self.Cathetus_A / self.Cathetus_B) ) + 180 ) % 360
+  else
+    self.Angle_Z = ( math.deg( math.atan(self.Cathetus_A / self.Cathetus_B) ) ) % 360
+  end
+  UnBind(self.Selected_Shop)
+  SetEntityAngle(self.Selected_Shop, 0, 0, self.Angle_Z)
+  Bind(self.Turret_Tripod, self.Selected_Shop, "", 0)
+  --enable shopping monitor
+  l0 = self[21]
+  l0.pawn = GetLocalPlayerEntityId()
+  l0.ItemDB = self.Upgrade_Silencer
+  l0:Enable() --Turret_Armed
+  l0 = self[22]
+  l0.pawn = GetLocalPlayerEntityId()
+  l0.ItemDB = self.Upgrade_Range
+  l0:Enable() --Turret_Armed
+  l0 = self[23]
+  l0.pawn = GetLocalPlayerEntityId()
+  l0.ItemDB = self.Upgrade_Tags
+  l0:Enable() --Turret_Armed
+  l0 = self[24]
+  l0.pawn = GetLocalPlayerEntityId()
+  l0.ItemDB = self.Upgrade_Cooldown
+  l0:Enable() --Turret_Armed
+end
+function export:Enter_Allowed()
+  local l0
+  self = self._graph
+  --enabling camera hack
+SetHackable(self.Turret_Hack, 1)
+  l0 = self[88]
+  l0.HackableEntity = self.Turret_Hack
+  l0:Enable() --Force_Enter
+--cooldown indicator
+IndicatorSetIsVisible(GetLocalPlayerId(), self.Turret_Cooldown, 0)
+end
+function export:Enter_Prevented()
+  local l0
+  self = self._graph
+  --forcing camera exit
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Force_Exit
+  l0:In()
+  --disabling camera hack
+SetHackable(self.Turret_Hack, 0)
+  l0 = self[88]
+  l0.HackableEntity = self.Turret_Hack
+  l0:Disable()
+--cooldown indicator
+IndicatorSetIsVisible(GetLocalPlayerId(), self.Turret_Cooldown, 1)
+IndicatorSetLocNameId(GetLocalPlayerId(), self.Turret_Cooldown, "201232") --"Out of range"
+end
+
+
+function export:Force_Enter()
+  local l0
+  self = self._graph
+--entering turret camera
+SecurityCameraForceEnter(GetLocalPlayerEntityId(), self.Turret_Camera)
+end
+function export:Camera_Entered()
+  local l0
+  self = self._graph
+--hiding prop
+HideEntity(self.Turret_Scope)
+  --enabling turret controls
+  l0 = self[1]
+  l0.Player = GetLocalPlayerEntityId()
+  l0.Input = { "cam_look_py_mouse", "cam_look_py", }
+  l0:Enable() --Controls_Camera
+  --enabling target acquisition
+OverrideAnticipationRadiusOnFoot(self.Turret_Range)
+ProfilerOverrideSwitchDuration(0)
+  l0 = self[25]
+  l0.Player = GetLocalPlayerEntityId()
+  l0.ProfilerInfoType = "BasicInfo"
+  -- l0.ProfilerInfoType = "ObjectInfo"
+  l0.DelayBeforeSendingEvent = 0.001
+  l0:SetDelayBeforeSendingEvent()
+  l0:Enable() --Acquisition_Started
+  --start monitoring marks
+AddScriptNarrativeDelay(9999) --hide hackable civilians
+  l0 = self[5]
+  l0.HackableEntity = self.Target_MARK
+  l0:Enable() --Acquire_Target
+  l0 = self[6]
+  l0.HackableEntityList = self.Target_MARKED
+  l0:Enable() --Remove_Target
+  l0 = self[7]
+  l0:Disable()
+  for i=1, #self.Acquired_Targets do
+    SetHackable(self.Target_MARKED[i], 1)
+    SetHackable(self.Target_ELIMINATE[i], 0)
+  end
+end
+function export:Camera_Exiting()
+  local l0
+  self = self._graph
+--showing prop
+ShowEntity(self.Turret_Scope)
+  --restart follow target
+  l0 = self[27]
+  l0.Seconds = 1.0
+  l0:Start()
+  --disabling turret controls
+  l0 = self[1]
+  l0:Disable()
+  --disabling target acquisition
+OverrideAnticipationRadiusOnFoot(-1)
+ProfilerOverrideSwitchDuration(-1)
+  l0 = self[25]
+  l0:ResetDelayBeforeSendingEvent()
+  l0:Disable()
+  --stop monitoring marks
+StopScriptNarrativeDelay() --redisplay hackable civilians
+  l0 = self[5]
+  l0:Disable()
+  l0 = self[6]
+  l0:Disable()
+  l0 = self[7]
+  l0.HackableEntityList = self.Target_ELIMINATE
+  l0:Enable() --Kill_Targets
+SetHackable(self.Target_MARK, 0)
+IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_MARK, 0)
+  for i=1, #self.Acquired_Targets do
+    SetHackable(self.Target_MARKED[i], 0)
+    SetHackable(self.Target_ELIMINATE[i], 1)
+  end
+  --hiding warning messages
+  l0 = self[300]
+  l0.MessageType = "MissionWarning"
+  l0:Hide()
+--stopping turret camera effects
+StopCameraShake(GetLocalPlayerEntityId(), self.ShakeKey, 0.0)
+StopBinkVideo()
+end
+function export:Follow_Target()
+  local l0
+  self = self._graph
+  if #self.Acquired_Targets > 0 and GetEntityPosition(self.Acquired_Targets[#self.Acquired_Targets], 2) > 0 and IsAlive(self.Acquired_Targets[#self.Acquired_Targets]) == 1 and GetDistance2D(self.Turret_Camera, self.Acquired_Targets[#self.Acquired_Targets]) < self.Turret_Range then
+    --setting target angle
+    self.Cathetus_A = GetDistance2D(self.Turret_Weapon, self.Acquired_Targets[#self.Acquired_Targets])
+    self.Cathetus_B = math.abs( GetEntityPosition(self.Turret_Weapon, 2) - GetEntityBonePosition(self.Acquired_Targets[#self.Acquired_Targets], "Head", 2, 0) )
+    if GetEntityPosition(self.Turret_Weapon, 2) < GetEntityBonePosition(self.Acquired_Targets[#self.Acquired_Targets], "Head", 2, 0) then
+      self.Angle_X = math.deg( math.atan(self.Cathetus_B / self.Cathetus_A) )
+    else
+      self.Angle_X = - math.deg( math.atan(self.Cathetus_B / self.Cathetus_A) )
+    end
+    self.Cathetus_A = GetEntityPosition(self.Turret_Weapon, 0) - GetEntityBonePosition(self.Acquired_Targets[#self.Acquired_Targets], "Head", 0, 0)
+    self.Cathetus_B = - ( GetEntityPosition(self.Turret_Weapon, 1) - GetEntityBonePosition(self.Acquired_Targets[#self.Acquired_Targets], "Head", 1, 0) )
+    if GetEntityPosition(self.Turret_Weapon, 1) < GetEntityBonePosition(self.Acquired_Targets[#self.Acquired_Targets], "Head", 1, 0) then
+      self.Angle_Z = ( math.deg( math.atan(self.Cathetus_A / self.Cathetus_B) ) ) % 360
+    else
+      self.Angle_Z = ( math.deg( math.atan(self.Cathetus_A / self.Cathetus_B) ) + 180 ) % 360
+    end
+    UnBind(self.Turret_Weapon)
+    if self.Angle_X > 30 and self.Angle_X < 180 then
+      SetEntityAngle(self.Turret_Weapon, 30, 0, self.Angle_Z)
+    elseif self.Angle_X < 330 and self.Angle_X > 180 then
+      SetEntityAngle(self.Turret_Weapon, 330, 0, self.Angle_Z)
+    else
+      SetEntityAngle(self.Turret_Weapon, self.Angle_X, 0, self.Angle_Z)
+    end
+    Bind(self.Turret_NPC, self.Turret_Weapon, "", 0)
+    --restart follow target
+    l0 = self[27]
+    l0.Seconds = 1/60
+    l0:Start()
+  elseif #self.Acquired_Targets > 0 then
+    --restart follow target
+    l0 = self[27]
+    l0.Seconds = self.Loop_Delay/2
+    l0:Start()
+  end
+end
+
+
+function export:Acquisition_Started()
+  local l0
+  self = self._graph
+  l0 = self[25]
+  --preventing selection if entity already acquired
+  for i=1, #self.Acquired_Targets do
+    if l0.EntityProfiled == self.Acquired_Targets[i] then
+      l0.EntityProfiled = GetLocalPlayerEntityId()
+	  break
+    end
+  end
+  --IF profiled new entity not blacklisted AND alive AND not player AND not bodyguard
+  if l0.EntityProfiled ~= self.Profiled_Entity and IsAlive(l0.EntityProfiled) == 1 and l0.EntityProfiled ~= GetLocalPlayerEntityId() and not string.find(GetEntityName(l0.EntityProfiled), "A03_M01_LumberMillWorker") then
+    self.Profiled_Entity = l0.EntityProfiled
+    -- SetHackable(self.Profiled_Entity, 0) --TOREMOVE
+    -- ForceNPCUnhackable(self.Profiled_Entity) --TOREMOVE
+    UnBind(self.Target_MARK)
+    Bind(self.Profiled_Entity, self.Target_MARK, "Pelvis", 1)
+    SetHackable(self.Target_MARK, 1)
+    IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_MARK, 1)
+    l0 = self[33]
+    l0.Seconds = 0.2
+    l0:Start() --Tag_Count
+  elseif l0.EntityProfiled ~= self.Profiled_Entity then
+    self.Profiled_Entity = l0.EntityProfiled
+    SetHackable(self.Target_MARK, 0)
+    IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_MARK, 0)
+  end
+end
+function export:Tag_Count()
+  local l0
+  self = self._graph
+IndicatorSetName(GetLocalPlayerId(), self.Target_MARK, "Tag "..string.format("%d",#self.Acquired_Targets).."/"..string.format("%d",self.Max_Targets))
+end
+
+function export:Acquire_Target()
+  local l0
+  self = self._graph
+SetHackable(self.Target_MARK, 0)
+IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_MARK, 0)
+--displaying acquired status
+SetKeyIntelId(self.Profiled_Entity, "147554") --"TRACKED"
+  --capping max acquired targets
+  if #self.Acquired_Targets >= self.Max_Targets then
+    --removing target from list
+    ResetKeyIntel(self.Acquired_Targets[1])
+    table.remove(self.Acquired_Targets, 1)
+    --removing marked hack
+    SetHackable(self.Target_MARKED[1], 0)
+    table.insert(self.Target_MARKED, table.remove(self.Target_MARKED, 1))
+    --removing eliminate hack
+    SetHackable(self.Target_ELIMINATE[1], 0)
+    table.insert(self.Target_ELIMINATE, table.remove(self.Target_ELIMINATE, 1))
+    --removing target icon
+    SendMapPointControllerEvent(self.Target_ICON[1], 0)
+    IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_ICON[1], 0)
+    table.insert(self.Target_ICON, table.remove(self.Target_ICON, 1))
+  end
+--appending target to list
+SetHackable(self.Profiled_Entity, 0)
+UnregisterReinforcer(self.Profiled_Entity)
+ForceNPCUnhackable(self.Profiled_Entity)
+ClearRewards(self.Profiled_Entity)
+table.insert(self.Acquired_Targets, self.Profiled_Entity)
+--applying marked hack
+UnBind(self.Target_MARKED[#self.Acquired_Targets])
+Bind(self.Profiled_Entity, self.Target_MARKED[#self.Acquired_Targets], "Pelvis", 1)
+SetHackable(self.Target_MARKED[#self.Acquired_Targets], 1)
+--applying eliminate hack
+UnBind(self.Target_ELIMINATE[#self.Acquired_Targets])
+Bind(self.Profiled_Entity, self.Target_ELIMINATE[#self.Acquired_Targets], "Pelvis", 1)
+SetHackable(self.Target_ELIMINATE[#self.Acquired_Targets], 0)
+--applying target icon
+UnBind(self.Target_ICON[#self.Acquired_Targets])
+Bind(self.Profiled_Entity, self.Target_ICON[#self.Acquired_Targets], "Head", 1)
+SendMapPointControllerEvent(self.Target_ICON[#self.Acquired_Targets], 1)
+IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_ICON[#self.Acquired_Targets], 1)
+end
+function export:Remove_Target()
+  local l0
+  self = self._graph
+  l0 = self[6]
+  for i=#self.Acquired_Targets, 1, -1 do --reverse parsing because chance of table.remove while iterating
+    if l0.HackedEntity == self.Target_MARKED[i] then
+	  --removing target from list
+      ResetKeyIntel(self.Acquired_Targets[i])
+      table.remove(self.Acquired_Targets, i)
+      --removing marked hack
+      SetHackable(self.Target_MARKED[i], 0)
+      table.insert(self.Target_MARKED, table.remove(self.Target_MARKED, i))
+      --removing eliminate hack
+      SetHackable(self.Target_ELIMINATE[i], 0)
+      table.insert(self.Target_ELIMINATE, table.remove(self.Target_ELIMINATE, i))
+      --removing target icon
+      SendMapPointControllerEvent(self.Target_ICON[i], 0)
+      IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_ICON[i], 0)
+      table.insert(self.Target_ICON, table.remove(self.Target_ICON, i))
+      --refreshing profiler monitor
+      -- self.Profiled_Entity = GetLocalPlayerEntityId()
+      l0 = self[25]
+      l0:Disable()
+      -- l0.CheckNow = 1
+      -- l0.ProfilableEntity = self.Acquired_Targets[i]
+      l0:Enable() --Acquisition_Started
+	  break
+    end
+  end
+  IndicatorSetName(GetLocalPlayerId(), self.Target_MARK, "Tag "..string.format("%d",#self.Acquired_Targets).."/"..string.format("%d",self.Max_Targets))
+end
+
+
+function export:Kill_Targets()
+  local l0
+  self = self._graph
+  --stop follow target
+  l0 = self[27]
+  l0:Stop()
+  --disabling turret range
+  l0 = self[30]
+  l0:Disable()
+  --disabling camera hack
+SetHackable(self.Turret_Hack, 0)
+  l0 = self[88]
+  l0.HackableEntity = self.Turret_Hack
+  l0:Disable()
+--disabling shop interaction
+ShopEnable(self.Selected_Shop, 0)
+--disabling retrieve interaction
+SetInteractionScriptState(self.Turret_RETRIEVE, 0)
+--disk
+SetMissionAreaColor(self.Turret_Disk, 1.0, 1.0, 0.0)
+  --moving hacked entity as first target
+  l0 = self[7]
+  for i=1, #self.Acquired_Targets do
+    SetHackable(self.Target_MARKED[i], 0)
+    SetHackable(self.Target_ELIMINATE[i], 0)
+    -- ResetKeyIntel(self.Acquired_Targets[1]) --removing this at the moment of the kill
+    -- SendMapPointControllerEvent(self.Target_ICON[i], 0) --hiding this at the moment of the kill
+    -- IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_ICON[i], 0) --hiding this at the moment of the kill
+    if l0.HackedEntity == self.Target_ELIMINATE[i] and i > 1 then
+      self.Acquired_Targets[i], self.Acquired_Targets[1] = self.Acquired_Targets[1], self.Acquired_Targets[i]
+      self.Target_ICON[i], self.Target_ICON[1] = self.Target_ICON[1], self.Target_ICON[i]
+      self.Target_MARKED[i], self.Target_MARKED[1] = self.Target_MARKED[1], self.Target_MARKED[i]
+      self.Target_ELIMINATE[i], self.Target_ELIMINATE[1] = self.Target_ELIMINATE[1], self.Target_ELIMINATE[i]
+    end
+  end
+  --start killing targets
+  l0 = self[28]
+  l0.Seconds = 1/60
+  l0.Loop = 1
+  l0.nbLoop = self.Kill_Rate
+  l0:Start() --Rotate_Weapon --Kill_Target
+end
+function export:Rotate_Weapon()
+  local l0
+  self = self._graph
+  l0 = self[28]
+  --calculating target angle
+  self.Cathetus_A = GetDistance2D(self.Turret_Weapon, self.Acquired_Targets[1])
+  self.Cathetus_B = math.abs( GetEntityPosition(self.Turret_Weapon, 2) - GetEntityBonePosition(self.Acquired_Targets[1], "Head", 2, 0) )
+  if GetEntityPosition(self.Turret_Weapon, 2) < GetEntityBonePosition(self.Acquired_Targets[#self.Acquired_Targets], "Head", 2, 0) then
+    self.Angle_X = math.deg( math.atan(self.Cathetus_B / self.Cathetus_A) )
+  else
+    self.Angle_X = - math.deg( math.atan(self.Cathetus_B / self.Cathetus_A) )
+  end
+  self.Cathetus_A = GetEntityPosition(self.Turret_Weapon, 0) - GetEntityBonePosition(self.Acquired_Targets[1], "Head", 0, 0)
+  self.Cathetus_B = - ( GetEntityPosition(self.Turret_Weapon, 1) - GetEntityBonePosition(self.Acquired_Targets[1], "Head", 1, 0) )
+  if GetEntityPosition(self.Turret_Weapon, 1) < GetEntityBonePosition(self.Acquired_Targets[1], "Head", 1, 0) then
+    self.Angle_Z = ( math.deg( math.atan(self.Cathetus_A / self.Cathetus_B) ) ) % 360
+  else
+    self.Angle_Z = ( math.deg( math.atan(self.Cathetus_A / self.Cathetus_B) ) + 180 ) % 360
+  end
+  --calculating rotation steps
+  self.Step_X = self.Angle_X - GetEntityAngle(self.Turret_Weapon, 0)
+  if math.abs(self.Step_X) > 180 then
+    if GetEntityAngle(self.Turret_Weapon, 0) < self.Angle_X then
+      self.Step_X = self.Step_X - 360
+    else
+      self.Step_X = self.Step_X + 360
+    end
+  end
+  self.Step_X = self.Step_X / (l0.nbLoop+1-l0.currentLoop)
+  self.Step_Z = self.Angle_Z - GetEntityAngle(self.Turret_Weapon, 2)
+  if math.abs(self.Step_Z) > 180 then
+    if GetEntityAngle(self.Turret_Weapon, 2) < self.Angle_Z then
+      self.Step_Z = self.Step_Z - 360
+    else
+      self.Step_Z = self.Step_Z + 360
+    end
+  end
+  self.Step_Z = self.Step_Z / (l0.nbLoop+1-l0.currentLoop)
+  --rotating weapon toward target
+  UnBind(self.Turret_Weapon)
+  if GetEntityAngle(self.Turret_Weapon, 0) + self.Step_X > 30 and GetEntityAngle(self.Turret_Weapon, 0) + self.Step_X < 180 then
+    SetEntityAngle(self.Turret_Weapon, 30, 0, GetEntityAngle(self.Turret_Weapon, 2) + self.Step_Z)
+  elseif GetEntityAngle(self.Turret_Weapon, 0) + self.Step_X < 330 and GetEntityAngle(self.Turret_Weapon, 0) + self.Step_X > 180 then
+    SetEntityAngle(self.Turret_Weapon, 330, 0, GetEntityAngle(self.Turret_Weapon, 2) + self.Step_Z)
+  else
+    SetEntityAngle(self.Turret_Weapon, GetEntityAngle(self.Turret_Weapon, 0) + self.Step_X, 0, GetEntityAngle(self.Turret_Weapon, 2) + self.Step_Z)
+  end
+  Bind(self.Turret_NPC, self.Turret_Weapon, "", 0)
+end
+function export:Kill_Target()
+  local l0
+  self = self._graph
+--killing acquired target
+  if self.Silenced == 0 then
+    CDominoManager_GetInstance():SendRegisteredEventToEntity(GetCurrentVehicleEntityId(self.Acquired_Targets[1]), "CVehicle_SetEngineBroken")
+  end
+SendDamageToEntity(self.Acquired_Targets[1], GetLocalPlayerEntityId(), 3, 9999, 512)
+--playing bullethit pfx
+UnBind(self.Turret_Blood)
+SetEntityPosition(self.Turret_Blood, GetEntityBonePosition(self.Acquired_Targets[1], "Head", 0, 0) + 0.1 * math.cos(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 270)), GetEntityBonePosition(self.Acquired_Targets[1], "Head", 1, 0) + 0.1 * math.sin(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 270)), GetEntityBonePosition(self.Acquired_Targets[1], "Head", 2, 0) + 0.1)
+SetEntityAngle(self.Turret_Blood, 0, 90-GetEntityAngle(self.Turret_Weapon, 0), GetEntityAngle(self.Turret_Weapon, 2)+270)
+Bind(self.Acquired_Targets[1], self.Turret_Blood, "Head", 0)
+CDominoManager_GetInstance():SendRegisteredEventToEntity(self.Turret_Blood, "CNewParticlesComponent_PlayParticles")
+  --playing shoot effect
+CDominoManager_GetInstance():SendRegisteredEventToEntity(self.Turret_Muzzlesmoke, "CNewParticlesComponent_PlayParticles")
+  l0 = self[70]
+  l0.Entity = self.Turret_NPC
+  if self.Silenced == 0 then
+    CDominoManager_GetInstance():SendCommandEventToEntity(self.Turret_Muzzleflash, "ShootFakeBullet", self.Target_ICON[1])
+    l0.SoundId = "0x00102575"
+  else
+    l0.SoundId = "0x00101316"
+  end
+  l0:Play()
+--clearing target data
+ResetKeyIntel(self.Acquired_Targets[1])
+table.remove(self.Acquired_Targets, 1)
+SendMapPointControllerEvent(self.Target_ICON[1], 0)
+IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_ICON[1], 0)
+table.insert(self.Target_ICON, table.remove(self.Target_ICON, 1))
+table.insert(self.Target_MARKED, table.remove(self.Target_MARKED, 1))
+table.insert(self.Target_ELIMINATE, table.remove(self.Target_ELIMINATE, 1))
+  --continue weapon rotation or start cooldown
+  if #self.Acquired_Targets > 0 then
+    l0 = self[28]
+    l0.Seconds = 1/60
+    l0.Loop = 1
+    l0.nbLoop = self.Kill_Rate
+    l0:Start() --Rotate_Weapon --Kill_Target
+  else
+    UnBind(self.Turret_Laser)
+    RemoveEntity(self.Turret_Laser)
+    SetMissionAreaColor(self.Turret_Disk, 1.0, 1.0, 1.0)
+    IndicatorSetIsVisible(GetLocalPlayerId(), self.Turret_Cooldown, 1)
+    IndicatorSetName(GetLocalPlayerId(), self.Turret_Cooldown, "Reloading "..string.format("%.1f",self.Cooldown_Time))
+    l0 = self[29]
+    l0.Seconds = 1/10
+    l0.Loop = 1
+    l0.nbLoop = self.Cooldown_Time * 10
+    l0:Start() --Cooldown_Update --Cooldown_Finished
+  end
+end
+
+function export:Cooldown_Update()
+  local l0
+  self = self._graph
+  l0 = self[29]
+IndicatorSetName(GetLocalPlayerId(), self.Turret_Cooldown, "Reloading "..string.format("%.1f",self.Cooldown_Time-l0.currentLoop/10))
+end
+function export:Cooldown_Finished()
+  local l0
+  self = self._graph
+--laser
+UnBind(self.Turret_Laser)
+RemoveEntity(self.Turret_Laser)
+self.Turret_Laser = SpawnEntityFromArchetype("{991DCBB0-AA68-4EC9-89C2-907799AF2139}", GetEntityPosition(self.Turret_Weapon, 0) + 0.59 * math.cos(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 90)), GetEntityPosition(self.Turret_Weapon, 1) + 0.59 * math.sin(math.rad(GetEntityAngle(self.Turret_Weapon, 2) + 90)), GetEntityPosition(self.Turret_Weapon, 2) + 0.06, GetEntityAngle(self.Turret_Weapon, 0), 0, GetEntityAngle(self.Turret_Weapon, 2)) --DLC_Laser.DLC_Laser.LaserTripwireTrigger
+Bind(self.Turret_Weapon, self.Turret_Laser, "", 0)
+--cooldown indicator
+IndicatorSetIsVisible(GetLocalPlayerId(), self.Turret_Cooldown, 0)
+--disk
+SetMissionAreaColor(self.Turret_Disk, 0.2, 0.78, 0.96)
+--notification ready
+PushTokenOasisId("[#STRINGA]", "187665") --"HUNTER"
+PushTokenOasisId("[#STRINGB]", "5901") --"READY"
+SendMissionChannelMessageToLocalPlayersId(Globals._CUSTOM_SCRIPTS._Mission_ID, "PlayerCentric", "15380", 5) --"[#STRINGA] [#STRINGB]"
+--enabling shop interaction
+ShopEnable(self.Selected_Shop, 1)
+--enabling retrieve interaction
+SetInteractionScriptState(self.Turret_RETRIEVE, 1)
+  --enabling turret range
+  l0 = self[30]
+  l0:Enable() --Enter_Allowed --Enter_Prevented
+end
+
+
+function export:Controls_Camera()
+  local l0
+  self = self._graph
+  --stop follow target
+  l0 = self[27]
+  l0:Stop()
+  --rotating camera
+  l0 = self[1]
+  if l0.eventSignal == "cam_look_py_mouse" or l0.eventSignal == "cam_look_py" then
+    UnBind(self.Turret_Weapon)
+    if GetEntityAngle(self.Turret_Weapon, 0)+l0.YAxisValue/2 > 30 and GetEntityAngle(self.Turret_Weapon, 0)+l0.YAxisValue/2 < 180 then
+      SetEntityAngle(self.Turret_Weapon, 30, GetEntityAngle(self.Turret_Weapon, 1), GetEntityAngle(self.Turret_Weapon, 2)-l0.XAxisValue/2)
+	elseif GetEntityAngle(self.Turret_Weapon, 0)+l0.YAxisValue/2 < 330 and GetEntityAngle(self.Turret_Weapon, 0)+l0.YAxisValue/2 > 180 then
+      SetEntityAngle(self.Turret_Weapon, 330, GetEntityAngle(self.Turret_Weapon, 1), GetEntityAngle(self.Turret_Weapon, 2)-l0.XAxisValue/2)
+	else
+      SetEntityAngle(self.Turret_Weapon, GetEntityAngle(self.Turret_Weapon, 0)+l0.YAxisValue/2, GetEntityAngle(self.Turret_Weapon, 1), GetEntityAngle(self.Turret_Weapon, 2)-l0.XAxisValue/2)
+    end
+    Bind(self.Turret_NPC, self.Turret_Weapon, "", 0)
+  end
+end
+
+
+function export:Turret_Destroyed()
+  local l0
+  self = self._graph
+--allows to terminate this script if needed
+SetEntityPosition(self.This_Script, 0, 0, 0)
+  --disabling turret
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Turret_Shutdown
+  l0:In()
+--killing turret npc
+UnBind(self.Turret_Weapon)
+UnBind(self.Turret_Tripod)
+SetPhysicsEnabled(self.Turret_NPC, 0)
+SetEntityPosition(self.Turret_NPC, GetEntityPosition(self.Turret_NPC, 0), GetEntityPosition(self.Turret_NPC, 1), 1)
+RemoveInvincibility(self.Turret_NPC)
+SendDamageToEntity(self.Turret_NPC, "", 16, 9999, 1)
+--setting destroyed effects
+Bind(self.Turret_Weapon, self.Turret_Stunned, "", 1)
+CDominoManager_GetInstance():SendRegisteredEventToEntity(self.Turret_Stunned, "CNewParticlesComponent_PlayParticles")
+Bind(self.Turret_Weapon, self.Turret_Salvage, "", 1)
+HideEntity(self.Turret_Salvage)
+SetEnablePickup(self.Turret_Salvage, 1)
+  --enabling salvage pickup
+  l0 = self[50]
+  l0.Pickup = self.Turret_Salvage
+  l0:Enable() --Despawn_Everything
+--notification destroyed
+PushTokenOasisId("[#STRINGA]", "187665") --"HUNTER"
+PushTokenOasisId("[#STRINGB]", "15525") --"FAILURE"
+SendMissionChannelMessageToLocalPlayersId(Globals._CUSTOM_SCRIPTS._Mission_ID, "PlayerCentric", "15380", 5) --"[#STRINGA] [#STRINGB]"
+  --playing camera effects
+  if GetSecurityCameraUser(self.Turret_Camera) == GetLocalPlayerEntityId() then
+    self.ShakeKey = StartCameraShake(GetLocalPlayerEntityId(), 8, -1, 0.8, 0.01, 0.01, 0.02, 0.01, 0.01, 0.02, "0")
+    StopCameraShake(GetLocalPlayerEntityId(), self.ShakeKey, 1.0)
+    --playing glitch
+    l0 = Boxes[PathID("Domino/System/BinkVideoPlayer_v3.lua")]
+    l0.BinkFileName = "FullScreen/generic_glitch0"..string.format("%d",math.random(6)).."_withalpha.bik"
+    l0.ExternalSoundId = "0x000fad6f"
+    l0.OnSkipSoundId = nil
+    l0.Seconds = nil
+    l0.CanBeSkip = nil
+    l0.NoActionMap = nil
+    l0.EnableAlpha = 1
+    l0.UseSubtitle = nil
+    l0.PlayEmbeddedAudio = nil
+    l0.PauseGame = nil
+    l0.OverrideSubtitle = nil
+    l0._graph = self
+    l0.Started = DummyFunction
+    l0.TimeElapsed = DummyFunction
+    l0.Stopped = DummyFunction
+    l0.Finished = DummyFunction
+    l0:Start()
+    --displaying destroyed warning
+    l0 = self[300]
+    l0.MessageType = "MissionWarning"
+    l0.MessageIcon = "iconWarning"
+    l0.OasisID_1 = {
+      section = "MISSIONS.SIDE.OBJECTIVES",
+      item = "Description",
+      id = "193968" --"Massive Malfunction"
+    }
+    l0.Duration = 3.0
+    l0:Display()
+  end
+  --delayed exit
+  l0 = self[99]
+  l0.Seconds = 1/60
+  l0.Loop = 1
+  if GetSecurityCameraUser(self.Turret_Camera) == GetLocalPlayerEntityId() then
+    l0.nbLoop = 2.4
+  else
+    l0.nbLoop = 1.2
+  end
+  l0.nbLoop = l0.nbLoop * 60
+  l0:Start() --Turret_Tilt --Force_Exit
+end
+function export:Turret_Tilt()
+  local l0
+  self = self._graph
+  l0 = self[99]
+  --calculating tilt step
+  if l0.currentLoop == l0.nbLoop - l0.nbLoop/3*2 then
+    self.Step_X = -70 - GetEntityAngle(self.Turret_Weapon, 0)
+    if math.abs(self.Step_X) > 180 then
+      if GetEntityAngle(self.Turret_Weapon, 0) < -70 then
+        self.Step_X = self.Step_X - 360
+      else
+        self.Step_X = self.Step_X + 360
+      end
+    end
+    self.Step_X = self.Step_X / (l0.nbLoop/3*2)
+  end
+  --tilting turret down
+  if l0.currentLoop > l0.nbLoop - l0.nbLoop/3*2 then
+    SetEntityAngle(self.Turret_Weapon, GetEntityAngle(self.Turret_Weapon, 0) + self.Step_X, GetEntityAngle(self.Turret_Weapon, 1), GetEntityAngle(self.Turret_Weapon, 2))
+  end
+end
+function export:Force_Exit()
+  local l0
+  self = self._graph
+  if GetSecurityCameraUser(self.Turret_Camera) == GetLocalPlayerEntityId() then
+    ForceUserOutOfCamera(GetLocalPlayerEntityId())
+    --displaying disconnection warning
+    l0 = self[300]
+    l0.MessageType = "MissionWarning"
+    l0.MessageIcon = "iconWarning"
+    l0.OasisID_1 = {
+      section = "MISSIONS.SIDE.OBJECTIVES",
+      item = "Description",
+      id = "172211" --"Connection lost."
+    }
+    l0.Duration = nil
+    l0:Display()
+  end
+end
+
+
+function export:Turret_Shutdown()
+  local l0
+  self = self._graph
+  --stopping looping timer to monitor targets
+  l0 = self[111]
+  l0:Stop()
+--removing laser
+UnBind(self.Turret_Laser)
+RemoveEntity(self.Turret_Laser)
+--disk
+MissionAreaActivation(self.Turret_Disk, 0)
+  --stop monitoring shop
+ShopEnable(self.Selected_Shop, 0)
+  l0 = self[40]
+  l0:Disable()
+  --disabling retrieve interaction
+SetInteractionScriptState(self.Turret_RETRIEVE, 0)
+  l0 = self[82]
+  l0:Disable()
+  --disabling turret health monitor
+  l0 = self[10]
+  l0:Disable()
+  --disabling turret range
+  l0 = self[30]
+  l0:Disable()
+  --disabling camera hack
+SetHackable(self.Turret_Hack, 0)
+  l0 = self[88]
+  l0.HackableEntity = self.Turret_Hack
+  l0:Disable()
+  --disabling camera hack
+SetHackable(self.Turret_Hack, 0)
+SetProfilingEnabled(self.Turret_Hack, 0)
+  l0 = self[88]
+  l0.HackableEntity = self.Turret_Hack
+  l0:Disable()
+  --stop follow target
+  l0 = self[27]
+  l0:Stop()
+  --disabling turret controls
+  l0 = self[1]
+  l0:Disable()
+  --disable shopping monitor
+  l0 = self[21]
+  l0:Disable()
+  l0 = self[22]
+  l0:Disable()
+  l0 = self[23]
+  l0:Disable()
+  l0 = self[24]
+  l0:Disable()
+  --disabling target acquisition
+self.Profiled_Entity = GetLocalPlayerEntityId()
+OverrideAnticipationRadiusOnFoot(-1)
+  l0 = self[25]
+  l0:ResetDelayBeforeSendingEvent()
+  l0:Disable()
+  --stop monitoring marks
+StopScriptNarrativeDelay()
+  l0 = self[5]
+  l0:Disable()
+  l0 = self[6]
+  l0:Disable()
+  l0 = self[7]
+  l0:Disable()
+SetHackable(self.Target_MARK, 0)
+IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_MARK, 0)
+  for i=1, #self.Acquired_Targets do
+    ResetKeyIntel(self.Acquired_Targets[i])
+    SetHackable(self.Target_MARKED[i], 0)
+    SetHackable(self.Target_ELIMINATE[i], 0)
+    SendMapPointControllerEvent(self.Target_ICON[i], 0)
+    IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_ICON[i], 0)
+  end
+  self.Acquired_Targets = {}
+  --hiding warning messages
+  l0 = self[300]
+  l0.MessageType = "MissionWarning"
+  l0:Hide()
+  --stop killing targets
+  l0 = self[28]
+  l0:Stop()
+  --stop cooldown timer
+IndicatorSetIsVisible(GetLocalPlayerId(), self.Turret_Cooldown, 0)
+  l0 = self[29]
+  l0:Stop()
+  --disabling salvage pickup
+  l0 = self[50]
+  l0:Disable()
+  --stopping turret camera effects
+  if GetSecurityCameraUser(self.Turret_Camera) == GetLocalPlayerEntityId() then
+    StopCameraShake(GetLocalPlayerEntityId(), self.ShakeKey, 0.0)
+    StopBinkVideo()
+  end
+  --stop delayed exit
+  l0 = self[99]
+  l0:Stop()
+  --unloading the shops layer
+  l0 = self[100]
+  l0:Unload()
+end
+function export:Despawn_Everything()
+  local l0
+  self = self._graph
+  --refunding turret item
+  if IsAlive(GetLocalPlayerEntityId()) == 1 and GetEntityPosition(self.This_Script, 2) ~= 0 and GetItemCount(GetLocalPlayerEntityId(), self.Item_Power) == 0 then
+    ExecuteReward_V2(GetLocalPlayerEntityId(), self.Item_Power, 1)
+    --playing sound
+    l0 = self[70]
+    l0.Entity = GetLocalPlayerEntityId()
+    l0.SoundId = "0x0001b16d" --pickup
+    l0:Play()
+  elseif IsAlive(GetLocalPlayerEntityId()) == 1 and GetEntityPosition(self.This_Script, 2) ~= 0 and GetItemCount(GetLocalPlayerEntityId(), self.Item_Power) > 0 then
+    ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.1125886109", 1) --crafting tech
+    ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.1125886109", 1) --crafting tech
+    ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.3108044763", 1) --system key
+    ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.4088031736", 1) --checmical component
+    --playing sound
+    l0 = self[70]
+    l0.Entity = GetLocalPlayerEntityId()
+    l0.SoundId = "0x0001b16d" --pickup
+    l0:Play()
+  end
+  --disabling turret
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Turret_Shutdown
+  l0:In()
+  --stop monitoring player
+  l0 = self[0]
+  l0:Disable()
+  --disabling despawn range
+  l0 = self[15]
+  l0:Disable()
+  --disabling camera monitor
+  l0 = self[89]
+  l0:Disable()
+  --stopping looping timer to detect despawn
+  l0 = self[1111]
+  l0:Stop()
+  --stopping looping timer to detect mission
+  l0 = self[11111]
+  l0:Stop()
+  --unloading the custom layer
+  l0 = self[1000]
+  l0.LayerName = self.Layer_Name
+  l0:Unload() --Layer_Unloaded
+end
+
+
+function export:Check_Targets()
+  local l0
+  self = self._graph
+  --checking targets validity
+  for i=#self.Acquired_Targets, 1, -1 do --reverse parsing because chance of table.remove while iterating
+    if GetEntityPosition(self.Acquired_Targets[i], 2) == 0 or IsAlive(self.Acquired_Targets[i]) ~= 1 or GetDistance2D(self.Turret_Camera, self.Acquired_Targets[i]) > self.Turret_Range then
+	  --removing target from list
+      ResetKeyIntel(self.Acquired_Targets[i])
+      table.remove(self.Acquired_Targets, i)
+      --removing marked hack
+      SetHackable(self.Target_MARKED[i], 0)
+      table.insert(self.Target_MARKED, table.remove(self.Target_MARKED, i))
+      --removing eliminate hack
+      SetHackable(self.Target_ELIMINATE[i], 0)
+      table.insert(self.Target_ELIMINATE, table.remove(self.Target_ELIMINATE, i))
+      --removing target icon
+      SendMapPointControllerEvent(self.Target_ICON[i], 0)
+      IndicatorSetIsVisible(GetLocalPlayerId(), self.Target_ICON[i], 0)
+      table.insert(self.Target_ICON, table.remove(self.Target_ICON, i))
+    end
+  end
+  --restarting looping timer
+  l0 = self[111]
+  if #self.Acquired_Targets > 0 then
+    l0.Seconds = self.Loop_Delay/2
+  else
+    l0.Seconds = self.Loop_Delay
+  end
+  l0:Start()
+end
+function export:Check_Existence()
+  local l0
+  self = self._graph 
+  if GetEntityPosition(self.Turret_Camera, 2) == 0 or IsInvasionVictim() == 1 then
+    --entity despawned
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Despawn_Everything
+    l0:In()
+  else
+    --restarting looping timer
+    l0 = self[1111]
+    l0.Seconds = self.Loop_Delay
+    l0:Start()
+  end
+end
+function export:Check_Mission()
+  local l0
+  self = self._graph
+  if self.Mission_Duration == nil or Globals._CUSTOM_SCRIPTS._In_Mission == 0 or Globals._CUSTOM_SCRIPTS._Enable_CompanionItems_InMissions == 1 or GetEntityPosition("2088800000000000000", 2) ~= 0 then --added AMBUSH exception
+    self.Mission_Duration = 0
+  else
+    self.Mission_Duration = self.Mission_Duration + self.Loop_Delay
+  end
+  if self.Mission_Duration > 5 then
+    --ending event
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Despawn_Everything
+    l0:In()
+  else
+    --restarting looping timer
+    l0 = self[11111]
+    l0.Seconds = self.Loop_Delay
+    l0:Start()
+  end
+end
+
+
+function export:Restore_Item()
+  local l0
+  self = self._graph
+  AddItem(self.Item_Power, 1)
+end
+
+function export:Layer_Unloaded()
+  local l0
+  self = self._graph
+  --unloading the shops layers
+  l0 = self[100]
+  l0:Unload()
+  l0.LayerName = self.Layer_Name.."_Shops_1"
+  l0:Unload()
+  l0.LayerName = self.Layer_Name.."_Shops_2"
+  l0:Unload()
+  l0.LayerName = self.Layer_Name.."_Shops_3"
+  l0:Unload()
+  l0.LayerName = self.Layer_Name.."_Shops_4"
+  l0:Unload()
+--terminating this script and zeroing current event variable
+self:ShutDown()
+CDominoManager_GetInstance():RemoveDominoEntity(Globals._CUSTOM_SCRIPTS._Launched_Turret)
+Globals._CUSTOM_SCRIPTS._Launched_Turret = nil
+CDominoManager_GetInstance():RemoveDominoEntity(self.This_Script)
+end
+_compilerVersion = 4

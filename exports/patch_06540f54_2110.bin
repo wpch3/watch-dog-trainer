@@ -1,0 +1,51 @@
+-- CREATED BY THE SILVER FOR LIVING CITY MOD
+InputListenerMonitor = {}
+function InputListenerMonitor:Create(cbox)
+end
+function InputListenerMonitor:Init(cbox)
+  self.callidRegisterSignal = nil
+end
+function InputListenerMonitor:ShutDown()
+  self._type.UnregisterCallback(self)
+end
+function InputListenerMonitor:Enable()
+  self._type.UnregisterCallback(self)
+  self.Player = self.Player or GetLocalPlayerEntityId()
+  self.Input = self.Input or "picross_validate"
+  if type(self.Input) == "string" then
+    self.callidRegisterSignal = CDominoManager_GetInstance():RegisterDominoInputListenerSignal(self.Player, self, "Event_InputReceived", self.Input)
+  elseif type(self.Input) == "table" and #self.Input > 0 then
+    self.callidRegisterSignal = {}
+    for i=1, #self.Input do
+      self.callidRegisterSignal[i] = CDominoManager_GetInstance():RegisterDominoInputListenerSignal(self.Player, self, "Event_InputReceived", self.Input[i])
+    end
+  end
+  self:Out()
+  self:Enabled()
+end
+function InputListenerMonitor:Disable()
+  self._type.UnregisterCallback(self)
+  self:Out()
+  self:Disabled()
+end
+function InputListenerMonitor:UnregisterCallback()
+  self.Player = self.Player or GetLocalPlayerEntityId()
+  if type(self.callidRegisterSignal) ~= "table" and self.callidRegisterSignal ~= nil then
+    CDominoManager_GetInstance():UnregisterDominoInputListenerSignal(self.Player, self.callidRegisterSignal, self.Input)
+  elseif type(self.callidRegisterSignal) == "table" and #self.callidRegisterSignal > 0 then
+    for i=1, #self.callidRegisterSignal do
+      CDominoManager_GetInstance():UnregisterDominoInputListenerSignal(self.Player, self.callidRegisterSignal[i], self.Input[i])
+    end
+  end
+  self.callidRegisterSignal = nil
+end
+function InputListenerMonitor:Event_InputReceived(eventSignal, numAxis, XAxisValue, YAxisValue, ZAxisValue)
+self.eventSignal = eventSignal
+self.numAxis = numAxis
+self.XAxisValue = XAxisValue
+self.YAxisValue = YAxisValue
+self.ZAxisValue = ZAxisValue
+  self:InputReceived()
+end
+export = InputListenerMonitor
+InputListenerMonitor = nil

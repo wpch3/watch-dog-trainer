@@ -1,0 +1,794 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua")
+  cbox:RegisterBox("Domino/System/GetPlayerID.lua")
+  cbox:RegisterBox("Domino/System/InputListenerMonitor.lua")
+  cbox:RegisterBox("Domino/System/PawnHealthMonitor_v3.lua")
+  cbox:RegisterBox("Domino/System/PlayDominoAnimation.lua")
+  cbox:RegisterBox("Domino/System/ProximityMonitor.lua")
+  cbox:RegisterBox("Domino/System/Timer_v2.lua")
+  cbox:RegisterBox("Domino/System/VehicleBhvController.lua")
+  cbox:RegisterBox("Domino/System/VehicleBhvMonitor.lua")
+end
+function export:Init(cbox)
+  local l0
+  self.Zone_Entity = {"2081641159312018168","2081521090066121735","2081517374164436275","2081518604886481914","2081612599482544648","2081391266358102327","2082099002494598180","2080066744822563417","2081061820895863441","2081517546275764107","2080331383214965197","2079707675360231977","2079957555276154924","2081901960086329161","2082801054973605864","2082902553795810575","2081893159941606805","2081916229597170710","2082746686588853773"}
+  self.Zone_Safety = {35,35,25,55,65,30,35,35,45,55,55,35,20,80,45,45,65,55,50}
+  self.Event_Status = nil
+  self.Delay = 0.5
+  self.Loop_Delay = 1.0
+  self.Radius_Despawn = 175
+  self.Spawn_Delays = {10,15,20,25}
+  self.Check_Vehicle_Despawned = 0
+  self.Check_Driver_Despawned = 0
+  self.Scared_Ambulance_Driver = 0
+  self.Animations_For_Driver = {
+    "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_57-00-029_mciv_stand-smoke-phone.move.bin",
+    "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_57-00-030_mciv_stand-smoke-text.move.bin",
+    "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_57-00-032_mciv_stand-text.move.bin",
+    -- "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_62-00-116_mcivi_stand-phone.move.bin",
+    -- "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_63-00-073_mciv1_vigilante-victime-text-loop.move.bin",
+    "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_67-00-089_mcivi_stand-text.move.bin",
+    -- "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_67-00-090_mcivi_stand-phone.move.bin",
+    "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_67-00-091_mcivi_stand-text-smoke.move.bin",
+    "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_67-00-092_mcivi_stand-smoke-phone.move.bin",
+    "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_75-00-026_mcivi_wardish-stand-2handspocket-look-shoes-v6.move.bin",
+    "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_75-00-027_mcivi_wardish-stand-text-browse-v2.move.bin",
+    -- "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_75-00-027_mcivi_wardish-stand-text-v4.move.bin",
+    "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_male_civi_stand-phone.move.bin",
+    -- "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_male_civi_stand-talk-phone-in-circle.move.bin",
+    "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_male_civilian-stand-phone.move.bin",
+    "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_male_civilian-stand-smoking-phone.move.bin",
+    "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_male_civilian-stand-smoking-texting.move.bin",
+    -- "move/decisiontrees/civilians/civilians/enticers/generic/male/drvr_male_civilian-stand-texting.move.bin",
+  }
+  self[0] = cbox:CreateBox("Domino/System/InputListenerMonitor.lua")
+  l0 = self[0]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.InputReceived = self.Entity_Attacked
+  self[1] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua")
+  l0 = self[1]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Damaged = DummyFunction
+  l0.Killed = self.NPC_Was_Killed
+  l0.AllDead = DummyFunction
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[2] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[2]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Enable_Vehicle
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[3] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[3]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Check_Script
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[4] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[4]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Delayed_Dismount
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[5] = cbox:CreateBox("Domino/System/VehicleBhvController.lua")
+  l0 = self[5]
+  l0._graph = self
+  l0.StartCompleted = DummyFunction
+  l0.StopCompleted = DummyFunction
+  l0.ForcedFakeFollow = DummyFunction
+  self[6] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua")
+  l0 = self[6]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Damaged = self.Kill_Driver
+  l0.Killed = self.Killed_Driver
+  l0.AllDead = DummyFunction
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[7] = cbox:CreateBox("Domino/System/VehicleBhvMonitor.lua")
+  l0 = self[7]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Stuck = self.Ambulance_Unstuck
+  l0.Broken = self.Ambulance_Flee
+  l0.TargetDetected = DummyFunction
+  l0.InLOS = DummyFunction
+  l0.ReacquireLOSTimerExpired = DummyFunction
+  l0.LostLOSTimerExpired = DummyFunction
+  l0.SuspiciousTargetAction = DummyFunction
+  l0.SpecificPathPointReached = DummyFunction
+  l0.PathPointReached = DummyFunction
+  l0.EndPathPointReached = self.Ambulance_Arrived
+  l0.InRange = DummyFunction
+  l0.WarningRange = DummyFunction
+  l0.OutsideRange = DummyFunction
+  l0.OutsideTimerExpired = DummyFunction
+  self[8] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[8]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = DummyFunction
+  l0.ExitRadius = self.Despawn_Vehicle
+  self[9] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[9]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Check_Aiming
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[10] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[10]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = DummyFunction
+  l0.ExitRadius = self.Despawn_Driver
+  self[11] = cbox:CreateBox("Domino/System/PlayDominoAnimation.lua")
+  l0 = self[11]
+  l0._graph = self
+  l0.Finished = DummyFunction
+  self[12] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[12]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Spawn_Ambulance
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[13] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[13]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Play_Anim_Driver
+  l0.ExitRadius = DummyFunction
+  self[14] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[14]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Ambulance_Flee
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[15] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[15]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Is_NPC_Loaded
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[16] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[16]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Driver_Leaving
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[17] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[17]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Driver_GoToBody
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[18] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[18]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Driver_InspectBody
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[19] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[19]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Driver_DriveAway
+  l0.ExitRadius = DummyFunction
+  self[20] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[20]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Check_Despawned_Early
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[21] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[21]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = self.AssignBHV_Unstuck
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.AssignBHV_Normal
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  local l0
+  l0 = self[0]
+  l0.Input = "fire_trigger_press"
+  l0:Enable()
+end
+function export:Entity_Attacked()
+  local l0
+  self = self._graph
+  if Globals._CUSTOM_SCRIPTS._Addons_AmbulanceArrive ~= 0 then
+    self.ReticleHitEntity = GetReticleHitEntity()
+    if string.find(GetEntityName(self.ReticleHitEntity), "Civilians") then
+	  l0 = self[1]
+      l0.Pawn = self.ReticleHitEntity
+      l0:Enable()
+    end
+  end
+end
+function export:NPC_Was_Killed()
+  local l0
+  self = self._graph
+  l0 = self[1]
+  l0:Disable()
+  self.Chance_Of_Arrival = math.random(1,4)
+  if self.Chance_Of_Arrival == 1 and IsInvasionVictim() == 0 and GetNumberOfPlayers() == 1 and self.Event_Status == nil then
+	self.Event_Status = "Calling"
+	self.NPC = self.ReticleHitEntity
+    l0 = self[15]
+    l0.Seconds = 0.3
+    l0:Start()
+	l0 = self[12]
+    l0.Seconds = self.Spawn_Delays[math.random(#self.Spawn_Delays)]
+    l0:Start()
+  end
+end
+function export:Spawn_Ambulance()
+  local l0
+  self = self._graph
+  self.Event_Status = "Spawning"
+  RemoveEntity(Globals._CUSTOM_SCRIPTS._Addons_AmbulanceArrive_DummyEntity)
+  Globals._CUSTOM_SCRIPTS._Addons_AmbulanceArrive_DummyEntity = SpawnEntityFromArchetype("{62D838C3-D647-462A-A61C-E1AF780836AE}", GetEntityPosition(GetLocalPlayerEntityId(), 0), GetEntityPosition(GetLocalPlayerEntityId(), 1), GetEntityPosition(GetLocalPlayerEntityId(), 2), 0, 0, 0)
+  self.Reference_Entity = Globals._CUSTOM_SCRIPTS._Addons_AmbulanceArrive_DummyEntity or GetInvalidEntityId()
+  repeat
+    self.Index_Position = math.random(4);self.Index_Position = math.random(4);self.Index_Position = math.random(4)
+    self.Player_Angle = GetEntityAngle(GetLocalPlayerEntityId(), 2)
+    if self.Player_Angle >= 0 and self.Player_Angle < 90 and self.Index_Position == 4 then
+      self.Index_Position = 2
+    elseif self.Player_Angle >= 90 and self.Player_Angle < 180 and self.Index_Position == 3 then
+      self.Index_Position = 1
+    elseif self.Player_Angle >= 180 and self.Player_Angle < 270 and self.Index_Position == 2 then
+      self.Index_Position = 4
+    elseif self.Player_Angle >= 270 and self.Index_Position == 1 then
+      self.Index_Position = 3
+    end
+    if self.Index_Position == 1 then
+      SetEntityPosition(self.Reference_Entity, GetEntityPosition(GetLocalPlayerEntityId(), 0) +65, GetEntityPosition(GetLocalPlayerEntityId(), 1) +65, GetEntityPosition(GetLocalPlayerEntityId(), 2))
+    elseif self.Index_Position == 2 then
+      SetEntityPosition(self.Reference_Entity, GetEntityPosition(GetLocalPlayerEntityId(), 0) +65, GetEntityPosition(GetLocalPlayerEntityId(), 1) -65, GetEntityPosition(GetLocalPlayerEntityId(), 2))
+    elseif self.Index_Position == 3 then
+      SetEntityPosition(self.Reference_Entity, GetEntityPosition(GetLocalPlayerEntityId(), 0) -65, GetEntityPosition(GetLocalPlayerEntityId(), 1) -65, GetEntityPosition(GetLocalPlayerEntityId(), 2))
+    else
+      SetEntityPosition(self.Reference_Entity, GetEntityPosition(GetLocalPlayerEntityId(), 0) -65, GetEntityPosition(GetLocalPlayerEntityId(), 1) +65, GetEntityPosition(GetLocalPlayerEntityId(), 2))
+    end
+    for i=1, #self.Zone_Entity do
+      if GetDistance2D(self.Reference_Entity, self.Zone_Entity[i]) > 0 and GetDistance2D(self.Reference_Entity, self.Zone_Entity[i]) < self.Zone_Safety[i] then
+        self.Inside_Zone = 1
+        break
+      end
+      if i == #self.Zone_Entity then
+        self.Inside_Zone = 0
+      end
+    end
+    self.Check_Count = self.Check_Count or 0
+    self.Check_Count = self.Check_Count + 1
+  until self.Inside_Zone ~= 1 or self.Check_Count > 32
+  self.Ambulance_Entities = SpawnAIVehicleAndPassengerOnRoad("Ambulance_LivingCity", "EmergentEvent_AmbulanceDriver", self.Reference_Entity, 1)
+  self.Ambulance_Vehicle = self.Ambulance_Entities[1]
+  self.Ambulance_Driver = self.Ambulance_Entities[2]
+  self.Ambulance_Passenger = self.Ambulance_Entities[3]
+  RemoveEntity(self.Ambulance_Passenger)
+  l0 = self[20]
+  l0.Seconds = 0.3
+  l0:Start()
+  l0 = self[2]
+  l0.Seconds = self.Delay
+  l0:Start()
+end
+function export:Enable_Vehicle()
+  local l0
+  self = self._graph
+  self.Event_Status = "Spawned"
+  l0 = self[3]
+  l0.Seconds = 0.3
+  l0:Start()
+  RemoveEntity(self.Ambulance_Passenger)
+  if self.Index_Position == 1 then
+    SetEntityAngle(self.Ambulance_Vehicle, 0, 0, 135)
+  elseif self.Index_Position == 2 then
+    SetEntityAngle(self.Ambulance_Vehicle, 0, 0, 45)
+  elseif self.Index_Position == 3 then
+    SetEntityAngle(self.Ambulance_Vehicle, 0, 0, 315)
+  elseif self.Index_Position == 4 then
+    SetEntityAngle(self.Ambulance_Vehicle, 0, 0, 225)
+  end
+  l0 = self[21]
+  l0.Seconds = 5
+  l0:Start()
+  CDominoManager_GetInstance():SendRegisteredEventToEntity(self.Ambulance_Vehicle, "CVehicle_SetAsIndestructable")
+  l0 = self[6]
+  l0.Pawn = self.Ambulance_Driver
+  l0:Enable()
+  ForceHideTagIndicator(self.Ambulance_Driver, 1)
+  l0 = self[7]
+  l0.Vehicle = self.Ambulance_Vehicle
+  l0:Enable()
+  DisableTakedownOnPawn(self.Ambulance_Driver)
+  CanBeAttractedBySTP(self.Ambulance_Driver, 0)
+  VehicleLightAndSiren(self.Ambulance_Vehicle, 1, 0, 0, 3, 0, 3, GetInvalidEntityId(), 1, 1)
+  l0 = self[14]
+  l0.Seconds = 60
+  l0:Start()
+  self:Proximity_Ambulance_Vehicle()
+  l0 = self[8]
+  l0:Enable()
+  self:Proximity_Ambulance_Driver()
+  l0 = self[10]
+  l0:Enable()
+end
+function export:AssignBHV_Unstuck()
+  local l0
+  self = self._graph
+  l0 = self[5]
+  l0.VehicleMaster = self.Ambulance_Vehicle
+  l0:Stop()
+  l0 = self[5]
+  l0.VehicleMaster = self.Ambulance_Vehicle
+  l0.PathOrPos = self.NPC
+  l0.VehicleTarget = GetLocalPlayerEntityId()
+  l0.Config = "VehicleBhvSetup.2287983787"
+  l0.StopAtEndPoint = 1
+  l0:Start()
+end
+function export:AssignBHV_Normal()
+  local l0
+  self = self._graph
+  l0 = self[5]
+  l0.VehicleMaster = self.Ambulance_Vehicle
+  l0:Stop()
+  l0 = self[5]
+  l0.VehicleMaster = self.Ambulance_Vehicle
+  l0.PathOrPos = self.NPC
+  l0.VehicleTarget = GetLocalPlayerEntityId()
+  l0.Config = "VehicleBhvSetup.3598459452"
+  l0.StopAtEndPoint = 1
+  l0:Start()
+end
+function export:Ambulance_Flee()
+  local l0
+  self = self._graph
+  l0 = self[20]
+  l0:Stop()
+  VehicleLightAndSiren(self.Ambulance_Vehicle, 0, 0, 0, 0, 0, 0, GetInvalidEntityId(), 0, 0)
+  SetEntityPosition(self.Reference_Entity, GetEntityPosition(self.Ambulance_Vehicle, 0), GetEntityPosition(self.Ambulance_Vehicle, 1), GetEntityPosition(self.Ambulance_Vehicle, 2))
+  l0 = self[7]
+  l0:Disable()
+  l0 = self[5]
+  l0.VehicleMaster = self.Ambulance_Vehicle
+  l0:Stop()
+  l0.VehicleMaster = self.Ambulance_Vehicle
+  l0.PathOrPos = self.Reference_Entity
+  l0.VehicleTarget = GetLocalPlayerEntityId()
+  l0.Config = "VehicleBhvSetup.570180135"
+  l0.StopAtEndPoint = 0
+  l0:Start()
+  CDominoManager_GetInstance():SendRegisteredEventToEntity(self.Ambulance_Vehicle, "CVehicle_SetAsDestructable")
+end
+function export:Ambulance_Unstuck()
+  local l0
+  self = self._graph
+  l0 = self[5]
+  l0.VehicleMaster = self.Ambulance_Vehicle
+  l0:Stop()
+  l0.VehicleMaster = self.Ambulance_Vehicle
+  l0.PathOrPos = self.NPC
+  l0.VehicleTarget = GetLocalPlayerEntityId()
+  l0.Config = "VehicleBhvSetup.2287983787"
+  l0.StopAtEndPoint = 1
+  l0:Start()
+end
+function export:Ambulance_Arrived()
+  local l0
+  self = self._graph
+  RemoveEntity(self.Reference_Entity)
+  l0 = self[14]
+  l0:Stop()
+  self.Event_Status = "Arrived"
+  l0 = self[7]
+  l0:Disable()
+  l0 = self[5]
+  l0.VehicleMaster = self.Ambulance_Vehicle
+  l0:Stop()
+  l0 = self[4]
+  l0.Seconds = 0.5
+  l0:Start()
+end
+function export:Delayed_Dismount()
+  local l0
+  self = self._graph
+  l0 = self[20]
+  l0:Stop()
+  VehicleLightAndSiren(self.Ambulance_Vehicle, 0, 0, 0, 0, 0, 0, GetInvalidEntityId(), 0, 0)
+  self.Event_Status = "Dismounting"
+  CDominoManager_GetInstance():SendRegisteredEventToEntity(self.Ambulance_Vehicle, "CVehicle_SetAsDestructable")
+  UnassignVehicleSeat(GetCurrentVehicleEntityId(self.Ambulance_Driver), self.Ambulance_Driver, GetCurrentSeat(self.Ambulance_Driver), 1)
+  l0 = self[17]
+  l0.Seconds = 1.25
+  l0:Start()
+end
+function export:Driver_GoToBody()
+  local l0
+  self = self._graph
+  self.Event_Status = "Dismounted"
+  AssignNPCOverrideConfig(self.Ambulance_Driver, "NPCOverrideConfig.3498730141")
+  SendAICmdBHVstateV2(self.Ambulance_Driver, "Unaware", "0", 1, 1, 0)
+  self.commandID_Driver = SendAICommand_Goto(self.Ambulance_Driver, self.NPC, "Jog", "", "")
+  self:Proximity_Dead_NPC()
+  l0 = self[13]
+  l0:Enable()
+  self.Animation_For_Driver = self.Animations_For_Driver[math.random(#self.Animations_For_Driver)]
+  l0 = self[9]
+  l0.Seconds = 0.3
+  l0:Start()
+end
+function export:Proximity_Ambulance_Vehicle()
+  local l0
+  l0 = self[8]
+  l0.Entity1 = self.Ambulance_Vehicle
+  l0.Entity2 = GetLocalPlayerEntityId()
+  l0.Radius = self.Radius_Despawn
+  l0.CheckNow = 1
+end
+function export:Proximity_Ambulance_Driver()
+  local l0
+  l0 = self[10]
+  l0.Entity1 = self.Ambulance_Driver
+  l0.Entity2 = GetLocalPlayerEntityId()
+  l0.Radius = self.Radius_Despawn
+  l0.CheckNow = 1
+end
+function export:Proximity_Dead_NPC()
+  local l0
+  l0 = self[13]
+  l0.Entity1 = self.NPC
+  l0.Entity2 = self.Ambulance_Driver
+  l0.Radius = 3
+  l0.CheckNow = 1
+end
+function export:Play_Anim_Driver()
+  local l0
+  self = self._graph
+  self.Event_Status = "LookingAtBody"
+  CancelAICommand(self.Ambulance_Driver, self.commandID_Driver)
+  self:Proximity_Dead_NPC()
+  l0 = self[13]
+  l0:Disable()
+  l0 = self[18]
+  l0.Seconds = 0.25
+  l0:Start()
+end
+function export:Driver_InspectBody()
+  local l0
+  self = self._graph
+  l0 = self[11]
+  l0.TargetEntity = self.Ambulance_Driver
+  l0.Anim = self.Animation_For_Driver
+  l0.Looping = 1
+  l0.Index = 0
+  l0:Start()
+end
+function export:Check_Aiming()
+  local l0
+  self = self._graph
+  if GetReticleHitEntity() == self.Ambulance_Driver and PlayerIsDoingAction(4) == 1 and GetDistance3D(GetLocalPlayerEntityId(), self.Ambulance_Driver) < 50 then
+    l0 = self[11]
+    l0.TargetEntity = self.Ambulance_Driver
+    l0.Anim = "move/decisiontrees/civilians/reactions/cower/drvr_civilians_cower.move.bin"
+    l0.Looping = 1
+    l0.Index = 0
+    l0:Start()
+	self.Scared_Ambulance_Driver = 1
+  end
+  if self.Scared_Ambulance_Driver ~= 1 then
+    l0 = self[9]
+    l0.Seconds = 0.3
+    l0:Start()
+  end
+end
+function export:Kill_Driver()
+  local l0
+  self = self._graph
+  SendDamageToEntity(self.Ambulance_Driver, GetLocalPlayerEntityId(), 16, 9999, 1)
+end
+function export:Killed_Driver()
+  local l0
+  self = self._graph
+  l0 = self[6]
+  l0:Disable()
+  l0 = self[15]
+  l0:Stop()
+  l0 = self[11]
+  l0.TargetEntity = self.Ambulance_Driver
+  l0.Anim = "move/decisiontrees/civilians/reactions/drvr_civilians_reaction_exit.move.bin"
+  l0.Looping = 0
+  l0.Index = 0
+  l0:Start()
+end
+function export:Despawn_Vehicle()
+  local l0
+  self = self._graph
+  l0 = self[5]
+  l0.VehicleMaster = self.Ambulance_Vehicle
+  l0:Stop()
+  l0 = self[7]
+  l0:Disable()
+  self:Proximity_Ambulance_Vehicle()
+  l0 = self[8]
+  l0:Disable()
+  RemoveEntity(self.Ambulance_Vehicle)
+  self.Check_Vehicle_Despawned = 1
+  if self.Check_Vehicle_Despawned == 1 and self.Check_Driver_Despawned == 1 then
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Despawn_Everything
+    l0:In()
+  end
+end
+function export:Despawn_Driver()
+  local l0
+  self = self._graph
+  l0 = self[6]
+  l0:Disable()
+  self:Proximity_Ambulance_Driver()
+  l0 = self[10]
+  l0:Disable()
+  l0 = self[11]
+  l0.TargetEntity = self.Ambulance_Driver
+  l0.Anim = "move/decisiontrees/civilians/reactions/drvr_civilians_reaction_exit.move.bin"
+  l0.Looping = 0
+  l0.Index = 0
+  l0:Start()
+  l0 = self[15]
+  l0:Stop()
+  RemoveEntity(self.Ambulance_Driver)
+  self.Check_Driver_Despawned = 1
+  if self.Check_Vehicle_Despawned == 1 and self.Check_Driver_Despawned == 1 then
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Despawn_Everything
+    l0:In()
+  end
+end
+function export:Despawn_Everything()
+  local l0
+  self = self._graph
+  l0 = self[1]
+  l0:Disable()
+  l0 = self[2]
+  l0:Stop()
+  l0 = self[3]
+  l0:Stop()
+  l0 = self[4]
+  l0:Stop() 
+  l0 = self[5]
+  l0.VehicleMaster = self.Ambulance_Vehicle
+  l0:Stop()
+  l0 = self[6]
+  l0:Disable()
+  l0 = self[7]
+  l0:Disable()
+  self:Proximity_Ambulance_Vehicle()
+  l0 = self[8]
+  l0:Disable()
+  l0 = self[9]
+  l0:Stop()
+  self:Proximity_Ambulance_Driver()
+  l0 = self[10]
+  l0:Disable()
+  l0 = self[11]
+  l0.TargetEntity = self.Ambulance_Driver
+  l0.Anim = "move/decisiontrees/civilians/reactions/drvr_civilians_reaction_exit.move.bin"
+  l0.Looping = 0
+  l0.Index = 0
+  l0:Start()
+  l0 = self[12]
+  l0:Stop()
+  self:Proximity_Dead_NPC()
+  l0 = self[13]
+  l0:Disable()
+  l0 = self[14]
+  l0:Stop()
+  l0 = self[15]
+  l0:Stop()
+  l0 = self[16]
+  l0:Stop()
+  l0 = self[17]
+  l0:Stop()
+  l0 = self[18]
+  l0:Stop()
+  self:Proximity_Ambulance_Driver_Leave()
+  l0 = self[19]
+  l0:Disable()
+  l0 = self[20]
+  l0:Stop()
+  RemoveEntity(self.Ambulance_Vehicle)
+  RemoveEntity(self.Ambulance_Driver)
+  RemoveEntity(self.Reference_Entity)
+  self.Check_Vehicle_Despawned = 0
+  self.Check_Driver_Despawned = 0
+  self.Scared_Ambulance_Driver = 0
+  self.Event_Status = nil
+end
+function export:Check_Script()
+  local l0
+  self = self._graph
+  if IsInvasionVictim() == 1 or GetNumberOfPlayers() > 1 then
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Despawn_Everything
+    l0:In()
+  else
+    l0 = self[3]
+    l0.Seconds = self.Loop_Delay
+    l0:Start()
+  end
+end
+function export:Is_NPC_Loaded()
+  local l0
+  self = self._graph
+  if IsEntityLoaded(self.NPC) ~= 1 then
+    if self.Event_Status == "Dismounted" or self.Event_Status == "LookingAtBody" then
+	  CancelAICommand(self.Ambulance_Driver, self.commandID_Driver)
+      l0 = self[11]
+      l0.TargetEntity = self.Ambulance_Driver
+      l0.Anim = "move/decisiontrees/civilians/reactions/drvr_civilians_reaction_exit.move.bin"
+      l0.Looping = 0
+      l0.Index = 0
+      l0:Start()
+      l0 = self[16]
+      l0.Seconds = 1.5
+      l0:Start()
+    elseif self.Event_Status == "Spawned" then
+	  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+      l0._graph = self
+      l0.Out = self.Ambulance_Flee
+      l0:In()
+	elseif self.Event_Status == "Spawning" or self.Event_Status == "Calling" then
+	  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+      l0._graph = self
+      l0.Out = self.Despawn_Everything
+      l0:In()
+	end
+  else
+    l0 = self[15]
+    l0.Seconds = 0.3
+    l0:Start()
+  end
+end
+function export:Driver_Leaving()
+  local l0
+  self = self._graph
+  if GetVehicleIsDriveable(self.Ambulance_Vehicle) ~= 0 and GetDistance3D(self.Ambulance_Vehicle, self.Ambulance_Driver) < 50 then
+    self:Proximity_Ambulance_Driver_Leave()
+    l0 = self[19]
+    l0:Enable()
+    ReserveAndMoveToSeat(self.Ambulance_Vehicle, self.Ambulance_Driver, 1, "Jog", 1)
+  else
+    StartOnFootFleeBehavior(self.Ambulance_Driver, GetLocalPlayerEntityId(), "FleeOnFootConfig.834989303", GetInvalidEntityId(), GetInvalidEntityId())
+  end 
+end
+function export:Proximity_Ambulance_Driver_Leave()
+  local l0
+  l0 = self[19]
+  l0.Entity1 = self.Ambulance_Vehicle
+  l0.Entity2 = self.Ambulance_Driver
+  l0.Radius = 2
+  l0.CheckNow = 1
+end
+function export:Driver_DriveAway()
+  local l0
+  self = self._graph
+  self:Proximity_Ambulance_Driver_Leave()
+  l0 = self[19]
+  l0:Disable()
+  if GetVehicleIsDriveable(self.Ambulance_Vehicle) ~= 0 and GetDistance3D(self.Ambulance_Vehicle, self.Ambulance_Driver) < 50 then
+    l0 = self[9]
+    l0:Stop()
+    AssignVehicleSeat(self.Ambulance_Vehicle, self.Ambulance_Driver, 1, 1, 1, 0)
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Ambulance_Flee
+    l0:In()
+  else
+    StartOnFootFleeBehavior(self.Ambulance_Driver, GetLocalPlayerEntityId(), "FleeOnFootConfig.834989303", GetInvalidEntityId(), GetInvalidEntityId())
+  end
+end
+function export:Check_Despawned_Early()
+  local l0
+  self = self._graph
+  if GetEntityPosition(self.Ambulance_Vehicle, 2) == 0 or GetEntityPosition(self.Ambulance_Driver, 2) == 0 then
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Despawn_Everything
+    l0:In()
+  else
+    l0 = self[20]
+    l0.Seconds = 0.3
+    l0:Start()
+  end
+end
+_compilerVersion = 4

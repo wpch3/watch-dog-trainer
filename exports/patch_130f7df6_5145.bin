@@ -1,0 +1,162 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua")
+  cbox:RegisterBox("Domino/System/InputListenerMonitor.lua")
+  cbox:RegisterBox("Domino/System/Timer_v2.lua")
+end
+
+function export:Init(cbox)
+  -- Vérifier la configuration avant d'initialiser
+  if Globals._CUSTOM_SCRIPTS._Addons_TheFoxHackingMode > 0 then
+    self.IsProfilerOn = 0
+    self.ProfilerStateChanged = false  -- Suivi du changement d'état
+    self.IsFocusModeBlocked = 0  -- Flag pour bloquer le focus mode
+
+    -- Initialiser InputListenerMonitor pour le hacking mode
+    self[0] = cbox:CreateBox("Domino/System/InputListenerMonitor.lua")
+    local l0 = self[0]
+    l0._graph = self
+    l0.Out = DummyFunction
+    l0.Enabled = DummyFunction
+    l0.Disabled = DummyFunction
+    l0.InputReceived = self.f_0_InputReceived
+
+    -- Initialiser Timer pour le hacking mode
+    self[1] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+    l0 = self[1]
+    l0._graph = self
+    l0.Out = DummyFunction
+    l0.Started = DummyFunction
+    l0.Stopped = DummyFunction
+    l0.Paused = DummyFunction
+    l0.Resumed = DummyFunction
+    l0.TimeElapsed = self.f_1_TimeElapsed
+    l0.LoopingEnded = DummyFunction
+    l0.GotTime = DummyFunction
+
+    -- Initialiser InputListenerMonitor pour Focus Mode
+    self[2] = cbox:CreateBox("Domino/System/InputListenerMonitor.lua")
+    l0 = self[2]
+    l0._graph = self
+    l0.Out = DummyFunction
+    l0.Enabled = DummyFunction
+    l0.Disabled = DummyFunction
+    l0.InputReceived = self.f_2_InputReceived
+
+    -- Activer/désactiver le blocage du focus mode selon la config
+    self.BlockFocusModeWithProfiler = (Globals._CUSTOM_SCRIPTS._Addons_TheFoxHackingMode == 2)
+
+    self:DisableProfilerMode()
+  end
+end
+
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+
+function export:In()
+  if Globals._CUSTOM_SCRIPTS._Addons_TheFoxHackingMode > 0 then
+    local l0 = self[0]
+    l0.Player = GetLocalPlayerEntityId()
+    l0.Input = "toggle_profiler"  -- Utilisez le bon signal d'activation du profiler ici
+    l0:Enable()
+
+    -- Démarrer le timer une fois
+    local l1 = self[1]
+    l1.Seconds = 0.5
+    l1:Start()
+
+    -- Activer l'écoute du focus mode
+    local l2 = self[2]
+    l2.Input = "adrenaline_rush_toggle"  -- Signal correspondant au focus mode
+    l2:Enable()
+  end
+end
+
+function export:f_0_InputReceived()
+  self = self._graph
+  if self.IsProfilerOn == 1 then
+    self.IsProfilerOn = 0
+    self.IsFocusModeBlocked = 0  -- Débloquer le focus mode lorsque le profiler est désactivé
+  else
+    self.IsProfilerOn = 1
+
+    -- Désactiver le focus mode si déjà actif
+    if self.BlockFocusModeWithProfiler then
+      self:DisableFocusMode()
+      self.IsFocusModeBlocked = 1  -- Bloquer le focus mode si la config l'exige
+    end
+  end
+  self.ProfilerStateChanged = true  -- Marquer le changement d'état
+end
+
+function export:EnableProfilerMode()
+  SetProfilerDisabled(GetLocalPlayerEntityId(), 0)
+  EnableDisplay("Felony", 1)
+  EnableDisplay("Minimap", 1)
+  EnableDisplay("Tags", 1)
+  EnableDisplay("Reticle", 0)
+  EnableDisplay("Battery", 1)
+  SetPowersEnabled(GetLocalPlayerEntityId(), 1)
+  SetProfilerOn(GetLocalPlayerEntityId(), 1)
+  RequestUseSoftware(GetLocalPlayerEntityId(), 1)
+end
+
+function export:DisableProfilerMode()
+  SetProfilerDisabled(GetLocalPlayerEntityId(), 1)
+  EnableDisplay("Felony", 0)
+  EnableDisplay("Minimap", 0)
+  EnableDisplay("Tags", 0)
+  EnableDisplay("Reticle", 1)
+  EnableDisplay("Battery", 0)
+  SetPowersEnabled(GetLocalPlayerEntityId(), 0)
+  SetProfilerOn(GetLocalPlayerEntityId(), 0)
+  RequestUseSoftware(GetLocalPlayerEntityId(), 0)
+  -- Réinitialiser le blocage du focus mode ici
+  self.IsFocusModeBlocked = 0
+  SetAdrenalineInputsBlocked(GetLocalPlayerEntityId(), 0)
+end
+
+function export:DisableFocusMode()
+  -- Désactiver le focus mode immédiatement
+  CancelAdrenalineDurationOverride(GetLocalPlayerEntityId())
+  CancelAdrenalineDilationOverride(GetLocalPlayerEntityId())
+  StopAdrenaline(GetLocalPlayerEntityId())
+  SetAdrenalineInputsBlocked(GetLocalPlayerEntityId(), 1)
+end
+
+function export:f_1_TimeElapsed()
+  self = self._graph
+  if self.ProfilerStateChanged then
+    if self.IsProfilerOn == 1 then
+      self:EnableProfilerMode()
+    else
+      self:DisableProfilerMode()
+    end
+    self.ProfilerStateChanged = false
+  end
+  local l0 = self[1]
+  l0.Seconds = 0.5  -- Intervalle du timer
+  l0:Start()
+end
+
+function export:f_2_InputReceived()
+  self = self._graph
+  if self.IsFocusModeBlocked == 1 then
+    -- Bloquer le focus mode si le profiler est activé
+    self:DisableFocusMode()
+  else
+    -- S'assurer que le focus mode fonctionne normalement si non bloqué
+    SetAdrenalineInputsBlocked(GetLocalPlayerEntityId(), 0)
+  end
+end
+
+_compilerVersion = 4

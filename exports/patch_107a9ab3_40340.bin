@@ -1,0 +1,1155 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua") --loaded global variables
+  cbox:RegisterBox("Domino/System/AIGeneratorController.lua")
+  cbox:RegisterBox("Domino/System/AssignPatrol_v2.lua")
+  cbox:RegisterBox("Domino/System/GetPlayerID.lua")
+  cbox:RegisterBox("domino/System/HackableMonitor.lua")
+  cbox:RegisterBox("Domino/System/InvasionMonitor.lua")
+  cbox:RegisterBox("Domino/System/MapPointController_v3.lua")
+  cbox:RegisterBox("Domino/System/MediaSystemCustomBroadcastController.lua")
+  cbox:RegisterBox("Domino/System/MissionLayer_v2.lua")
+  cbox:RegisterBox("Domino/System/MissionModuleBox_v3.lua")
+  cbox:RegisterBox("Domino/System/MissionMonitor.lua")
+  cbox:RegisterBox("Domino/System/NPCSquad_v2.lua")
+  cbox:RegisterBox("Domino/System/PawnHealthMonitor_v3.lua")
+  cbox:RegisterBox("Domino/System/PickupMonitor.lua")
+  cbox:RegisterBox("Domino/System/ProximityMonitor.lua")
+  cbox:RegisterBox("Domino/System/StandaloneLoaderController.lua")
+  cbox:RegisterBox("Domino/System/Timer_v2.lua")
+  cbox:RegisterBox("Domino/System/TriggerMonitor_v2.lua")
+  cbox:RegisterBox("Domino/Library/common/SnapAndBind.SnapAndBind.lua")
+end
+function export:Init(cbox)
+  local l0
+  self.Reward_Money = {}
+  self.Spawned_Enemies = {}
+  self.Layer_Name = "custom_rossifremont"
+  self.Interior_Marker = "2081000000000000006"
+  self.Stronghold_Marker = "2081000000000000014"
+  self.Roof_Door = "2081000000000000019"
+  self.Teleport_Destination = "2081000000000000020"
+  self.PlayerPawn = nil
+  self.RequiresCompleted = "MissionList.1503355061" --execute if this completed (available after A04_M01 completion)
+  Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior = Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior or 0
+  self[1] = cbox:CreateBox("Domino/System/ProximityMonitor.lua") --ProximityEntrance
+  l0 = self[1]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.Load_A03_M10
+  l0.EnterRadius = self.Check_Completed
+  l0.ExitRadius = DummyFunction
+  self[2] = cbox:CreateBox("Domino/System/ProximityMonitor.lua") --ProximityRoofElevator
+  l0 = self[2]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Teleport_Elevator
+  l0.ExitRadius = DummyFunction
+  self[3] = cbox:CreateBox("Domino/System/ProximityMonitor.lua") --ProximityRoofDoor
+  l0 = self[3]
+  l0._graph = self
+  l0.Enabled = self.Enable_ProximityUnload
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Teleport_Inside
+  l0.ExitRadius = DummyFunction
+  self[4] = cbox:CreateBox("Domino/System/ProximityMonitor.lua") --ProximityUnload
+  l0 = self[4]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.Unload_Layer_HMA
+  l0.EnterRadius = DummyFunction
+  l0.ExitRadius = self.Disable_ProximityUnload
+  self[5] = cbox:CreateBox("Domino/System/ProximityMonitor.lua") --ProximityExterior
+  l0 = self[5]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Respawn_Exterior
+  l0.ExitRadius = DummyFunction
+  self[10] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[10]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = self.Enable_ProximityEntrance
+  l0.Reseted = self.Load_HMA_1
+  self[11] = cbox:CreateBox("Domino/System/StandaloneLoaderController.lua")
+  l0 = self[11]
+  l0._graph = self
+  l0.LoadingStarted = DummyFunction
+  l0.Loaded = self.Load_HMA_2
+  l0.PreviousZoneUnloaded = DummyFunction
+  self[12] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[12]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = self.Load_HMA_3
+  self[13] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[13]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = self.Enable_ProximityLobby
+  self[14] = cbox:CreateBox("Domino/System/TriggerMonitor_v2.lua")
+  l0 = self[14]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Enter = self.Entered_Lobby
+  l0.Leave = DummyFunction
+  l0.Use = DummyFunction
+  self[16] = cbox:CreateBox("Domino/System/TriggerMonitor_v2.lua")
+  l0 = self[16]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Enter = self.Riding_Elevator
+  l0.Leave = DummyFunction
+  l0.Use = DummyFunction
+  self[18] = cbox:CreateBox("domino/System/HackableMonitor.lua")
+  l0 = self[18]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.Server_Hacked
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[19] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[19]
+  l0._graph = self
+  l0.Spawned = self.Entrance_Spawned
+  l0.UnSpawned = DummyFunction
+  self[20] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[20]
+  l0._graph = self
+  l0.Spawned = self.Enemy_Spawned
+  l0.UnSpawned = DummyFunction
+  self[25] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua")
+  l0 = self[25]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Damaged = DummyFunction
+  l0.Killed = DummyFunction
+  l0.AllDead = self.All_Dead
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[30] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[30]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Elevator_Arrived
+  l0.ExitRadius = DummyFunction
+  self[35] = cbox:CreateBox("Domino/System/AssignPatrol_v2.lua")
+  l0 = self[35]
+  l0._graph = self
+  l0.Assigned = DummyFunction
+  l0.Unassigned = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Failed = DummyFunction
+  l0.SpeedSet = DummyFunction
+  l0.Out = DummyFunction
+  self[40] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[40]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = self.Allow_Respawn
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Count_Down
+  l0.LoopingEnded = self.Allow_Respawn
+  l0.GotTime = DummyFunction
+  self[45] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[45]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = self.Enable_Reward
+  self[50] = cbox:CreateBox("Domino/System/PickupMonitor.lua")
+  l0 = self[50]
+  l0._graph = self
+  l0.PickedUp = self.Picked_Up
+  self[55] = cbox:CreateBox("Domino/Library/common/SnapAndBind.SnapAndBind.lua")
+  l0 = self[55]
+  l0._graph = self
+  l0.Attached = DummyFunction
+  self[60] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[60]
+  l0._graph = self
+  l0.Shown = DummyFunction
+  l0.Hidden = DummyFunction
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[65] = cbox:CreateBox("Domino/System/NPCSquad_v2.lua")
+  l0 = self[65]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.ConfigAdded = DummyFunction
+  l0.ConfigRemoved = DummyFunction
+  l0.NPCAdded = DummyFunction
+  l0.NPCRemoved = DummyFunction
+  l0.LKPGroupAdded = DummyFunction
+  l0.ZoneAdded = DummyFunction
+  l0.ZoneRemoved = DummyFunction
+  l0.DefendPointAdded = DummyFunction
+  l0.DefendPointRemoved = DummyFunction
+  l0.AssaultPointAdded = DummyFunction
+  l0.AssaultPointRemoved = DummyFunction
+  l0.Out = DummyFunction
+  self[100] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[100]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[1000] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[1000]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = self.Loaded_Markers
+  self[2000] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[2000]
+  l0._graph = self
+  l0.Shown = DummyFunction --self.Enable_ProximityFarAway NOT NEEDED BECAUSE StandaloneLoaderController BLOCKS FASTTRAVEL ANYWAY
+  l0.Hidden = DummyFunction
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[3000] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[3000]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = DummyFunction
+  l0.ExitRadius = self.Disable_ProximityUnload
+  self[4000] = cbox:CreateBox("Domino/System/InvasionMonitor.lua")
+  l0 = self[4000]
+  l0._graph = self
+  l0.CurrentlyIsInvasionVictim = DummyFunction
+  l0.NotInvasionVictim = self.Disable_ProximityEntrance
+  l0.Out = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  local l0
+-- Globals._CUSTOM_SCRIPTS._Respawn_Blocked[10] = Globals._CUSTOM_SCRIPTS._Respawn_Timeout
+-- Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior = Globals._CUSTOM_SCRIPTS._Respawn_Timeout
+-- self.Entity_Destination = SpawnEntityFromArchetype("{787873A0-B779-459F-93EA-C9654A449448}", 714, 1723, 62, 0, 0, 90)
+-- TeleportEntity(GetLocalPlayerEntityId(), self.Entity_Destination, 0, 0)
+  l0 = self[1000]
+  l0.LayerName = self.Layer_Name
+  l0:Reset()
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Enable_ProximityEntrance
+  l0:In()
+end
+function export:Loaded_Markers()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionMonitor.lua")]
+  l0.Mission = self.RequiresCompleted
+  l0._graph = self
+  l0.Completed = self.Show_Marker
+  l0.NotCompleted = self.Hide_Marker
+  l0:CheckCompletion()
+end
+function export:Show_Marker()
+  local l0
+  self = self._graph
+  l0 = self[40]
+  l0.Seconds = 1 --loop gap
+  l0.Loop = 1
+  l0.nbLoop = Globals._CUSTOM_SCRIPTS._Respawn_Timeout
+  l0:Start() --Count_Down
+--SetEntityPosition(self.Interior_Marker, 701, 1723, 62)
+  l0 = self[2000]
+  l0.MapPoint = self.Interior_Marker
+  l0.LocMapMarkerTitle = {
+    section = "MISSIONS.COMMON.OBJECTIVELABELS",
+    item = "Title",
+    id = "14566" --"City Hotspots"
+  }
+  l0.LocMapMarkerDescription = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "141090" --"Rossi-Fremont"
+  }
+  l0:Show()
+end
+function export:Hide_Marker()
+  local l0
+  self = self._graph
+  l0 = self[2000]
+  l0.MapPoint = self.Interior_Marker
+  l0:Hide()
+end
+function export:Count_Down()
+  local l0
+  self = self._graph
+  if Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior == nil or Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior <= 0 then
+    l0 = self[40]
+    l0:Stop() --Allow_Respawn
+  else
+    Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior = Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior - 1
+  end
+end
+
+function export:Enable_ProximityEntrance()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  self.PlayerPawn = l0.PlayerID
+  self:ProximityEntrance()
+  l0 = self[1]
+  l0:Enable()
+end
+function export:ProximityEntrance()
+  local l0
+  l0 = self[1]
+  l0.Entity1 = "2082081014894731931" --exterior door
+  l0.Entity2 = GetLocalPlayerEntityId()
+  l0.Radius = 3
+  l0.CheckNow = 1
+  l0.CheckDistance3D = 1
+end
+
+function export:Check_Completed()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionMonitor.lua")]
+  l0.Mission = self.RequiresCompleted
+  l0._graph = self
+  l0.Completed = self.Check_Invasion
+  l0.NotCompleted = DummyFunction
+  l0:CheckCompletion()
+end
+function export:Check_Invasion()
+  local l0
+  self = self._graph
+  l0 = self[4000]
+  l0:CheckInvasionStatus()
+end
+function export:Disable_ProximityEntrance()
+  local l0
+  self = self._graph
+  --checking IF not chased AND not other multiplayer mode AND zone mission layer not loaded AND NOT Alone Madness p30ple Spidertank Bouncing LAYERS
+  if FelonyGetType(GetLocalPlayerEntityId()) == 8 and GetNumberOfPlayers() == 1.000000 and GetEntityPosition("2082124800775611431", 2) == 0 and GetEntityPosition("2080711752735150797", 2) == 0 and GetEntityPosition("2082563707426260037", 2) == 0 and GetEntityPosition("2082371120201204534", 2) == 0 and GetEntityPosition("2081694354673681048", 2) == 0 and GetEntityPosition("2080282882919629347", 2) == 0 then
+    if Globals._CUSTOM_SCRIPTS._In_Mission == 0 and Globals._CUSTOM_SCRIPTS._Gameplay_Context == 0 then
+      Globals._CUSTOM_SCRIPTS._Gameplay_Context = 1
+      SetDensityContextOverride("GameplayContextSpec.4012897103") --CUSTOM gameplaycontextspec.lib REQUIRED
+      AddScriptNarrativeDelay(9999)
+    end
+    self:ProximityEntrance()
+    l0 = self[1]
+    l0:Disable() --Load_A03_M10
+SetDoorLockState("2082081014894731931", 0) --exterior doors
+SetDoorLockState("2082081016253686429", 0) --exterior doors
+  else
+    CloseDoor("2082081014894731931", 1) --instant close
+    CloseDoor("2082081016253686429", 1) --instant close
+    SetDoorLockState("2082081014894731931", 1) --exterior doors
+    SetDoorLockState("2082081016253686429", 1) --exterior doors
+  end
+end
+function export:Load_A03_M10()
+  local l0
+  self = self._graph
+  l0 = self[10]
+  l0.LayerName = "A03_M10"
+  l0:Reset() --Load_HMA_1
+end
+function export:Load_HMA_1()
+  local l0
+  self = self._graph
+  l0 = self[11]
+  l0:UnregisterCallback()
+  l0.StandaloneLoader = "2083230033136084819"
+  l0.LayerName = "04_ScalabriniGreen_HMA_01"
+  l0:Load() --Load_HMA_2
+end
+function export:Load_HMA_2()
+  local l0
+  self = self._graph
+  l0 = self[12]
+  l0.LayerName = "04_ScalabriniGreen_HMA_02"
+  l0:Reset() --Load_HMA_3
+end
+function export:Load_HMA_3()
+  local l0
+  self = self._graph
+  l0 = self[13]
+  l0.LayerName = "04_ScalabriniGreen_HMA_03"
+  l0:Reset() --Enable_ProximityLobby
+end
+function export:Enable_ProximityLobby()
+  local l0
+  self = self._graph
+  --enabling lobby trigger
+  l0 = self[14]
+  l0.Trigger = "2081337786467770866" --2081348404585327897
+  l0.CheckNow = 1
+  l0.AutoDisable = 1
+  l0:Enable() --Entered_Lobby
+  --disabling elevator trigger
+  l0 = self[16]
+  l0:Disable()
+  --enabling server hack
+SetHackable("2081393937544645578", 1)
+  l0 = self[18]
+  l0.HackableEntity = "2081393937544645578"
+  l0:Enable()
+  --enabling quick descend
+  self:ProximityRoofElevator()
+  l0 = self[2]
+  l0:Enable()
+  --enabling roof reenter
+  self:ProximityRoofDoor() --Enable_ProximityUnload
+  l0 = self[3]
+  l0:Enable()
+end
+function export:ProximityRoofElevator()
+  local l0
+  l0 = self[2]
+  l0.Entity1 = "2083203736108278712" --top elevator
+  l0.Entity2 = GetLocalPlayerEntityId()
+  l0.Radius = 1
+  l0.CheckNow = 0
+  l0.CheckDistance3D = 1
+end
+function export:ProximityRoofDoor()
+  local l0
+  l0 = self[3]
+  l0.Entity1 = self.Roof_Door
+  l0.Entity2 = GetLocalPlayerEntityId()
+  l0.Radius = 1
+  l0.CheckNow = 0
+  l0.CheckDistance3D = 1
+end
+
+function export:Entered_Lobby()
+  local l0
+  self = self._graph
+SetHackOccludable("2081984359256200674", 0) --elevator button down
+SetHackOccludable("2081984359256200685", 0) --elevator button up
+SetDoorLockState("2082966043262998703", 0) --guard door
+SetDoorLockState("2082264957400915158", 0) --final door
+BreakableEntity_NextState("2082969675616248838") --blown up wall
+  --playing base video
+  l0 = Boxes[PathID("domino/System/MediaSystemCustomBroadcastController.lua")]
+  l0.BroadcastInfo = "CustomBroadcasts.932847631"
+  l0.OnGenericChannel = 1
+  l0.OnShopChannel = 0
+  l0.OnBarChannel = 0
+  l0.PlayOnLoad = 1
+  l0.ApplyOnLoad = nil
+  l0._graph = self
+  l0.LoadAndPlayRequested = DummyFunction
+  l0.EndedAllCustomMediaBroadcasts = DummyFunction
+  l0.ActivatedPlayOnBinkChannel = DummyFunction
+  l0.AppliedLoadedBufferOnChannels = DummyFunction
+  l0.Out = DummyFunction
+  l0:LoadAndPlayCustomBroadcast()
+  --IF respawn allowed AND no active event
+  if (Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior == nil or Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior <= 0) and (GetEntityPosition("2080000000000000002", 1) == 0 or Globals._CUSTOM_SCRIPTS._Current_Event == 0 or Globals._CUSTOM_SCRIPTS._Gameplay_Context ~= 2) then
+    Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior = 0
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+-- l0.Out = self.All_Dead --TESTING
+-- TeleportEntity(GetLocalPlayerEntityId(), "2082067577231811270", 0, 0) --TESTING
+    l0.Out = self.Spawn_Enemies
+    l0:In()
+  else
+    SetDoorLockState("2082067577231811270", 0) --server door
+  end
+  l0 = self[60]
+  l0.MapPoint = self.Stronghold_Marker
+  l0:Hide()
+end
+
+function export:Respawn_Exterior()
+  local l0
+  self = self._graph
+  self:ProximityExterior()
+  l0 = self[5]
+  l0:Disable()
+  --if exterior not cleared and interior not cleared
+  if Globals._CUSTOM_SCRIPTS._Respawn_Blocked[10] == 0 then
+    CloseDoor("2082859338596315298", 0) --interior doors
+    CloseDoor("2082081047616594647", 0) --interior doors
+    --despawning interior enemies
+	if type(self.Spawned_Entrance) == "table" then
+      for n=1, #self.Spawned_Entrance do
+        RemoveEntity(self.Spawned_Entrance[n])
+      end
+    end
+    l0 = self[65]
+    l0.SquadName = "Interior"
+    l0:Stop()
+	if type(self.Spawned_Enemies) == "table" then
+      for n=1, #self.Spawned_Enemies do
+        RemoveEntity(self.Spawned_Enemies[n])
+      end
+	end
+    --spawning exterior enemies
+    self.Exterior_Spawner = CDominoManager_GetInstance():SpawnDominoEntity("Domino/User/windycity/Custom_Scripts/Restricted_Areas/14_thewards_rossifremont.14_thewards_rossifremont_persistent.lua") or GetInvalidEntityId()
+    --redisplaying raid marker
+    Globals._CUSTOM_SCRIPTS._Notify_Raid = 1
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Allow_Respawn
+    l0:In()
+  end
+  --disabling elevator trigger
+  l0 = self[16]
+  l0:Disable()
+  --reenabling lobby trigger
+  l0 = self[14]
+  l0.Trigger = "2081337786467770866" --2081348404585327897
+  l0.CheckNow = 1
+  l0.AutoDisable = 1
+  l0:Enable() --Entered_Lobby
+end
+function export:ProximityExterior()
+  local l0
+  l0 = self[5]
+  l0.Entity1 = "2083228708528731140" --vehicle barrier 1
+  l0.Entity2 = GetLocalPlayerEntityId()
+  l0.Radius = 3
+  l0.CheckNow = 1
+  l0.CheckDistance3D = 1
+end
+function export:Spawn_Enemies()
+  local l0
+  self = self._graph
+  --displaying raid message
+  l0 = self[100]
+  l0.MessageType = "MissionUpdate"
+  l0.MessageIcon = "iconVigilante"
+  l0.OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "24738" --"Eliminate all enemies."
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "148318" --"RAID"
+  }
+  l0.Duration = -1
+  l0:Display()
+  --if exterior not cleared
+  if Globals._CUSTOM_SCRIPTS._Respawn_Blocked[10] == 0 then
+    self:ProximityExterior() --Respawn_Exterior
+    l0 = self[5]
+    l0:Enable()
+CloseDoor("2082081014894731931", 0) --exterior doors
+CloseDoor("2082081016253686429", 0) --exterior doors
+    --despawning exterior enemies
+    CDominoManager_GetInstance():RemoveDominoEntity(self.Exterior_Spawner)
+    for h=1, #Globals._CUSTOM_SCRIPTS._Guards_List[10] do
+      RemoveEntity(Globals._CUSTOM_SCRIPTS._Guards_List[10][h])
+    end
+  end
+CloseDoor("2082067577231811270", 1) --server door
+SetDoorLockState("2082067577231811270", 1) --server door
+  --starting spawning
+SetEntityPosition("2081347906406869693", 676.047, 1726.055, GetEntityPosition("2081984359256200686", 2)) --elevator enemy spawner
+SetEntityPosition("2081347909997193918", 677.317, 1726.710, GetEntityPosition("2081984359256200686", 2)) --elevator enemy spawner
+SetEntityPosition("2081347910234172095", 676.155, 1727.436, GetEntityPosition("2081984359256200686", 2)) --elevator enemy spawner
+  self.Spawned_Entrance = {}
+  self.INDEX = 1
+  self.Entrance_List = {
+    "2081347918561962689", --elevator enemy (2081347906406869693)
+    "2081347919432280771", --elevator enemy (2081347909997193918)
+    "2081347919279188674", --elevator enemy (2081347910234172095)
+    "2081348914371364577", --entrance balcony
+    "2081349170498635632", --entrance balcony
+  }
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Spawn_Entrance
+  l0:In()
+end
+function export:Spawn_Entrance()
+  local l0
+  self = self._graph
+  l0 = self[19]
+  l0.AIGenerator = self.Entrance_List[self.INDEX]
+  l0:Spawn()
+end
+function export:Entrance_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[19]
+  table.insert(self.Spawned_Entrance, l0.SpawnedEntity)
+  self.INDEX = self.INDEX + 1
+  if #self.Spawned_Entrance < #self.Entrance_List then
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Spawn_Entrance
+    l0:In()
+  else
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Elevator_Spawned
+    l0:In()
+  end
+end
+function export:Elevator_Spawned()
+  local l0
+  self = self._graph
+  self.Distance = GetDistance3D("2081984359256200686", "2081984359256200674") --elevator and elevator button down
+  if self.Distance > 10 then
+    ForceHackIngredient("2081984359256200674", GetLocalPlayerEntityId()) --prepare elevator if needed
+  end
+  self:ProximityElevator() --to assign patrols on elevator arrival
+  l0 = self[30]
+  l0:Enable()
+end
+function export:ProximityElevator()
+  local l0
+  l0 = self[30]
+  l0.Entity1 = "2081984359256200686" --elevator
+  l0.Entity2 = "2084612420493384311" --TagPoint_0
+  l0.Radius = 1.1
+  l0.CheckNow = 1
+  l0.CheckDistance3D = 1
+end
+function export:Elevator_Arrived()
+  local l0
+  self = self._graph
+  self:ProximityElevator()
+  l0 = self[30]
+  l0:Disable()
+  l0 = self[35]
+  l0.NPC = self.Spawned_Entrance[1]
+  l0.Patrol = "2083643833322575996"
+  l0:Assign()
+  l0 = self[35]
+  l0.NPC = self.Spawned_Entrance[2]
+  l0.Patrol = "2083643847033755875"
+  l0:Assign()
+  l0 = self[35]
+  l0.NPC = self.Spawned_Entrance[3]
+  l0.Patrol = "2083644000943741384"
+  l0:Assign()
+  --enabling elevator trigger
+  l0 = self[16]
+  l0.Trigger = "2081350416555205469"
+  l0.CheckNow = 1
+  l0.AutoDisable = 1
+  l0:Enable() --Riding_Elevator
+end
+
+function export:Riding_Elevator()
+  local l0
+  self = self._graph
+  if type(self.Spawned_Entrance) == "table" then
+    for n=1, #self.Spawned_Entrance do
+      RemoveEntity(self.Spawned_Entrance[n])
+    end
+  end
+  self.Spawned_Enemies = {}
+  self.INDEX = 1
+  self.Spawners_List = {
+    "2081349230391199664",
+    "2081350440928306062",
+    "2081350438866805644",
+    "2081390372153619550",
+    "2081390545430800968",
+    "2081390358526325841",
+    "2081390530379541053",
+    "2081390884173278063",
+    "2081390880228535150",
+    "2081391170688283497",
+    "2082205187596003127",
+    "2082205431966640290",
+    "2081391183204086634",
+    "2081392885365736269",
+    "2081392887595008847",
+    "2081392884327646028",
+    "2081392886418506574",
+    "2081392882771559243",
+    "2081393534857905362",
+    "2081393535738709203",
+    -- "2081394149765942258", --roof enforcer
+  }
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Spawn_Enemy
+  l0:In()
+end
+function export:Spawn_Enemy()
+  local l0
+  self = self._graph
+  l0 = self[20]
+  l0.AIGenerator = self.Spawners_List[self.INDEX]
+  l0:Spawn()
+end
+function export:Enemy_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[20]
+  table.insert(self.Spawned_Enemies, l0.SpawnedEntity)
+  self.INDEX = self.INDEX + 1
+  if #self.Spawned_Enemies < #self.Spawners_List then
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Spawn_Enemy
+    l0:In()
+  else
+    l0 = self[25]
+    l0.PawnList = self.Spawned_Enemies
+    l0:Enable()
+    l0 = self[65]
+    l0.SquadName = "Interior"
+    l0.NPCList = self.Spawned_Enemies
+    l0.LKPGroup = "LKP_Interior"
+    l0:Start()
+  end
+end
+
+function export:All_Dead()
+  local l0
+  self = self._graph
+  l0 = self[25]
+  l0.PawnList = self.Spawned_Enemies
+  l0:Disable()
+  l0 = self[65]
+  l0.SquadName = "Interior"
+  l0:Stop()
+  --preventing completion after dying
+  if IsAlive(self.PlayerPawn) == 1 then
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Player_Survived
+    l0:In()
+  end
+end
+function export:Player_Survived()
+  local l0
+  self = self._graph
+  --starting respawn blocked timeout
+Globals._CUSTOM_SCRIPTS._Guards_List[10] = { GetInvalidEntityId(), }
+Globals._CUSTOM_SCRIPTS._Respawn_Blocked[10] = Globals._CUSTOM_SCRIPTS._Respawn_Timeout
+CDominoManager_GetInstance():SpawnDominoEntity("Domino/User/windycity/Custom_Scripts/Restricted_Areas/14_thewards_rossifremont.14_thewards_rossifremont_persistent_timeout.lua")
+MissionAreaActivation("2082593938658564343", 0)
+CDominoManager_GetInstance():RemoveDominoEntity(self.Exterior_Spawner)
+Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior = Globals._CUSTOM_SCRIPTS._Respawn_Timeout
+Globals._CUSTOM_SCRIPTS._Notify_Raid = 1
+  l0 = self[40]
+  l0.Seconds = 1 --loop gap
+  l0.Loop = 1
+  l0.nbLoop = Globals._CUSTOM_SCRIPTS._Respawn_Timeout
+  l0:Start() --Count_Down
+  --removing reward
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Remove_Reward
+  l0:In()
+  --removing previous rewards stuff
+  RemoveEntity(self.Reward_Table)
+  RemoveEntity(self.Reward_Weapon_Table)
+  RemoveEntity(self.Reward_Weapon_Table_Collision)
+  if type(self.Reward_Money) == "table" then
+    for i=1, #self.Reward_Money do
+      RemoveEntity(self.Reward_Money[i])
+    end
+  end
+  --reward money bag
+  self.Reward_Bag = SpawnEntityFromArchetype("{78A154C8-3CD4-AA5E-C860-31957EDF135F}", 671.8, 1761.7, 111.525, 0, 0, 5) --Pickup.FoundBagsSystemic.CashBag
+  self.Reward_Table = SpawnEntityFromArchetype("{BD38B1A4-B681-FA67-F32C-0AE2DC5DA8BB}", 671.8, 1761.55, 110.8, 0, 0, 0)
+  self.Reward_Money = {}
+  self.Reward_Money[1] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 671.5, 1761.46, 111.525, 0, 0, 80)
+  self.Reward_Money[2] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 671.6, 1761.41, 111.525, 0, 0, 100)
+  self.Reward_Money[3] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 671.7, 1761.42, 111.525, 0, 0, 85)
+  self.Reward_Money[4] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 671.8, 1761.37, 111.525, 0, 0, 80)
+  self.Reward_Money[5] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 671.9, 1761.40, 111.525, 0, 0, 90)
+  self.Reward_Money[6] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 672.0, 1761.38, 111.525, 0, 0, 70)
+  self.Reward_Money[7] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 672.1, 1761.44, 111.525, 0, 0, 95)	
+  self.Reward_Money[8] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 671.5, 1761.45, 111.580, 0, 0, 95)
+  self.Reward_Money[9] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 671.6, 1761.42, 111.580, 0, 0, 85)
+  self.Reward_Money[10] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 671.7, 1761.41, 111.580, 0, 0, 100)
+  self.Reward_Money[11] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 671.8, 1761.38, 111.580, 0, 0, 90)
+  self.Reward_Money[12] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 671.9, 1761.39, 111.580, 0, 0, 70)
+  self.Reward_Money[13] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 672.0, 1761.39, 111.580, 0, 0, 95)
+  self.Reward_Money[14] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 672.1, 1761.43, 111.580, 0, 0, 90)	
+  self.Reward_Money[15] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 671.65, 1761.21, 111.525, 0, 0, 10)
+  self.Reward_Money[16] = SpawnEntityFromArchetype("{8527248C-3BFD-5EEF-A3CD-4AED2F93671C}", 671.95, 1761.24, 111.525, 0, 0, -5)
+  --reward special weapon
+  self.Weapons_List = {
+    { "208032", "weapon_U100", "2089000000000000013", "Items.900578036" }, --"U100"
+    { "107527", "weapon_GL94", "2089000000000000016", "Items.3139436763" }, --"GL-94"
+    { "52619", "weapon_ACS12", "2089000000000000032", "Items.1758597562" }, --"ATSG–12"
+    { "185956", "weapon_M1SMG_Gold", "2089000000000000046", "Items.1128431973" }, --"Gangster"
+    { "185953", "weapon_Destroyer", "2089000000000000051", "Items.2343466146" }, --"Destroyer"
+  }
+  --adding biometric as eligible if completed its mission
+  if IsMissionPlayed("MissionList.4167756943") == 1 then
+    table.insert(self.Weapons_List, { "185936", "weapon_Biometric", "2089000000000000005", "Items.1830466540" }) --"Biometric Rifle"
+  end
+  --ensuring at least one weapon isn't owned already
+  for i=1, #self.Weapons_List do
+    if GetItemCount(GetLocalPlayerEntityId(), self.Weapons_List[i][4]) == 0 then
+	  math.randomseed(Globals._CUSTOM_SCRIPTS._Random_Seed+math.floor(GetGameTime())) --set the global variable as math seed
+	  repeat
+	    self.Weapon_Index = math.random(#self.Weapons_List)
+	  until GetItemCount(GetLocalPlayerEntityId(), self.Weapons_List[self.Weapon_Index][4]) == 0
+	  self.Reward_Weapon = self.Weapons_List[self.Weapon_Index][3]
+      self.Reward_Weapon_Table = SpawnEntityFromArchetype("{6ACA9BF1-9124-4C06-91FF-CCAADB3FC81F}", 669.75, 1761.5, 110.8, 0, 0, 180)
+      self.Reward_Weapon_Table_Collision = SpawnEntityFromArchetype("{637C6697-AC62-8BBA-BA81-0D138D1B596D}", 669.7, 1761.55, 111.25, 180, 0, 0)
+      l0 = self[45]
+      l0.LayerName = self.Weapons_List[self.Weapon_Index][2]
+      l0:Reset() --Enable_Reward
+	  break
+    end
+    if i == #self.Weapons_List then
+      l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+      l0._graph = self
+      l0.Out = self.Enable_Reward
+      l0:In()
+    end
+  end
+end
+function export:Enable_Reward()
+  local l0
+  self = self._graph
+SetDoorLockState("2082067577231811270", 0) --server door
+  SetEntityPosition(self.Reward_Weapon, 670.0, 1761.35, 111.35)
+  SetEntityAngle(self.Reward_Weapon, 0, 85, 80)
+  SetPhysicsEnabled(self.Reward_Weapon, 0)
+  SetEnablePickup(self.Reward_Weapon, 1)
+  SetEnablePickup(self.Reward_Bag, 1)
+  l0 = self[50]
+  l0:Disable()
+  l0.Pickup = self.Reward_Bag
+  l0:Enable() --Picked_Up
+  l0 = self[55]
+  l0.Parent = self.Reward_Bag
+  l0.Child = "2081403820209868211"
+  l0:Attach()
+  l0 = self[60]
+  l0.MapPoint = "2081403820209868211"
+  l0.LocText = {
+    section = "FLOATING",
+    item = "Reward",
+    id = "59506"
+  }
+  l0.LocMapMarkerTitle = {
+    section = "Lowercase",
+    item = "Raid",
+    id = "145137"
+  }
+  l0.LocMapMarkerDescription = {
+    section = "UPPERCASE",
+    item = "DRUG MONEY",
+    id = "144975"
+  }
+  l0:Show()
+  l0 = self[100]
+  l0.MessageType = "MissionSuccess"
+  l0.MessageIcon = "iconVigilante"
+  l0.OasisID_1 = {
+    section = "First",
+    item = "AREA CLEAN",
+    id = "165720"
+  }
+  l0.OasisID_2 = {
+    section = "Second",
+    item = "High rewards",
+    id = "107851"
+  }
+  l0.OasisID_3 = {
+    section = "Top",
+    item = "Rossi-Fremont",
+    id = "141090"
+  }
+  l0.Duration = 7
+  l0:Display()
+end
+
+function export:Picked_Up()
+  local l0
+  self = self._graph
+  ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.2532779827", 1) --Cash.HardConvoyRewards (10000$)
+  ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.2532779827", 1) --Cash.HardConvoyRewards (10000$)
+  ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.2532779827", 1) --Cash.HardConvoyRewards (10000$)
+  ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.2532779827", 1) --Cash.HardConvoyRewards (10000$)
+  ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.2532779827", 1) --Cash.HardConvoyRewards (10000$)
+  ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.2532779827", 1) --Cash.HardConvoyRewards (10000$)
+  ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.2532779827", 1) --Cash.HardConvoyRewards (10000$)
+  ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.2532779827", 1) --Cash.HardConvoyRewards (10000$)
+  ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.2532779827", 1) --Cash.HardConvoyRewards (10000$)
+  ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.2532779827", 1) --Cash.HardConvoyRewards (10000$)
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Remove_Reward
+  l0:In()
+end
+function export:Remove_Reward()
+  local l0
+  self = self._graph
+  l0 = self[50]
+  l0.Pickup = self.Reward_Bag
+  l0:Disable()
+  l0 = self[60]
+  l0.MapPoint = "2081403820209868211"
+  l0:Hide()
+RemoveEntity(self.Reward_Bag)
+RemoveEntity(self.Reward_Weapon)
+end
+
+function export:Allow_Respawn()
+  local l0
+  self = self._graph
+  l0 = self[100]
+  l0.MessageType = "MissionUpdate"
+  l0.MessageIcon = "iconVigilante"
+  l0.OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "24738" --"Eliminate all enemies."
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "148318" --"RAID"
+  }
+  l0.Duration = -1
+  l0:Hide()
+Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior = 0
+  l0 = self[60]
+  l0.MapPoint = self.Stronghold_Marker
+  l0.LocText = {
+    section = "FLOATING",
+    item = "Raid",
+    id = "145137"
+  }
+  l0.LocMapMarkerTitle = {
+    section = "Lowercase",
+    item = "RAID",
+    id = "148318"
+  }
+  l0.LocMapMarkerDescription = {
+    section = "UPPERCASE",
+    item = "Rossi-Fremont",
+    id = "141090"
+  }
+  l0:Show()
+  --notify RAID only once
+  if Globals._CUSTOM_SCRIPTS._Notify_Raid == 1 then
+    Globals._CUSTOM_SCRIPTS._Notify_Raid = nil
+    DisplaySideInvestigationNotification(self.Stronghold_Marker, "ItemsCollectableMatchList.3519166888") --Custom.RAID
+  end
+end
+
+
+function export:Server_Hacked()
+  local l0
+  self = self._graph
+  --disabling server hack
+SetHackable("2081393937544645578", 0)
+  l0 = self[18]
+  l0.HackableEntity = "2081393937544645578"
+  l0:Disable()
+  --playing hacked video
+  l0 = Boxes[PathID("domino/System/MediaSystemCustomBroadcastController.lua")]
+  l0.BroadcastInfo = "CustomBroadcasts.2928898485"
+  l0.OnGenericChannel = 1
+  l0.OnShopChannel = 0
+  l0.OnBarChannel = 0
+  l0.PlayOnLoad = 1
+  l0.ApplyOnLoad = nil
+  l0._graph = self
+  l0.LoadAndPlayRequested = DummyFunction
+  l0.EndedAllCustomMediaBroadcasts = DummyFunction
+  l0.ActivatedPlayOnBinkChannel = DummyFunction
+  l0.AppliedLoadedBufferOnChannels = DummyFunction
+  l0.Out = DummyFunction
+  l0:LoadAndPlayCustomBroadcast()
+end
+
+function export:Teleport_Elevator()
+  local l0
+  self = self._graph
+TeleportEntity(GetLocalPlayerEntityId(), "2081984359256200686", 0, 1)
+end
+function export:Teleport_Inside()
+  local l0
+  self = self._graph
+TeleportEntity(GetLocalPlayerEntityId(), self.Teleport_Destination, 0, 1)
+end
+
+function export:Enable_ProximityUnload()
+  local l0
+  self = self._graph
+  self:ProximityUnload() --Disable_ProximityUnload
+  l0 = self[4]
+  l0:Enable()
+end
+function export:ProximityUnload()
+  local l0
+  l0 = self[4]
+  l0.Entity1 = "2081984359256200686" --elevator
+  l0.Entity2 = GetLocalPlayerEntityId()
+  l0.Radius = 55 --min to cover entire interior
+  l0.CheckNow = 1
+end
+
+function export:Disable_ProximityUnload()
+  local l0
+  self = self._graph
+  self:ProximityUnload()
+  l0 = self[4]
+  l0:Disable()
+end
+function export:Unload_Layer_HMA()
+  local l0
+  self = self._graph
+  l0 = self[100]
+  l0.MessageType = "MissionUpdate"
+  l0.MessageIcon = "iconVigilante"
+  l0.OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "24738" --"Eliminate all enemies."
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "148318" --"RAID"
+  }
+  l0.Duration = -1
+  l0:Hide()
+  --IF red zone missing OR red zone cleared OR far away OR out of red zone radius
+  if GetEntityPosition("2083383437200204706", 2) == 0 or Globals._CUSTOM_SCRIPTS._Respawn_Blocked[10] > 0 or GetDistance2D(self.Interior_Marker, self.PlayerPawn) >= 160 or GetDistance2D("2081517546275764106", self.PlayerPawn) > 140 then
+    if Globals._CUSTOM_SCRIPTS._In_Mission == 0 and Globals._CUSTOM_SCRIPTS._Gameplay_Context == 1 then
+      Globals._CUSTOM_SCRIPTS._Gameplay_Context = 0
+      SetDensityContextOverride("") --enabling invasions
+      StopScriptNarrativeDelay()
+    end
+  end
+CDominoManager_GetInstance():RemoveDominoEntity(self.Exterior_Spawner)
+CloseDoor("2082859338596315298", 1) --interior doors
+CloseDoor("2082081047616594647", 1) --interior doors
+  self:ProximityRoofElevator()
+  l0 = self[2]
+  l0:Disable()
+  self:ProximityRoofDoor()
+  l0 = self[3]
+  l0:Disable()
+  self:ProximityExterior()
+  l0 = self[5]
+  l0:Disable()
+  --disabling lobby trigger
+  l0 = self[14]
+  l0:Disable()
+  --disabling elevator trigger
+  l0 = self[16]
+  l0:Disable()
+  --disabling server hack
+SetHackable("2081393937544645578", 0)
+  l0 = self[18]
+  l0.HackableEntity = "2081393937544645578"
+  l0:Disable()
+  --restoring broadcasts
+  l0 = Boxes[PathID("Domino/System/MediaSystemCustomBroadcastController.lua")]
+  l0.BroadcastInfo = nil
+  l0.OnGenericChannel = nil
+  l0.OnShopChannel = nil
+  l0.OnBarChannel = nil
+  l0.PlayOnLoad = nil
+  l0.ApplyOnLoad = nil
+  l0._graph = self
+  l0.LoadAndPlayRequested = DummyFunction
+  l0.EndedAllCustomMediaBroadcasts = DummyFunction
+  l0.ActivatedPlayOnBinkChannel = DummyFunction
+  l0.AppliedLoadedBufferOnChannels = DummyFunction
+  l0.Out = DummyFunction
+  l0:EndAllCustomMediaBroadcasts()
+  --removing reward
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Remove_Reward
+  l0:In()
+  --removing previous rewards stuff
+  RemoveEntity(self.Reward_Table)
+  RemoveEntity(self.Reward_Weapon_Table)
+  RemoveEntity(self.Reward_Weapon_Table_Collision)
+  if type(self.Reward_Money) == "table" then
+    for i=1, #self.Reward_Money do
+      RemoveEntity(self.Reward_Money[i])
+    end
+  end
+  --despawning interior enemies
+  if type(self.Spawned_Entrance) == "table" then
+    for n=1, #self.Spawned_Entrance do
+      RemoveEntity(self.Spawned_Entrance[n])
+    end
+  end
+  l0 = self[65]
+  l0.SquadName = "Interior"
+  l0:Stop()
+  if type(self.Spawned_Enemies) == "table" then
+    for n=1, #self.Spawned_Enemies do
+      RemoveEntity(self.Spawned_Enemies[n])
+    end
+  end
+  --unloading interior layers
+  l0 = self[11]
+  l0:UnregisterCallback()
+  l0.StandaloneLoader = "2083230033136084819"
+  l0.LayerName = ""
+  l0:Load()
+  l0 = self[12]
+  l0.LayerName = "04_ScalabriniGreen_HMA_02"
+  l0:Unload()
+  l0 = self[13]
+  l0.LayerName = "04_ScalabriniGreen_HMA_03"
+  l0:Unload()
+  l0 = self[10]
+  l0.LayerName = "A03_M10"
+  l0:Unload() --Enable_ProximityEntrance
+end
+
+
+function export:Enable_ProximityFarAway()
+  local l0
+  self = self._graph
+  self:ProximityFarAway()
+  l0 = self[3000]
+  l0:Enable()
+end
+function export:ProximityFarAway()
+  local l0
+  l0 = self[3000]
+  l0.Entity1 = self.Interior_Marker
+  l0.Entity2 = GetLocalPlayerEntityId()
+  l0.Radius = 160
+  --l0.CheckNow = 1
+end
+_compilerVersion = 4

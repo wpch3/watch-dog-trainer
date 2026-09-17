@@ -1,0 +1,662 @@
+
+<!--
+  HOW TO USE THIS FILE:
+
+  <Award
+    name - the name of the achievement / trophy, for debugging purposes
+    index - the platform index of the achievement / trophy to be awarded
+    uplay - optional, the uplay action index to be awarded
+
+  Conditions:
+  An award must have 1 or more conditions. When all of the conditions are met the achievement / trophy
+  will be awarded. Conditions must be based upon / contain 1 or more statistics. 
+  There are 3 types of conditions:
+  <Cumulative
+    count - The condition is met when all the statistics added together reach or exceed this value.
+  <MultiAnd
+    Must have 2 or more statistics. Each stat has a count value. The condition is met when ALL the stats reach or exceed their specified values.
+  <MultiOr
+    Must have 2 or more statistics. Each stat has a count value. The condition is met when ANY of the stats reach or exceed their specified value.
+
+  Statistics:
+  There are 4 types of statistic:
+  <Stat> and <InvStat> are based upon values found in the "stats": section of the file: \\main\data\engine\settings\TrackingConfig.json
+  <Stat
+    name - the name of the statistic, follows "name": in the aformentioned file
+    count - optional, used with the <MultiAnd> <MultiOr> conditions to suply target values for multiple statistics.
+  <InvStat> - usage is the same as for <Stat> except that this value will return the inverse. Use only for <Cumulative> condition to perform a subtraction of one stat from another
+-->
+
+<Awards>
+  <Award
+    name="Hello World"
+    designIndex="1"
+    platformIndex="1"
+    uplay="1">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_MissionCompleted_ShootMaurice"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="End of Line"
+    designIndex="2"
+    platformIndex="2">
+    <Cumulative
+      count="40">
+      <Stat
+        name="Stat_MissionCompleted_DrivingJobs"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Basest Base"
+    designIndex="3"
+    platformIndex="3">
+    <Cumulative
+      count="15">
+      <Stat
+        name="Stat_MissionCompleted_ContractLair"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="alt.vigilante"
+    designIndex="4"
+    platformIndex="4">
+    <MultiAnd>
+      <Stat
+        name="Stat_Mission_HumanTraffic_FirstCollectible"
+        count="1"
+      />
+      <Stat
+        name="Stat_Mission_WeaponTraffic_FirstCollectible"
+        count="1"
+      />
+      <Stat
+        name="Stat_Mission_FamilyTies_FirstCollectible"
+        count="8"
+      />
+      <Stat
+        name="Stat_Mission_CyberCrimes_FirstCollectible"
+        count="1"
+      />
+      <Stat
+        name="Stat_Mission_SerialKiller_FirstCollectible"
+        count="1"
+      />
+    </MultiAnd>
+  </Award>
+  
+  <Award
+    name="Peephole"
+    designIndex="5"
+    platformIndex="5">
+    <Cumulative
+      count="30">
+      <Stat
+        name="Stat_MissionCompleted_PrivacyInvasionHacked"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Road Rage"
+    designIndex="6"
+    platformIndex="6">
+    <Cumulative
+      count="18">
+      <Stat
+        name="Stat_MissionCompleted_Convoy"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Enforcer"
+    designIndex="7"
+    platformIndex="7">
+    <Cumulative
+      count="20">
+      <Stat
+        name="Stat_MissionCompleted_ApprehendCriminal"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Family Man"
+    designIndex="8"
+    platformIndex="8"
+    uplay="2">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_MissionCompleted_Act1"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Who Is Raymond Kenny?"
+    designIndex="9"
+    platformIndex="9">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_MissionCompleted_Act2"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="One Down, One to Go"
+    designIndex="10"
+    platformIndex="10">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_MissionCompleted_Act3"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Vengeance"
+    designIndex="11"
+    platformIndex="11"
+    uplay="4">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_MissionCompleted_Act4"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Log Off"
+    designIndex="12"
+    platformIndex="12">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_MissionCompleted_Act5"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Hard Crash"
+    designIndex="13"
+    platformIndex="13">
+    <Cumulative
+      count="10">
+      <Stat
+        name="Stat_IllegalAppTakedown_Total"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Communication Fail"
+    designIndex="14"
+    platformIndex="14">
+    <Cumulative
+      count="10">
+      <Stat
+        name="Stat_Combat_Takedown_Denunciator"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Bookmarked"
+    designIndex="15"
+    platformIndex="15">
+    <Cumulative
+      count="100">
+      <Stat
+        name="Stat_Tag_Enemy_Total"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Power Cycle"
+    designIndex="16"
+    platformIndex="16">
+    <MultiAnd>      
+      <Stat
+        name="Stat_Minigame_Drinking_GamesPlayed"
+        count="1"
+      />
+      <Stat
+        name="Stat_Minigame_ChessPuzzle_GamesPlayed"
+        count="1"
+      />
+      <Stat
+        name="Stat_Minigame_Poker_GamesPlayed"
+        count="1"
+      />
+      <Stat
+        name="Stat_Minigame_Shell_GamesPlayed"
+        count="1"
+      />
+      <Stat
+        name="Stat_Minigame_Slots_GamesPlayed"
+        count="1"
+      />
+    </MultiAnd>
+  </Award>
+
+  <Award
+    name="Magic Smoke"
+    designIndex="17"
+    platformIndex="17"
+    uplay="3">
+    <Cumulative
+      count="4">
+      <Stat
+        name="Stat_Combat_Kill_AdrenalineKillStreak"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Escape Loop"
+    designIndex="18"
+    platformIndex="18">
+    <Cumulative
+      count="15">
+      <Stat
+        name="Stat_Felony_CopsEvaded"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Free Radical"
+    designIndex="19"
+    platformIndex="19">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_Felony_CopsEvadedLevel5"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="White Rabbit Object"
+    designIndex="20"
+    platformIndex="20">
+    <Cumulative
+      count="15">
+      <Stat
+        name="Stat_Felony_ScanEvaded"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Scanproof"
+    designIndex="21"
+    platformIndex="21">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_Felony_ScanEvadedLevel5"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Hardware Fail"
+    designIndex="22"
+    platformIndex="22">
+    <Cumulative
+      count="15">
+      <Stat
+        name="Stat_Combat_Shooting_CarTires"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Black Hat Trick"
+    designIndex="23"
+    platformIndex="23">
+    <Cumulative
+      count="3">
+      <Stat
+        name="Combat_IEDKillStreak"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Revoking Client Privileges"
+    designIndex="24"
+    platformIndex="24">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_Mission_HumanTraffic_FirstCollectible"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Saturday Night Special"
+    designIndex="25"
+    platformIndex="25">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_Mission_WeaponTraffic_FirstCollectible"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Sanity Check"
+    designIndex="26"
+    platformIndex="26">
+    <Cumulative
+      count="8">
+      <Stat
+        name="Stat_Mission_FamilyTies_FirstCollectible"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Read-only"
+    designIndex="27"
+    platformIndex="27">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_Mission_CyberCrimes_FirstCollectible"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Darkness Looms"
+    designIndex="28"
+    platformIndex="28">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_Mission_SerialKiller_FirstCollectible"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Geolocated"
+    designIndex="29"
+    platformIndex="29">
+    <Cumulative
+      count="100">
+      <Stat
+        name="Stat_Player_NexusWalla_UniqueCheckins"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Disc Space Full"
+    designIndex="30"
+    platformIndex="30">
+    <Cumulative
+      count="23">
+      <Stat
+        name="Stat_Song_SongsUnlocked"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Social Lubricant"
+    designIndex="31"
+    platformIndex="31">
+    <MultiAnd>
+      <Stat
+        name="Stat_Minigame_Drinking_Opp1LevelUp"
+        count="10"
+      />
+      <Stat
+        name="Stat_Minigame_Drinking_Opp2LevelUp"
+      count="10"
+      />
+      <Stat
+        name="Stat_Minigame_Drinking_Opp3LevelUp"
+        count="10"
+      />
+    </MultiAnd>
+  </Award>
+
+  <Award
+    name="Hackification"
+    designIndex="32"
+    platformIndex="32">
+    <Cumulative
+      count="10">
+      <Stat
+        name="Stat_HackingContracts_Completed"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Piggyback"
+    designIndex="33"
+    platformIndex="33">
+    <Cumulative
+      count="10">
+      <Stat
+        name="Stat_Tailing_TailingCompleted"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Superhighway"
+    designIndex="34"
+    platformIndex="34">
+    <Cumulative
+      count="10">
+      <Stat
+        name="Stat_Race_Completed"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="System Mangler"
+    designIndex="35"
+    platformIndex="35">
+    <Cumulative
+      count="16">
+      <Stat
+        name="Stat_ctOSBreach_ContractsCompleted"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Stealth Cookie"
+    designIndex="36"
+    platformIndex="36">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_Tailing_PerfectTailingCompleted"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Freeware"
+    designIndex="37"
+    platformIndex="37">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_Skills_AllSkillsUnlocked"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Traced"
+    designIndex="38"
+    platformIndex="38">
+    <Cumulative
+      count="5">
+      <Stat
+        name="Stat_Tailing_TimesTailed"
+      />
+    </Cumulative>
+  </Award>
+
+  <Award
+    name="Clear Signals"
+    designIndex="39"
+    platformIndex="39">
+    <Cumulative
+      count="13">
+      <Stat
+        name="Stat_Stingray_TowersUnlocked"
+      />
+    </Cumulative>
+  </Award>
+   
+  <Award
+    name="Friends in Need"
+    designIndex="40"
+    platformIndex="40">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_MissionCompleted_DLC_Act1"
+      />
+    </Cumulative>
+  </Award>
+  
+  <Award
+    name="No Easy Fix"
+    designIndex="41"
+    platformIndex="41">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_MissionCompleted_DLC_Act2"
+      />
+    </Cumulative>
+  </Award>
+  
+  <Award
+    name="Pest Control"
+    designIndex="42"
+    platformIndex="42">
+    <Cumulative
+      count="1">
+      <Stat
+        name="Stat_MissionCompleted_DLC_Act3"
+      />
+    </Cumulative>
+  </Award>  
+    
+  <Award
+    name="Mob Ruled"
+    designIndex="43"
+    platformIndex="43">
+    <Cumulative
+      count="20">
+      <Stat
+        name="Stat_GangsWars_FactionClub"
+      />
+    </Cumulative>
+  </Award>
+  
+  <Award
+    name="Second Amandement"
+    designIndex="44"
+    platformIndex="44">
+    <Cumulative
+      count="20">
+      <Stat
+        name="Stat_GangsWars_FactionMilitia"
+      />
+    </Cumulative>
+  </Award>
+  
+  <Award
+    name="Unfixable"
+    designIndex="45"
+    platformIndex="45">
+    <Cumulative
+      count="20">
+      <Stat
+        name="Stat_GangsWars_FactionFixer"
+      />
+    </Cumulative>
+  </Award>
+  
+  <Award
+    name="Full Circuit"
+    designIndex="46"
+    platformIndex="46">
+    <Cumulative
+      count="29">
+      <Stat
+        name="Stat_GangsWars_Driving"
+      />
+    </Cumulative>
+  </Award>
+  
+  <Award
+    name="Tag Team"
+    designIndex="47"
+    platformIndex="47">
+    <Cumulative
+      count="10">
+      <Stat
+        name="Stat_GangsWars_Coop"
+      />
+    </Cumulative>
+  </Award>
+  
+  <Award
+    name="Looking For Trouble"
+    designIndex="48"
+    platformIndex="48">
+    <Cumulative
+      count="2">
+      <Stat
+        name="Stat_NewContent_Investigations"
+      />
+    </Cumulative>
+  </Award>
+   
+  <Award
+    name="Negative Eugenics"
+    designIndex="49"
+    platformIndex="49">
+    <Cumulative
+      count="4">
+      <Stat
+        name="Stat_NewContent_MultiKill"
+      />
+    </Cumulative>
+  </Award>
+</Awards>

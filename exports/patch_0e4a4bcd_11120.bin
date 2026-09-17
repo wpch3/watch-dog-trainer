@@ -1,0 +1,338 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua") --loaded global variables
+  cbox:RegisterBox("Domino/System/CompareBoolean_v2.lua")
+  cbox:RegisterBox("Domino/System/GetPlayerID.lua")
+  cbox:RegisterBox("Domino/System/MissionMonitor.lua")
+  cbox:RegisterBox("Domino/System/MissionLayer_v2.lua")
+  cbox:RegisterBox("Domino/System/MissionZoneController.lua")
+  cbox:RegisterBox("Domino/System/ProximityMonitor.lua")
+  cbox:RegisterBox("Domino/System/InvasionMonitor.lua")
+  cbox:RegisterBox("Domino/System/StartScript.lua")
+end
+function export:Init(cbox)
+  local l0
+  self.PlayerPawn = nil
+  self.RequiresUncompleted = "MissionList.2820128939" --execute if this not completed (available before A01_M03b completion)
+  self.RequiresCompleted = "MissionList.3809462170" --execute if this completed (available after Loop HUB unlock completion)
+  self.Layer = "custom_01_Loop_HubUnlock_Mission" --layer name for this script
+  self.MissionLayer = "01_Loop_HubUnlock_Mission" --main mission layer
+  self.ForbiddenZone = "2081641159312018168" --id of restricted area (used also as entity1 for proximity trigger in this case)
+  self.Zone_Icon_Mission = "2082422479508211821" --entity1 for proximity trigger (unused in this case, using Red_Zone instead)
+  self.Radius_Small = 35 --safety radius to avoid loading area if respawned inside it (increased due to the big hub area)
+  self.Radius_Medium = 100 --load radius when approaching hub (increased due to the big hub area)
+  self.Radius_Large = 160 --unload radius when leaving hub
+  self.Main_Script = "Domino/User/windycity/Custom_Scripts/Restricted_Areas/01_loop_hubunlock.01_loop_hubunlock_persistent.lua" --path to real script
+  self.Timer_Script = "Domino/User/windycity/Custom_Scripts/Restricted_Areas/01_loop_hubunlock.01_loop_hubunlock_persistent_timeout.lua" --path to timer script
+  self[0] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[0]
+  l0._graph = self
+  l0.Loaded = self.Start_Script
+  l0.Unloaded = DummyFunction
+  l0.Reseted = DummyFunction
+  self[1] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[1]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = self.Enable_ProximityTrigger_Small
+  self[2] = cbox:CreateBox("Domino/System/ProximityMonitor.lua") --ProximityTrigger_Small
+  l0 = self[2]
+  l0._graph = self
+  l0.Enabled = self.Check_ForbiddenZone
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Enable_ProximityTrigger_Large
+  l0.ExitRadius = self.Enable_ProximityTrigger_Medium
+  self[3] = cbox:CreateBox("Domino/System/ProximityMonitor.lua") --ProximityTrigger_Medium
+  l0 = self[3]
+  l0._graph = self
+  l0.Enabled = self.Disable_ProximityTrigger_Small
+  l0.Disabled = self.Enable_ProximityTrigger_Large
+  l0.EnterRadius = self.Check_Respawn
+  l0.ExitRadius = DummyFunction
+  self[4] = cbox:CreateBox("Domino/System/ProximityMonitor.lua") --ProximityTrigger_Large
+  l0 = self[4]
+  l0._graph = self
+  l0.Enabled = self.Disable_ProximityTrigger_Small
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = DummyFunction
+  l0.ExitRadius = self.Enable_Invasions
+  self[9] = cbox:CreateBox("Domino/System/InvasionMonitor.lua")
+  l0 = self[9]
+  l0._graph = self
+  l0.CurrentlyIsInvasionVictim = DummyFunction
+  l0.NotInvasionVictim = self.Disable_Invasions
+  l0.Out = DummyFunction
+  self[99] = cbox:CreateBox("Domino/System/StartScript.lua")
+  l0 = self[99]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.Closed = DummyFunction
+  self[100] = cbox:CreateBox("Domino/System/StartScript.lua")
+  l0 = self[100]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.Closed = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  local l0
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Startup_Check_Uncompleted
+  l0:In()
+  if Globals._CUSTOM_SCRIPTS._Respawn_Blocked[1] > 0 then
+    self:StartTimer()
+    l0 = self[100]
+    l0:In()
+  end
+end
+function export:Startup_Check_Uncompleted()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionMonitor.lua")]
+  l0.Mission = self.RequiresUncompleted
+  l0._graph = self
+  l0.Completed = self.Startup_Check_Completed
+  l0.NotCompleted = self.Reset_Layer
+  l0:CheckCompletion()
+end
+function export:Startup_Check_Completed()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionMonitor.lua")]
+  l0.Mission = self.RequiresCompleted
+  l0._graph = self
+  l0.Completed = self.Reset_Layer
+  l0.NotCompleted = DummyFunction
+  l0:CheckCompletion()
+end
+function export:Reset_Layer()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  self.PlayerPawn = l0.PlayerID
+  for i=1, #Globals._CUSTOM_SCRIPTS._Guards_List[1] do
+    RemoveEntity(Globals._CUSTOM_SCRIPTS._Guards_List[1][i])
+  end
+  Globals._CUSTOM_SCRIPTS._Guards_List[1] = { GetInvalidEntityId(), }
+  l0 = self[99]
+  l0:ShutDown()
+  l0 = self[0]
+  l0.LayerName = self.MissionLayer
+  l0:Unload()
+  l0 = self[1]
+  l0.LayerName = self.Layer
+  l0:Reset()
+end
+function export:Enable_ProximityTrigger_Small()
+  local l0
+  self = self._graph
+  self:ProximityTrigger_Small()
+  l0 = self[2]
+  l0:Enable()
+end
+function export:Check_ForbiddenZone()
+  local l0
+  self = self._graph
+  if Globals._CUSTOM_SCRIPTS._Respawn_Blocked[1] > 0 then
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Disable_ForbiddenZone
+    l0:In()
+  else
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Enable_ForbiddenZone
+    l0:In()
+  end
+end
+function export:Disable_ForbiddenZone()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionZoneController.lua")]
+  l0.MissionZone = self.ForbiddenZone
+  l0.Red = 1.0
+  l0.Green = 1.0
+  l0.Blue = 1.0
+  l0.Alpha = 1
+  l0.Radius = nil
+  l0.DrawType = "Inside"
+  l0.ShapeType = "CMissionRegionDescriptor"
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.PropertiesUpdated = DummyFunction
+  l0.Out = DummyFunction
+  l0:Enable()
+end
+function export:Enable_ForbiddenZone()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionZoneController.lua")]
+  l0.MissionZone = self.ForbiddenZone
+  l0.Red = 0.82
+  l0.Green = 0.2
+  l0.Blue = 0.2
+  l0.Alpha = 1
+  l0.Radius = nil
+  l0.DrawType = "Inside"
+  l0.ShapeType = "CMissionRegionDescriptor"
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.PropertiesUpdated = DummyFunction
+  l0.Out = DummyFunction
+  l0:Enable()
+end
+function export:Enable_ProximityTrigger_Medium()
+  local l0
+  self = self._graph
+  self:ProximityTrigger_Medium()
+  l0 = self[3]
+  l0:Enable()
+end
+function export:Disable_ProximityTrigger_Small()
+  local l0
+  self = self._graph
+  self:ProximityTrigger_Small()
+  l0 = self[2]
+  l0:Disable()
+end
+function export:Check_Respawn()
+  local l0
+  self = self._graph
+  if Globals._CUSTOM_SCRIPTS._Respawn_Blocked[1] == 0 then
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Check_Uncompleted
+    l0:In()
+  end
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Disable_ProximityTrigger_Medium
+  l0:In()
+end
+function export:Check_Uncompleted()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionMonitor.lua")]
+  l0.Mission = self.RequiresUncompleted
+  l0._graph = self
+  l0.Completed = self.Check_Completed
+  l0.NotCompleted = self.Check_Invasion
+  l0:CheckCompletion()
+end
+function export:Check_Completed()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionMonitor.lua")]
+  l0.Mission = self.RequiresCompleted
+  l0._graph = self
+  l0.Completed = self.Check_Invasion
+  l0.NotCompleted = DummyFunction
+  l0:CheckCompletion()
+end
+function export:Check_Invasion()
+  local l0
+  self = self._graph
+  l0 = self[9]
+  l0:CheckInvasionStatus()
+end
+function export:Disable_Invasions()
+  local l0
+  self = self._graph
+  --checking IF not other multiplayer mode AND zone mission layer not loaded AND not digital trips
+  if GetNumberOfPlayers() == 1.000000 and GetEntityPosition("2084903356179941439", 2) == 0 and GetEntityPosition("2080711752735150797", 2) == 0 and GetEntityPosition("2082563707426260037", 2) == 0 and GetEntityPosition("2082371120201204534", 2) == 0 and GetEntityPosition("2081694354673681048", 2) == 0 and GetEntityPosition("2080282882919629347", 2) == 0 then
+    if Globals._CUSTOM_SCRIPTS._In_Mission == 0 and Globals._CUSTOM_SCRIPTS._Gameplay_Context == 0 then
+      Globals._CUSTOM_SCRIPTS._Gameplay_Context = 1
+      SetDensityContextOverride("GameplayContextSpec.4012897103") --CUSTOM gameplaycontextspec.lib REQUIRED
+      --AddScriptNarrativeDelay(9999)
+	end
+    l0 = self[0]
+    l0.LayerName = self.MissionLayer
+    l0:Load()
+  end
+end
+function export:Start_Script()
+  local l0
+  self = self._graph
+MissionAreaActivation(self.ForbiddenZone, 0)
+  l0 = self[99]
+  l0:ShutDown()
+  self:StartScript()
+  l0 = self[99]
+  l0:In()
+end
+function export:Disable_ProximityTrigger_Medium()
+  local l0
+  self = self._graph
+  self:ProximityTrigger_Medium()
+  l0 = self[3]
+  l0:Disable()
+end
+function export:Enable_ProximityTrigger_Large()
+  local l0
+  self = self._graph
+  self:ProximityTrigger_Large()
+  l0 = self[4]
+  l0:Enable()
+end
+function export:Enable_Invasions()
+  local l0
+  self = self._graph
+  if Globals._CUSTOM_SCRIPTS._In_Mission == 0 and Globals._CUSTOM_SCRIPTS._Gameplay_Context == 1 then
+    Globals._CUSTOM_SCRIPTS._Gameplay_Context = 0
+    SetDensityContextOverride("")
+    --StopScriptNarrativeDelay()
+  end
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Startup_Check_Uncompleted
+  l0:In()
+end
+
+function export:ProximityTrigger_Small()
+  local l0
+  l0 = self[2]
+  l0.Entity1 = self.ForbiddenZone
+  l0.Entity2 = self.PlayerPawn
+  l0.Radius = self.Radius_Small
+  l0.CheckNow = 1
+end
+function export:ProximityTrigger_Medium()
+  local l0
+  l0 = self[3]
+  l0.Entity1 = self.ForbiddenZone
+  l0.Entity2 = self.PlayerPawn
+  l0.Radius = self.Radius_Medium
+  l0.CheckNow = 1
+end
+function export:ProximityTrigger_Large()
+  local l0
+  l0 = self[4]
+  l0.Entity1 = self.ForbiddenZone
+  l0.Entity2 = self.PlayerPawn
+  l0.Radius = self.Radius_Large
+  l0.CheckNow = 1
+end
+function export:StartScript()
+  local l0
+  l0 = self[99]
+  l0.Script = self.Main_Script
+end
+function export:StartTimer()
+  local l0
+  l0 = self[100]
+  l0.Script = self.Timer_Script
+end
+_compilerVersion = 4

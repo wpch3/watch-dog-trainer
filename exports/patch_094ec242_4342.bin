@@ -1,0 +1,110 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("_hardVatsuki/Scripts_Loader/Table.lua")
+  cbox:RegisterGlobals("_hardVatsuki/Scripts_Loader/Table_Debug.lua")
+  cbox:RegisterBox("Domino/System/MissionLayer_v2.lua")
+  cbox:RegisterBox("Domino/System/Timer_v2.lua")
+end
+function export:Init(cbox)
+  local l0
+  self[0] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[0]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.f_0_TimeElapsed
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[1] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[1]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = self.f_1_Reseted
+  self[2] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[2]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.f_2_TimeElapsed
+  l0.LoopingEnded = self.f_2_LoopingEnded
+  l0.GotTime = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  local l0
+  Globals.Scripts_Loader.List_Merged = {}
+  for x=1, #Globals.Scripts_Loader.List do
+    Globals.Scripts_Loader.List_Merged[x] = "_hardVatsuki/Scripts_Loader/Scripts/"..Globals.Scripts_Loader.List[x]
+  end
+  if Globals.Scripts_Loader_Debug ~= nil then
+    for x=1, #Globals.Scripts_Loader_Debug.List do
+      Globals.Scripts_Loader.List_Merged[#Globals.Scripts_Loader.List + x] = "_hardVatsuki/Scripts_Loader/Scripts/"..Globals.Scripts_Loader_Debug.List[x]
+    end
+  end
+  l0 = self[0]
+  l0.Seconds = 1
+  l0:Start()
+end
+function export:f_0_TimeElapsed()
+  local l0
+  self = self._graph
+  if GetEntityPosition("1085941096730000000", 2) ~= 86 then
+    l0 = self[1]
+    l0.LayerName = "hardVatsuki_Scripts_Loader"
+    l0:Reset()
+    l0 = self[0]
+    l0.Seconds = 5
+    l0:Start()
+	return
+  end
+  l0 = self[0]
+  l0.Seconds = 1
+  l0:Start()
+end
+function export:f_1_Reseted()
+  local l0
+  self = self._graph
+  SetEntityPosition("1085941096730000000", 0, 0, 86)
+  Globals.Scripts_Loader.Loop_Count = 1
+  l0 = self[2]
+  l0.Seconds = 1.0/#Globals.Scripts_Loader.List_Merged
+  l0.Loop = 1
+  l0.nbLoop = #Globals.Scripts_Loader.List_Merged
+  l0:Start()
+end
+function export:f_2_TimeElapsed()
+  local l0
+  self = self._graph
+  UnBind(Globals.Scripts_Loader.Launched_Scripts[Globals.Scripts_Loader.Loop_Count])
+  CDominoManager_GetInstance():RemoveDominoEntity(Globals.Scripts_Loader.Launched_Scripts[Globals.Scripts_Loader.Loop_Count])
+  Globals.Scripts_Loader.Launched_Scripts[Globals.Scripts_Loader.Loop_Count] = CDominoManager_GetInstance():SpawnDominoEntity(Globals.Scripts_Loader.List_Merged[Globals.Scripts_Loader.Loop_Count]..".lua") or GetInvalidEntityId()
+  SetEntityPosition(Globals.Scripts_Loader.Launched_Scripts[Globals.Scripts_Loader.Loop_Count], GetEntityPosition(GetLocalPlayerEntityId(), 0), GetEntityPosition(GetLocalPlayerEntityId(), 1), GetEntityPosition(GetLocalPlayerEntityId(), 2))
+  Bind(GetLocalPlayerEntityId(), Globals.Scripts_Loader.Launched_Scripts[Globals.Scripts_Loader.Loop_Count], "", 0)
+  Globals.Scripts_Loader.Loop_Count = Globals.Scripts_Loader.Loop_Count + 1
+end
+function export:f_2_LoopingEnded()
+  local l0
+  self = self._graph
+  UnBind(Globals.Scripts_Loader.Self_Activation)
+  CDominoManager_GetInstance():RemoveDominoEntity(Globals.Scripts_Loader.Self_Activation)
+  Globals.Scripts_Loader.Self_Activation = CDominoManager_GetInstance():SpawnDominoEntity("_hardVatsuki/scripts_loader/activation.lua") or GetInvalidEntityId()
+  SetEntityPosition(Globals.Scripts_Loader.Self_Activation, GetEntityPosition(GetLocalPlayerEntityId(), 0), GetEntityPosition(GetLocalPlayerEntityId(), 1), GetEntityPosition(GetLocalPlayerEntityId(), 2))
+  Bind(GetLocalPlayerEntityId(), Globals.Scripts_Loader.Self_Activation, "", 0)
+end
+_compilerVersion = 4
