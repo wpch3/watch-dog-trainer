@@ -1,0 +1,1618 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua")
+  cbox:RegisterBox("Domino/System/CameraLockController.lua")
+  cbox:RegisterBox("Domino/Library/common/CinematicPrep.CinematicPrep.lua")
+  cbox:RegisterBox("Domino/Library/common/FixerCameras.SuccessFixerCamera_v2.lua")
+  cbox:RegisterBox("Domino/System/GetPlayerID.lua")
+  cbox:RegisterBox("Domino/System/InputListenerMonitor.lua")
+  cbox:RegisterBox("Domino/System/MissionCheckpointReach.lua")
+  cbox:RegisterBox("Domino/System/MissionController_v2.lua")
+  cbox:RegisterBox("Domino/System/MissionLayer_v2.lua")
+  cbox:RegisterBox("Domino/System/MissionModuleBox_v3.lua")
+  cbox:RegisterBox("Domino/System/PawnHealthMonitor_v3.lua")
+  cbox:RegisterBox("Domino/System/PhoneCallController.lua")
+  cbox:RegisterBox("Domino/System/PlaySound_v2.lua")
+  cbox:RegisterBox("domino/System/ReinforcementMonitor.lua")
+  cbox:RegisterBox("Domino/System/SecurityCameraMonitor.lua")
+  cbox:RegisterBox("Domino/System/Timer_v2.lua")
+  cbox:RegisterBox("Domino/System/TimerToScreen.lua")
+  cbox:LoadResource("sndres0x000f88e4", "CSoundResource") --checkpoint reached sound
+  cbox:LoadResource("sndres0x0004e0e1", "CSoundResource") --"Ok, go! Now!"
+  cbox:LoadResource("sndres0x000c9c1e", "CSoundResource") --"Now. Go."
+  cbox:LoadResource("sndres0x000c9b11", "CSoundResource") --"Go. Quick."
+end
+function export:Init(cbox)
+  self.Mission_ID = cbox:GetParentMissionId()
+  local l0
+  self.Layer_Name = "custom_Kingslayer"
+  self.Reference_Entity = "2582000000000000000"
+  self.Mission_Marker = "2582000000000000001"
+  self.Objective_Marker = "2582000000000000002"
+  self.Mission_Trigger = "2582000000000000003"
+  self.Circle_Inner = "2582000000000000004"
+  self.Circle_Outer = "2582000000000000005"
+  self.Camera_A = "2582000000000000006"
+  self.Camera_B = "2582000000000000007"
+  self.Vehicle_Generator = "2582000000000000008"
+  self.Starting_Dialog = { "0x0004e0e1", "0x000c9c1e", "0x000c9b11", }
+  self.ActionMap = "default_nopick" --requires custom inputactionmapcommon.xml
+  self.Handguns = {"Items.4108766499", "Items.3058031154","Items.700442068","Items.1317933865","Items.2156459794","Items.1152216775","Items.1683351323","Items.3931946971","Items.4108766496","Items.2269372494","Items.879325178","Items.2797606244","Items.3084233885","Items.4099987261","Items.3059215197","Items.2417314999","Items.2377767548"}
+  self.Rifles = {"Items.142743014", "Items.3220571773","Items.2517217399","Items.633170941","Items.1830466540","Items.3001183890","Items.1236846365","Items.2468673040","Items.2418918813","Items.2207476061","Items.900578036","Items.1128431973","Items.1479791293","Items.4258700054","Items.309961700","Items.92417902"}
+  self.Shotguns = {"Items.731023906", "Items.3514256627","Items.1758597562","Items.2721974924","Items.4180379767","Items.2565686443","Items.770883049"}
+  self.Specials = {"Items.3532138297", "Items.1853148229","Items.1577674927","Items.2343466146","Items.3745523831","Items.56535470","Items.2234429577","Items.3139436763"}
+  self.List_All = {self.Handguns, self.Rifles, self.Shotguns, self.Specials} --DLC weapons removed
+  self.Zone_Coordinate = { { -350.493011, -212.095993, 71.692101 }, { -1556.290039, -1268.209961, 62.567699 }, { 975.877014, 1536.280029, 61.354198 }, { -967.612976, 2152.310059, 60.336102 }, { 1624.679932, -1768.949951, 57.987110 }, { 598.841980, -2451.030029, 110.586998 }, { 76.549934, -832.109131, 67.000000 }, { 629.697998, -598.528992, 63.500099 }, { -844.937012, 1156.650024, 56.360600 }, { 750.250977, 1749.540039, 59.986099 }, { 1276.010010, 1422.889893, 60.775700 }, { -1098.640015, -135.393005, 50.976585 }, { -347.170013, -1531.219971, 62.632301 }, { -845.666016, -1887.989990, 59.487999 }, { 1208.119995, 1813.170044, 60.485401 }, { 1640.609985, -2167.350098, 76.814903 }, { 1305.140015, -1525.209961, 88.542198 }, { -1163.449951, 2222.040039, 57.526600 }, { -1496.950073, -1466.009888, 62.144600 }, }
+  --self.Zone_Entity = {"2081641159312018167","2081521090066121734","2081517374164436274","2081518604886481913","2081612599482544647","2081391266358102326","2082099002494598179","2080066744822563416","2081061820895863440","2081517546275764106","2080331383214965196","2079707675360231976","2079957555276154923","2081901960086329160","2082801054973605863","2082902553795810574","2081893159941606804","2081916229597170709","2082746686588853772",}
+  self.Zone_Entity = {"2081641159312018168","2081521090066121735","2081517374164436275","2081518604886481914","2081612599482544648","2081391266358102327","2082099002494598180","2080066744822563417","2081061820895863441","2081517546275764107","2080331383214965197","2079707675360231977","2079957555276154924","2081901960086329161","2082801054973605864","2082902553795810575","2081893159941606805","2081916229597170710","2082746686588853773",}
+  self.Zone_Safety = {35,35,25,55,65,30,35,35,45,55,55,35,20,80,45,45,65,55,50,}
+  self.Zone_Spawn = {100,80,80,100,90,120,60,105,110,105,120,150,60,120,80,100,100,100,90,}
+  self.Zone_Despawn = {160,100,120,160,100,125,120,110,130,140,150,160,80,150,120,120,130,150,120,}
+  self.Zone_District = { "Loop", "MadMile", "Wards", "Brandon", "Pawnee", "Pawnee", "Loop", "Loop", "Brandon", "Wards", "Wards", "Loop", "MadMile", "MadMile", "Wards", "Pawnee", "Pawnee", "Brandon", "MadMile", }
+  self.Zone_Boss = { { -351.471832, -187.737015, 76.818527; 180.588806 }, { -1547.924561, -1273.475220, 62.479897; 97.833458 }, { 973.314514, 1531.191040, 63.139549; 1.634778 }, { -987.810364, 2125.973145, 65.503914; 276.477112 }, { 1603.270508, -1761.514038, 60.428753; 95.948380 }, { 605.532117, -2477.843945, 122.512520; 35.531242 }, { 94.897316, -816.566406, 67.094757; 180.732864 }, { 618.741333, -605.031738, 67.484184; 270.770081 }, { -860.135986, 1161.737061, 67.894348; 86.185410 }, { 746.515503, 1743.630859, 62.062157; 178.720291 }, { 1271.146973, 1436.674927, 61.989956; 291.427673 }, { -1120.842407, -140.080765, 61.074398; 89.561714 }, { -354.023804, -1529.608521, 69.146400; 1.863754 }, { -850.958691, -1870.669775, 72.939003; 315.932373 }, { 1207.986572, 1832.795654, 61.999882; 180.795197 }, { 1637.903564, -2170.330078, 77.459969; 133.107285 }, { 1306.931152, -1510.249390, 96.062408; 157.757111 }, { -1176.151123, 2225.697754, 60.048214; 88.904945 }, { -1162.963745, 2221.174316, 60.048195; 272.057007 }, }
+  self.Zone_Activation = {"Domino/User/windycity/custom_scripts/restricted_areas/01_loop_hubunlock.01_loop_hubunlock_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/02_madmile_hubunlock.02_madmile_hubunlock_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/04_thewards_hubunlock.04_thewards_hubunlock_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/05_brandondocks_hubunlock.05_brandondocks_hubunlock_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/07_pontiac_hubunlock.07_pontiac_hubunlock_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/10_pontiac_blumehq.10_pontiac_blumehq_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/11_loop_ctos_plaza_garage.11_loop_ctos_plaza_garage_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/12_loop_railyard.12_loop_railyard_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/13_brandondocks_racine.13_brandondocks_racine_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/14_thewards_rossifremont.14_thewards_rossifremont_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/15_thewards_neighborhood.15_thewards_neighborhood_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/16_loop_marina.16_loop_marina_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/17_madmile_cardealership.17_madmile_cardealership_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/18_madmile_seasiderestaurant.18_madmile_seasiderestaurant_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/19_thewards_building.19_thewards_building_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/20_pawnee_camp.20_pawnee_camp_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/21_pawnee_trailerpark.21_pawnee_trailerpark_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/22_brandondocks_warehouse.22_brandondocks_warehouse_persistent_activation.lua","Domino/User/windycity/custom_scripts/restricted_areas/23_madmile_marlaut.23_madmile_marlaut_persistent_activation.lua",}
+  self.Zone_Timeout = {"Domino/User/windycity/custom_scripts/restricted_areas/01_loop_hubunlock.01_loop_hubunlock_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/02_madmile_hubunlock.02_madmile_hubunlock_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/04_thewards_hubunlock.04_thewards_hubunlock_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/05_brandondocks_hubunlock.05_brandondocks_hubunlock_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/07_pontiac_hubunlock.07_pontiac_hubunlock_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/10_pontiac_blumehq.10_pontiac_blumehq_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/11_loop_ctos_plaza_garage.11_loop_ctos_plaza_garage_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/12_loop_railyard.12_loop_railyard_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/13_brandondocks_racine.13_brandondocks_racine_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/14_thewards_rossifremont.14_thewards_rossifremont_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/15_thewards_neighborhood.15_thewards_neighborhood_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/16_loop_marina.16_loop_marina_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/17_madmile_cardealership.17_madmile_cardealership_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/18_madmile_seasiderestaurant.18_madmile_seasiderestaurant_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/19_thewards_building.19_thewards_building_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/20_pawnee_camp.20_pawnee_camp_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/21_pawnee_trailerpark.21_pawnee_trailerpark_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/22_brandondocks_warehouse.22_brandondocks_warehouse_persistent_timeout.lua","Domino/User/windycity/custom_scripts/restricted_areas/23_madmile_marlaut.23_madmile_marlaut_persistent_timeout.lua",}
+  self.Zone_Layer = {"01_Loop_HubUnlock_Mission","02_MadMile_HubUnlock_Mission","04_TheWards_HubUnlock_Mission","05_BrandonDocks_HubUnlock_Mission","07_Pontiac_HubUnlock_Mission","A03_M06","A01_M06","A01_M08","A02_F01","A02_M06","A02_M08a","A02_M09a","A02_M09b","A03_F01","A02_M13","A03_M02","A03_M03","A04_F01","A04_M06_new",}
+  self.Zone_Entry = {
+    { { -371.350861, -212.576462, 72.992012; 196.472229 }, { -325.153442, -232.088287, 72.994804; 30.716425 }, { -329.064178, -189.996063, 76.759247; 357.387512 } },
+    { { -1540.933350, -1275.286499, 62.486294; 90.144196 }, { -1578.384033, -1253.574097, 62.459591; 272.751648 }, { -1578.002051, -1293.028149, 62.459602; 269.760071 } },
+    { { 985.489099, 1531.999902, 63.141041; 3.600220 }, { 999.902466, 1564.798706, 62.179127; 84.290878 }, { 981.820984, 1547.199097, 62.196030; 87.040741 } },
+    { { -936.856628, 2150.942871, 67.215942; 94.178864 }, { -988.427124, 2188.751465, 61.141083; 275.821045 }, { -1002.470093, 2123.558105, 65.357384; 275.620819 } },
+    { { 1593.507153, -1721.921387, 59.469376; 146.699631 }, { 1643.870850, -1760.563477, 63.393723; 75.856369 }, { 1584.609009, -1819.016113, 65.816948; 355.463867 } },
+    { { 622.770691, -2472.418457, 122.582382; 97.529892 }, { 546.434326, -2498.476074, 122.644997; 270.124512 }, { 601.790039, -2418.922363, 118.653778; 179.192856 } },
+    { { 55.932339, -848.204956, 67.115822; 278.544830 }, { 88.637840, -849.631226, 67.094803; 2.584956 }, { 81.955055, -831.054260, 67.094833; 273.369110 } },
+    { { 610.007324, -500.719238, 67.484245; 178.905685 }, { 594.047852, -673.769775, 67.498108; 359.381348 }, { 630.240479, -679.082825, 67.576271; 16.478323 } },
+    { { -875.014648, 1111.275146, 61.000000; 358.671265 }, { -809.981384, 1175.312500, 62.014950; 112.248077 }, { -905.144653, 1155.341187, 59.989563; 267.294067 } },
+    { { 709.464722, 1717.442749, 62.066315; 354.944489 }, { 787.490173, 1765.992432, 62.089336; 155.221619 }, { 800.375366, 1680.395996, 62.007656; 98.065765 } },
+    { { 1256.142090, 1449.140137, 62.057583; 267.941406 }, { 1304.262329, 1432.824219, 62.711327; 64.209229 }, { 1296.559326, 1372.487183, 61.921932; 86.990723 } },
+    { { -1108.470581, -146.771454, 62.084915; 4.739618 }, { -1061.909180, -171.117828, 59.893600; 47.174164 }, { -1101.494019, -125.439003, 62.084946; 177.633255 } },
+    { { -340.438354, -1532.091431, 69.150803; 137.040039 }, { -355.838654, -1507.000000, 66.982887; 176.805420 }, { -361.801361, -1530.714233, 69.146309; 259.650177 } },
+    { { -848.250244, -1886.286377, 66.707008; 314.389526 }, { -888.212476, -1859.255811, 60.281876; 310.229614 }, { -810.598877, -1934.267822, 60.448906; 45.295109 } },
+    { { 1233.863037, 1837.054688, 62.000000; 93.933006 }, { 1214.197998, 1771.759644, 62.057148; 359.740448 }, { 1171.613159, 1819.565063, 62.007813; 240.961151 } },
+    { { 1638.580322, -2178.426074, 77.473770; 41.401821 }, { 1644.092944, -2194.251172, 80.483437; 38.429581 }, { 1646.823853, -2136.476318, 77.446297; 182.892838 } },
+    { { 1319.917480, -1499.925049, 100.052460; 69.952515 }, { 1269.258545, -1503.599731, 96.086761; 269.499512 }, { 1351.719727, -1531.079712, 95.952965; 45.852917 } },
+    { { -1136.688477, 2197.615479, 59.999897; 90.644928 }, { -1205.398438, 2192.580078, 66.010101; 356.658325 }, { -1165.039063, 2241.577148, 60.048210; 118.130943 } },
+    { { -1484.310913, -1452.191772, 62.383736; 91.713684 }, { -1521.477051, -1491.319214, 62.386005; 4.617571 }, { -1512.724365, -1420.993823, 62.387650; 263.938477 } },
+  }
+  self[1000] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[1000]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = self.Layer_Loaded
+  self[60] = cbox:CreateBox("Domino/System/SecurityCameraMonitor.lua")
+  l0 = self[60]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnStartAccessCamera = DummyFunction
+  l0.OnEndAccessCamera = self.Camera_A_Entered
+  l0.OnStartExitCamera = DummyFunction
+  l0.OnEndExitCamera = DummyFunction
+  l0.OnPlayerDetectionStartCamera = DummyFunction
+  l0.OnPlayerDetectionStopCamera = DummyFunction
+  l0.CameraHostile = DummyFunction
+  l0.CameraNotHostile = DummyFunction
+  self[61] = cbox:CreateBox("Domino/System/SecurityCameraMonitor.lua")
+  l0 = self[61]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnStartAccessCamera = DummyFunction
+  l0.OnEndAccessCamera = self.Camera_B_Entered
+  l0.OnStartExitCamera = DummyFunction
+  l0.OnEndExitCamera = self.Camera_B_Exited
+  l0.OnPlayerDetectionStartCamera = DummyFunction
+  l0.OnPlayerDetectionStopCamera = DummyFunction
+  l0.CameraHostile = DummyFunction
+  l0.CameraNotHostile = DummyFunction
+  self[50] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[50]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Camera_A_Entering
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[51] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[51]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Camera_B_Entering
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[52] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[52]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Camera_B_Exiting
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[10] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua") --zone enemies
+  l0 = self[10]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Damaged = DummyFunction
+  l0.Killed = self.One_Dead
+  l0.AllDead = self.All_Dead
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[13] = cbox:CreateBox("Domino/System/PlaySound_v2.lua")
+  l0 = self[13]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Finished = DummyFunction
+  self[35] = cbox:CreateBox("domino/System/ReinforcementMonitor.lua")
+  l0 = self[35]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.CallStarted = self.Disable_Reinforcements
+  l0.CallComplete =DummyFunction
+  l0.CallerKilled = DummyFunction
+  l0.DisruptComms = DummyFunction
+  l0.CallFailed = DummyFunction
+  l0.NoMoreReinforcers = DummyFunction
+  self[0] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[0]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = self.Zone_Check
+  l0.Out = DummyFunction
+  self[12] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua") --initial zone enemies
+  l0 = self[12]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Damaged = DummyFunction
+  l0.Killed = self.Enemy_Killed
+  l0.AllDead = self.Zone_Cleared
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[11] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[11]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = self.Zone_Clear
+  l0.Out = DummyFunction
+  self[1] = cbox:CreateBox("Domino/System/PhoneCallController.lua")
+  l0 = self[1]
+  l0._graph = self
+  l0._DynamicAnchors = {SoundID = 1}
+  l0.OnShown = DummyFunction
+  l0.CallStarted = DummyFunction
+  l0.CallStopped = DummyFunction
+  l0.CallFinished = self.Start_Level
+  l0.OnClosed = DummyFunction
+  l0.Out = DummyFunction
+  self[2] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[2]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = self.Display_Objective
+  l0.Out = DummyFunction
+  self[3] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[3]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[4] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[4]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = self.Stage_Started
+  l0.Out = DummyFunction
+  self[30] = cbox:CreateBox("Domino/System/CameraLockController.lua")
+  l0 = self[30]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Finished = DummyFunction
+  l0.Out = DummyFunction
+  self[5] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[5]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = self.Stage_Completed
+  l0.Out = DummyFunction
+  self[6] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua") --stage completed
+  l0 = self[6]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = self.Start_Level
+  l0.Out = DummyFunction
+  self[7] = cbox:CreateBox("Domino/Library/common/FixerCameras.SuccessFixerCamera_v2.lua") --mission completed
+  l0 = self[7]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.RewardScreenShown = DummyFunction
+  l0.Finished = self.Abort_Mission
+  self[8] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua") --mission failed
+  l0 = self[8]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = self.Abort_Mission
+  l0.Out = DummyFunction
+  self[9] = cbox:CreateBox("Domino/System/TimerToScreen.lua")
+  l0 = self[9]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Restarted = DummyFunction
+  l0.GotTime = self.Got_Time
+  l0.TimeElapsed = self.Timer_Expired
+  self[85] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[85]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = DummyFunction
+  l0.ExitRadius = self.Exited_Perimeter
+  self[15] = cbox:CreateBox("Domino/System/InputListenerMonitor.lua")
+  l0 = self[15]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.InputReceived = self.Swap_Places
+  self[16] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua") --Instant_Kill
+  l0 = self[16]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Damaged = self.Instant_Kill
+  l0.Killed = DummyFunction
+  l0.AllDead = DummyFunction
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[17] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua") --Explosive_Head
+  l0 = self[17]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Damaged = self.Explosive_Head
+  l0.Killed = self.Explosive_Head
+  l0.AllDead = DummyFunction
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[18] = cbox:CreateBox("Domino/System/Timer_v2.lua") --Infinite_Ammo
+  l0 = self[18]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Infinite_Ammo
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[19] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua") --Give_Bullet
+  l0 = self[19]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Damaged = DummyFunction
+  l0.Killed = self.Give_Bullet
+  l0.AllDead = DummyFunction
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[100] = cbox:CreateBox("Domino/System/MissionCheckpointReach.lua")
+  l0 = self[100]
+  l0._graph = self
+  l0.Out = self.Checkpoint_Reached
+  l0.AllCheckpointsDisabled = DummyFunction
+  self[101] = cbox:CreateBox("Domino/Library/common/CinematicPrep.CinematicPrep.lua")
+  l0 = self[101]
+  l0._graph = self
+  l0.PreOut = DummyFunction
+  l0.PostOut = self.Loadingscreen_Removed
+end
+function export:ShutDown()
+  RemoveEntity(self.Spawnpoint)
+  RemoveEntity(self.Spawned_IED)
+  RemoveEntity(self.PFX_Player)
+  RemoveEntity(self.PFX_Enemy)
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  local l0
+  l0 = self[100]
+  l0.Checkpoint = "CheckPoint_0"
+  l0:In() --Checkpoint_Reached
+end
+function export:CheckPoint_0()
+  local l0
+  --teleporting player back to initial location if possible
+  if Globals._CUSTOM_SCRIPTS._Kingslayer_Location ~= nil then
+    Globals._CUSTOM_SCRIPTS._Respawn_Blocked[Globals._CUSTOM_SCRIPTS._Kingslayer_Location] = 3600
+    RemoveEntity(self.Spawnpoint)
+    self.Spawnpoint = SpawnEntityFromArchetype("{C551D92C-84E7-60ED-7168-27138DBECB0F}", self.Zone_Boss[Globals._CUSTOM_SCRIPTS._Kingslayer_Location][1], self.Zone_Boss[Globals._CUSTOM_SCRIPTS._Kingslayer_Location][2], self.Zone_Boss[Globals._CUSTOM_SCRIPTS._Kingslayer_Location][3], 0, 0, self.Zone_Boss[Globals._CUSTOM_SCRIPTS._Kingslayer_Location][4]) --Road.Decal.Road_Stains_01
+    TeleportEntity(GetLocalPlayerEntityId(), self.Spawnpoint, 0, 0)
+    Globals._CUSTOM_SCRIPTS._Kingslayer_Location = nil
+  end
+  l0 = self[101]
+  l0.SkipPostFX = 0
+  l0.SkipCameraAlign = 0
+  l0:PostCinematic() --Loadingscreen_Removed
+end
+function export:Loadingscreen_Removed()
+  local l0
+  self = self._graph
+--unlock Seaside Restaurant top floor door
+SetDoorLockState("2082897962033374037", 0)
+--unlock Racine top floor door
+SetDoorLockState("2082897625031379011", 0)
+  --checking if completed or reloaded
+  if Globals._CUSTOM_SCRIPTS._Kingslayer_Reward ~= nil then
+    Globals._CUSTOM_SCRIPTS._Kingslayer_Reward = nil
+    --executing rewards
+    ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.3066831865", 1) --SideMissionXP.Difficulty.Hard (1000xp)
+    ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.478524244", 1) --SideMissionXP.MobTrap (100000$)
+    Globals._CUSTOM_SCRIPTS._Save_Game = 1
+  end
+  --unloading the custom layer
+  l0 = self[1000]
+  l0.LayerName = self.Layer_Name
+  l0:Unload()
+  --aborting mission
+  l0 = Boxes[PathID("Domino/System/MissionController_v2.lua")]
+  l0.Mission = "MissionList.2949057808"
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0:Abort()
+end
+function export:Checkpoint_Reached()
+  local l0
+  self = self._graph
+  --loading layer only if needed
+  if GetEntityPosition(self.Reference_Entity, 2) ~= 0 then
+    --skipping layer load
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Layer_Loaded
+    l0:In()
+  else
+    --loading the custom layer
+    l0 = self[1000]
+    l0.LayerName = self.Layer_Name
+    l0:Reset() --Layer_Loaded
+  end
+end
+function export:Layer_Loaded()
+  local l0
+  self = self._graph
+  math.randomseed(Globals._CUSTOM_SCRIPTS._Random_Seed+math.floor(GetGameTime())) --set the global variable as math seed
+  math.random(); math.random(); math.random() --pop some random numbers before using them for real
+--getting player entity id for next functions
+self.PlayerPawn = GetLocalPlayerEntityId()
+--disabling felony system and random events and online activities
+FelonySystemEnable(0)
+RandomEventSystemEnable(0)
+GridMonitoringEnable(0)
+--disabling reputation
+EnableReputation(0)
+--zeroing rewards
+Globals._CUSTOM_SCRIPTS._Kingslayer_Reward = nil
+--zeroing initial location
+Globals._CUSTOM_SCRIPTS._Kingslayer_Location = nil
+self.Index_Location = 0
+  --checking initial location
+  for i=1, #self.Zone_Entity do
+    if GetDistance3D(self.Zone_Entity[i], GetLocalPlayerEntityId()) > 0 and GetDistance3D(self.Zone_Entity[i], GetLocalPlayerEntityId()) < self.Zone_Safety[i] then
+      Globals._CUSTOM_SCRIPTS._Kingslayer_Location = i
+      self.Index_Location = i
+      break
+    end
+  end
+  --blocking RAID if needed
+  if self.Index_Location == 10 then
+    Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior = 3600
+  end
+  --displaying start message
+  l0 = self[0]
+  l0.MessageType = "MissionStart"
+  l0.MessageIcon = "iconVigilante"
+  l0.OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES.Mob_Traps.MobTraps",
+    item = "Description",
+    id = "185495" --"CONTRACT ACCEPTED"
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.SIDE.OBJECTIVES.Mob_Traps.MobTraps",
+    item = "Name",
+    id = "145005" --"STREET CLEANING"
+  }
+  l0.Duration = 5
+  l0.Queue = 0
+  l0:Display() --Zone_Check
+  --enabling reinforcements call monitor
+  l0 = self[35]
+  l0:Enable() --Disable_Reinforcements
+end
+function export:Disable_Reinforcements()
+  local l0
+  self = self._graph
+--disabling reinforcement calls
+EnableReinforcements(self.Mission_ID, 0)
+  --unregistering reinforcers
+  for x=1, #Globals._CUSTOM_SCRIPTS._Guards_List do
+    for y=1, #Globals._CUSTOM_SCRIPTS._Guards_List[x] do
+      UnregisterReinforcer(Globals._CUSTOM_SCRIPTS._Guards_List[x][y])
+    end
+  end
+end
+function export:Zone_Check()
+  local l0
+  self = self._graph
+  --if initial zone still populated
+  if Globals._CUSTOM_SCRIPTS._Respawn_Blocked[self.Index_Location] == 0 and Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location][1] ~= 0 then
+    --enable mission area
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Perimeter_Enable
+    l0:In()
+    --displaying objective message
+    l0 = self[3]
+    l0.MessageType = "MissionUpdate"
+    l0.MessageIcon = "iconVigilante"
+    l0.OasisID_1 = {section = "HACKING.Interface Messages", item = "Eliminate", id = "24738"} --"Eliminate all enemies."
+    l0.Duration = -1
+    l0.Queue = 0
+    l0:Display()
+    --displaying enemy dots
+    for i=1, #Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location] do
+      if IsDead(Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location][i]) ~= 1 then
+        SetIconVisible(Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location][i], 1)
+      end
+    end
+    --start monitoring zone enemies
+    l0 = self[12]
+    l0.PawnList = Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location]
+    l0.CheckNow = 1
+    l0:Enable() --Enemy_Killed --Zone_Cleared
+  else
+    --continuing mission
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Zone_Clear
+    l0:In()
+  end
+end
+
+function export:Enemy_Killed()
+  local l0
+  self = self._graph
+  l0 = self[12]
+  self.Victim = l0.Victim
+--hiding enemy dot
+SetIconVisible(self.Victim, 0)
+end
+function export:Zone_Cleared()
+  local l0
+  self = self._graph
+  --stop monitoring zone enemies
+  l0 = self[12]
+  l0:Disable()
+  --displaying completed message
+  l0 = self[11]
+  l0.MessageType = "MissionUpdateCompleted"
+  l0.MessageIcon = "iconVigilante"
+  l0.OasisID_1 = {section = "HACKING.Interface Messages", item = "Eliminate", id = "24738"} --"Eliminate all enemies."
+  l0.Duration = 5
+  l0.Queue = 0
+  l0:Display() --Zone_Clear
+end
+function export:Zone_Clear()
+  local l0
+  self = self._graph
+--increased respawn time
+Globals._CUSTOM_SCRIPTS._Respawn_Blocked[self.Index_Location] = 3600
+  --generating indexes list
+  self.List_Zones = {}
+  for i=1, #self.Zone_Entity do
+    if i ~= self.Index_Location and GetEntityPosition(self.Zone_Entity[i], 2) ~= 0 then
+      table.insert(self.List_Zones, i)
+    end
+  end
+		-- self.List_Zones = { 8, 7, } --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ONLY FOR TESTING
+  self.Rounds_Max = #self.List_Zones
+  --playing starting phonecall
+  l0 = self[1]
+  l0.Caller = "Unknown"
+  l0.HeaderText = {
+    section = "POPUPS.Phone Calls",
+    item = "OutgoingTo",
+    id = "15199"
+  }
+  l0.LineText = {
+    section = "POPUPS.Phone Calls",
+    item = "UNKNOWN",
+    id = "17590"
+  }
+  l0.SoundIDList = { self.Starting_Dialog[math.random(#self.Starting_Dialog)] }
+  l0.RingToneType = "Outgoing"
+  l0:StartCall() --Start_Level
+end
+
+
+function export:Start_Level()
+  local l0
+  self = self._graph
+--special cinematic mode
+SetOverrideCanDetectPlayer(0)
+ActivateInvincibility(GetLocalPlayerEntityId())
+  EnableDisplay("Adrenaline", 0)
+  EnableDisplay("Battery", 0)
+  EnableDisplay("Camera", 0)
+  EnableDisplay("Consommable", 0)
+  EnableDisplay("DynamicContent", 0)
+  EnableDisplay("DistrictMonitoring", 0)
+  EnableDisplay("Felony", 0)
+  EnableDisplay("Marker", 0)
+EnableDisplay("MessageBox", 1)
+  EnableDisplay("Minimap", 0)
+  EnableDisplay("MonitoringLevel", 0)
+  EnableDisplay("Profiler", 0)
+  EnableDisplay("Reticle", 0)
+  EnableDisplay("SoftwareLink", 0)
+  EnableDisplay("Tags", 0)
+  EnableDisplay("Wheel", 0)
+RemoveAllStanceControlHelper()
+StopAdrenaline(GetLocalPlayerEntityId())
+RefillAdrenaline(GetLocalPlayerEntityId())
+SetAdrenalineInputsBlocked(GetLocalPlayerEntityId(), 1)
+--forcing camera exit
+ForceUserOutOfCamera(GetLocalPlayerEntityId())
+--pull out phone
+RequestUseSoftware(GetLocalPlayerEntityId(), 1)
+--forcing cover exit
+ForceExitCover(GetLocalPlayerEntityId())
+  --disable mission area
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Perimeter_Disable
+  l0:In()
+  --restarting level selector
+  l0 = self[50]
+  l0.Seconds = 1.0
+  l0:Start() --Camera_A_Entering
+end
+function export:Camera_A_Entering()
+  local l0
+  self = self._graph
+--FIX
+UnassignVehicleSeat(GetCurrentVehicleEntityId(GetLocalPlayerEntityId()), GetLocalPlayerEntityId(), GetCurrentSeat(GetLocalPlayerEntityId()), 0)
+--required for SetEntityPosition
+SetPhysicsEnabled(GetLocalPlayerEntityId(), 0)
+--enabling grid shading
+SetGridShading(1)
+--disable profiler
+SetProfilerOn(GetLocalPlayerEntityId(), 0)
+SetProfilerAutoActivationInCamerasDisabled(GetLocalPlayerEntityId(), 1)
+SetProfilerDisabled(GetLocalPlayerEntityId(), 1)
+--disable tagging
+SetTaggerComponentStatus(GetLocalPlayerEntityId(), 0)
+--setting camera position
+self.Camera_Height = 900
+SetEntityPosition(self.Camera_A, GetEntityPosition(GetLocalPlayerEntityId(), 0), GetEntityPosition(GetLocalPlayerEntityId(), 1), self.Camera_Height)
+  --enabling camera monitor
+  l0 = self[60]
+  l0.PlayerEntity = GetLocalPlayerEntityId()
+  l0.CameraEntity = self.Camera_A
+  l0:Enable() --Camera_A_Entered
+--forcing camera enter
+SecurityCameraForceEnter(GetLocalPlayerEntityId(), self.Camera_A)
+end
+function export:Camera_A_Entered()
+  local l0
+  self = self._graph
+  --disabling camera monitor
+  l0 = self[60]
+  l0.PlayerEntity = GetLocalPlayerEntityId()
+  l0.CameraEntity = self.Camera_A
+  l0:Disable()
+  --restoring inventory
+  if self.Switched_Inventory ~= nil then
+    ForceRemoveItem(self.Weapon_Primary, 2) --primary
+    ForceRemoveItem(self.Weapon_Secondary, 2) --secondary
+    CScriptCallbackSystem_GetInstance():RemoveCallback(GetLocalPlayerEntityId(), Globals._CUSTOM_SCRIPTS._Inventory_callID)
+    SwitchLocalPlayerInventoryToNormal()
+  end
+  --delay next camera
+  l0 = self[51]
+  l0.Seconds = 0.5
+  l0:Start() --Camera_B_Entering
+end
+function export:Camera_B_Entering()
+  local l0
+  self = self._graph
+--generating random position from list
+self.Index_Position = math.random(#self.List_Zones)
+--getting index at that random position
+self.Index_Location = self.List_Zones[self.Index_Position]
+--removing that position from list
+table.remove(self.List_Zones, self.Index_Position)
+--allowing zone respawn
+Globals._CUSTOM_SCRIPTS._Respawn_Blocked[self.Index_Location] = 0
+  --blocking RAID if needed
+  if self.Index_Location == 10 then
+    Globals._CUSTOM_SCRIPTS._Respawn_Blocked_Rossi_Fremont_Interior = 3600
+  end
+  --select mutator
+  self.List_Mutators = self.List_Mutators or { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, }
+		-- self.List_Mutators = self.List_Mutators or { 6, 6, 6, 6, 6, 6, 6, } --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ONLY FOR TESTING
+  self.Mutator = nil
+  if #self.List_Mutators > 0 and #self.List_Zones%3 == 0 and self.Final_Time ~= nil then
+    self.Index_Mutator = math.random(#self.List_Mutators)
+    self.Mutator = self.List_Mutators[self.Index_Mutator]
+    table.remove(self.List_Mutators, self.Index_Mutator)
+  end
+  --setting appropriate faction index
+  if self.Index_Location <= 7 then
+    self.Index_Faction = 7
+  elseif self.Index_Location == 10 or self.Index_Location == 11 then
+    self.Index_Faction = 2
+  elseif self.Index_Location >= 12 and self.Index_Location <= 14 or self.Index_Location == 19 then
+    self.Index_Faction = 1
+  elseif self.Index_Location == 16 or self.Index_Location == 17 then
+    self.Index_Faction = 4
+  else
+    self.Index_Faction = 3
+  end
+  --setting appropriate character
+  if self.Index_Location == 2 or self.Index_Location == 8 or self.Index_Location == 10 or self.Index_Location == 11 then
+    self.Selected_Character = "Mobsters.Chicago_Club"
+  elseif self.Index_Location == 3 or self.Index_Location == 15 or self.Index_Location == 18 then
+    self.Selected_Character = "Mobsters.Black_Viceroys"
+  elseif self.Index_Location == 5 or self.Index_Location == 6 then
+    self.Selected_Character = "Mobsters.Militia"
+  else
+    self.Selected_Character = "Mobsters.Fixers"
+  end
+--setting enforcer if GOD MODE
+if self.Mutator == 1 then
+  if self.Index_Location == 2 or self.Index_Location == 8 or self.Index_Location == 10 or self.Index_Location == 11 then
+    self.Selected_Character = "Mobsters.Chicago_Club_Enforcer"
+  elseif self.Index_Location == 3 or self.Index_Location == 15 or self.Index_Location == 18 then
+    self.Selected_Character = "Mobsters.Black_Viceroy_Enforcer"
+  elseif self.Index_Location == 5 or self.Index_Location == 6 then
+    self.Selected_Character = "Mobsters.Militia_Enforcer"
+  else
+    self.Selected_Character = "Mobsters.Fixers_Enforcer"
+  end
+end
+--changing player model
+ChangeGraphicKitModel(GetLocalPlayerEntityId(), self.Selected_Character, "")
+SetHandsInPocketsAllowed(GetLocalPlayerEntityId(), 0)
+SetFaceMaskAllowed(GetLocalPlayerEntityId(), 0)
+SetProfilingEnabled(GetLocalPlayerEntityId(), 0)
+--setting player position
+self.Zone_Coordinates = self.Zone_Entry[self.Index_Location][math.random(#self.Zone_Entry[self.Index_Location])]
+SetEntityPosition(GetLocalPlayerEntityId(), self.Zone_Coordinates[1], self.Zone_Coordinates[2], self.Zone_Coordinates[3])
+SetEntityAngle(GetLocalPlayerEntityId(), 0, 0, self.Zone_Coordinates[4])
+--setting camera position
+SetEntityPosition(self.Camera_B, self.Zone_Coordinates[1], self.Zone_Coordinates[2], self.Camera_Height)
+  --enabling camera monitor
+  l0 = self[61]
+  l0.PlayerEntity = GetLocalPlayerEntityId()
+  l0.CameraEntity = self.Camera_B
+  l0:Enable() --Camera_B_Entered --Camera_B_Exited
+--forcing camera enter
+SecurityCameraForceEnter(GetLocalPlayerEntityId(), self.Camera_B)
+end
+function export:Camera_B_Entered()
+  local l0
+  self = self._graph
+--required for SetEntityPosition
+SetPhysicsEnabled(GetLocalPlayerEntityId(), 1)
+--forcing enter cover
+ForceEnterCover(GetLocalPlayerEntityId(), GetLocalPlayerEntityId())
+  --delay exit camera
+  l0 = self[52]
+  l0.Seconds = 0.5
+  l0:Start() --Camera_B_Exiting
+end
+function export:Camera_B_Exiting()
+  local l0
+  self = self._graph
+--placing target entity in front of player
+self.Coordinate_X = self.Zone_Coordinates[1] + 10 * math.cos(math.rad(self.Zone_Coordinates[4] + 90))
+self.Coordinate_Y = self.Zone_Coordinates[2] + 10 * math.sin(math.rad(self.Zone_Coordinates[4] + 90))
+self.Coordinate_Z = self.Zone_Coordinates[3] + 1
+UnBind(self.Reference_Entity)
+SetEntityPosition(self.Reference_Entity, self.Coordinate_X, self.Coordinate_Y, self.Coordinate_Z)
+  --look at target entity
+  l0 = self[30]
+  l0.Player = GetLocalPlayerEntityId()
+  l0.BlendInTime = 0.5
+  l0.BlendOutTime = 0.5
+  l0.Target = self.Reference_Entity
+  l0.Duration = 1.5
+  l0.KillLockOnSpeed = 1
+  l0.KillLockOnInput = 1
+  l0:Start()
+--forcing camera exit
+ForceUserOutOfCamera(GetLocalPlayerEntityId())
+end
+function export:Camera_B_Exited()
+  local l0
+  self = self._graph
+  --disabling camera monitor
+  l0 = self[61]
+  l0.PlayerEntity = GetLocalPlayerEntityId()
+  l0.CameraEntity = self.Camera_B
+  l0:Disable()
+--resetting camera allignment
+RealignCameraBehind(GetLocalPlayerEntityId())
+--disabling grid shading
+SetGridShading(0)
+--enable profiler
+SetProfilerAutoActivationInCamerasDisabled(GetLocalPlayerEntityId(), 0)
+SetProfilerDisabled(GetLocalPlayerEntityId(), 0)
+--enable tagging
+SetTaggerComponentStatus(GetLocalPlayerEntityId(), 1)
+--put away phone
+RequestUseSoftware(GetLocalPlayerEntityId(), 0)
+  --starting level
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Switch_Completed
+  l0:In()
+end
+
+function export:Switch_Completed()
+  local l0
+  self = self._graph
+  --enable cinematic mode
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Cinematic_Enable
+  l0:In()
+  --displaying start message
+  l0 = self[2]
+  l0.MessageType = "MissionStart"
+  l0.MessageIcon = "iconVigilante"
+  l0.OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES.Mob_Traps.MobTraps",
+    item = "Description",
+    id = "196202" --"Next Round"
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.SIDE.OBJECTIVES.Mob_Traps.MobTraps",
+    item = "Name",
+    id = "145005" --"STREET CLEANING"
+  }
+  l0.Duration = 5
+  l0.Queue = 0
+  l0:Display() --Display_Objective
+end
+function export:Display_Objective()
+  local l0
+  self = self._graph
+  --displaying enemy dots
+  for i=1, #Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location] do
+    if IsDead(Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location][i]) ~= 1 then
+      SetIconVisible(Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location][i], 1)
+    end
+  end
+  --start monitoring zone enemies
+  l0 = self[10]
+  l0.PawnList = Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location]
+  l0.CheckNow = 1
+  l0:Enable()
+--SWITCHING INVENTORY
+self.Switched_Inventory = 1
+CScriptCallbackSystem_GetInstance():RemoveCallback(GetLocalPlayerEntityId(), Globals._CUSTOM_SCRIPTS._Inventory_callID)
+SwitchLocalPlayerInventoryToEmpty()
+ForceRemoveItem("Items.2803193695", 2) --Weapon.Pistols.D50.07_People
+ForceRemoveItem("Items.3968788573", 2) --Weapon.Pistols.357REX.357REX_MP
+--removing all ammo
+ForceRemoveItem("Items.2468964847", 999) --pistol
+ForceRemoveItem("Items.2581069272", 999) --smg
+ForceRemoveItem("Items.2875309739", 999) --ar
+ForceRemoveItem("Items.3376957109", 999) --buckshot
+ForceRemoveItem("Items.114103786", 999) --sniper
+ForceRemoveItem("Items.1321691069", 999) --gl
+  --skipped if mutator SWAPPER
+  if self.Mutator ~= 6 then
+    --selecting secondary weapon types depending on zones
+    self.Zone_Secondary = { 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 2, 1, 1, }
+    repeat
+      self.Secondary_Type = 2 + self.Zone_Secondary[self.Index_Location]*math.random(0,1)
+    until #self.List_All[self.Secondary_Type] > 1
+    --generating new random index from list
+    self.Index_Primary = math.random(2,#self.List_All[1])
+    self.Index_Secondary = math.random(2,#self.List_All[self.Secondary_Type])
+    self.Weapon_Primary = self.List_All[1][self.Index_Primary]
+    self.Weapon_Secondary = self.List_All[self.Secondary_Type][self.Index_Secondary]
+    --adding weapons found at that random position
+    ExecuteReward_V2(GetLocalPlayerEntityId(), self.Weapon_Primary, 1) --primary
+    ExecuteReward_V2(GetLocalPlayerEntityId(), self.Weapon_Secondary, 1) --secondary
+    --removing those weapons from list
+    if #self.List_All[1] > 2 then
+      table.remove(self.List_All[1], self.Index_Primary)
+    end
+    if #self.List_All[2] + #self.List_All[3] + #self.List_All[4] > 4 then
+      table.remove(self.List_All[self.Secondary_Type], self.Index_Secondary)
+    end
+    --adding appropriate ammo
+    SetItem("Items.2468964847", 60) --pistol
+    SetItem("Items.2581069272", 90) --smg
+    if self.Secondary_Type == 2 then
+      SetItem("Items.2875309739", 90) --ar
+    elseif self.Secondary_Type == 3 then
+      SetItem("Items.3376957109", 40) --buckshot
+    else
+      SetItem("Items.114103786", 20) --sniper
+      SetItem("Items.1321691069", 5) --gl
+    end
+    --drawing weapon
+    AgentDrawWeaponType(GetLocalPlayerEntityId(), self.Secondary_Type-1)
+  end
+  --displaying time
+  l0 = self[9]
+  l0.Seconds = 20 + math.ceil(self.Zone_Spawn[self.Index_Location]/10)
+  l0:Start()
+  l0:Pause()
+  --enable random mutator
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Enable_Mutator
+  l0:In()
+  --displaying objective message
+  l0 = self[4]
+  l0.MessageType = "MissionUpdate"
+  l0.MessageIcon = "iconVigilante"
+  if self.Index_Faction == 1 then
+    l0.OasisID_1 = {section = "HACKING.Interface Messages", item = "Eliminate", id = "24738"} --"Eliminate all enemies."
+  elseif self.Index_Faction == 2 then
+    l0.OasisID_1 = {section = "HACKING.Interface Messages", item = "Eliminate", id = "24738"} --"Eliminate all enemies."
+  elseif self.Index_Faction == 3 then
+    l0.OasisID_1 = {section = "HACKING.Interface Messages", item = "Eliminate", id = "146637"} --"Eliminate all fixers."
+  elseif self.Index_Faction == 4 then
+    l0.OasisID_1 = {section = "HACKING.Interface Messages", item = "Eliminate", id = "105304"} --"Eliminate the militia."
+  else
+    l0.OasisID_1 = {section = "HACKING.Interface Messages", item = "Eliminate", id = "227282"} --"Eliminate all guards."
+  end
+  l0.Duration = 5
+  l0.Queue = 0
+  l0:Display() --Stage_Started
+end
+function export:Stage_Started()
+  local l0
+  self = self._graph
+  --enable mission area
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Perimeter_Enable
+  l0:In()
+  --disable cinematic mode
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Cinematic_Disable
+  l0:In()
+  --starting countdown
+  l0 = self[9]
+  l0:Resume()
+end
+
+
+function export:One_Dead()
+  local l0
+  self = self._graph
+  l0 = self[10]
+  self.Victim = l0.Victim
+  self.Attacker = l0.Attacker
+  self.TakeDown = l0.TakeDown
+  self.Hit_Locations = { "Spine2", "Pelvis", "L UpperArm", "L Hand", "R UpperArm", "R Hand", "Head", "L Calf", "L Foot", "R Calf", "R Foot", "L UpperArm", "L Forearm", "R UpperArm", "R Forearm", "Spine2" }
+  self.HitLocation = self.Hit_Locations[l0.HitLocation] or "Spine1"
+  self.Reasons = { ["$#2873080202"] = "Bullet Impact", ["$#1509070927"] = "Generic", ["$#1905746204"] = "Explosion", ["$#461431942"] = "Vehicle", ["$#724099965"] = "Takedown", ["$#1472391658"] = "Falling", ["$#4294967295"] = "None" }
+  self.Reason = self.Reasons[l0.Reason] or "Generic"
+--hiding enemy dot
+SetIconVisible(self.Victim, 0)
+  --selecting bonus time
+  if self.TakeDown == 1 or self.HitLocation == "Head" or self.Reason == "Explosion" or self.Mutator == 8 then
+    self.Bonus_Time = 10
+  else
+    self.Bonus_Time = 5
+  end
+  --retrieving remaining time
+  l0 = self[9]
+  l0:GetTime()
+end
+function export:Got_Time()
+  local l0
+  self = self._graph
+  l0 = self[9]
+  self.Remaining_Time = l0.RemainingTime + self.Bonus_Time
+  --skipped if mutator NO TIMER
+  if self.Mutator ~= 3 then
+    --restarting countdown
+    l0 = self[9]
+    l0.Seconds = self.Remaining_Time
+    l0:Start()
+  end
+  --playing bonus sound
+  l0 = self[13]
+  l0.SoundId = "0x000f88e4"
+  l0:Play()
+end
+
+function export:All_Dead()
+  local l0
+  self = self._graph
+  --stop monitoring zone enemies
+  l0 = self[10]
+  self.Victim = l0.Victim
+  self.Attacker = l0.Attacker
+  self.TakeDown = l0.TakeDown
+  self.Hit_Locations = { "Spine2", "Pelvis", "L UpperArm", "L Hand", "R UpperArm", "R Hand", "Head", "L Calf", "L Foot", "R Calf", "R Foot", "L UpperArm", "L Forearm", "R UpperArm", "R Forearm", "Spine2" }
+  self.HitLocation = self.Hit_Locations[l0.HitLocation] or "Spine1"
+  self.Reasons = { ["$#2873080202"] = "Bullet Impact", ["$#1509070927"] = "Generic", ["$#1905746204"] = "Explosion", ["$#461431942"] = "Vehicle", ["$#724099965"] = "Takedown", ["$#1472391658"] = "Falling", ["$#4294967295"] = "None" }
+  self.Reason = self.Reasons[l0.Reason] or "Generic"
+  l0:Disable()
+  --pausing countdown
+  l0 = self[9]
+  l0:Pause()
+  --disable mission area
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Perimeter_Disable
+  l0:In()
+  --disable random mutator
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Disable_Mutator
+  l0:In()
+  --enable cinematic mode
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Cinematic_Enable
+  l0:In()
+  --if not takedown and not roadkill
+  if self.TakeDown ~= 1 and GetCurrentSeat(GetLocalPlayerEntityId()) == 0 then
+    --start look at last killed
+    UnBind(self.Reference_Entity)
+    Bind(self.Victim, self.Reference_Entity, self.HitLocation, 1)
+    l0 = self[30]
+    l0.Player = GetLocalPlayerEntityId()
+    l0.BlendInTime = 0.5
+    l0.BlendOutTime = 0.5
+    l0.Target = self.Reference_Entity
+    l0.Duration = 1.0
+    l0.KillLockOnSpeed = 0
+    l0.KillLockOnInput = 0
+    l0:Start()
+    --if player was aiming (doesn't work from cover)
+	if PlayerIsDoingAction(4) == 1 and self.Reason ~= "Explosion" then
+      --refilling weapon magazine
+      ModifyBulletsInClip(GetLocalPlayerEntityId(), 0, 999, 1)
+      ModifyBulletsInClip(GetLocalPlayerEntityId(), 1, 999, 1)
+      ModifyBulletsInClip(GetLocalPlayerEntityId(), 2, 999, 1)
+      ModifyBulletsInClip(GetLocalPlayerEntityId(), 3, 999, 1)
+      --forcing aim
+      SetForceAiming(GetLocalPlayerEntityId(), 3)
+      --disabling controls
+      PopPlayerActionMap(self.ActionMap)
+	  self.ActionMap = "common_aiming_no_weapon_selection"
+      PushPlayerActionMap(self.ActionMap)
+	end
+  end
+--setting player vehicle indestructable
+CDominoManager_GetInstance():SendRegisteredEventToEntity(GetCurrentVehicleEntityId(GetLocalPlayerEntityId()), "CVehicle_SetAsIndestructable")
+  --displaying completed message
+  l0 = self[5]
+  l0.MessageType = "MissionUpdateCompleted"
+  l0.MessageIcon = "iconVigilante"
+  if self.Index_Faction == 1 then
+    l0.OasisID_1 = {section = "HACKING.Interface Messages", item = "Eliminate", id = "24738"} --"Eliminate all enemies."
+  elseif self.Index_Faction == 2 then
+    l0.OasisID_1 = {section = "HACKING.Interface Messages", item = "Eliminate", id = "24738"} --"Eliminate all enemies."
+  elseif self.Index_Faction == 3 then
+    l0.OasisID_1 = {section = "HACKING.Interface Messages", item = "Eliminate", id = "146637"} --"Eliminate all fixers."
+  elseif self.Index_Faction == 4 then
+    l0.OasisID_1 = {section = "HACKING.Interface Messages", item = "Eliminate", id = "105304"} --"Eliminate the militia."
+  else
+    l0.OasisID_1 = {section = "HACKING.Interface Messages", item = "Eliminate", id = "227282"} --"Eliminate all guards."
+  end
+  l0.Duration = 5
+  l0.Queue = 0
+  l0:Display() --Stage_Completed
+end
+function export:Stage_Completed()
+  local l0
+  self = self._graph
+  --stopping countdown
+  l0 = self[9]
+  self.Final_Time = self.Remaining_Time + l0.RemainingTime
+  l0:Stop()
+--stop aim
+SetForceAiming(GetLocalPlayerEntityId(), 0)
+--disabling controls
+PopPlayerActionMap(self.ActionMap)
+self.ActionMap = "cinematic_nocameralock"
+PushPlayerActionMap(self.ActionMap)
+--stopping slowmotion
+StopAdrenaline(GetLocalPlayerEntityId())
+RefillAdrenaline(GetLocalPlayerEntityId())
+--increased respawn time
+Globals._CUSTOM_SCRIPTS._Respawn_Blocked[self.Index_Location] = 3600
+  --selecting next level
+  if #self.List_Zones > 0 then
+    --starting next level
+    l0 = self[6]
+    l0.MessageType = "MissionSuccess"
+    l0.MessageIcon = "iconVigilante"
+    l0.OasisID_1 = {
+      section = "MISSIONS.COMMON.OBJECTIVES",
+      item = "MISSIONSUCCESS",
+      id = "165720" --"AREA CLEAN"
+    }
+    l0.OasisID_2 = {
+      section = "MISSIONS.COMMON.OBJECTIVES",
+      item = "MISSIONSUCCESS",
+      id = "196202" --"Next Round"
+    }
+    l0.OasisID_3 = {
+      section = "MISSIONS.SIDE.OBJECTIVES",
+      item = "Description",
+      id = "145005" --"STREET CLEANING"
+    }
+    l0.Duration = 5
+    l0.Queue = 0
+    l0:Display() --Start_Level
+  else
+    --marking rewards earned
+    Globals._CUSTOM_SCRIPTS._Kingslayer_Reward = 1
+    --completing mission
+    l0 = self[7]
+    l0.Camera = GetLocalPlayerEntityId()
+    l0.Target = GetLocalPlayerEntityId()
+    l0.MissionID = "MissionList.2949057808"
+    l0.MissionTime = self.Final_Time
+    l0.StopFelony = 0 --1 reenables felony system
+    l0.OpenEnded = 1 --0 goes to blackscreen
+    l0:Start() --Abort_Mission
+  end
+end
+
+
+function export:Timer_Expired()
+  local l0
+  self = self._graph
+  --stopping countdown
+  l0 = self[9]
+  l0:Stop()
+  --stop monitoring zone enemies
+  l0 = self[10]
+  l0:Disable()
+  --disable mission area
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Perimeter_Disable
+  l0:In()
+  --disable random mutator
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Disable_Mutator
+  l0:In()
+  --enable cinematic mode
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Cinematic_Enable
+  l0:In()
+  --displaying failed message
+  l0 = self[8]
+  l0.MessageType = "MissionFailed"
+  l0.MessageIcon = "iconVigilante"
+  l0.OasisID_1 = {
+    section = "MISSIONS.COMMON.MESSAGES.MISSIONFAILURE",
+    item = "ObjectiveFailed",
+    id = "145289" --"Time expired."
+  }
+  l0.OasisID_2 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "145288" --"CONTRACT FAILED"
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "145005" --"STREET CLEANING"
+  }
+  l0.Duration = 5
+  l0.Queue = 0
+  l0:Display() --Abort_Mission
+end
+function export:Exited_Perimeter()
+  local l0
+  self = self._graph
+  --stopping countdown
+  l0 = self[9]
+  l0:Stop()
+  --stop monitoring zone enemies
+  l0 = self[10]
+  l0:Disable()
+  --disable mission area
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Perimeter_Disable
+  l0:In()
+  --disable random mutator
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Disable_Mutator
+  l0:In()
+  --enable cinematic mode
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Cinematic_Enable
+  l0:In()
+  --displaying failed message
+  l0 = self[8]
+  l0.MessageType = "MissionFailed"
+  l0.MessageIcon = "iconVigilante"
+  l0.OasisID_1 = {
+    section = "MISSIONS.COMMON.MESSAGES.MISSIONFAILURE",
+    item = "ObjectiveFailed",
+    id = "40153" --"You left the mission area."
+  }
+  l0.OasisID_2 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "145288" --"CONTRACT FAILED"
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "145005" --"STREET CLEANING"
+  }
+  l0.Duration = 5
+  l0.Queue = 0
+  l0:Display() --Abort_Mission
+end
+function export:Abort_Mission()
+  local l0
+  self = self._graph
+--reenabling felony system and random events and online activities
+FelonySystemEnable(1)
+RandomEventSystemEnable(1)
+GridMonitoringEnable(1)
+--enabling reputation
+EnableReputation(1)
+  --disable mission area
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Perimeter_Disable
+  l0:In()
+  --disable cinematic mode
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Cinematic_Disable
+  l0:In()
+  --disabling reinforcements call monitor
+  l0 = self[35]
+  l0:Disable()
+--aborting mission
+LoadLastCheckpoint()
+end
+
+
+function export:Cinematic_Enable()
+  local l0
+  self = self._graph
+  --disabling player detection
+  SetOverrideCanDetectPlayer(0)
+  --enabling invincibility
+  ActivateInvincibility(GetLocalPlayerEntityId())
+  --disabling controls
+  PopPlayerActionMap(self.ActionMap)
+  self.ActionMap = "cinematic_nocameralock"
+  PushPlayerActionMap(self.ActionMap)
+  --hiding UI
+  EnableDisplay("Adrenaline", 0)
+  EnableDisplay("Battery", 0)
+  EnableDisplay("Camera", 0)
+  EnableDisplay("Consommable", 0)
+  EnableDisplay("DynamicContent", 0)
+  EnableDisplay("DistrictMonitoring", 0)
+  EnableDisplay("Felony", 0)
+  EnableDisplay("Marker", 0)
+EnableDisplay("MessageBox", 1)
+  EnableDisplay("Minimap", 0)
+  EnableDisplay("MonitoringLevel", 0)
+  EnableDisplay("Profiler", 0)
+  EnableDisplay("Reticle", 0)
+  EnableDisplay("SoftwareLink", 0)
+  EnableDisplay("Tags", 0)
+  EnableDisplay("Wheel", 0)
+RemoveAllStanceControlHelper()
+  --setting scripted slowmotion
+  OverrideAdrenalineDuration(GetLocalPlayerEntityId(), 999)
+  SetAdrenalineDilationOverride(GetLocalPlayerEntityId(), 0.15)
+  RefillAdrenaline(GetLocalPlayerEntityId())
+  StartAdrenaline(GetLocalPlayerEntityId())
+  SetAdrenalineInputsBlocked(GetLocalPlayerEntityId(), 1)
+end
+function export:Cinematic_Disable()
+  local l0
+  self = self._graph
+  --enabling player detection
+  SetOverrideCanDetectPlayer(-1)
+  --skipped if mutator GOD MODE
+  if self.Mutator ~= 1 then
+    --disabling invincibility
+    RemoveInvincibility(GetLocalPlayerEntityId())
+  end
+  --enabling controls
+  PopPlayerActionMap(self.ActionMap)
+  self.ActionMap = "default_nopick" --requires custom inputactionmapcommon.xml
+  PushPlayerActionMap(self.ActionMap)
+  --displaying UI
+  EnableDisplay("Adrenaline", 1)
+  EnableDisplay("Battery", 1)
+  EnableDisplay("Camera", 1)
+  EnableDisplay("Consommable", 1)
+  EnableDisplay("DynamicContent", 1)
+  EnableDisplay("DistrictMonitoring", 1)
+  EnableDisplay("Felony", 1)
+  EnableDisplay("Marker", 1)
+  EnableDisplay("MessageBox", 1)
+  EnableDisplay("Minimap", 1)
+  EnableDisplay("MonitoringLevel", 1)
+  EnableDisplay("Profiler", 1)
+  EnableDisplay("Reticle", 1)
+  EnableDisplay("SoftwareLink", 1)
+  EnableDisplay("Tags", 1)
+  EnableDisplay("Wheel", 1)
+  --skipped if mutator SLOW MODE or HYPER SPEED or FOCUS DISABLED
+  if self.Mutator ~= 7 and self.Mutator ~= 8 and self.Mutator ~= 9 then
+    --restoring manual slowmotion
+    CancelAdrenalineDurationOverride(GetLocalPlayerEntityId())
+    CancelAdrenalineDilationOverride(GetLocalPlayerEntityId())
+    StopAdrenaline(GetLocalPlayerEntityId())
+    RefillAdrenaline(GetLocalPlayerEntityId())
+    SetAdrenalineInputsBlocked(GetLocalPlayerEntityId(), 0)
+  else
+    EnableDisplay("Adrenaline", 0)
+  end
+end
+
+
+function export:Perimeter_Enable()
+  local l0
+  self = self._graph
+  --showing zone radius
+SetEntityPosition(self.Circle_Outer, GetEntityPosition(self.Zone_Entity[self.Index_Location], 0), GetEntityPosition(self.Zone_Entity[self.Index_Location], 1), GetEntityPosition(self.Zone_Entity[self.Index_Location], 2))
+  l0 = Boxes[PathID("Domino/System/MissionZoneController.lua")]
+  l0.MissionZone = self.Circle_Outer
+  l0.Red = 0.82
+  l0.Green = 0.2
+  l0.Blue = 0.2
+  l0.Alpha = 1
+  l0.Radius = self.Zone_Despawn[self.Index_Location]
+  l0.DrawType = "Outside"
+  l0.ShapeType = "CMissionCircleDescriptor"
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.PropertiesUpdated = DummyFunction
+  l0.Out = DummyFunction
+  l0:Enable()
+  --enabling zone radius
+  l0 = self[85]
+  l0.Entity1 = GetLocalPlayerEntityId()
+  l0.Entity2 = self.Zone_Entity[self.Index_Location]
+  l0.Radius = self.Zone_Despawn[self.Index_Location]
+  l0.CheckNow = 1
+  l0:Enable() --Exited_Perimeter
+end
+function export:Perimeter_Disable()
+  local l0
+  self = self._graph
+  --hiding zone radius
+  l0 = Boxes[PathID("Domino/System/MissionZoneController.lua")]
+  l0.MissionZone = self.Circle_Outer
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.PropertiesUpdated = DummyFunction
+  l0.Out = DummyFunction
+  l0:Disable()
+  --disabling zone radius
+  l0 = self[85]
+  l0:Disable()
+end
+
+
+function export:Enable_Mutator()
+  local l0
+  self = self._graph
+  --apply selected mutator
+  if self.Mutator == 1 then
+    PushTokenString("[#STRINGB]", "- GOD MODE")
+    ActivateInvincibility(GetLocalPlayerEntityId())
+    --setting appropriate enforcer properties
+    SetPlayerMaxLocomotionSpeedTypeOverride(GetLocalPlayerEntityId(), 2)
+    SetCoverAllowedOverride(GetLocalPlayerEntityId(), 0)
+    SetCoverToCoverAllowedOverride(GetLocalPlayerEntityId(), 0)
+  elseif self.Mutator == 2 then
+    PushTokenString("[#STRINGB]", "- INSTAKILL")
+	self.List_Health = {}
+    for i=1, #Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location] do
+      table.insert(self.List_Health, GetPawnHealthPercentage(Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location][i]))
+    end
+    l0 = self[16]
+    l0.PawnList = Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location]
+    l0:Enable() --Instant_Kill
+  elseif self.Mutator == 3 then
+    PushTokenString("[#STRINGB]", "- NO TIMER")
+    l0 = self[9]
+    self.Final_Time = self.Remaining_Time + l0.RemainingTime
+    l0:Stop()
+  elseif self.Mutator == 4 then
+    PushTokenString("[#STRINGB]", "- EXPLOSIVE HEADS")
+    l0 = self[17]
+    l0.PawnList = Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location]
+    l0:Enable() --Explosive_Head
+  elseif self.Mutator == 5 then
+    PushTokenString("[#STRINGB]", "- INFINITE AMMO")
+    l0 = self[18]
+    l0.Seconds = 0.5
+    l0:Start() --Infinite_Ammo
+  elseif self.Mutator == 6 then
+    PushTokenString("[#STRINGB]", "- SWAPPER")
+    ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.3651876853", 1) --frag grenade
+    AddItem("Items.3651876853", 10)
+    ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.1174431968", 1) --ctos scan
+    AddItem("Items.1174431968", 10)
+    ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.2840708499", 1) --ied
+    AddItem("Items.2840708499", 10)
+    ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.2987530112", 1) --proximity ied
+    AddItem("Items.2987530112", 10)
+    EquipItem("Items.2987530112") --proximity ied
+    for i=1, #Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location] do
+      AssignNPCOverrideConfig(Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location][i], "NPCOverrideConfig.3530244141") --custom_NoCoversBlindGrenades
+    end
+    ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.1718884258", 1) --Weapon.ARPistol.DefaultPistol
+    AgentDrawWeaponType(GetLocalPlayerEntityId(), 0)
+    l0 = self[15]
+    l0.Input = "fire_trigger_press"
+    l0:Enable() --Swap_Places
+    l0 = self[9]
+    l0.Seconds = 20 + math.ceil(self.Zone_Spawn[self.Index_Location]/2)
+    l0:Start()
+    l0:Pause()
+  elseif self.Mutator == 7 then
+    PushTokenString("[#STRINGB]", "- SLOW MODE")
+    OverrideAdrenalineDuration(GetLocalPlayerEntityId(), 999)
+    SetAdrenalineDilationOverride(GetLocalPlayerEntityId(), 0.5)
+    RefillAdrenaline(GetLocalPlayerEntityId())
+    StartAdrenaline(GetLocalPlayerEntityId())
+    SetAdrenalineInputsBlocked(GetLocalPlayerEntityId(), 1)
+  elseif self.Mutator == 8 then
+    PushTokenString("[#STRINGB]", "- HYPER SPEED")
+    OverrideAdrenalineDuration(GetLocalPlayerEntityId(), 999)
+    SetAdrenalineDilationOverride(GetLocalPlayerEntityId(), 1.5)
+    RefillAdrenaline(GetLocalPlayerEntityId())
+    StartAdrenaline(GetLocalPlayerEntityId())
+    SetAdrenalineInputsBlocked(GetLocalPlayerEntityId(), 1)
+    l0 = self[9]
+    l0.Seconds = 20 + math.ceil(self.Zone_Spawn[self.Index_Location]/5)
+    l0:Start()
+    l0:Pause()
+  elseif self.Mutator == 9 then
+    PushTokenString("[#STRINGB]", "- FOCUS DISABLED")
+    CancelAdrenalineDurationOverride(GetLocalPlayerEntityId())
+    CancelAdrenalineDilationOverride(GetLocalPlayerEntityId())
+    StopAdrenaline(GetLocalPlayerEntityId())
+    RefillAdrenaline(GetLocalPlayerEntityId())
+    SetAdrenalineInputsBlocked(GetLocalPlayerEntityId(), 1)
+  elseif self.Mutator == 10 then
+    PushTokenString("[#STRINGB]", "- ONE IN THE CHAMBER")
+    ForceRemoveItem("Items.2468964847", 999) --pistol
+    ForceRemoveItem("Items.2581069272", 999) --smg
+    ForceRemoveItem("Items.2875309739", 999) --ar
+    ForceRemoveItem("Items.3376957109", 999) --buckshot
+    ForceRemoveItem("Items.114103786", 999) --sniper
+    ForceRemoveItem("Items.1321691069", 999) --gl
+    ModifyBulletsInClip(GetLocalPlayerEntityId(), 0, 1, 0)
+    ModifyBulletsInClip(GetLocalPlayerEntityId(), 1, 1, 0)
+    ModifyBulletsInClip(GetLocalPlayerEntityId(), 2, 1, 0)
+    ModifyBulletsInClip(GetLocalPlayerEntityId(), 3, 1, 0)
+    l0 = self[19]
+    l0.PawnList = Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location]
+    l0:Enable() --Give_Bullet
+	self.List_Health = {}
+    for i=1, #Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location] do
+      table.insert(self.List_Health, GetPawnHealthPercentage(Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location][i]))
+    end
+    l0 = self[16]
+    l0.PawnList = Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location]
+    l0:Enable() --Instant_Kill
+  else
+    PushTokenString("[#STRINGB]", "")
+  end
+  --displaying message
+  PushTokenString("[#STRINGA]", "Round "..string.format("%d",self.Rounds_Max-#self.List_Zones).."/"..string.format("%d",self.Rounds_Max))
+  SendMissionChannelMessageToLocalPlayersId(Globals._CUSTOM_SCRIPTS._Mission_ID, "PlayerCentric", "15380", 10) --"[#STRINGA] [#STRINGB]"
+end
+function export:Instant_Kill()
+  local l0
+  self = self._graph
+  l0 = self[16]
+  self.Attacker = l0.Attacker
+  if self.Attacker == GetLocalPlayerEntityId() then
+    for i=1, #Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location] do
+      if GetPawnHealthPercentage(Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location][i]) < self.List_Health[i] then
+        SendDamageToEntity(Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location][i], GetLocalPlayerEntityId(), 16, 999, 1)
+      end
+    end
+  end
+  self.List_Health = {}
+  for i=1, #Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location] do
+    table.insert(self.List_Health, GetPawnHealthPercentage(Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location][i]))
+  end
+end
+function export:Explosive_Head()
+  local l0
+  self = self._graph
+  l0 = self[17]
+  self.Victim = l0.Victim
+  self.Attacker = l0.Attacker
+  self.Hit_Locations = { "Spine2", "Pelvis", "L UpperArm", "L Hand", "R UpperArm", "R Hand", "Head", "L Calf", "L Foot", "R Calf", "R Foot", "L UpperArm", "L Forearm", "R UpperArm", "R Forearm", "Spine2" }
+  self.HitLocation = self.Hit_Locations[l0.HitLocation] or "Spine1"
+  if self.Victim ~= GetLocalPlayerEntityId() and self.Attacker == GetLocalPlayerEntityId() and self.HitLocation == "Head" then
+    SendDamageToEntity(self.Victim, GetLocalPlayerEntityId(), 3, 999, 512)
+    RemoveEntity(self.Spawned_IED)
+	if GetEntityBonePosition(self.Victim, "Head", 0, 0) ~= nil and GetEntityBonePosition(self.Victim, "Head", 1, 0) ~= nil and GetEntityBonePosition(self.Victim, "Head", 2, 0) ~= nil then
+      self.Spawned_IED = SpawnEntityFromArchetype("{2177A2A6-6310-43B5-9B2D-300D6F21BCE8}", GetEntityBonePosition(self.Victim, "Head", 0, 0), GetEntityBonePosition(self.Victim, "Head", 1, 0), GetEntityBonePosition(self.Victim, "Head", 2, 0), 0, 0, 0)
+    else
+      self.Spawned_IED = SpawnEntityFromArchetype("{2177A2A6-6310-43B5-9B2D-300D6F21BCE8}", GetEntityPosition(self.Victim, 0), GetEntityPosition(self.Victim, 1), GetEntityPosition(self.Victim, 2), 0, 0, 0)
+    end
+    ForceHackIngredient(self.Spawned_IED, GetLocalPlayerEntityId())
+  end
+end
+function export:Infinite_Ammo()
+  local l0
+  self = self._graph
+ModifyBulletsInClip(GetLocalPlayerEntityId(), 0, 999, 1)
+ModifyBulletsInClip(GetLocalPlayerEntityId(), 1, 999, 1)
+ModifyBulletsInClip(GetLocalPlayerEntityId(), 2, 999, 1)
+ModifyBulletsInClip(GetLocalPlayerEntityId(), 3, 999, 1)
+  l0 = self[18]
+  l0.Seconds = 0.5
+  l0:Start() --Infinite_Ammo
+end
+function export:Swap_Places()
+  local l0
+  self = self._graph
+  self.Teleport_Target = GetReticleHitEntity() or GetLocalPlayerEntityId()
+  if string.find(GetEntityName(self.Teleport_Target), "AIClasses") and PlayerIsDoingAction(4) == 1 and GetDistance2D(self.Teleport_Target, self.Zone_Entity[self.Index_Location]) < self.Zone_Despawn[self.Index_Location] then
+    StopAdrenaline(GetLocalPlayerEntityId())
+    RefillAdrenaline(GetLocalPlayerEntityId())
+    ForceExitCover(GetLocalPlayerEntityId())
+	self.Position_Player = { GetEntityPosition(GetLocalPlayerEntityId(), 0), GetEntityPosition(GetLocalPlayerEntityId(), 1), GetEntityPosition(GetLocalPlayerEntityId(), 2) }
+	self.Position_Enemy = { GetEntityPosition(self.Teleport_Target, 0), GetEntityPosition(self.Teleport_Target, 1), GetEntityPosition(self.Teleport_Target, 2) }
+    RemoveEntity(self.PFX_Player)
+    RemoveEntity(self.PFX_Enemy)
+    self.PFX_Player = SpawnEntityFromArchetype("{CF4A5A94-CD3C-D8F9-BDA3-AA1523871B49}", self.Position_Player[1], self.Position_Player[2], self.Position_Player[3], 0, 0, 0)
+    self.PFX_Enemy = SpawnEntityFromArchetype("{CF4A5A94-CD3C-D8F9-BDA3-AA1523871B49}", self.Position_Enemy[1], self.Position_Enemy[2], self.Position_Enemy[3], 0, 0, 0)
+    SetEntityPosition(GetLocalPlayerEntityId(), self.Position_Enemy[1], self.Position_Enemy[2], self.Position_Enemy[3])
+    SetEntityPosition(self.Teleport_Target, self.Position_Player[1], self.Position_Player[2], self.Position_Player[3])
+    for i=1, #Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location] do
+      SendAICmdBHVstateV2(Globals._CUSTOM_SCRIPTS._Guards_List[self.Index_Location][i], "Unaware", GetLocalPlayerEntityId(), 0, 0, 0)
+    end
+  end
+end
+function export:Give_Bullet()
+  local l0
+  self = self._graph
+ModifyBulletsInClip(GetLocalPlayerEntityId(), 0, 0, 0)
+ModifyBulletsInClip(GetLocalPlayerEntityId(), 1, 0, 0)
+ModifyBulletsInClip(GetLocalPlayerEntityId(), 2, 0, 0)
+ModifyBulletsInClip(GetLocalPlayerEntityId(), 3, 0, 0)
+SetItem("Items.2468964847", 1) --pistol
+SetItem("Items.2581069272", 1) --smg
+SetItem("Items.2875309739", 1) --ar
+SetItem("Items.3376957109", 1) --buckshot
+SetItem("Items.114103786", 1) --sniper
+SetItem("Items.1321691069", 1) --gl
+end
+
+function export:Disable_Mutator()
+  local l0
+  self = self._graph
+  --disable selected mutator
+  if self.Mutator == 1 then --GOD MODE
+    RemoveInvincibility(GetLocalPlayerEntityId())
+    --setting appropriate player properties
+    ResetPlayerMaxLocomotionSpeedTypeOverride(GetLocalPlayerEntityId())
+    ResetCoverAllowedOverride(GetLocalPlayerEntityId())
+    ResetCoverToCoverAllowedOverride(GetLocalPlayerEntityId())
+  elseif self.Mutator == 2 then --INSTAKILL
+    l0 = self[16]
+    l0:Disable()
+  elseif self.Mutator == 3 then --NO TIMER
+  elseif self.Mutator == 4 then --EXPLOSIVE HEADS
+    l0 = self[17]
+    l0:Disable()
+  elseif self.Mutator == 5 then --INFINITE AMMO
+    l0 = self[18]
+    l0:Stop()
+  elseif self.Mutator == 6 then --SWAPPER
+    AgentDrawWeaponType(GetLocalPlayerEntityId(), -1)
+    ForceRemoveItem("Items.1718884258", 2) --Weapon.ARPistol.DefaultPistol
+    l0 = self[15]
+    l0:Disable()
+  elseif self.Mutator == 7 then --SLOW MODE
+    CancelAdrenalineDurationOverride(GetLocalPlayerEntityId())
+    CancelAdrenalineDilationOverride(GetLocalPlayerEntityId())
+    StopAdrenaline(GetLocalPlayerEntityId())
+    RefillAdrenaline(GetLocalPlayerEntityId())
+    SetAdrenalineInputsBlocked(GetLocalPlayerEntityId(), 0)
+  elseif self.Mutator == 8 then --HYPER SPEED
+    CancelAdrenalineDurationOverride(GetLocalPlayerEntityId())
+    CancelAdrenalineDilationOverride(GetLocalPlayerEntityId())
+    StopAdrenaline(GetLocalPlayerEntityId())
+    RefillAdrenaline(GetLocalPlayerEntityId())
+    SetAdrenalineInputsBlocked(GetLocalPlayerEntityId(), 0)
+  elseif self.Mutator == 9 then --FOCUS DISABLED
+    CancelAdrenalineDurationOverride(GetLocalPlayerEntityId())
+    CancelAdrenalineDilationOverride(GetLocalPlayerEntityId())
+    StopAdrenaline(GetLocalPlayerEntityId())
+    RefillAdrenaline(GetLocalPlayerEntityId())
+    SetAdrenalineInputsBlocked(GetLocalPlayerEntityId(), 0)
+  elseif self.Mutator == 10 then --ONE IN THE CHAMBER
+    l0 = self[19]
+    l0:Disable()
+    l0 = self[16]
+    l0:Disable()
+  end
+end
+_compilerVersion = 4

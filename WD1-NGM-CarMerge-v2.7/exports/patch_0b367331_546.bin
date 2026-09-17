@@ -1,0 +1,20 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua")
+end
+function export:Init(cbox)
+  if Globals._CUSTOM_SCRIPTS._Addons_RealisticTimescale ~= 0 then
+    SetTimeScale(0)
+  end
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+_compilerVersion = 4

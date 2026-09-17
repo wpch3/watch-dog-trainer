@@ -1,0 +1,4196 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua") --loaded global variables
+  cbox:RegisterBox("Domino/System/PlayDialog_v2.lua")
+  cbox:RegisterBox("Domino/System/AgentStateMonitor_v2.lua")
+  cbox:RegisterBox("Domino/System/AIGeneratorController.lua")
+  cbox:RegisterBox("Domino/System/AssignPatrol_v2.lua")
+  cbox:RegisterBox("Domino/Library/common/CopFelonyMonitor.CheckCopFelonyState.lua")
+  cbox:RegisterBox("Domino/Library/common/CinematicPrep.CinematicPrep.lua")
+  cbox:RegisterBox("Domino/System/CompareBoolean_v2.lua")
+  cbox:RegisterBox("Domino/System/CompareEntity_v2.lua")
+  cbox:RegisterBox("Domino/System/CompareIntegers_v2.lua")
+  cbox:RegisterBox("Domino/System/DeadBodyUnspawnController.lua")
+  cbox:RegisterBox("Domino/System/FelonyChaseMonitor.lua")
+  cbox:RegisterBox("Domino/System/FelonySystemController.lua")
+  cbox:RegisterBox("Domino/Library/common/Common_HUD.ForbiddenArea.lua")
+  cbox:RegisterBox("Domino/System/GateMonitor.lua")
+  cbox:RegisterBox("Domino/System/GateController.lua")
+  cbox:RegisterBox("Domino/System/GetInvalidEntity.lua")
+  cbox:RegisterBox("Domino/System/GetPlayerID.lua")
+  cbox:RegisterBox("Domino/System/HackableController.lua")
+  cbox:RegisterBox("Domino/System/HackableMonitor.lua")
+  cbox:RegisterBox("Domino/Library/common/HiddenCamera.HiddenCameraSetup.lua")
+  cbox:RegisterBox("Domino/System/HubController.lua")
+  cbox:RegisterBox("Domino/Library/common/SideMissionSignAndFeedback.Hubs_Ending.lua")
+  cbox:RegisterBox("Domino/System/LaneRestrictionsControl.lua")
+  cbox:RegisterBox("Domino/System/Lists/ListLength.lua")
+  cbox:RegisterBox("Domino/System/Lists/ListWriter.lua")
+  cbox:RegisterBox("Domino/System/MapPointController_v3.lua")
+  cbox:RegisterBox("Domino/Library/common/Common_HUD.MissionArea.lua")
+  cbox:RegisterBox("Domino/System/MissionCheckpointReach.lua")
+  cbox:RegisterBox("Domino/System/MissionController_v2.lua")
+  cbox:RegisterBox("Domino/System/MissionLayer_v2.lua")
+  cbox:RegisterBox("Domino/System/MissionModuleBox_v3.lua")
+  cbox:RegisterBox("Domino/System/MissionMonitor.lua")
+  cbox:RegisterBox("Domino/System/MissionZoneController.lua")
+  cbox:RegisterBox("Domino/System/MultipleAND.lua")
+  cbox:RegisterBox("Domino/System/NPCSquad_v2.lua")
+  cbox:RegisterBox("Domino/System/OnceOnly_v2.lua")
+  cbox:RegisterBox("Domino/System/OrderedOutput.lua")
+  cbox:RegisterBox("Domino/System/PawnHealthMonitor_v3.lua")
+  cbox:RegisterBox("Domino/System/PlaySound_v2.lua")
+  cbox:RegisterBox("Domino/System/PowerUserController_v3.lua")
+  cbox:RegisterBox("Domino/System/ProfilerMonitor_v2.lua")
+  cbox:RegisterBox("Domino/System/ReinforcementController.lua")
+  cbox:RegisterBox("Domino/System/ReinforcementMonitor.lua")
+  cbox:RegisterBox("Domino/System/RewardComponentController.lua")
+  cbox:RegisterBox("Domino/System/SecurityCameraMonitor.lua")
+  cbox:RegisterBox("Domino/System/SendAICommandGoto.lua")
+  cbox:RegisterBox("Domino/System/Lists/SetList.lua")
+  cbox:RegisterBox("Domino/System/SetBoolean_v2.lua")
+  cbox:RegisterBox("Domino/System/SimpleNode.lua")
+  cbox:RegisterBox("Domino/Library/common/SnapAndBind.SnapAndBind.lua")
+  cbox:RegisterBox("Domino/System/Timer_v2.lua")
+  cbox:RegisterBox("Domino/System/TriggerMonitor_v2.lua")
+  cbox:RegisterBox("Domino/System/VehicleController.lua")
+  cbox:RegisterBox("Domino/System/VehicleSpawnerControl_v2.lua")
+  cbox:LoadResource("sndres0x000ebb2c", "CSoundResource") --"That's all of them."
+  cbox:LoadResource("sndres0x000eb97f", "CSoundResource") --"Looks clear."
+  cbox:LoadResource("sndres0x000eb9ba", "CSoundResource") --"That's everyone."
+  cbox:LoadResource("sndres0x000ebbdc", "CSoundResource") --"They are done."
+  cbox:LoadResource("sndres0x000ebb41", "CSoundResource") --"Got 'em all."
+  cbox:LoadResource("sndres0x000ebc15", "CSoundResource") --"There's noone left."
+  cbox:LoadResource("sndres0x000eb9c5", "CSoundResource") --"They are finished."
+  cbox:LoadResource("sndres0x000ebc7c", "CSoundResource") --"All clear."
+end
+function export:Init(cbox)
+  self.This_Script = cbox:GetParentEntity()
+  local l0
+  self.HubA_Mobster04 = nil
+  self.HubA_HubGuy = nil
+  self.HubA_Mobster03 = nil
+  self.HubA_Mobster02 = nil
+  self.Mission1AM04 = "A01_M04"
+  self.Layer = "04_TheWards_HubUnlock_Mission"
+  self.Local_Player = "0"
+  self.Player = nil
+  self.HUB = "2079998449874404925"
+  self.VR_Last_Node = "2080923451337476557"
+  self.VIP_Marker = "2081584662032947612"
+  self.VR_Marker = "2081584661556891801"
+  self.VR_Entry = "2081629345759278049"
+  self.Mission_Zone_Icon = "2082460592060313369"
+  self.NPCParking = {}
+  self.NPCRestrictedZone = "2081048938441344508"
+  self.List_Length = 0
+  self.Total_NPC_Before_Reinforcement = 7
+  self.Reinforcement_01 = nil
+  self.Reinforcement_02 = nil
+  self.Reinforcement_03 = nil
+  self.Reinforcement_04 = nil
+  self.total_of_AI = ""
+  self.Total_of_Mobs = 0
+  self.Mobs_Left = 0
+  self.Vehicle = nil
+  self.Reinforcement = {}
+  self.Combat_Entered = 0
+  self.HubGuyHacked = 0
+  self.HubGuyProfiled = 0
+  self.All_Init_Mobs = {}
+  self.All_Init_Dead = 0
+  self.Reinforcement_Dead = 0
+  self.Reinforcement_Called = 0
+  self.PlayerPawn = nil
+  self.Car_Ambush01 = nil
+  self.CarDest_01 = "2081103271933511909"
+  self.Wave01_Attacker01 = nil
+  self.Wave01_Attacker02 = nil
+  self.Cam_Ambush02 = nil
+  self.Car_Ambush02 = nil
+  self.CarDest_02 = nil
+  self.IsE3Demo = 0
+  self.E3_Hub_Box = "2081393094265151189"
+  self.Hub_Marker = "2081584662074890849"
+  self.Forbidden_Area = "2081517374164436274"
+  self.Control_Room_Cameras = {}
+  self.WarningZone = "2081809572531538899"
+  self.text_to = 0
+  self.E3_VR_Marker = "2081836363809982948"
+  self.Gate02 = "2081340958506489052"
+  self.Reinforcement_Callers = {}
+  self.Gate01 = "2081340335891430650"
+  self.Reinforcement_Vehicle_A = nil
+  self.Gate03 = "2081448917913844190"
+  self.Investigation_Area = "2080952443874588544"
+  self.Forbidden_Area_Triggers = {}
+  self.UnloadTriggerZone = "2081491019932642382"
+  self.Zone_Icon_Hub = "2082460592060313369"
+  self.Zone_Icon_Mission = "2082893508672245265"
+  self.Empty_List = {}
+  self.NewMissionArea = "2082573330252054381"
+  self.ExitFail_MissionArea = "2081617167675032354"
+  self.MissionAreaStopped = 0
+  self.IsVIPDead = 0
+  self.Felony_Mob_List = {}
+  self.Activation_Layer = "04_TheWards_HubUnlock_Activation"
+  self.SquadStarted = 0
+  self.MissionLoadedCheck = "2083869339257150693"
+  self.Activation_Zone_Icon_Mission = "2082893464988569011"
+  self.Activation_Zone_Icon_Hub = "2081639545197196307"
+  self.MobListLength = 0
+  self.HubA_Mobster01_CAMERA = nil
+  self.HubA_Mobster06_CALLER = nil
+  self.HubA_Mobster05_CALLER = nil
+  self.StartedByCheckpoint = 0
+  self.IsPostHubUnlockCheckpoint = 0
+  self.InCombatCheckpoint = 0
+  self.NPC_With_Code = {}
+  self.ForbiddenZone = "2081641159312018167"
+  self.New_MissionZone = "2082595112677815539"
+  self[43] = cbox:CreateBox("Domino/Library/common/Common_HUD.MissionArea.lua")
+  l0 = self[43]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Failed = DummyFunction
+  l0.Exited = DummyFunction
+  l0.Reentered = DummyFunction
+  self[25] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[25]
+  l0._graph = self
+  l0.Spawned = self.f_25_Spawned
+  l0.UnSpawned = DummyFunction
+  self[3] = cbox:CreateBox("Domino/System/HackableController.lua")
+  l0 = self[3]
+  l0._graph = self
+  l0.Enabled = self.f_3_Enabled
+  l0.Disabled = DummyFunction
+  l0.ProfileAssigned = DummyFunction
+  l0.ProfileReset = DummyFunction
+  l0.ProfilingEnabled = DummyFunction
+  l0.ProfilingDisabled = DummyFunction
+  l0.HackSecurityLevelSet = DummyFunction
+  l0.OccludableSet = DummyFunction
+  l0.HackForced = DummyFunction
+  l0.OutFakePlayerHoldButton = DummyFunction
+  l0.OutFakePlayerUnholdButton = DummyFunction
+  l0.NoTextSet = DummyFunction
+  self[79] = cbox:CreateBox("Domino/System/MissionCheckpointReach.lua")
+  l0 = self[79]
+  l0._graph = self
+  l0.Out = self.f_79_Out
+  l0.AllCheckpointsDisabled = DummyFunction
+  self[130] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[130]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 4}
+  l0.Out = self.f_130_Out
+  self[59] = cbox:CreateBox("Domino/Library/common/SnapAndBind.SnapAndBind.lua")
+  l0 = self[59]
+  l0._graph = self
+  l0.Attached = self.f_59_Attached
+  self[146] = cbox:CreateBox("Domino/System/OnceOnly_v2.lua")
+  l0 = self[146]
+  l0._graph = self
+  l0._DynamicAnchors = {In = 1, Out = 1}
+  l0.Out[0] = self.f_146_Out_0
+  l0.ResetOut = DummyFunction
+  self[53] = cbox:CreateBox("Domino/System/HackableController.lua")
+  l0 = self[53]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_53_Disabled
+  l0.ProfileAssigned = DummyFunction
+  l0.ProfileReset = DummyFunction
+  l0.ProfilingEnabled = DummyFunction
+  l0.ProfilingDisabled = DummyFunction
+  l0.HackSecurityLevelSet = DummyFunction
+  l0.OccludableSet = DummyFunction
+  l0.HackForced = DummyFunction
+  l0.OutFakePlayerHoldButton = DummyFunction
+  l0.OutFakePlayerUnholdButton = DummyFunction
+  l0.NoTextSet = DummyFunction
+  self[180] = cbox:CreateBox("Domino/System/MissionCheckpointReach.lua")
+  l0 = self[180]
+  l0._graph = self
+  l0.Out = self.f_180_Out
+  l0.AllCheckpointsDisabled = DummyFunction
+  self[126] = cbox:CreateBox("Domino/System/SetBoolean_v2.lua")
+  l0 = self[126]
+  l0._graph = self
+  l0.Out = self.f_126_Out
+  l0.SetTrue = self.f_126_SetTrue
+  l0.SetFalse = self.f_126_SetFalse
+  l0.Toggled = self.f_126_Toggled
+  l0.SetFromBool = self.f_126_SetFromBool
+  self[18] = cbox:CreateBox("Domino/System/HackableController.lua")
+  l0 = self[18]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_18_Disabled
+  l0.ProfileAssigned = self.f_18_ProfileAssigned
+  l0.ProfileReset = DummyFunction
+  l0.ProfilingEnabled = DummyFunction
+  l0.ProfilingDisabled = DummyFunction
+  l0.HackSecurityLevelSet = DummyFunction
+  l0.OccludableSet = DummyFunction
+  l0.HackForced = DummyFunction
+  l0.OutFakePlayerHoldButton = DummyFunction
+  l0.OutFakePlayerUnholdButton = DummyFunction
+  l0.NoTextSet = DummyFunction
+  self[60] = cbox:CreateBox("Domino/System/TriggerMonitor_v2.lua")
+  l0 = self[60]
+  l0._graph = self
+  l0.Enabled = self.f_60_Enabled
+  l0.Disabled = DummyFunction
+  l0.Enter = DummyFunction
+  l0.Leave = self.f_60_Leave
+  l0.Use = DummyFunction
+  self[163] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[163]
+  l0._graph = self
+  l0.Spawned = self.f_163_Spawned
+  l0.UnSpawned = DummyFunction
+  self[14] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[14]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_14_Disabled
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.f_14_HackSuccess
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[47] = cbox:CreateBox("Domino/System/GateMonitor.lua")
+  l0 = self[47]
+  l0._graph = self
+  l0.Enabled = self.f_47_Enabled
+  l0.Disabled = self.f_47_Disabled
+  l0.OnBlock = self.f_47_OnBlock
+  l0.OnUnblock = self.f_47_OnUnblock
+  l0.Opening = DummyFunction
+  l0.Closing = DummyFunction
+  self[195] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[195]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 4}
+  l0.Out = self.f_195_Out
+  self[17] = cbox:CreateBox("Domino/System/HackableController.lua")
+  l0 = self[17]
+  l0._graph = self
+  l0.Enabled = self.f_17_Enabled
+  l0.Disabled = DummyFunction
+  l0.ProfileAssigned = DummyFunction
+  l0.ProfileReset = DummyFunction
+  l0.ProfilingEnabled = DummyFunction
+  l0.ProfilingDisabled = DummyFunction
+  l0.HackSecurityLevelSet = DummyFunction
+  l0.OccludableSet = DummyFunction
+  l0.HackForced = DummyFunction
+  l0.OutFakePlayerHoldButton = DummyFunction
+  l0.OutFakePlayerUnholdButton = DummyFunction
+  l0.NoTextSet = DummyFunction
+  self[193] = cbox:CreateBox("Domino/System/VehicleSpawnerControl_v2.lua")
+  l0 = self[193]
+  l0._graph = self
+  l0.Spawned = self.f_193_Spawned
+  l0.UnSpawned = DummyFunction
+  l0.AllowAutoRespawnSet = DummyFunction
+  l0.Out = DummyFunction
+  self[160] = cbox:CreateBox("Domino/System/Lists/ListWriter.lua")
+  l0 = self[160]
+  l0._graph = self
+  l0._DynamicAnchors = {Data = 2}
+  l0.Added = self.f_160_Added
+  l0.Removed = self.f_160_Removed
+  l0.Out = self.f_160_Out
+  self[134] = cbox:CreateBox("Domino/System/AssignPatrol_v2.lua")
+  l0 = self[134]
+  l0._graph = self
+  l0.Assigned = DummyFunction
+  l0.Unassigned = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Failed = DummyFunction
+  l0.SpeedSet = DummyFunction
+  l0.Out = DummyFunction
+  self[78] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[78]
+  l0._graph = self
+  l0.DisplayRequested = self.f_78_DisplayRequested
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[67] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[67]
+  l0._graph = self
+  l0.Loaded = self.f_67_Loaded
+  l0.Unloaded = DummyFunction
+  l0.Reseted = DummyFunction
+  self[54] = cbox:CreateBox("Domino/Library/common/HiddenCamera.HiddenCameraSetup.lua")
+  l0 = self[54]
+  l0._graph = self
+  l0.Out = DummyFunction
+  self[187] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[187]
+  l0._graph = self
+  l0.Loaded = self.f_187_Loaded
+  l0.Unloaded = DummyFunction
+  l0.Reseted = DummyFunction
+  self[72] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[72]
+  l0._graph = self
+  l0.Spawned = self.f_72_Spawned
+  l0.UnSpawned = DummyFunction
+  self[149] = cbox:CreateBox("Domino/System/SendAICommandGoto.lua")
+  l0 = self[149]
+  l0._graph = self
+  l0.InProgress = DummyFunction
+  l0.Succeeded = DummyFunction
+  l0.Failed = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Error = DummyFunction
+  self[153] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[153]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 3}
+  l0.Out = self.f_153_Out
+  self[107] = cbox:CreateBox("Domino/System/Lists/ListWriter.lua")
+  l0 = self[107]
+  l0._graph = self
+  l0._DynamicAnchors = {Data = 2}
+  l0.Added = self.f_107_Added
+  l0.Removed = self.f_107_Removed
+  l0.Out = self.f_107_Out
+  self[50] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[50]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.f_50_TimeElapsed
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[63] = cbox:CreateBox("Domino/Library/common/SnapAndBind.SnapAndBind.lua")
+  l0 = self[63]
+  l0._graph = self
+  l0.Attached = self.f_63_Attached
+  self[68] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[68]
+  l0._graph = self
+  l0.Loaded = self.f_68_Loaded
+  l0.Unloaded = DummyFunction
+  l0.Reseted = DummyFunction
+  self[158] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[158]
+  l0._graph = self
+  l0.Spawned = self.f_158_Spawned
+  l0.UnSpawned = DummyFunction
+  self[80] = cbox:CreateBox("Domino/System/OnceOnly_v2.lua")
+  l0 = self[80]
+  l0._graph = self
+  l0._DynamicAnchors = {In = 1, Out = 1}
+  l0.Out[0] = self.f_80_Out_0
+  l0.ResetOut = DummyFunction
+  self[24] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[24]
+  l0._graph = self
+  l0.Spawned = self.f_24_Spawned
+  l0.UnSpawned = DummyFunction
+  self[37] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[37]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.f_37_TimeElapsed
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[33] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[33]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.f_33_HackSuccess
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[42] = cbox:CreateBox("Domino/System/ReinforcementMonitor.lua")
+  l0 = self[42]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_42_Disabled
+  l0.CallStarted = self.Call_Started
+  l0.CallComplete = self.f_42_CallComplete
+  l0.CallerKilled = DummyFunction
+  l0.DisruptComms = DummyFunction
+  l0.CallFailed = DummyFunction
+  l0.NoMoreReinforcers = DummyFunction
+  self[52] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[52]
+  l0._graph = self
+  l0.Shown = DummyFunction
+  l0.Hidden = self.f_52_Hidden
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[39] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[39]
+  l0._graph = self
+  l0.Shown = DummyFunction
+  l0.Hidden = self.f_39_Hidden
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[197] = cbox:CreateBox("Domino/System/VehicleSpawnerControl_v2.lua")
+  l0 = self[197]
+  l0._graph = self
+  l0.Spawned = self.f_197_Spawned
+  l0.UnSpawned = DummyFunction
+  l0.AllowAutoRespawnSet = DummyFunction
+  l0.Out = DummyFunction
+  self[191] = cbox:CreateBox("Domino/System/Lists/ListWriter.lua")
+  l0 = self[191]
+  l0._graph = self
+  l0._DynamicAnchors = {Data = 4}
+  l0.Added = self.f_191_Added
+  l0.Removed = self.f_191_Removed
+  l0.Out = self.f_191_Out
+  self[73] = cbox:CreateBox("Domino/System/SendAICommandGoto.lua")
+  l0 = self[73]
+  l0._graph = self
+  l0.InProgress = DummyFunction
+  l0.Succeeded = DummyFunction
+  l0.Failed = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Error = DummyFunction
+  self[151] = cbox:CreateBox("Domino/System/SendAICommandGoto.lua")
+  l0 = self[151]
+  l0._graph = self
+  l0.InProgress = DummyFunction
+  l0.Succeeded = DummyFunction
+  l0.Failed = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Error = DummyFunction
+  self[95] = cbox:CreateBox("Domino/Library/common/CinematicPrep.CinematicPrep.lua")
+  l0 = self[95]
+  l0._graph = self
+  l0.PreOut = DummyFunction
+  l0.PostOut = self.f_95_PostOut
+  self[91] = cbox:CreateBox("Domino/System/SendAICommandGoto.lua")
+  l0 = self[91]
+  l0._graph = self
+  l0.InProgress = DummyFunction
+  l0.Succeeded = DummyFunction
+  l0.Failed = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Error = DummyFunction
+  self[71] = cbox:CreateBox("Domino/System/HackableController.lua")
+  l0 = self[71]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_71_Disabled
+  l0.ProfileAssigned = DummyFunction
+  l0.ProfileReset = DummyFunction
+  l0.ProfilingEnabled = DummyFunction
+  l0.ProfilingDisabled = DummyFunction
+  l0.HackSecurityLevelSet = DummyFunction
+  l0.OccludableSet = DummyFunction
+  l0.HackForced = DummyFunction
+  l0.OutFakePlayerHoldButton = DummyFunction
+  l0.OutFakePlayerUnholdButton = DummyFunction
+  l0.NoTextSet = DummyFunction
+  self[15] = cbox:CreateBox("Domino/System/GateMonitor.lua")
+  l0 = self[15]
+  l0._graph = self
+  l0.Enabled = self.f_15_Enabled
+  l0.Disabled = self.f_15_Disabled
+  l0.OnBlock = self.f_15_OnBlock
+  l0.OnUnblock = self.f_15_OnUnblock
+  l0.Opening = DummyFunction
+  l0.Closing = DummyFunction
+  self[83] = cbox:CreateBox("Domino/System/HubController.lua")
+  l0 = self[83]
+  l0._graph = self
+  l0.Unlocked = DummyFunction
+  l0.Locked = self.f_83_Locked
+  self[165] = cbox:CreateBox("Domino/Library/common/CinematicPrep.CinematicPrep.lua")
+  l0 = self[165]
+  l0._graph = self
+  l0.PreOut = DummyFunction
+  l0.PostOut = self.f_165_PostOut
+  self[19] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[19]
+  l0._graph = self
+  l0.DisplayRequested = self.f_19_DisplayRequested
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[82] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[82]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = self.f_82_Unloaded
+  l0.Reseted = DummyFunction
+  self[108] = cbox:CreateBox("Domino/Library/common/CopFelonyMonitor.CheckCopFelonyState.lua")
+  l0 = self[108]
+  l0._graph = self
+  l0.NoCopFelony = self.f_108_NoCopFelony
+  l0.EvadedInsideZone = DummyFunction
+  l0.EvadedOutsideZone = DummyFunction
+  l0.BeingChased = DummyFunction
+  self[56] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua")
+  l0 = self[56]
+  l0._graph = self
+  l0.Enabled = self.f_56_Enabled
+  l0.Disabled = DummyFunction
+  l0.Damaged = DummyFunction
+  l0.Killed = self.f_56_Killed
+  l0.AllDead = self.f_56_AllDead
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[31] = cbox:CreateBox("Domino/System/HackableController.lua")
+  l0 = self[31]
+  l0._graph = self
+  l0.Enabled = self.f_31_Enabled
+  l0.Disabled = DummyFunction
+  l0.ProfileAssigned = DummyFunction
+  l0.ProfileReset = DummyFunction
+  l0.ProfilingEnabled = DummyFunction
+  l0.ProfilingDisabled = DummyFunction
+  l0.HackSecurityLevelSet = DummyFunction
+  l0.OccludableSet = DummyFunction
+  l0.HackForced = DummyFunction
+  l0.OutFakePlayerHoldButton = DummyFunction
+  l0.OutFakePlayerUnholdButton = DummyFunction
+  l0.NoTextSet = DummyFunction
+  self[22] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[22]
+  l0._graph = self
+  l0.Loaded = self.f_22_Loaded
+  l0.Unloaded = DummyFunction
+  l0.Reseted = DummyFunction
+  self[144] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua")
+  l0 = self[144]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_144_Disabled
+  l0.Damaged = DummyFunction
+  l0.Killed = self.f_144_Killed
+  l0.AllDead = DummyFunction
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[211] = cbox:CreateBox("Domino/System/SetBoolean_v2.lua")
+  l0 = self[211]
+  l0._graph = self
+  l0.Out = self.f_211_Out
+  l0.SetTrue = self.f_211_SetTrue
+  l0.SetFalse = self.f_211_SetFalse
+  l0.Toggled = self.f_211_Toggled
+  l0.SetFromBool = self.f_211_SetFromBool
+  self[199] = cbox:CreateBox("Domino/System/VehicleSpawnerControl_v2.lua")
+  l0 = self[199]
+  l0._graph = self
+  l0.Spawned = self.f_199_Spawned
+  l0.UnSpawned = DummyFunction
+  l0.AllowAutoRespawnSet = DummyFunction
+  l0.Out = DummyFunction
+  self[184] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[184]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 2}
+  l0.Out = self.f_184_Out
+  self[46] = cbox:CreateBox("Domino/System/VehicleSpawnerControl_v2.lua")
+  l0 = self[46]
+  l0._graph = self
+  l0.Spawned = self.f_46_Spawned
+  l0.UnSpawned = DummyFunction
+  l0.AllowAutoRespawnSet = DummyFunction
+  l0.Out = DummyFunction
+  self[136] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[136]
+  l0._graph = self
+  l0.Shown = DummyFunction
+  l0.Hidden = self.f_136_Hidden
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[106] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[106]
+  l0._graph = self
+  l0.Shown = self.f_106_Shown
+  l0.Hidden = self.f_106_Hidden
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[150] = cbox:CreateBox("Domino/System/SendAICommandGoto.lua")
+  l0 = self[150]
+  l0._graph = self
+  l0.InProgress = DummyFunction
+  l0.Succeeded = DummyFunction
+  l0.Failed = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Error = DummyFunction
+  self[98] = cbox:CreateBox("Domino/System/TriggerMonitor_v2.lua")
+  l0 = self[98]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Enter = self.f_98_Enter
+  l0.Leave = DummyFunction
+  l0.Use = DummyFunction
+  self[62] = cbox:CreateBox("Domino/System/SendAICommandGoto.lua")
+  l0 = self[62]
+  l0._graph = self
+  l0.InProgress = DummyFunction
+  l0.Succeeded = DummyFunction
+  l0.Failed = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Error = DummyFunction
+  self[162] = cbox:CreateBox("Domino/System/SendAICommandGoto.lua")
+  l0 = self[162]
+  l0._graph = self
+  l0.InProgress = DummyFunction
+  l0.Succeeded = DummyFunction
+  l0.Failed = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Error = DummyFunction
+  self[11] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[11]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.f_11_HackSuccess
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[148] = cbox:CreateBox("Domino/System/FelonyChaseMonitor.lua")
+  l0 = self[148]
+  l0._graph = self
+  l0.Started = self.f_148_Started
+  l0.Stopped = DummyFunction
+  l0.None = DummyFunction
+  l0.DenunciatorStarted = DummyFunction
+  l0.DenunciatorInterrupted = DummyFunction
+  l0.DenunciatorFinished = DummyFunction
+  l0.ScanStarted = DummyFunction
+  l0.ScanSuccess = DummyFunction
+  l0.ScanFailure = DummyFunction
+  l0.Chasing = DummyFunction
+  l0.Searching = DummyFunction
+  l0.Evaded = self.f_148_Evaded
+  l0.TargetKilled = DummyFunction
+  l0.LevelChanged = DummyFunction
+  l0.TargetArrested = DummyFunction
+  self[179] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[179]
+  l0._graph = self
+  l0.Spawned = self.f_179_Spawned
+  l0.UnSpawned = DummyFunction
+  self[135] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[135]
+  l0._graph = self
+  l0.Shown = DummyFunction
+  l0.Hidden = self.f_135_Hidden
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[85] = cbox:CreateBox("Domino/System/AgentStateMonitor_v2.lua")
+  l0 = self[85]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_85_Disabled
+  l0.PauseState = DummyFunction
+  l0.InterruptibleCinematicState = DummyFunction
+  l0.UnawareState = DummyFunction
+  l0.AwareState = DummyFunction
+  l0.AlertSoftState = DummyFunction
+  l0.AlertHardState = DummyFunction
+  l0.FleeState = DummyFunction
+  l0.CombatState = self.f_85_CombatState
+  l0.ScriptedState = DummyFunction
+  l0.InvestigateState = DummyFunction
+  l0.PostCombatSearchState = DummyFunction
+  l0.CinematicMode_Interrupted = DummyFunction
+  l0.DetectionIntuitionStarted = DummyFunction
+  l0.DetectionIntuitionStopped = DummyFunction
+  l0.DetectionIntuitionFull = DummyFunction
+  l0.DetectionAlertStarted = DummyFunction
+  l0.DetectionAlertStopped = DummyFunction
+  l0.DetectionAlertFull = DummyFunction
+  l0.IsDistracted = DummyFunction
+  self[105] = cbox:CreateBox("Domino/System/SetBoolean_v2.lua")
+  l0 = self[105]
+  l0._graph = self
+  l0.Out = self.f_105_Out
+  l0.SetTrue = self.f_105_SetTrue
+  l0.SetFalse = self.f_105_SetFalse
+  l0.Toggled = self.f_105_Toggled
+  l0.SetFromBool = self.f_105_SetFromBool
+  self[89] = cbox:CreateBox("Domino/System/SecurityCameraMonitor.lua")
+  l0 = self[89]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_89_Disabled
+  l0.OnStartAccessCamera = DummyFunction
+  l0.OnEndAccessCamera = self.f_89_OnEndAccessCamera
+  l0.OnStartExitCamera = self.f_89_OnStartExitCamera
+  l0.OnEndExitCamera = self.f_89_OnEndExitCamera
+  l0.OnPlayerDetectionStartCamera = DummyFunction
+  l0.OnPlayerDetectionStopCamera = DummyFunction
+  l0.CameraHostile = DummyFunction
+  l0.CameraNotHostile = DummyFunction
+  self[6] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[6]
+  l0._graph = self
+  l0.DisplayRequested = self.f_6_DisplayRequested
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[115] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[115]
+  l0._graph = self
+  l0.Shown = DummyFunction
+  l0.Hidden = DummyFunction
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[127] = cbox:CreateBox("Domino/System/PawnHealthMonitor_v3.lua")
+  l0 = self[127]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Damaged = DummyFunction
+  l0.Killed = self.f_127_Killed
+  l0.AllDead = DummyFunction
+  l0.IsUnderwater = DummyFunction
+  l0.DeadChecked = DummyFunction
+  l0.HealthChecked = DummyFunction
+  self[168] = cbox:CreateBox("Domino/System/MissionCheckpointReach.lua")
+  l0 = self[168]
+  l0._graph = self
+  l0.Out = self.f_168_Out
+  l0.AllCheckpointsDisabled = DummyFunction
+  self[61] = cbox:CreateBox("Domino/System/AssignPatrol_v2.lua")
+  l0 = self[61]
+  l0._graph = self
+  l0.Assigned = DummyFunction
+  l0.Unassigned = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Failed = DummyFunction
+  l0.SpeedSet = DummyFunction
+  l0.Out = DummyFunction
+  self[94] = cbox:CreateBox("Domino/Library/common/SideMissionSignAndFeedback.Hubs_Ending.lua")
+  l0 = self[94]
+  l0._graph = self
+  self[86] = cbox:CreateBox("Domino/System/Lists/ListWriter.lua")
+  l0 = self[86]
+  l0._graph = self
+  l0._DynamicAnchors = {Data = 1}
+  l0.Added = self.f_86_Added
+  l0.Removed = self.f_86_Removed
+  l0.Out = self.f_86_Out
+  self[13] = cbox:CreateBox("Domino/System/Lists/ListWriter.lua")
+  l0 = self[13]
+  l0._graph = self
+  l0._DynamicAnchors = {Data = 7}
+  l0.Added = self.f_13_Added
+  l0.Removed = self.f_13_Removed
+  l0.Out = self.f_13_Out
+  self[190] = cbox:CreateBox("Domino/System/SendAICommandGoto.lua")
+  l0 = self[190]
+  l0._graph = self
+  l0.InProgress = DummyFunction
+  l0.Succeeded = DummyFunction
+  l0.Failed = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Error = DummyFunction
+  self[2] = cbox:CreateBox("Domino/System/ProfilerMonitor_v2.lua")
+  l0 = self[2]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_2_Disabled
+  l0.InfoDisplayed = self.f_2_InfoDisplayed
+  l0.ListInfoDisplayed = DummyFunction
+  l0.IsOn = DummyFunction
+  l0.IsOff = DummyFunction
+  l0.DelayBeforeSendingEventSet = DummyFunction
+  l0.DelayBeforeSendingEventReset = DummyFunction
+  self[44] = cbox:CreateBox("Domino/System/VehicleSpawnerControl_v2.lua")
+  l0 = self[44]
+  l0._graph = self
+  l0.Spawned = self.f_44_Spawned
+  l0.UnSpawned = DummyFunction
+  l0.AllowAutoRespawnSet = DummyFunction
+  l0.Out = DummyFunction
+  self[10] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[10]
+  l0._graph = self
+  l0.Spawned = self.f_10_Spawned
+  l0.UnSpawned = DummyFunction
+  self[28] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[28]
+  l0._graph = self
+  l0.Shown = self.f_28_Shown
+  l0.Hidden = DummyFunction
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[66] = cbox:CreateBox("Domino/System/NPCSquad_v2.lua")
+  l0 = self[66]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.ConfigAdded = DummyFunction
+  l0.ConfigRemoved = DummyFunction
+  l0.NPCAdded = DummyFunction
+  l0.NPCRemoved = DummyFunction
+  l0.LKPGroupAdded = DummyFunction
+  l0.ZoneAdded = self.f_66_ZoneAdded
+  l0.ZoneRemoved = DummyFunction
+  l0.DefendPointAdded = DummyFunction
+  l0.DefendPointRemoved = DummyFunction
+  l0.AssaultPointAdded = DummyFunction
+  l0.AssaultPointRemoved = DummyFunction
+  l0.Out = DummyFunction
+  self[112] = cbox:CreateBox("Domino/System/SetBoolean_v2.lua")
+  l0 = self[112]
+  l0._graph = self
+  l0.Out = self.f_112_Out
+  l0.SetTrue = self.f_112_SetTrue
+  l0.SetFalse = self.f_112_SetFalse
+  l0.Toggled = self.f_112_Toggled
+  l0.SetFromBool = self.f_112_SetFromBool
+  self[32] = cbox:CreateBox("Domino/System/NPCSquad_v2.lua")
+  l0 = self[32]
+  l0._graph = self
+  l0.Started = self.f_32_Started
+  l0.Stopped = DummyFunction
+  l0.ConfigAdded = DummyFunction
+  l0.ConfigRemoved = DummyFunction
+  l0.NPCAdded = DummyFunction
+  l0.NPCRemoved = DummyFunction
+  l0.LKPGroupAdded = DummyFunction
+  l0.ZoneAdded = DummyFunction
+  l0.ZoneRemoved = DummyFunction
+  l0.DefendPointAdded = DummyFunction
+  l0.DefendPointRemoved = DummyFunction
+  l0.AssaultPointAdded = DummyFunction
+  l0.AssaultPointRemoved = DummyFunction
+  l0.Out = DummyFunction
+  self[167] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[167]
+  l0._graph = self
+  l0.Spawned = self.f_167_Spawned
+  l0.UnSpawned = DummyFunction
+  self[170] = cbox:CreateBox("Domino/System/MissionCheckpointReach.lua")
+  l0 = self[170]
+  l0._graph = self
+  l0.Out = self.f_170_Out
+  l0.AllCheckpointsDisabled = DummyFunction
+  self[65] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[65]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = self.f_65_Unloaded
+  l0.Reseted = DummyFunction
+  self[20] = cbox:CreateBox("Domino/System/OnceOnly_v2.lua")
+  l0 = self[20]
+  l0._graph = self
+  l0._DynamicAnchors = {In = 1, Out = 1}
+  l0.Out[0] = self.f_20_Out_0
+  l0.ResetOut = DummyFunction
+  self[23] = cbox:CreateBox("Domino/System/VehicleSpawnerControl_v2.lua")
+  l0 = self[23]
+  l0._graph = self
+  l0.Spawned = self.f_23_Spawned
+  l0.UnSpawned = DummyFunction
+  l0.AllowAutoRespawnSet = DummyFunction
+  l0.Out = DummyFunction
+  self[182] = cbox:CreateBox("Domino/System/NPCSquad_v2.lua")
+  l0 = self[182]
+  l0._graph = self
+  l0.Started = self.f_182_Started
+  l0.Stopped = DummyFunction
+  l0.ConfigAdded = DummyFunction
+  l0.ConfigRemoved = DummyFunction
+  l0.NPCAdded = DummyFunction
+  l0.NPCRemoved = DummyFunction
+  l0.LKPGroupAdded = DummyFunction
+  l0.ZoneAdded = DummyFunction
+  l0.ZoneRemoved = DummyFunction
+  l0.DefendPointAdded = DummyFunction
+  l0.DefendPointRemoved = DummyFunction
+  l0.AssaultPointAdded = DummyFunction
+  l0.AssaultPointRemoved = DummyFunction
+  l0.Out = DummyFunction
+  self[169] = cbox:CreateBox("Domino/System/VehicleSpawnerControl_v2.lua")
+  l0 = self[169]
+  l0._graph = self
+  l0.Spawned = self.f_169_Spawned
+  l0.UnSpawned = DummyFunction
+  l0.AllowAutoRespawnSet = DummyFunction
+  l0.Out = DummyFunction
+  self[157] = cbox:CreateBox("Domino/System/ReinforcementController.lua")
+  l0 = self[157]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.EnabledCallers = self.f_157_EnabledCallers
+  l0.DisabledCallers = self.f_157_DisabledCallers
+  l0.Registered = self.f_157_Registered
+  l0.Unregistered = DummyFunction
+  self[74] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[74]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.f_74_TimeElapsed
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[7] = cbox:CreateBox("Domino/Library/common/SnapAndBind.SnapAndBind.lua")
+  l0 = self[7]
+  l0._graph = self
+  l0.Attached = self.f_7_Attached
+  self[5] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[5]
+  l0._graph = self
+  l0.Shown = self.f_5_Shown
+  l0.Hidden = DummyFunction
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[35] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua")
+  l0 = self[35]
+  l0._graph = self
+  l0.DisplayRequested = self.f_35_DisplayRequested
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[161] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[161]
+  l0._graph = self
+  l0.Spawned = self.f_161_Spawned
+  l0.UnSpawned = DummyFunction
+  self[123] = cbox:CreateBox("Domino/System/GateMonitor.lua")
+  l0 = self[123]
+  l0._graph = self
+  l0.Enabled = self.f_123_Enabled
+  l0.Disabled = self.f_123_Disabled
+  l0.OnBlock = self.f_123_OnBlock
+  l0.OnUnblock = self.f_123_OnUnblock
+  l0.Opening = DummyFunction
+  l0.Closing = DummyFunction
+  self[159] = cbox:CreateBox("Domino/System/HackableController.lua")
+  l0 = self[159]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_159_Disabled
+  l0.ProfileAssigned = DummyFunction
+  l0.ProfileReset = DummyFunction
+  l0.ProfilingEnabled = DummyFunction
+  l0.ProfilingDisabled = DummyFunction
+  l0.HackSecurityLevelSet = DummyFunction
+  l0.OccludableSet = DummyFunction
+  l0.HackForced = DummyFunction
+  l0.OutFakePlayerHoldButton = DummyFunction
+  l0.OutFakePlayerUnholdButton = DummyFunction
+  l0.NoTextSet = DummyFunction
+  self[16] = cbox:CreateBox("Domino/System/VehicleSpawnerControl_v2.lua")
+  l0 = self[16]
+  l0._graph = self
+  l0.Spawned = self.f_16_Spawned
+  l0.UnSpawned = DummyFunction
+  l0.AllowAutoRespawnSet = DummyFunction
+  l0.Out = DummyFunction
+  self[36] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[36]
+  l0._graph = self
+  l0.Shown = self.f_36_Shown
+  l0.Hidden = DummyFunction
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[96] = cbox:CreateBox("Domino/System/SetBoolean_v2.lua")
+  l0 = self[96]
+  l0._graph = self
+  l0.Out = self.f_96_Out
+  l0.SetTrue = self.f_96_SetTrue
+  l0.SetFalse = self.f_96_SetFalse
+  l0.Toggled = self.f_96_Toggled
+  l0.SetFromBool = self.f_96_SetFromBool
+  self[41] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[41]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 4}
+  l0.Out = self.f_79_Out --skip StartedByCheckpoint and go to Out of "CheckPoint_0" function
+  self[173] = cbox:CreateBox("Domino/System/SetBoolean_v2.lua")
+  l0 = self[173]
+  l0._graph = self
+  l0.Out = self.f_173_Out
+  l0.SetTrue = self.f_173_SetTrue
+  l0.SetFalse = self.f_173_SetFalse
+  l0.Toggled = self.f_173_Toggled
+  l0.SetFromBool = self.f_173_SetFromBool
+  self[125] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[125]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 2}
+  l0.Out = self.f_125_Out
+  self[8] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[8]
+  l0._graph = self
+  l0.Spawned = self.f_8_Spawned
+  l0.UnSpawned = DummyFunction
+  self[30] = cbox:CreateBox("Domino/Library/common/Common_HUD.ForbiddenArea.lua")
+  l0 = self[30]
+  l0._graph = self
+  l0.Started = self.f_30_Started
+  l0.Stopped = DummyFunction
+  l0.NPCListUpdated = DummyFunction
+  l0.NPCs_All_Dead = DummyFunction
+  self[110] = cbox:CreateBox("Domino/System/OnceOnly_v2.lua")
+  l0 = self[110]
+  l0._graph = self
+  l0._DynamicAnchors = {In = 2, Out = 2}
+  l0.Out[0] = self.f_110_Out_0
+  l0.Out[1] = DummyFunction
+  l0.ResetOut = DummyFunction
+  self[129] = cbox:CreateBox("Domino/System/MultipleAND.lua")
+  l0 = self[129]
+  l0._graph = self
+  l0._DynamicAnchors = {Condition = 4}
+  l0.Out = self.f_129_Out
+  self[119] = cbox:CreateBox("Domino/System/AssignPatrol_v2.lua")
+  l0 = self[119]
+  l0._graph = self
+  l0.Assigned = DummyFunction
+  l0.Unassigned = DummyFunction
+  l0.Aborted = DummyFunction
+  l0.Failed = DummyFunction
+  l0.SpeedSet = DummyFunction
+  l0.Out = DummyFunction
+  self[84] = cbox:CreateBox("Domino/System/SetBoolean_v2.lua")
+  l0 = self[84]
+  l0._graph = self
+  l0.Out = self.f_84_Out
+  l0.SetTrue = self.f_84_SetTrue
+  l0.SetFalse = self.f_84_SetFalse
+  l0.Toggled = self.f_84_Toggled
+  l0.SetFromBool = self.f_84_SetFromBool
+  self[164] = cbox:CreateBox("Domino/System/SetBoolean_v2.lua")
+  l0 = self[164]
+  l0._graph = self
+  l0.Out = self.f_164_Out
+  l0.SetTrue = self.f_164_SetTrue
+  l0.SetFalse = self.f_164_SetFalse
+  l0.Toggled = self.f_164_Toggled
+  l0.SetFromBool = self.f_164_SetFromBool
+  self[171] = cbox:CreateBox("Domino/Library/common/CinematicPrep.CinematicPrep.lua")
+  l0 = self[171]
+  l0._graph = self
+  l0.PreOut = DummyFunction
+  l0.PostOut = self.f_171_PostOut
+  self[29] = cbox:CreateBox("Domino/System/HackableMonitor.lua")
+  l0 = self[29]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnIsHackable = DummyFunction
+  l0.OnIsNotHackable = DummyFunction
+  l0.HackStart = DummyFunction
+  l0.HackStartListening = DummyFunction
+  l0.HackSuccess = self.f_29_HackSuccess
+  l0.HackStopListening = DummyFunction
+  l0.HackFailed = DummyFunction
+  l0.HackedOn = DummyFunction
+  l0.HackedOff = DummyFunction
+  l0.AllHacked = DummyFunction
+  self[145] = cbox:CreateBox("Domino/System/OnceOnly_v2.lua")
+  l0 = self[145]
+  l0._graph = self
+  l0._DynamicAnchors = {In = 1, Out = 1}
+  l0.Out[0] = self.f_145_Out_0
+  l0.ResetOut = DummyFunction
+  self[4] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[4]
+  l0._graph = self
+  l0.Shown = self.f_4_Shown
+  l0.Hidden = self.f_4_Hidden
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[26] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[26]
+  l0._graph = self
+  l0.Spawned = self.f_26_Spawned
+  l0.UnSpawned = DummyFunction
+  self[999] = cbox:CreateBox("Domino/System/PlaySound_v2.lua")
+  l0 = self[999]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Finished = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:CheckPoint_0()
+  local l0
+  l0 = Boxes[PathID("Domino/System/FelonySystemController.lua")]
+  l0.player = nil
+  l0.ScanLevel = nil
+  l0.ChaseLevel = nil
+  l0.HeatLevel = nil
+  l0.CustomChaseLevel = nil
+  l0.CustomSearchLevel = nil
+  l0.SkipScanDispatchBark = nil
+  l0.FelonyType = nil
+  l0.AgentList = nil
+  l0.RemoveAgentRestrictions = nil
+  l0.ArrestType = nil
+  l0.AffectMediaSystem = nil
+  l0.AllowFirstIntuition = nil
+  l0.AllowFallBack = nil
+  l0.VehicleExclusionZone = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_133_Disabled
+  l0.ScanStarted = DummyFunction
+  l0.ChaseStarted = DummyFunction
+  l0.HeatSet = DummyFunction
+  l0.AddScriptedSucceeded = DummyFunction
+  l0.AddScriptedFailed = DummyFunction
+  l0.ScriptedAgentsAdopted = DummyFunction
+  l0.ArrestForced = DummyFunction
+  l0.VehicleExclusionZoneAdded = DummyFunction
+  l0.VehicleExclusionZoneRemoved = DummyFunction
+  l0:Disable()
+end
+function export:CheckPoint_InCombat()
+  local l0
+  l0 = Boxes[PathID("Domino/System/FelonySystemController.lua")]
+  l0.player = nil
+  l0.ScanLevel = nil
+  l0.ChaseLevel = nil
+  l0.HeatLevel = nil
+  l0.CustomChaseLevel = nil
+  l0.CustomSearchLevel = nil
+  l0.SkipScanDispatchBark = nil
+  l0.FelonyType = nil
+  l0.AgentList = nil
+  l0.RemoveAgentRestrictions = nil
+  l0.ArrestType = nil
+  l0.AffectMediaSystem = nil
+  l0.AllowFirstIntuition = nil
+  l0.AllowFallBack = nil
+  l0.VehicleExclusionZone = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_154_Disabled
+  l0.ScanStarted = DummyFunction
+  l0.ChaseStarted = DummyFunction
+  l0.HeatSet = DummyFunction
+  l0.AddScriptedSucceeded = DummyFunction
+  l0.AddScriptedFailed = DummyFunction
+  l0.ScriptedAgentsAdopted = DummyFunction
+  l0.ArrestForced = DummyFunction
+  l0.VehicleExclusionZoneAdded = DummyFunction
+  l0.VehicleExclusionZoneRemoved = DummyFunction
+  l0:Disable()
+end
+function export:CheckPoint_MissionComplete()
+  local l0
+  l0 = self[168]
+  l0.Checkpoint = "CheckPoint_MissionComplete"
+  l0:In()
+end
+function export:CheckPoint_NoCombat()
+  local l0
+  l0 = Boxes[PathID("Domino/System/FelonySystemController.lua")]
+  l0.player = nil
+  l0.ScanLevel = nil
+  l0.ChaseLevel = nil
+  l0.HeatLevel = nil
+  l0.CustomChaseLevel = nil
+  l0.CustomSearchLevel = nil
+  l0.SkipScanDispatchBark = nil
+  l0.FelonyType = nil
+  l0.AgentList = nil
+  l0.RemoveAgentRestrictions = nil
+  l0.ArrestType = nil
+  l0.AffectMediaSystem = nil
+  l0.AllowFirstIntuition = nil
+  l0.AllowFallBack = nil
+  l0.VehicleExclusionZone = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_120_Disabled
+  l0.ScanStarted = DummyFunction
+  l0.ChaseStarted = DummyFunction
+  l0.HeatSet = DummyFunction
+  l0.AddScriptedSucceeded = DummyFunction
+  l0.AddScriptedFailed = DummyFunction
+  l0.ScriptedAgentsAdopted = DummyFunction
+  l0.ArrestForced = DummyFunction
+  l0.VehicleExclusionZoneAdded = DummyFunction
+  l0.VehicleExclusionZoneRemoved = DummyFunction
+  l0:Disable()
+end
+function export:In() --replaced FelonySystemController with GetPlayerID that points to function that inits loading enemies and vehicles
+  local l0
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.f_6_DisplayRequested
+  l0:In()
+end
+function export:f_194_Out()
+  local l0
+  self = self._graph
+  l0 = self[195]
+  l0:Condition(2)
+end
+function export:f_101_Out_0()
+  local l0
+  self = self._graph
+  self:en_104()
+  l0 = Boxes[PathID("Domino/System/CompareBoolean_v2.lua")]
+  l0:In()
+end
+function export:f_101_Out_1()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_93_Out
+  l0:In()
+end
+function export:f_25_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[25]
+  self.HubA_HubGuy = l0.SpawnedEntity
+  l0 = self[41]
+  l0:Condition(0)
+  l0 = Boxes[PathID("Domino/System/DeadBodyUnspawnController.lua")]
+  l0.Entity = self.HubA_HubGuy
+  l0._graph = self
+  l0.UnspawnAllowed = DummyFunction
+  l0.UnspawnPrevented = self.f_87_UnspawnPrevented
+  l0.Out = DummyFunction
+--l0:PreventUnspawn() --commented PreventUnspawn to disable HubGuy
+end
+function export:f_218_A_is_False()
+  local l0
+  self = self._graph
+  l0 = self[149]
+  l0.NPC = self.HubA_Mobster02
+  l0.Destination = "2084712034093518825"
+  l0.WalkType = "Walk"
+  l0:In()
+  l0 = self[190]
+  l0.NPC = self.HubA_Mobster05_CALLER
+  l0.Destination = "2084712004087467935"
+  l0.WalkType = "Walk"
+  l0:In()
+  l0 = self[134]
+  l0.NPC = self.HubA_Mobster01_CAMERA
+  l0.Patrol = "2080909896584267450"
+  l0:Assign()
+  l0 = self[162]
+  l0.NPC = self.HubA_Mobster04
+  l0.Destination = "2084711822897719805"
+  l0.WalkType = "Walk"
+  l0:In()
+end
+function export:f_156_Out()
+  local l0
+  self = self._graph
+  l0 = self[129]
+  l0:Condition(1)
+end
+function export:f_3_Enabled()
+  local l0
+  self = self._graph
+  l0 = self[35]
+  l0.MessageType = "MissionUpdate"
+  l0.OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES.CTOS_Control_Rooms.CTOS_TheWards.Objective_01",
+    item = "Description",
+    id = "151488"
+  }
+  l0.OasisID_2 = {
+    section = "MISSIONS.SIDE.OBJECTIVES.CTOS_Control_Rooms.CTOS_TheWards.Objective_04",
+    item = "Description",
+    id = "151784"
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.COMMON.MESSAGES.OBJECTIVE",
+    item = "NewObjective",
+    id = "165445"
+  }
+  l0.Queue = 1
+  l0:Display()
+end
+function export:f_185_Out()
+  local l0
+  self = self._graph
+  l0 = self[161]
+  l0.AIGenerator = "2079279297004076022"
+  l0:Spawn()
+  l0 = self[167]
+  l0.AIGenerator = "2079279295347325939"
+  l0:Spawn()
+  l0 = self[179]
+  l0.AIGenerator = "2079279290026851314"
+  l0:Spawn()
+  l0 = self[163]
+  l0.AIGenerator = "2079279296679017461"
+  l0:Spawn()
+end
+function export:f_79_Out()
+  local l0
+  self = self._graph
+  l0 = self[13]
+  l0.Input = self.All_Init_Mobs
+  l0.Data[0] = self.HubA_HubGuy
+  l0.Data[1] = self.HubA_Mobster01_CAMERA
+  l0.Data[2] = self.HubA_Mobster02
+  l0.Data[3] = self.HubA_Mobster05_CALLER
+  l0.Data[4] = self.HubA_Mobster06_CALLER
+  l0.Data[5] = self.HubA_Mobster04
+  l0.Data[6] = self.HubA_Mobster03
+  l0:Add()
+end
+function export:f_130_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/CompareBoolean_v2.lua")]
+  l0.A = self.InCombatCheckpoint
+  l0.B = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.A_is_True = DummyFunction
+  l0.A_is_False = self.f_218_A_is_False
+  l0.A_and_B = DummyFunction
+  l0.notA_and_notB = DummyFunction
+  l0.A_or_B = DummyFunction
+  l0.A_xor_B = DummyFunction
+  l0:In()
+  l0 = self[191]
+  l0.Input = self.All_Init_Mobs
+  l0.Data[0] = self.HubA_Mobster04
+  l0.Data[1] = self.HubA_Mobster01_CAMERA
+  l0.Data[2] = self.HubA_Mobster02
+  l0.Data[3] = self.HubA_Mobster05_CALLER
+  l0:Add()
+end
+function export:f_59_Attached()
+  local l0
+  self = self._graph
+  l0 = self[5]
+  l0.MapPoint = self.VR_Marker
+  l0:Show()
+end
+function export:f_146_Out_0()
+  local l0
+  self = self._graph
+  self:en_157()
+  l0 = self[157]
+  l0:EnableCallers()
+end
+function export:f_53_Disabled()
+  local l0
+  self = self._graph
+  self:en_78()
+  l0 = self[78]
+  l0:Display()
+end
+function export:f_180_Out()
+  local l0
+  self = self._graph
+  l0 = self[126]
+  l0:True()
+end
+function export:f_126_Out()
+  local l0
+  self = self._graph
+  l0 = self[126]
+  self.InCombatCheckpoint = l0.Target
+  l0 = Boxes[PathID("Domino/System/GetInvalidEntity.lua")]
+  l0._graph = self
+  l0.Out = self.f_214_Out
+  l0:In()
+end
+function export:f_126_SetFalse()
+  local l0
+  self = self._graph
+  l0 = self[126]
+  self.InCombatCheckpoint = l0.Target
+end
+function export:f_126_SetFromBool()
+  local l0
+  self = self._graph
+  l0 = self[126]
+  self.InCombatCheckpoint = l0.Target
+end
+function export:f_126_SetTrue()
+  local l0
+  self = self._graph
+  l0 = self[126]
+  self.InCombatCheckpoint = l0.Target
+end
+function export:f_126_Toggled()
+  local l0
+  self = self._graph
+  l0 = self[126]
+  self.InCombatCheckpoint = l0.Target
+end
+function export:f_18_Disabled()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/RewardComponentController.lua")]
+  l0.entity = self.HubA_HubGuy
+  l0.ClearRewardsBeforeRegister = nil
+  l0.ItemDB = "Items.2111968709"
+  l0.ItemDBList = nil
+  l0.RewardEvent = "OnHackSuccess"
+  l0.Player = nil
+  l0.Amount = nil
+  l0._graph = self
+  l0.Out = self.f_51_Out
+  l0:RegisterRewards()
+end
+function export:f_18_ProfileAssigned()
+  local l0
+  self = self._graph
+  self:en_18()
+  l0 = self[18]
+  l0:DisableHack()
+end
+function export:f_70_Enabled()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/OrderedOutput.lua")]
+  l0._graph = self
+  l0._DynamicAnchors = {Out = 2}
+  l0.Out[0] = self.f_77_Out_0
+  l0.Out[1] = self.f_77_Out_1
+  l0:In()
+end
+function export:f_60_Enabled()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionMonitor.lua")]
+  l0.Mission = "MissionList.3518386444"
+  l0._graph = self
+  l0.Completed = self.f_21_Completed
+  l0.NotCompleted = self.f_21_NotCompleted
+  l0:CheckCompletion()
+end
+function export:f_60_Leave()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/FelonySystemController.lua")]
+  l0.player = nil
+  l0.ScanLevel = nil
+  l0.ChaseLevel = nil
+  l0.HeatLevel = nil
+  l0.CustomChaseLevel = nil
+  l0.CustomSearchLevel = nil
+  l0.SkipScanDispatchBark = nil
+  l0.FelonyType = nil
+  l0.AgentList = nil
+  l0.RemoveAgentRestrictions = nil
+  l0.ArrestType = nil
+  l0.AffectMediaSystem = nil
+  l0.AllowFirstIntuition = nil
+  l0.AllowFallBack = nil
+  l0.VehicleExclusionZone = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = self.f_70_Enabled
+  l0.Disabled = DummyFunction
+  l0.ScanStarted = DummyFunction
+  l0.ChaseStarted = DummyFunction
+  l0.HeatSet = DummyFunction
+  l0.AddScriptedSucceeded = DummyFunction
+  l0.AddScriptedFailed = DummyFunction
+  l0.ScriptedAgentsAdopted = DummyFunction
+  l0.ArrestForced = DummyFunction
+  l0.VehicleExclusionZoneAdded = DummyFunction
+  l0.VehicleExclusionZoneRemoved = DummyFunction
+  l0:Enable()
+end
+function export:f_163_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[163]
+  self.HubA_Mobster04 = l0.SpawnedEntity
+  l0 = self[130]
+  l0:Condition(1)
+end
+function export:f_189_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionZoneController.lua")]
+  l0.MissionZone = self.Forbidden_Area
+  l0.Red = nil
+  l0.Green = nil
+  l0.Blue = nil
+  l0.Alpha = nil
+  l0.Radius = nil
+  l0.DrawType = nil
+  l0.ShapeType = nil
+  l0._graph = self
+  l0.Enabled = self.f_181_Enabled
+  l0.Disabled = DummyFunction
+  l0.PropertiesUpdated = DummyFunction
+  l0.Out = DummyFunction
+  l0:Enable()
+end
+function export:f_120_Disabled()
+  local l0
+  self = self._graph
+  l0 = self[170]
+  l0.Checkpoint = "CheckPoint_NoCombat"
+  l0:In()
+end
+function export:f_14_Disabled()
+  local l0
+  self = self._graph
+  l0 = self[19]
+  l0.MessageType = "MissionUpdate"
+  l0.OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES.CTOS_Control_Rooms.CTOS_TheWards.Objective_04",
+    item = "Description",
+    id = "151784"
+  }
+  l0.OasisID_2 = {
+    section = "MISSIONS.SIDE.OBJECTIVES.CTOS_Control_Rooms.CTOS_TheWards.Objective_02",
+    item = "Description",
+    id = "151490"
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.COMMON.MESSAGES.OBJECTIVE",
+    item = "NewObjective",
+    id = "165445"
+  }
+  l0.Queue = 1
+  l0:Display()
+end
+function export:f_14_HackSuccess()
+  local l0
+  self = self._graph
+  self:en_4()
+  l0 = self[4]
+  l0:Hide()
+end
+function export:f_47_Disabled()
+  local l0
+  self = self._graph
+  self:en_50()
+  l0 = self[50]
+  l0:Stop()
+end
+function export:f_47_Enabled()
+  local l0
+  self = self._graph
+  self:en_49()
+  l0 = Boxes[PathID("Domino/System/GateController.lua")]
+  l0:Open()
+end
+function export:f_47_OnBlock()
+  local l0
+  self = self._graph
+  self:en_50()
+  l0 = self[50]
+  l0:Start()
+end
+function export:f_47_OnUnblock()
+  local l0
+  self = self._graph
+  self:en_50()
+  l0 = self[50]
+  l0:Stop()
+end
+function export:f_9_Out()
+  local l0
+  self = self._graph
+  l0 = self[105]
+  l0:True()
+end
+function export:f_88_UnspawnAllowed()
+  local l0
+  self = self._graph
+  l0 = self[63]
+  l0.Parent = self.VR_Entry
+  l0.Child = self.VR_Marker
+  l0:Attach()
+end
+function export:f_137_Out()
+  local l0
+  self = self._graph
+  self:en_94()
+  l0 = self[94]
+  --l0:MobFelonyOccured()
+end
+function export:f_195_Out()
+  local l0
+  self = self._graph
+  l0 = self[184]
+  l0:Condition(1)
+end
+function export:f_17_Enabled()
+  local l0
+  self = self._graph
+  l0 = self[11]
+  l0.HackableEntity = self.HUB
+  l0:Enable()
+end
+function export:f_77_Out_0()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_99_Out
+  l0:In()
+end
+function export:f_77_Out_1()
+  local l0
+  self = self._graph
+  l0 = self[65]
+  l0.LayerName = self.Layer
+  l0:Unload()
+end
+function export:f_193_Spawned()
+  local l0, l1
+  self = self._graph
+  l0 = self[193]
+  l1 = Boxes[PathID("Domino/System/VehicleController.lua")]
+  l1.Vehicle = l0.SpawnedVehicle
+  l1._graph = self
+  l1.Out = self.f_194_Out
+  l1.Usable = DummyFunction
+  l1.Unusable = DummyFunction
+  l1.Destructable = DummyFunction
+  l1.Indestructable = DummyFunction
+  l1.Deflatable = DummyFunction
+  l1.Undeflatable = DummyFunction
+  l1.EngineBroken = DummyFunction
+  l1.EngineShutDown = DummyFunction
+  l1.EngineStarted = DummyFunction
+  l1.VehicleAlarmHackOn = DummyFunction
+  l1.VehicleAlarmHackOff = DummyFunction
+  l1:EnableVehicleAlarmHack()
+end
+function export:f_34_Out_0()
+  local l0
+  self = self._graph
+  l0 = self[71]
+  l0.HackableEntity = self.HubA_HubGuy
+  l0:DisableHack()
+end
+function export:f_34_Out_1()
+  local l0
+  self = self._graph
+  self:en_141()
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0:In()
+end
+function export:f_34_Out_2()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_90_Out
+  l0:In()
+end
+function export:f_34_Out_3()
+  local l0
+  self = self._graph
+  self:en_142()
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0:In()
+end
+function export:f_160_Added()
+  local l0
+  self = self._graph
+  l0 = self[160]
+  self.Reinforcement_Callers = l0.Target
+  self:en_157()
+  l0 = self[157]
+  l0:Register()
+end
+function export:f_160_Out()
+  local l0
+  self = self._graph
+  l0 = self[160]
+  self.Reinforcement_Callers = l0.Target
+end
+function export:f_160_Removed()
+  local l0
+  self = self._graph
+  l0 = self[160]
+  self.Reinforcement_Callers = l0.Target
+end
+function export:f_188_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  self.PlayerPawn = l0.PlayerID
+  l0 = Boxes[PathID("Domino/System/LaneRestrictionsControl.lua")]
+  l0.LaneRestrictionsController = "2081352385617200666"
+  l0.RestrictTraffic = nil
+  l0.RestrictPedestrians = nil
+  l0.RestrictParking = nil
+  l0.ResetLivingCity = 1
+  l0.ResetMissionWithLivingCity = nil
+  l0.CivilianDensityDbObject = "CivilianDensity.78228001"
+  l0.ParkedCarsDensityDbObject = nil
+  l0.TrafficDensityScale = nil
+  l0.ApplyToEnticers = nil
+  l0._graph = self
+  l0.Out = self.f_189_Out
+  l0:In()
+end
+function export:f_172_Out()
+  local l0
+  self = self._graph
+  l0 = self[165]
+  l0.SkipPostFX = 0
+  l0.SkipCameraAlign = 0
+  l0:PostCinematic()
+end
+function export:f_78_DisplayRequested()
+  local l0
+  self = self._graph
+  self:en_6()
+  l0 = self[6]
+  l0:Display()
+end
+function export:f_67_Loaded()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionZoneController.lua")]
+  l0.MissionZone = self.Forbidden_Area
+  l0.Red = nil
+  l0.Green = nil
+  l0.Blue = nil
+  l0.Alpha = nil
+  l0.Radius = nil
+  l0.DrawType = nil
+  l0.ShapeType = nil
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_178_Disabled
+  l0.PropertiesUpdated = DummyFunction
+  l0.Out = DummyFunction
+  l0:Disable()
+end
+function export:f_187_Loaded()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GateController.lua")]
+  l0.GateEntity = self.Gate01
+  l0.SetOpen = nil
+  l0.Instant = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Opened = self.f_217_Opened
+  l0.Closed = DummyFunction
+  l0.IsSet = DummyFunction
+  l0.Toggled = DummyFunction
+  l0:Open()
+end
+function export:f_72_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[72]
+  self.HubA_Mobster04 = l0.SpawnedEntity
+  l0 = self[153]
+  l0:Condition(2)
+  l0 = self[73]
+  l0.NPC = self.HubA_Mobster04
+  l0.Destination = "2084711822897719805"
+  l0.WalkType = "Walk"
+  l0:In()
+end
+function export:f_176_AddScriptedFailed()
+  local l0
+  self = self._graph
+  self:en_113()
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0:In()
+end
+function export:f_176_AddScriptedSucceeded()
+  local l0
+  self = self._graph
+  self:en_113()
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0:In()
+end
+function export:f_176_ChaseStarted()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/CompareBoolean_v2.lua")]
+  l0.A = self.IsPostHubUnlockCheckpoint
+  l0.B = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.A_is_True = self.f_212_A_is_True
+  l0.A_is_False = self.f_212_A_is_False
+  l0.A_and_B = DummyFunction
+  l0.notA_and_notB = DummyFunction
+  l0.A_or_B = DummyFunction
+  l0.A_xor_B = DummyFunction
+  l0:In()
+end
+function export:f_153_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/OrderedOutput.lua")]
+  l0._graph = self
+  l0._DynamicAnchors = {Out = 4}
+  l0.Out[0] = self.f_152_Out_0
+  l0.Out[1] = self.f_152_Out_1
+  l0.Out[2] = self.f_152_Out_2
+  l0.Out[3] = self.f_152_Out_3
+  l0:In()
+end
+function export:f_177_Out_0()
+  local l0
+  self = self._graph
+  self:en_141()
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0:In()
+end
+function export:f_177_Out_1()
+  local l0
+  self = self._graph
+  self:en_142()
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0:In()
+end
+function export:f_107_Added()
+  local l0
+  self = self._graph
+  l0 = self[107]
+  self.Control_Room_Cameras = l0.Target
+  self:en_89()
+  l0 = self[89]
+  l0:Enable()
+end
+function export:f_107_Out()
+  local l0
+  self = self._graph
+  l0 = self[107]
+  self.Control_Room_Cameras = l0.Target
+end
+function export:f_107_Removed()
+  local l0
+  self = self._graph
+  l0 = self[107]
+  self.Control_Room_Cameras = l0.Target
+end
+function export:f_50_TimeElapsed()
+  local l0
+  self = self._graph
+  self:en_49()
+  l0 = Boxes[PathID("Domino/System/GateController.lua")]
+  l0:Open()
+end
+function export:f_63_Attached()
+  local l0
+  self = self._graph
+  l0 = self[59]
+  l0.Parent = self.HUB
+  l0.Child = self.Hub_Marker
+  l0:Attach()
+end
+function export:f_68_Loaded()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.f_69_Out
+  l0:In()
+end
+function export:f_158_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[158]
+  self.HubA_Mobster03 = l0.SpawnedEntity
+  l0 = self[119]
+  l0.NPC = self.HubA_Mobster03
+  l0.Patrol = "2081533656039424728"
+  l0:Assign()
+  l0 = self[153]
+  l0:Condition(0)
+end
+function export:f_80_Out_0()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionMonitor.lua")]
+  l0.Mission = "MissionList.3518386444"
+  l0._graph = self
+  l0.Completed = self.f_48_Completed
+  l0.NotCompleted = self.f_48_NotCompleted
+  l0:CheckCompletion()
+  self:en_98()
+  l0 = self[98]
+  l0:Disable()
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_103_Out
+  l0:In()
+end
+function export:f_24_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[24]
+  self.HubA_Mobster06_CALLER = l0.SpawnedEntity
+  l0 = self[41]
+  l0:Condition(3)
+  l0 = self[151]
+  l0.NPC = self.HubA_Mobster06_CALLER
+  l0.Destination = "2084712088755787690"
+  l0.WalkType = "Walk"
+  l0:In()
+end
+function export:f_37_TimeElapsed()
+  local l0
+  self = self._graph
+  self:en_45()
+  l0 = Boxes[PathID("Domino/System/GateController.lua")]
+  l0:Open()
+end
+function export:f_174_Disabled()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/LaneRestrictionsControl.lua")]
+  l0.LaneRestrictionsController = "2081352385617200666"
+  l0.RestrictTraffic = nil
+  l0.RestrictPedestrians = nil
+  l0.RestrictParking = nil
+  l0.ResetLivingCity = 1
+  l0.ResetMissionWithLivingCity = nil
+  l0.CivilianDensityDbObject = "CivilianDensity.78228001"
+  l0.ParkedCarsDensityDbObject = nil
+  l0.TrafficDensityScale = nil
+  l0.ApplyToEnticers = nil
+  l0._graph = self
+  l0.Out = self.f_172_Out
+  l0:In()
+end
+function export:f_33_HackSuccess()
+  local l0
+  self = self._graph
+  self:en_33()
+  l0 = self[33]
+  l0:Disable()
+  self:en_29()
+  l0 = self[29]
+  l0:Enable()
+end
+function export:f_69_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  self.PlayerPawn = l0.PlayerID
+  l0 = Boxes[PathID("Domino/System/LaneRestrictionsControl.lua")]
+  l0.LaneRestrictionsController = "2081352385617200666"
+  l0.RestrictTraffic = nil
+  l0.RestrictPedestrians = nil
+  l0.RestrictParking = nil
+  l0.ResetLivingCity = 1
+  l0.ResetMissionWithLivingCity = nil
+  l0.CivilianDensityDbObject = "CivilianDensity.78228001"
+  l0.ParkedCarsDensityDbObject = nil
+  l0.TrafficDensityScale = nil
+  l0.ApplyToEnticers = nil
+  l0._graph = self
+  l0.Out = self.f_76_Out
+  l0:In()
+end
+function export:f_57_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/OrderedOutput.lua")]
+  l0._graph = self
+  l0._DynamicAnchors = {Out = 2}
+  l0.Out[0] = self.f_109_Out_0
+  l0.Out[1] = self.f_109_Out_1
+  l0:In()
+end
+function export:f_114_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  self.PlayerPawn = l0.PlayerID
+  l0 = Boxes[PathID("Domino/System/LaneRestrictionsControl.lua")]
+  l0.LaneRestrictionsController = "2081352385617200666"
+  l0.RestrictTraffic = nil
+  l0.RestrictPedestrians = nil
+  l0.RestrictParking = nil
+  l0.ResetLivingCity = 1
+  l0.ResetMissionWithLivingCity = nil
+  l0.CivilianDensityDbObject = "CivilianDensity.78228001"
+  l0.ParkedCarsDensityDbObject = nil
+  l0.TrafficDensityScale = nil
+  l0.ApplyToEnticers = nil
+  l0._graph = self
+  l0.Out = self.f_117_Out
+  l0:In()
+end
+function export:Call_Started()
+  local l0
+  self = self._graph
+  --preventing conflict with custom scripts
+  if Globals._CUSTOM_SCRIPTS._Launched_Call_911 ~= nil and GetEntityPosition(Globals._CUSTOM_SCRIPTS._Launched_Call_911, 2) ~= 0 then
+    self:en_157()
+    l0 = self[157]
+    l0:Unregister()
+  end
+end
+function export:f_42_CallComplete()
+  local l0
+  self = self._graph
+  self:en_157()
+  l0 = self[157]
+  l0:DisableCallers()
+end
+function export:f_42_Disabled()
+  local l0
+  self = self._graph
+  l0 = self[108]
+  l0:In()
+end
+function export:f_52_Hidden()
+  local l0
+  self = self._graph
+  self:en_104()
+  l0 = Boxes[PathID("Domino/System/CompareBoolean_v2.lua")]
+  l0:In()
+end
+function export:f_39_Hidden()
+  local l0
+  self = self._graph
+  self:en_104()
+  l0 = Boxes[PathID("Domino/System/CompareBoolean_v2.lua")]
+  l0:In()
+end
+function export:f_197_Spawned()
+  local l0, l1
+  self = self._graph
+  l0 = self[197]
+  l1 = Boxes[PathID("Domino/System/VehicleController.lua")]
+  l1.Vehicle = l0.SpawnedVehicle
+  l1._graph = self
+  l1.Out = self.f_192_Out
+  l1.Usable = DummyFunction
+  l1.Unusable = DummyFunction
+  l1.Destructable = DummyFunction
+  l1.Indestructable = DummyFunction
+  l1.Deflatable = DummyFunction
+  l1.Undeflatable = DummyFunction
+  l1.EngineBroken = DummyFunction
+  l1.EngineShutDown = DummyFunction
+  l1.EngineStarted = DummyFunction
+  l1.VehicleAlarmHackOn = DummyFunction
+  l1.VehicleAlarmHackOff = DummyFunction
+  l1:DisableVehicleAlarmHack()
+end
+function export:f_216_Opened()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.f_188_Out
+  l0:In()
+end
+function export:f_191_Added()
+  local l0
+  self = self._graph
+  l0 = self[191]
+  self.All_Init_Mobs = l0.Target
+  l0 = self[182]
+  l0.SquadType = "SquadRoot"
+  l0.SquadName = "04_TheWards_HubUnlock_MobstersProtectingHub"
+  l0.Config = "NPCOverrideConfig.3952559719" --was 3456007471
+  l0.NPCList = self.All_Init_Mobs
+  l0.LKPGroup = "FelonyMobSquad"
+  l0.Zone = self.NPCRestrictedZone
+  l0.ForbiddenZone = self.Forbidden_Area
+  l0.WarningZone = self.WarningZone
+  l0:Start()
+end
+function export:f_191_Out()
+  local l0
+  self = self._graph
+  l0 = self[191]
+  self.All_Init_Mobs = l0.Target
+end
+function export:f_191_Removed()
+  local l0
+  self = self._graph
+  l0 = self[191]
+  self.All_Init_Mobs = l0.Target
+end
+function export:f_95_PostOut()
+  local l0
+  self = self._graph
+  self:en_79()
+  l0 = self[79]
+  l0:In()
+end
+function export:f_71_Disabled()
+  local l0
+  self = self._graph
+  l0 = self[30]
+  l0.MissionZone = self.Forbidden_Area
+  l0.NPCList = self.All_Init_Mobs
+  l0.HideZoneWhenCleared = 1
+  l0:Start()
+end
+function export:f_103_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_27_Out
+  l0:In()
+end
+function export:f_15_Disabled()
+  local l0
+  self = self._graph
+  self:en_37()
+  l0 = self[37]
+  l0:Stop()
+end
+function export:f_15_Enabled()
+  local l0
+  self = self._graph
+  self:en_45()
+  l0 = Boxes[PathID("Domino/System/GateController.lua")]
+  l0:Open()
+end
+function export:f_15_OnBlock()
+  local l0
+  self = self._graph
+  self:en_37()
+  l0 = self[37]
+  l0:Start()
+end
+function export:f_15_OnUnblock()
+  local l0
+  self = self._graph
+  self:en_37()
+  l0 = self[37]
+  l0:Stop()
+end
+function export:f_83_Locked()
+  local l0
+  self = self._graph
+  self:en_2()
+  l0 = self[2]
+  l0:Enable()
+  self:en_127()
+  l0 = self[127]
+  l0:Enable()
+  self:en_98()
+  l0 = self[98]
+  l0:Enable()
+end
+function export:f_165_PostOut()
+  local l0
+  self = self._graph
+  self:en_94()
+  l0 = self[94]
+  --l0:CheckPoint_MissionComplete()
+end
+function export:f_19_DisplayRequested()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/DeadBodyUnspawnController.lua")]
+  l0.Entity = self.HubA_HubGuy
+  l0._graph = self
+  l0.UnspawnAllowed = self.f_88_UnspawnAllowed
+  l0.UnspawnPrevented = DummyFunction
+  l0.Out = DummyFunction
+  l0:AllowUnspawn()
+end
+function export:f_82_Unloaded()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.f_114_Out
+  l0:In()
+end
+function export:f_108_NoCopFelony()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/Lists/SetList.lua")]
+  l0.List = self.All_Init_Mobs
+  l0._graph = self
+  l0.Out = self.f_118_Out
+  l0:FromList()
+end
+function export:f_56_AllDead()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/Lists/SetList.lua")]
+  l0.List = self.Empty_List
+  l0._graph = self
+  l0.Out = self.f_97_Out
+  l0:FromList()
+end
+function export:f_56_Enabled()
+  local l0
+  self = self._graph
+Globals._CUSTOM_SCRIPTS._Guards_List[3] = self.All_Init_Mobs
+  self:en_85()
+  l0 = self[85]
+  l0:Enable()
+end
+function export:f_56_Killed()
+  local l0, l1
+  self = self._graph
+  l0 = self[56]
+  l1 = self[86]
+  l1.Data[0] = l0.Victim
+  l1 = Boxes[PathID("Domino/System/CompareEntity_v2.lua")]
+  l1.Entity1 = l0.Victim
+  l1.Entity2 = self.HubA_HubGuy
+  l1._graph = self
+  l1.Out = self.f_111_Out
+  l1.Equal = self.f_111_Equal
+  l1.NotEqual = DummyFunction
+  l1:In()
+end
+function export:f_31_Enabled()
+  local l0
+  self = self._graph
+  self:en_33()
+  l0 = self[33]
+  l0:Enable()
+end
+function export:f_1_Out()
+  local l0
+  self = self._graph
+  l0 = self[129]
+  l0:Condition(2)
+end
+function export:f_22_Loaded()
+  local l0
+  self = self._graph
+  l0 = self[82]
+  l0.LayerName = self.Activation_Layer
+  l0:Unload()
+end
+function export:f_144_Disabled()
+  local l0
+  self = self._graph
+  l0 = self[146]
+  l0:In(0)
+end
+function export:f_144_Killed()
+  local l0
+  self = self._graph
+  self:en_143()
+  l0 = Boxes[PathID("Domino/System/Lists/ListLength.lua")]
+  l0:GetLength()
+end
+function export:f_211_Out()
+  local l0
+  self = self._graph
+  l0 = self[211]
+  self.IsPostHubUnlockCheckpoint = l0.Target
+end
+function export:f_211_SetFalse()
+  local l0
+  self = self._graph
+  l0 = self[211]
+  self.IsPostHubUnlockCheckpoint = l0.Target
+end
+function export:f_211_SetFromBool()
+  local l0
+  self = self._graph
+  l0 = self[211]
+  self.IsPostHubUnlockCheckpoint = l0.Target
+end
+function export:f_211_SetTrue()
+  local l0
+  self = self._graph
+  l0 = self[211]
+  self.IsPostHubUnlockCheckpoint = l0.Target
+  l0 = self[164]
+  l0:True()
+end
+function export:f_211_Toggled()
+  local l0
+  self = self._graph
+  l0 = self[211]
+  self.IsPostHubUnlockCheckpoint = l0.Target
+end
+function export:f_155_Out()
+  local l0
+  self = self._graph
+  l0 = self[129]
+  l0:Condition(0)
+end
+function export:f_199_Spawned()
+  local l0, l1
+  self = self._graph
+  l0 = self[199]
+  l1 = Boxes[PathID("Domino/System/VehicleController.lua")]
+  l1.Vehicle = l0.SpawnedVehicle
+  l1._graph = self
+  l1.Out = self.f_196_Out
+  l1.Usable = DummyFunction
+  l1.Unusable = DummyFunction
+  l1.Destructable = DummyFunction
+  l1.Indestructable = DummyFunction
+  l1.Deflatable = DummyFunction
+  l1.Undeflatable = DummyFunction
+  l1.EngineBroken = DummyFunction
+  l1.EngineShutDown = DummyFunction
+  l1.EngineStarted = DummyFunction
+  l1.VehicleAlarmHackOn = DummyFunction
+  l1.VehicleAlarmHackOff = DummyFunction
+  l1:DisableVehicleAlarmHack()
+end
+function export:f_184_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/OrderedOutput.lua")]
+  l0._graph = self
+  l0._DynamicAnchors = {Out = 2}
+  l0.Out[0] = self.f_177_Out_0
+  l0.Out[1] = self.f_177_Out_1
+  l0:In()
+  l0 = self[171]
+  l0.SkipPostFX = 0
+  l0.SkipCameraAlign = 0
+  l0:PostCinematic()
+end
+function export:f_46_Spawned()
+  local l0, l1
+  self = self._graph
+  l0 = self[46]
+  l1 = Boxes[PathID("Domino/System/VehicleController.lua")]
+  l1.Vehicle = l0.SpawnedVehicle
+  l1._graph = self
+  l1.Out = self.f_156_Out
+  l1.Usable = DummyFunction
+  l1.Unusable = DummyFunction
+  l1.Destructable = DummyFunction
+  l1.Indestructable = DummyFunction
+  l1.Deflatable = DummyFunction
+  l1.Undeflatable = DummyFunction
+  l1.EngineBroken = DummyFunction
+  l1.EngineShutDown = DummyFunction
+  l1.EngineStarted = DummyFunction
+  l1.VehicleAlarmHackOn = DummyFunction
+  l1.VehicleAlarmHackOff = DummyFunction
+  l1:DisableVehicleAlarmHack()
+end
+function export:f_215_Opened()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GateController.lua")]
+  l0.GateEntity = self.Gate03
+  l0.SetOpen = nil
+  l0.Instant = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Opened = self.f_216_Opened
+  l0.Closed = DummyFunction
+  l0.IsSet = DummyFunction
+  l0.Toggled = DummyFunction
+  l0:Open()
+end
+function export:f_51_Out()
+  local l0
+  self = self._graph
+  l0 = self[62]
+  l0.NPC = self.HubA_HubGuy
+  l0.Destination = "2084778581480703660"
+  l0.WalkType = "Walk"
+  l0:In()
+end
+function export:f_136_Hidden()
+  local l0
+  self = self._graph
+  self:en_53()
+  l0 = self[53]
+  l0:DisableHack()
+end
+function export:f_40_A_is_False()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_186_Out
+  l0:In()
+end
+function export:f_40_A_is_True()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_166_Out
+  l0:In()
+end
+function export:f_106_Hidden()
+  local l0
+  self = self._graph
+  self:en_58()
+  l0 = Boxes[PathID("Domino/System/PowerUserController_v3.lua")]
+  l0:EnableSecurityCameraDistanceCheckWithPlayer()
+end
+function export:f_106_Shown()
+  local l0
+  self = self._graph
+  self:en_58()
+  l0 = Boxes[PathID("Domino/System/PowerUserController_v3.lua")]
+  l0:DisableSecurityCameraDistanceCheckWithPlayer()
+end
+function export:f_98_Enter()
+  local l0
+  self = self._graph
+  l0 = self[80]
+  l0:In(0)
+end
+function export:f_128_A_is_False()
+  local l0
+  self = self._graph
+  l0 = self[20]
+  l0:In(0)
+end
+function export:f_81_A_is_False()
+  local l0
+  self = self._graph
+  self:en_79()
+  l0 = self[79]
+  l0:In()
+end
+function export:f_81_A_is_True()
+  local l0
+  self = self._graph
+  l0 = self[125]
+  l0:Condition(0)
+end
+function export:f_11_HackSuccess()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/RewardComponentController.lua")]
+  l0.entity = nil
+  l0.ClearRewardsBeforeRegister = nil
+  l0.ItemDB = "Items.4176525297"
+  l0.ItemDBList = nil
+  l0.RewardEvent = nil
+  l0.Player = nil
+  l0.Amount = nil
+  l0._graph = self
+  l0.Out = self.f_57_Out
+  l0:ExecuteRewards()
+  self:en_89()
+  l0 = self[89]
+  l0:Disable()
+  self:en_17()
+  l0 = self[17]
+  l0:DisableHack()
+end
+function export:f_148_Evaded()
+  local l0
+  self = self._graph
+  self:en_47()
+  l0 = self[47]
+  l0:Disable()
+  l0 = self[148]
+  l0:Stop()
+  self:en_15()
+  l0 = self[15]
+  l0:Disable()
+  self:en_123()
+  l0 = self[123]
+  l0:Disable()
+end
+function export:f_148_Started()
+  local l0
+  self = self._graph
+  l0 = self[66]
+  l0.SquadName = "FelonyMobSquad"
+  l0.Zone = self.NPCRestrictedZone
+  l0:AddZone()
+end
+function export:f_179_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[179]
+  self.HubA_Mobster01_CAMERA = l0.SpawnedEntity
+  l0 = self[130]
+  l0:Condition(0)
+end
+function export:f_135_Hidden()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionZoneController.lua")]
+  l0.MissionZone = self.Forbidden_Area
+  l0.Red = nil
+  l0.Green = nil
+  l0.Blue = nil
+  l0.Alpha = nil
+  l0.Radius = nil
+  l0.DrawType = nil
+  l0.ShapeType = nil
+  l0._graph = self
+  l0.Enabled = self.f_38_Enabled
+  l0.Disabled = DummyFunction
+  l0.PropertiesUpdated = DummyFunction
+  l0.Out = DummyFunction
+  l0:Enable()
+end
+function export:f_118_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/Lists/SetList.lua")]
+  self.Felony_Mob_List = l0.Target
+  self:en_176()
+  l0 = Boxes[PathID("Domino/System/FelonySystemController.lua")]
+  l0:StartChase()
+end
+function export:f_132_Disabled()
+  local l0
+  self = self._graph
+  l0 = self[22]
+  l0.LayerName = self.Layer
+  l0:Load()
+end
+function export:f_85_CombatState()
+  local l0
+  self = self._graph
+  self:en_85()
+  l0 = self[85]
+  l0:Disable()
+end
+function export:f_85_Disabled()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/OrderedOutput.lua")]
+  l0._graph = self
+  l0._DynamicAnchors = {Out = 2}
+  l0.Out[0] = self.f_101_Out_0
+  l0.Out[1] = self.f_101_Out_1
+  l0:In()
+end
+function export:f_147_A_gt_B()
+  local l0
+  self = self._graph
+  l0 = self[145]
+  l0:In(0)
+end
+function export:f_147_A_le_B()
+  local l0
+  self = self._graph
+  self:en_144()
+  l0 = self[144]
+  l0:Disable()
+end
+function export:f_214_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GetInvalidEntity.lua")]
+  self.HubA_HubGuy = l0.Entity
+  l0 = self[211]
+  l0:True()
+end
+function export:f_105_Out()
+  local l0
+  self = self._graph
+  l0 = self[105]
+  self.MissionAreaStopped = l0.Target
+end
+function export:f_105_SetFalse()
+  local l0
+  self = self._graph
+  l0 = self[105]
+  self.MissionAreaStopped = l0.Target
+end
+function export:f_105_SetFromBool()
+  local l0
+  self = self._graph
+  l0 = self[105]
+  self.MissionAreaStopped = l0.Target
+end
+function export:f_105_SetTrue()
+  local l0
+  self = self._graph
+  l0 = self[105]
+  self.MissionAreaStopped = l0.Target
+  self:en_43()
+  l0 = self[43]
+  l0:Stop()
+end
+function export:f_105_Toggled()
+  local l0
+  self = self._graph
+  l0 = self[105]
+  self.MissionAreaStopped = l0.Target
+end
+function export:f_192_Out()
+  local l0
+  self = self._graph
+  l0 = self[195]
+  l0:Condition(1)
+end
+function export:f_89_Disabled()
+  local l0
+  self = self._graph
+  self:en_106()
+  l0 = self[106]
+  l0:Hide()
+  self:en_115()
+  l0 = self[115]
+  l0:Hide()
+end
+function export:f_89_OnEndAccessCamera()
+  local l0
+  self = self._graph
+  self:en_17()
+  l0 = self[17]
+  l0:EnableHack()
+  self:en_106()
+  l0 = self[106]
+  l0:Show()
+  self:en_115()
+  l0 = self[115]
+  l0:Hide()
+end
+function export:f_89_OnEndExitCamera()
+  local l0
+  self = self._graph
+  self:en_115()
+  l0 = self[115]
+  l0:Show()
+end
+function export:f_89_OnStartExitCamera()
+  local l0
+  self = self._graph
+  self:en_106()
+  l0 = self[106]
+  l0:Hide()
+end
+function export:f_6_DisplayRequested()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  self.PlayerPawn = l0.PlayerID
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_92_Out
+  l0:In()
+  l0 = Boxes[PathID("Domino/System/OrderedOutput.lua")]
+  l0._graph = self
+  l0._DynamicAnchors = {Out = 3}
+  l0.Out[0] = self.f_75_Out_0
+  l0.Out[1] = self.f_75_Out_1
+  l0.Out[2] = self.f_75_Out_2
+  l0:In()
+end
+function export:f_113_Out()
+  local l0
+  self = self._graph
+  self:en_140()
+  l0 = Boxes[PathID("Domino/System/OrderedOutput.lua")]
+  l0:In()
+end
+function export:f_127_Killed()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/CompareBoolean_v2.lua")]
+  l0.A = self.HubGuyProfiled
+  l0.B = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.A_is_True = DummyFunction
+  l0.A_is_False = self.f_128_A_is_False
+  l0.A_and_B = DummyFunction
+  l0.notA_and_notB = DummyFunction
+  l0.A_or_B = DummyFunction
+  l0.A_xor_B = DummyFunction
+  l0:In()
+  self:en_2()
+  l0 = self[2]
+  l0:Disable()
+end
+function export:f_168_Out()
+  local l0
+  self = self._graph
+  l0 = self[67]
+  l0.LayerName = self.Layer
+  l0:Load()
+end
+function export:f_111_Equal()
+  local l0
+  self = self._graph
+  l0 = self[112]
+  l0:True()
+end
+function export:f_111_Out()
+  local l0
+  self = self._graph
+  l0 = self[86]
+  l0.Input = self.All_Init_Mobs
+  l0:Remove()
+end
+function export:f_198_Out()
+  local l0
+  self = self._graph
+  l0 = self[197]
+  l0.VehicleSpawner = "2081689052498628564"
+  l0:Spawn()
+  l0 = self[193]
+  l0.VehicleSpawner = "2081626514652155997"
+  l0:Spawn()
+  l0 = self[199]
+  l0.VehicleSpawner = "2081352401287120472"
+  l0:Spawn()
+  l0 = self[169]
+  l0.VehicleSpawner = "2081352392655242790"
+  l0:Spawn()
+end
+function export:f_86_Added()
+  local l0
+  self = self._graph
+  l0 = self[86]
+  self.All_Init_Mobs = l0.Target
+end
+function export:f_86_Out()
+  local l0
+  self = self._graph
+  l0 = self[86]
+  self.All_Init_Mobs = l0.Target
+end
+function export:f_86_Removed()
+  local l0
+  self = self._graph
+  l0 = self[86]
+  self.All_Init_Mobs = l0.Target
+end
+function export:f_154_Disabled()
+  local l0
+  self = self._graph
+  l0 = self[180]
+  l0.Checkpoint = "CheckPoint_InCombat"
+  l0:In()
+end
+function export:f_13_Added()
+  local l0
+  self = self._graph
+  l0 = self[13]
+  self.All_Init_Mobs = l0.Target
+  l0 = self[32]
+  l0.SquadType = "SquadRoot"
+  l0.SquadName = "04_TheWards_HubUnlock_MobstersProtectingHub"
+  l0.Config = "NPCOverrideConfig.3952559719" --was 3456007471
+  l0.NPCList = self.All_Init_Mobs
+  l0.LKPGroup = "FelonyMobSquad"
+  l0.Zone = self.NPCRestrictedZone
+  l0.ForbiddenZone = self.Forbidden_Area
+  l0.WarningZone = self.WarningZone
+  l0:Start()
+end
+function export:f_13_Out()
+  local l0
+  self = self._graph
+  l0 = self[13]
+  self.All_Init_Mobs = l0.Target
+end
+function export:f_13_Removed()
+  local l0
+  self = self._graph
+  l0 = self[13]
+  self.All_Init_Mobs = l0.Target
+end
+function export:f_2_Disabled()
+  local l0
+  self = self._graph
+  self:en_127()
+  l0 = self[127]
+  l0:Disable()
+end
+function export:f_2_InfoDisplayed()
+  local l0
+  self = self._graph
+  l0 = self[84]
+  l0.Bool = self.HubGuyProfiled
+  l0:True()
+  self:en_2()
+  l0 = self[2]
+  l0:Disable()
+end
+function export:f_44_Spawned()
+  local l0, l1
+  self = self._graph
+  l0 = self[44]
+  l1 = Boxes[PathID("Domino/System/VehicleController.lua")]
+  l1.Vehicle = l0.SpawnedVehicle
+  l1._graph = self
+  l1.Out = self.f_1_Out
+  l1.Usable = DummyFunction
+  l1.Unusable = DummyFunction
+  l1.Destructable = DummyFunction
+  l1.Indestructable = DummyFunction
+  l1.Deflatable = DummyFunction
+  l1.Undeflatable = DummyFunction
+  l1.EngineBroken = DummyFunction
+  l1.EngineShutDown = DummyFunction
+  l1.EngineStarted = DummyFunction
+  l1.VehicleAlarmHackOn = DummyFunction
+  l1.VehicleAlarmHackOff = DummyFunction
+  l1:EnableVehicleAlarmHack()
+end
+function export:f_217_Opened()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/GateController.lua")]
+  l0.GateEntity = self.Gate02
+  l0.SetOpen = nil
+  l0.Instant = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Opened = self.f_215_Opened
+  l0.Closed = DummyFunction
+  l0.IsSet = DummyFunction
+  l0.Toggled = DummyFunction
+  l0:Open()
+end
+function export:f_10_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[10]
+  self.HubA_Mobster05_CALLER = l0.SpawnedEntity
+  l0 = self[41]
+  l0:Condition(2)
+  l0 = self[91]
+  l0.NPC = self.HubA_Mobster05_CALLER
+  l0.Destination = "2084712004087467935"
+  l0.WalkType = "Walk"
+  l0:In()
+end
+function export:f_28_Shown()
+  local l0
+  self = self._graph
+  l0 = self[135]
+  l0.MapPoint = self.Activation_Zone_Icon_Mission
+  l0:Hide()
+end
+function export:f_181_Enabled()
+  local l0
+  self = self._graph
+  l0 = self[159]
+  l0.HackableEntity = self.VR_Entry
+  l0:DisableHack()
+end
+function export:f_93_Out()
+  local l0
+  self = self._graph
+  self:en_94()
+  l0 = self[94]
+  --l0:IsInCombat()
+end
+function export:f_66_ZoneAdded()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_138_Out
+  l0:In()
+end
+function export:f_112_Out()
+  local l0
+  self = self._graph
+  l0 = self[112]
+  self.IsVIPDead = l0.Target
+end
+function export:f_112_SetFalse()
+  local l0
+  self = self._graph
+  l0 = self[112]
+  self.IsVIPDead = l0.Target
+end
+function export:f_112_SetFromBool()
+  local l0
+  self = self._graph
+  l0 = self[112]
+  self.IsVIPDead = l0.Target
+end
+function export:f_112_SetTrue()
+  local l0
+  self = self._graph
+  l0 = self[112]
+  self.IsVIPDead = l0.Target
+end
+function export:f_112_Toggled()
+  local l0
+  self = self._graph
+  l0 = self[112]
+  self.IsVIPDead = l0.Target
+end
+function export:f_99_Out()
+  local l0
+  self = self._graph
+  self:en_78()
+  l0 = self[78]
+  l0:Hide()
+  self:en_6()
+  l0 = self[6]
+  l0:Hide()
+end
+function export:f_32_Started()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/OrderedOutput.lua")]
+  l0._graph = self
+  l0._DynamicAnchors = {Out = 4}
+  l0.Out[0] = self.f_34_Out_0
+  l0.Out[1] = self.f_34_Out_1
+  l0.Out[2] = self.f_34_Out_2
+  l0.Out[3] = self.f_34_Out_3
+  l0:In()
+end
+function export:f_167_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[167]
+  self.HubA_Mobster02 = l0.SpawnedEntity
+  l0 = Boxes[PathID("Domino/System/RewardComponentController.lua")]
+  l0.entity = self.HubA_Mobster02
+  l0.ClearRewardsBeforeRegister = nil
+  l0.ItemDB = "Items.3108044763"
+  l0.ItemDBList = nil
+  l0.RewardEvent = "OnHackSuccess"
+  l0.Player = nil
+  l0.Amount = nil
+  l0._graph = self
+  l0.Out = self.f_175_Out
+  l0:RegisterRewards()
+end
+function export:f_170_Out()
+  local l0
+  self = self._graph
+  l0 = self[126]
+  l0:False()
+end
+function export:f_65_Unloaded()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionController_v2.lua")]
+  l0.Mission = "MissionList.4044557227"
+  l0.MissionName = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0:Abort()
+end
+function export:f_20_Out_0()
+  local l0
+  self = self._graph
+  l0 = self[80]
+  l0:In(0)
+  l0 = self[3]
+  l0.HackableEntity = self.HubA_HubGuy
+  l0:EnableHack()
+end
+function export:f_142_Out()
+  local l0
+  self = self._graph
+  l0 = self[54]
+  l0.NPC = self.HubA_Mobster01_CAMERA
+  l0.HiddenCamera = "2082976997197226042"
+  l0.Profile = {
+    section = "PROFILER_SPECIFIC.PEOPLE.HiddenCamNPC.HiddenCamNPC_ctOS_5",
+    item = "",
+    id = "4294975984"
+  }
+  l0:In()
+end
+function export:f_23_Spawned()
+  local l0, l1
+  self = self._graph
+  l0 = self[23]
+  l1 = Boxes[PathID("Domino/System/VehicleController.lua")]
+  l1.Vehicle = l0.SpawnedVehicle
+  l1._graph = self
+  l1.Out = self.f_155_Out
+  l1.Usable = DummyFunction
+  l1.Unusable = DummyFunction
+  l1.Destructable = DummyFunction
+  l1.Indestructable = DummyFunction
+  l1.Deflatable = DummyFunction
+  l1.Undeflatable = DummyFunction
+  l1.EngineBroken = DummyFunction
+  l1.EngineShutDown = DummyFunction
+  l1.EngineStarted = DummyFunction
+  l1.VehicleAlarmHackOn = DummyFunction
+  l1.VehicleAlarmHackOff = DummyFunction
+  l1:DisableVehicleAlarmHack()
+end
+function export:f_87_UnspawnPrevented()
+  local l0
+  self = self._graph
+  l0 = self[7]
+  l0.Parent = self.HubA_HubGuy
+  l0.Child = self.VIP_Marker
+  l0.NpcIcon = 1
+  l0:Attach()
+end
+function export:f_182_Started()
+  local l0
+  self = self._graph
+  l0 = self[184]
+  l0:Condition(0)
+end
+function export:f_169_Spawned()
+  local l0, l1
+  self = self._graph
+  l0 = self[169]
+  l1 = Boxes[PathID("Domino/System/VehicleController.lua")]
+  l1.Vehicle = l0.SpawnedVehicle
+  l1._graph = self
+  l1.Out = self.f_200_Out
+  l1.Usable = DummyFunction
+  l1.Unusable = DummyFunction
+  l1.Destructable = DummyFunction
+  l1.Indestructable = DummyFunction
+  l1.Deflatable = DummyFunction
+  l1.Undeflatable = DummyFunction
+  l1.EngineBroken = DummyFunction
+  l1.EngineShutDown = DummyFunction
+  l1.EngineStarted = DummyFunction
+  l1.VehicleAlarmHackOn = DummyFunction
+  l1.VehicleAlarmHackOff = DummyFunction
+  l1:DisableVehicleAlarmHack()
+end
+function export:f_157_DisabledCallers()
+  local l0
+  self = self._graph
+  l0 = self[42]
+  l0:Disable()
+end
+function export:f_157_EnabledCallers()
+  local l0
+  self = self._graph
+  l0 = self[42]
+  l0:Enable()
+end
+function export:f_157_Registered()
+  local l0
+  self = self._graph
+  self:en_143()
+  l0 = Boxes[PathID("Domino/System/Lists/ListLength.lua")]
+  l0:GetLength()
+end
+function export:f_38_Enabled()
+  local l0
+  self = self._graph
+  self:en_53()
+  l0 = self[53]
+  l0:DisableHack()
+end
+function export:f_74_TimeElapsed()
+  local l0
+  self = self._graph
+  self:en_116()
+  l0 = Boxes[PathID("Domino/System/GateController.lua")]
+  l0:Open()
+end
+function export:f_7_Attached()
+  local l0
+  self = self._graph
+  self:en_18()
+  l0 = self[18]
+  l0:AssignProfile()
+end
+function export:f_5_Shown()
+  local l0
+  self = self._graph
+  l0 = self[31]
+  l0.HackableEntity = self.VR_Entry
+  l0:EnableHack()
+end
+function export:f_35_DisplayRequested()
+  local l0
+  self = self._graph
+  self:en_4()
+  l0 = self[4]
+  l0:Show()
+end
+function export:f_140_Out_0()
+  local l0
+  self = self._graph
+  l0 = self[148]
+  l0:Start()
+end
+function export:f_140_Out_1()
+  local l0
+  self = self._graph
+  self:en_15()
+  l0 = self[15]
+  l0:Enable()
+  self:en_47()
+  l0 = self[47]
+  l0:Enable()
+  self:en_123()
+  l0 = self[123]
+  l0:Enable()
+end
+function export:f_161_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[161]
+  self.HubA_Mobster05_CALLER = l0.SpawnedEntity
+  l0 = self[130]
+  l0:Condition(3)
+end
+function export:f_48_Completed()
+  local l0
+  self = self._graph
+  l0 = self[39]
+  l0.MapPoint = self.Zone_Icon_Mission
+  l0:Hide()
+end
+function export:f_48_NotCompleted()
+  local l0
+  self = self._graph
+  l0 = self[52]
+  l0.MapPoint = self.Zone_Icon_Hub
+  l0:Hide()
+end
+function export:f_12_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_9_Out
+  l0:In()
+end
+function export:f_178_Disabled()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionZoneController.lua")]
+  l0.MissionZone = self.NewMissionArea
+  l0.Red = nil
+  l0.Green = nil
+  l0.Blue = nil
+  l0.Alpha = nil
+  l0.Radius = nil
+  l0.DrawType = nil
+  l0.ShapeType = nil
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.f_174_Disabled
+  l0.PropertiesUpdated = DummyFunction
+  l0.Out = DummyFunction
+  l0:Disable()
+end
+function export:f_21_Completed()
+  local l0
+  self = self._graph
+  l0 = self[28]
+  l0.MapPoint = self.Zone_Icon_Mission
+  l0.LocMapMarkerTitle = {
+    section = "GPS.CATEGORIES",
+    item = "ctOS_System",
+    id = "197450"
+  }
+  l0.LocMapMarkerDescription = {
+    section = "GPS.ICONS",
+    item = "Hub",
+    id = "15382"
+  }
+  l0:Show()
+end
+function export:f_21_NotCompleted()
+  local l0
+  self = self._graph
+  l0 = self[36]
+  l0.MapPoint = self.Zone_Icon_Hub
+  l0.LocMapMarkerTitle = {
+    section = "GPS.CATEGORIES",
+    item = "ctOS_System",
+    id = "197450"
+  }
+  l0.LocMapMarkerDescription = {
+    section = "GPS.ICONS",
+    item = "Hub",
+    id = "15382"
+  }
+  l0:Show()
+end
+function export:f_138_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_137_Out
+  l0:In()
+end
+function export:f_123_Disabled()
+  local l0
+  self = self._graph
+  self:en_74()
+  l0 = self[74]
+  l0:Stop()
+end
+function export:f_123_Enabled()
+  local l0
+  self = self._graph
+  self:en_116()
+  l0 = Boxes[PathID("Domino/System/GateController.lua")]
+  l0:Open()
+end
+function export:f_123_OnBlock()
+  local l0
+  self = self._graph
+  self:en_74()
+  l0 = self[74]
+  l0:Start()
+end
+function export:f_123_OnUnblock()
+  local l0
+  self = self._graph
+  self:en_74()
+  l0 = self[74]
+  l0:Stop()
+end
+function export:f_152_Out_0()
+  local l0
+  self = self._graph
+  l0 = self[25]
+  l0.AIGenerator = "2080949612752934337"
+  l0:Spawn()
+end
+function export:f_152_Out_1()
+  local l0
+  self = self._graph
+  l0 = self[26]
+  l0.AIGenerator = "2079279295347325939"
+  l0:Spawn()
+end
+function export:f_152_Out_2()
+  local l0
+  self = self._graph
+  l0 = self[10]
+  l0.AIGenerator = "2079279297004076022"
+  l0:Spawn()
+end
+function export:f_152_Out_3()
+  local l0
+  self = self._graph
+  l0 = self[24]
+  l0.AIGenerator = "2079279297687747575"
+  l0:Spawn()
+end
+function export:f_212_A_is_False()
+  local l0
+  self = self._graph
+  self:en_176()
+  l0 = Boxes[PathID("Domino/System/FelonySystemController.lua")]
+  l0:AddScripted()
+end
+function export:f_212_A_is_True()
+  local l0
+  self = self._graph
+  self:en_140()
+  l0 = Boxes[PathID("Domino/System/OrderedOutput.lua")]
+  l0:In()
+end
+function export:f_175_Out()
+  local l0
+  self = self._graph
+  l0 = self[130]
+  l0:Condition(2)
+end
+function export:f_104_A_is_False()
+  local l0
+  self = self._graph
+  l0 = self[110]
+  l0:In(0)
+end
+function export:f_76_Out()
+  local l0
+  self = self._graph
+  l0 = self[96]
+  l0:True()
+end
+function export:f_159_Disabled()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_185_Out
+  l0:In()
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_198_Out
+  l0:In()
+end
+function export:f_16_Spawned()
+  local l0, l1
+  self = self._graph
+  l0 = self[16]
+  l1 = Boxes[PathID("Domino/System/VehicleController.lua")]
+  l1.Vehicle = l0.SpawnedVehicle
+  l1._graph = self
+  l1.Out = self.f_139_Out
+  l1.Usable = DummyFunction
+  l1.Unusable = DummyFunction
+  l1.Destructable = DummyFunction
+  l1.Indestructable = DummyFunction
+  l1.Deflatable = DummyFunction
+  l1.Undeflatable = DummyFunction
+  l1.EngineBroken = DummyFunction
+  l1.EngineShutDown = DummyFunction
+  l1.EngineStarted = DummyFunction
+  l1.VehicleAlarmHackOn = DummyFunction
+  l1.VehicleAlarmHackOff = DummyFunction
+  l1:DisableVehicleAlarmHack()
+end
+function export:f_141_Out()
+  local l0
+  self = self._graph
+  l0 = self[56]
+  l0.PawnList = self.All_Init_Mobs
+  l0:Enable()
+end
+function export:f_36_Shown()
+  local l0
+  self = self._graph
+  l0 = self[136]
+  l0.MapPoint = self.Activation_Zone_Icon_Hub
+  l0:Hide()
+end
+function export:f_90_Out()
+  local l0
+  self = self._graph
+  l0 = self[160]
+  l0.Input = self.Reinforcement_Callers
+  l0.Data[0] = self.HubA_Mobster05_CALLER
+  l0.Data[1] = self.HubA_Mobster06_CALLER
+  l0:Add()
+end
+function export:f_109_Out_0()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_12_Out
+  l0:In()
+end
+function export:f_109_Out_1()
+  local l0
+  self = self._graph
+  self:en_94()
+  l0 = self[94]
+  --l0:Enable()
+end
+function export:f_96_Out()
+  local l0
+  self = self._graph
+  l0 = self[96]
+  self.StartedByCheckpoint = l0.Target
+end
+function export:f_96_SetFalse()
+  local l0
+  self = self._graph
+  l0 = self[96]
+  self.StartedByCheckpoint = l0.Target
+end
+function export:f_96_SetFromBool()
+  local l0
+  self = self._graph
+  l0 = self[96]
+  self.StartedByCheckpoint = l0.Target
+end
+function export:f_96_SetTrue()
+  local l0
+  self = self._graph
+  l0 = self[96]
+  self.StartedByCheckpoint = l0.Target
+  self:en_60()
+  l0 = self[60]
+  l0:Enable()
+end
+function export:f_96_Toggled()
+  local l0
+  self = self._graph
+  l0 = self[96]
+  self.StartedByCheckpoint = l0.Target
+end
+function export:f_41_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/CompareBoolean_v2.lua")]
+  l0.A = self.StartedByCheckpoint
+  l0.B = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.A_is_True = self.f_81_A_is_True
+  l0.A_is_False = self.f_81_A_is_False
+  l0.A_and_B = DummyFunction
+  l0.notA_and_notB = DummyFunction
+  l0.A_or_B = DummyFunction
+  l0.A_xor_B = DummyFunction
+  l0:In()
+end
+function export:f_173_Out()
+  local l0
+  self = self._graph
+  l0 = self[173]
+  self.MissionAreaStopped = l0.Target
+end
+function export:f_173_SetFalse()
+  local l0
+  self = self._graph
+  l0 = self[173]
+  self.MissionAreaStopped = l0.Target
+end
+function export:f_173_SetFromBool()
+  local l0
+  self = self._graph
+  l0 = self[173]
+  self.MissionAreaStopped = l0.Target
+end
+function export:f_173_SetTrue()
+  local l0
+  self = self._graph
+  l0 = self[173]
+  self.MissionAreaStopped = l0.Target
+  l0 = self[187]
+  l0.LayerName = self.Layer
+  l0:Load()
+end
+function export:f_173_Toggled()
+  local l0
+  self = self._graph
+  l0 = self[173]
+  self.MissionAreaStopped = l0.Target
+end
+function export:f_125_Out()
+  local l0
+  self = self._graph
+  l0 = self[95]
+  l0.SkipPostFX = 0
+  l0.SkipCameraAlign = 0
+  l0:PostCinematic()
+end
+function export:f_8_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[8]
+  self.HubA_Mobster01_CAMERA = l0.SpawnedEntity
+  l0 = self[153]
+  l0:Condition(1)
+  l0 = self[61]
+  l0.NPC = self.HubA_Mobster01_CAMERA
+  l0.Patrol = "2080909896584267450"
+  l0:Assign()
+end
+function export:f_30_Started()
+  local l0
+  self = self._graph
+  l0 = self[83]
+  l0.HubEntity = self.HUB
+--l0:Lock() --disabled hub lockdown
+end
+function export:f_110_Out_0()
+  local l0
+  self = self._graph
+  self:en_43()
+  l0 = self[43]
+  l0:Start()
+end
+function export:f_129_Out()
+  local l0
+  self = self._graph
+  l0 = self[125]
+  l0:Condition(1)
+end
+function export:f_84_Out()
+  local l0
+  self = self._graph
+  l0 = self[84]
+  self.HubGuyProfiled = l0.Target
+  l0 = self[20]
+  l0:In(0)
+end
+function export:f_84_SetFalse()
+  local l0
+  self = self._graph
+  l0 = self[84]
+  self.HubGuyProfiled = l0.Target
+end
+function export:f_84_SetFromBool()
+  local l0
+  self = self._graph
+  l0 = self[84]
+  self.HubGuyProfiled = l0.Target
+end
+function export:f_84_SetTrue()
+  local l0
+  self = self._graph
+  l0 = self[84]
+  self.HubGuyProfiled = l0.Target
+end
+function export:f_84_Toggled()
+  local l0
+  self = self._graph
+  l0 = self[84]
+  self.HubGuyProfiled = l0.Target
+end
+function export:f_196_Out()
+  local l0
+  self = self._graph
+  l0 = self[195]
+  l0:Condition(3)
+end
+function export:f_186_Out()
+  local l0
+  self = self._graph
+  self:en_94()
+  l0 = self[94]
+  --l0:CheckPoint_NoCombat()
+end
+function export:f_166_Out()
+  local l0
+  self = self._graph
+  self:en_94()
+  l0 = self[94]
+  --l0:CheckPoint_InCombat()
+end
+function export:f_164_Out()
+  local l0
+  self = self._graph
+  l0 = self[164]
+  self.IsVIPDead = l0.Target
+end
+function export:f_164_SetFalse()
+  local l0
+  self = self._graph
+  l0 = self[164]
+  self.IsVIPDead = l0.Target
+end
+function export:f_164_SetFromBool()
+  local l0
+  self = self._graph
+  l0 = self[164]
+  self.IsVIPDead = l0.Target
+end
+function export:f_164_SetTrue()
+  local l0
+  self = self._graph
+  l0 = self[164]
+  self.IsVIPDead = l0.Target
+  l0 = self[173]
+  l0:True()
+end
+function export:f_164_Toggled()
+  local l0
+  self = self._graph
+  l0 = self[164]
+  self.IsVIPDead = l0.Target
+end
+function export:f_171_PostOut()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/CompareBoolean_v2.lua")]
+  l0.A = self.InCombatCheckpoint
+  l0.B = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.A_is_True = self.f_40_A_is_True
+  l0.A_is_False = self.f_40_A_is_False
+  l0.A_and_B = DummyFunction
+  l0.notA_and_notB = DummyFunction
+  l0.A_or_B = DummyFunction
+  l0.A_xor_B = DummyFunction
+  l0:In()
+end
+function export:f_75_Out_0()
+  local l0
+  self = self._graph
+  l0 = self[158]
+  l0.AIGenerator = "2082112072434494294"
+  l0:Spawn()
+end
+function export:f_75_Out_1()
+  local l0
+  self = self._graph
+  l0 = self[8]
+  l0.AIGenerator = "2079279290026851314"
+  l0:Spawn()
+end
+function export:f_75_Out_2()
+  local l0
+  self = self._graph
+  l0 = self[72]
+  l0.AIGenerator = "2079279296679017461"
+  l0:Spawn()
+end
+function export:f_139_Out()
+  local l0
+  self = self._graph
+  l0 = self[129]
+  l0:Condition(3)
+end
+function export:f_27_Out()
+  local l0
+  self = self._graph
+  self:en_60()
+  l0 = self[60]
+  l0:Disable()
+end
+function export:f_117_Out()
+  local l0
+  self = self._graph
+  self:en_60()
+  l0 = self[60]
+  l0:Enable()
+end
+function export:f_29_HackSuccess()
+  local l0
+  self = self._graph
+  l0 = self[107]
+  l0.Input = self.Control_Room_Cameras
+  l0.Data[0] = "2081228021366264085"
+  l0.Data[1] = "2081656428000609188"
+  l0:Add()
+  self:en_29()
+  l0 = self[29]
+  l0:Disable()
+end
+function export:f_133_Disabled()
+  local l0
+  self = self._graph
+  l0 = self[68]
+  l0.LayerName = self.Layer
+  l0:Load()
+end
+function export:f_143_Empty()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/Lists/ListLength.lua")]
+  self.MobListLength = l0.Length
+end
+function export:f_143_NotEmpty()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/Lists/ListLength.lua")]
+  self.MobListLength = l0.Length
+  l0 = Boxes[PathID("Domino/System/CompareIntegers_v2.lua")]
+  l0.A = self.MobListLength
+  l0.B = 5
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.A_lt_B = DummyFunction
+  l0.A_le_B = self.f_147_A_le_B
+  l0.A_eq_B = DummyFunction
+  l0.A_ge_B = DummyFunction
+  l0.A_gt_B = self.f_147_A_gt_B
+  l0.A_ne_B = DummyFunction
+  l0:In()
+end
+function export:f_143_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/Lists/ListLength.lua")]
+  self.MobListLength = l0.Length
+end
+function export:f_145_Out_0()
+  local l0
+  self = self._graph
+  self:en_144()
+  l0 = self[144]
+  l0:Enable()
+end
+function export:f_92_Out()
+  local l0
+  self = self._graph
+  l0 = self[46]
+  l0.VehicleSpawner = "2081689052498628564"
+  l0:Spawn()
+  l0 = self[44]
+  l0.VehicleSpawner = "2081626514652155997"
+  l0:Spawn()
+  l0 = self[16]
+  l0.VehicleSpawner = "2081352401287120472"
+  l0:Spawn()
+  l0 = self[23]
+  l0.VehicleSpawner = "2081352392655242790"
+  l0:Spawn()
+end
+function export:f_200_Out()
+  local l0
+  self = self._graph
+  l0 = self[195]
+  l0:Condition(0)
+end
+function export:f_4_Hidden()
+  local l0
+  self = self._graph
+  self:en_14()
+  l0 = self[14]
+  l0:Disable()
+end
+function export:f_4_Shown()
+  local l0
+  self = self._graph
+  self:en_14()
+  l0 = self[14]
+  l0:Enable()
+end
+function export:f_97_Out()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/Lists/SetList.lua")]
+  self.All_Init_Mobs = l0.Target
+  l0 = Boxes[PathID("Domino/System/MissionZoneController.lua")]
+  l0.MissionZone = self.Forbidden_Area
+  l0.Red = nil
+  l0.Green = nil
+  l0.Blue = nil
+  l0.Alpha = nil
+  l0.Radius = nil
+  l0.DrawType = nil
+  l0.ShapeType = nil
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = self.Disable_Respawn --linked added disable respawn function
+  l0.PropertiesUpdated = DummyFunction
+  l0.Out = DummyFunction
+  l0:Disable()
+end
+function export:f_122_Out()
+  local l0
+  self = self._graph
+  l0 = self[150]
+  l0.NPC = self.HubA_Mobster02
+  l0.Destination = "2084712034093518825"
+  l0.WalkType = "Walk"
+  l0:In()
+  l0 = self[41]
+  l0:Condition(1)
+end
+function export:f_26_Spawned()
+  local l0
+  self = self._graph
+  l0 = self[26]
+  self.HubA_Mobster02 = l0.SpawnedEntity
+  l0 = Boxes[PathID("Domino/System/RewardComponentController.lua")]
+  l0.entity = self.HubA_Mobster02
+  l0.ClearRewardsBeforeRegister = nil
+  l0.ItemDB = "Items.3108044763"
+  l0.ItemDBList = nil
+  l0.RewardEvent = "OnHackSuccess"
+  l0.Player = nil
+  l0.Amount = nil
+  l0._graph = self
+  l0.Out = self.f_122_Out
+  l0:RegisterRewards()
+end
+function export:en_43()
+  local l0
+  l0 = self[43]
+  l0.MissionArea = self.ExitFail_MissionArea
+  l0.Radius = 808080 --maxed mission fail area to disable it
+end
+function export:en_79()
+  local l0
+  l0 = self[79]
+  l0.Checkpoint = "CheckPoint_0"
+end
+function export:en_53()
+  local l0
+  l0 = self[53]
+  l0.HackableEntity = self.VR_Entry
+end
+function export:en_18()
+  local l0
+  l0 = self[18]
+  l0.HackableEntity = self.HubA_HubGuy
+  l0.OasisProfilerInfo = {
+    section = "PROFILER_SPECIFIC.PEOPLE.ctOS_Hub_Guards.Ray_Holston",
+    item = "",
+    id = "4294972231"
+  }
+  l0.AllowRetryAfterFailure = 1
+end
+function export:en_60()
+  local l0
+  l0 = self[60]
+  l0.Trigger = self.UnloadTriggerZone
+end
+function export:en_58()
+  local l0
+  l0 = Boxes[PathID("Domino/System/PowerUserController_v3.lua")]
+  l0.PowerUserEntity = nil
+  l0.Perk = nil
+  l0.PowerTargetEntity = nil
+  l0.Use_Forced = nil
+  l0.Use_PlayPlayerAnimation = nil
+  l0.Use_PlayTakedownCamera = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.PowersEnabled = DummyFunction
+  l0.PowersDisabled = DummyFunction
+  l0.PerkAdded = DummyFunction
+  l0.PerkRemoved = DummyFunction
+  l0.Selected = DummyFunction
+  l0.FailedSelect = DummyFunction
+  l0.Used = DummyFunction
+  l0.PEOUsed = DummyFunction
+  l0.SecurityCameraDistanceCheckWithPlayerChanged = DummyFunction
+end
+function export:en_14()
+  local l0
+  l0 = self[14]
+  l0.HackableEntity = self.HubA_HubGuy
+end
+function export:en_47()
+  local l0
+  l0 = self[47]
+  l0.GateEntity = self.Gate02
+end
+function export:en_17()
+  local l0
+  l0 = self[17]
+  l0.HackableEntity = self.HUB
+end
+function export:en_116()
+  local l0
+  l0 = Boxes[PathID("Domino/System/GateController.lua")]
+  l0.GateEntity = self.Gate01
+  l0.SetOpen = nil
+  l0.Instant = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Opened = DummyFunction
+  l0.Closed = DummyFunction
+  l0.IsSet = DummyFunction
+  l0.Toggled = DummyFunction
+end
+function export:en_78()
+  local l0
+  l0 = self[78]
+  l0.MessageType = "MissionStart"
+  l0.OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES.CTOS_Control_Rooms.CTOS_TheWards",
+    item = "Description",
+    id = "151486"
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.SIDE.OBJECTIVES.CTOS_Control_Rooms.CTOS_TheWards",
+    item = "Name",
+    id = "151485"
+  }
+  l0.Queue = 1
+end
+function export:en_176()
+  local l0
+  l0 = Boxes[PathID("Domino/System/FelonySystemController.lua")]
+  l0.player = self.PlayerPawn
+  l0.ScanLevel = nil
+  l0.ChaseLevel = nil
+  l0.HeatLevel = nil
+  l0.CustomChaseLevel = "ChaseLevelParameters.71360797"
+  l0.CustomSearchLevel = "ChaseLevelParameters.217061562"
+  l0.SkipScanDispatchBark = nil
+  l0.FelonyType = "CTOS"
+  l0.AgentList = self.Felony_Mob_List
+  l0.RemoveAgentRestrictions = nil
+  l0.ArrestType = nil
+  l0.AffectMediaSystem = nil
+  l0.AllowFirstIntuition = 0
+  l0.AllowFallBack = 0
+  l0.VehicleExclusionZone = "2085764654419676103"
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.ScanStarted = DummyFunction
+  l0.ChaseStarted = self.f_176_ChaseStarted
+  l0.HeatSet = DummyFunction
+  l0.AddScriptedSucceeded = self.f_176_AddScriptedSucceeded
+  l0.AddScriptedFailed = self.f_176_AddScriptedFailed
+  l0.ScriptedAgentsAdopted = DummyFunction
+  l0.ArrestForced = DummyFunction
+  l0.VehicleExclusionZoneAdded = DummyFunction
+  l0.VehicleExclusionZoneRemoved = DummyFunction
+end
+function export:en_50()
+  local l0
+  l0 = self[50]
+  l0.Seconds = 10
+end
+function export:en_37()
+  local l0
+  l0 = self[37]
+  l0.Seconds = 10
+end
+function export:en_33()
+  local l0
+  l0 = self[33]
+  l0.HackableEntity = self.VR_Entry
+end
+function export:en_15()
+  local l0
+  l0 = self[15]
+  l0.GateEntity = self.Gate03
+end
+function export:en_144()
+  local l0
+  l0 = self[144]
+  l0.PawnList = self.All_Init_Mobs
+end
+function export:en_106()
+  local l0
+  l0 = self[106]
+  l0.MapPoint = self.Hub_Marker
+end
+function export:en_98()
+  local l0
+  l0 = self[98]
+  l0.Trigger = self.Forbidden_Area
+  l0.CheckNow = 1
+end
+function export:en_45()
+  local l0
+  l0 = Boxes[PathID("Domino/System/GateController.lua")]
+  l0.GateEntity = self.Gate03
+  l0.SetOpen = nil
+  l0.Instant = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Opened = DummyFunction
+  l0.Closed = DummyFunction
+  l0.IsSet = DummyFunction
+  l0.Toggled = DummyFunction
+end
+function export:en_85()
+  local l0
+  l0 = self[85]
+  l0.NPCList = self.All_Init_Mobs
+end
+function export:en_89()
+  local l0
+  l0 = self[89]
+  l0.CameraEntityList = self.Control_Room_Cameras
+end
+function export:en_6()
+  local l0
+  l0 = self[6]
+  l0.MessageType = "MissionUpdate"
+  l0.OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES.CTOS_Control_Rooms.CTOS_TheWards.Objective_01",
+    item = "Description",
+    id = "151488"
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.COMMON.MESSAGES.OBJECTIVE",
+    item = "NewObjective",
+    id = "165445"
+  }
+  l0.Duration = -1
+  l0.Queue = 1
+end
+function export:en_115()
+  local l0
+  l0 = self[115]
+  l0.MapPoint = self.VR_Marker
+end
+function export:en_113()
+  local l0
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_113_Out
+end
+function export:en_127()
+  local l0
+  l0 = self[127]
+  l0.Pawn = self.HubA_HubGuy
+end
+function export:en_94()
+  local l0
+  l0 = self[94]
+  l0.List01 = self.All_Init_Mobs
+  l0.HUB = self.HUB
+  l0.HUB_Location = {
+    section = "MISSIONS.SIDE.OBJECTIVES.CTOS_Control_Rooms.CTOS_TheWards",
+    item = "Description",
+    id = "151486"
+  }
+  l0.GridScriptSequence = "GridScriptSequence.107196032"
+  l0.CurrentMissionZone = self.Forbidden_Area
+  l0.NewMissionZone = self.NewMissionArea
+  l0.RadiusExit = 80
+  l0.Layer = self.Layer
+  l0.Rewards = "ItemLists.4146946734"
+  l0.Mission = "MissionList.4044557227"
+  l0.Ending_OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES.CTOS_Control_Rooms.CTOS_TheWards",
+    item = "Name",
+    id = "151485"
+  }
+  l0.IsLoop = 0
+  l0.PostUnlockCheckPoint = "2085403850071616372"
+  l0.FelonyVehicleExclusionZone = "2085764654419676103"
+  l0.NPCRestrictedZone = self.NPCRestrictedZone
+end
+function export:en_2()
+  local l0
+  l0 = self[2]
+  l0.ProfilerInfoType = "BasicInfo"
+  l0.ProfilableEntity = self.HubA_HubGuy
+end
+function export:en_142()
+  local l0
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_142_Out
+end
+function export:en_157()
+  local l0
+  l0 = self[157]
+  l0.NPCList = self.Reinforcement_Callers
+  l0.Mission = "MissionList.4044557227"
+end
+function export:en_74()
+  local l0
+  l0 = self[74]
+  l0.Seconds = 10
+end
+function export:en_140()
+  local l0
+  l0 = Boxes[PathID("Domino/System/OrderedOutput.lua")]
+  l0._graph = self
+  l0._DynamicAnchors = {Out = 2}
+  l0.Out[0] = self.f_140_Out_0
+  l0.Out[1] = self.f_140_Out_1
+end
+function export:en_49()
+  local l0
+  l0 = Boxes[PathID("Domino/System/GateController.lua")]
+  l0.GateEntity = self.Gate02
+  l0.SetOpen = nil
+  l0.Instant = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Opened = DummyFunction
+  l0.Closed = DummyFunction
+  l0.IsSet = DummyFunction
+  l0.Toggled = DummyFunction
+end
+function export:en_123()
+  local l0
+  l0 = self[123]
+  l0.GateEntity = self.Gate01
+end
+function export:en_104()
+  local l0
+  l0 = Boxes[PathID("Domino/System/CompareBoolean_v2.lua")]
+  l0.A = self.MissionAreaStopped
+  l0.B = nil
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.A_is_True = DummyFunction
+  l0.A_is_False = self.f_104_A_is_False
+  l0.A_and_B = DummyFunction
+  l0.notA_and_notB = DummyFunction
+  l0.A_or_B = DummyFunction
+  l0.A_xor_B = DummyFunction
+end
+function export:en_141()
+  local l0
+  l0 = Boxes[PathID("Domino/System/SimpleNode.lua")]
+  l0._graph = self
+  l0.Out = self.f_141_Out
+end
+function export:en_29()
+  local l0
+  l0 = self[29]
+  l0.HackableEntity = self.VR_Last_Node
+end
+function export:en_143()
+  local l0
+  l0 = Boxes[PathID("Domino/System/Lists/ListLength.lua")]
+  l0.Input = self.All_Init_Mobs
+  l0._graph = self
+  l0.Out = self.f_143_Out
+  l0.Empty = self.f_143_Empty
+  l0.NotEmpty = self.f_143_NotEmpty
+end
+function export:en_4()
+  local l0
+  l0 = self[4]
+  l0.MapPoint = self.VIP_Marker
+end
+function export:Disable_Respawn() --added function to start respawn block timeout
+  local l0
+  self = self._graph
+  --if not chased and not in mission
+  if FelonyGetType(GetLocalPlayerEntityId()) == 8 and Globals._CUSTOM_SCRIPTS._In_Mission == 0 then
+    self.Dialogue_Clear = {
+      "0x000ebb2c", --"That's all of them."
+      "0x000eb97f", --"Looks clear."
+      "0x000eb9ba", --"That's everyone."
+      "0x000ebbdc", --"They are done."
+      "0x000ebb41", --"Got 'em all."
+      "0x000ebc15", --"There's noone left."
+      "0x000eb9c5", --"They are finished."
+      "0x000ebc7c", --"All clear."
+    }
+    --playing dialogue
+    l0 = self[999]
+    l0.Entity = GetLocalPlayerEntityId()
+    l0.SoundId = self.Dialogue_Clear[math.random(#self.Dialogue_Clear)]
+    l0:Play()
+  end
+  Globals._CUSTOM_SCRIPTS._Guards_List[3] = { GetInvalidEntityId(), }
+  Globals._CUSTOM_SCRIPTS._Respawn_Blocked[3] = Globals._CUSTOM_SCRIPTS._Respawn_Timeout
+  CDominoManager_GetInstance():SpawnDominoEntity("Domino/User/windycity/Custom_Scripts/Restricted_Areas/04_thewards_hubunlock.04_thewards_hubunlock_persistent_timeout.lua")
+  self:ShutDown()
+  CDominoManager_GetInstance():RemoveDominoEntity(self.This_Script)
+end
+_compilerVersion = 4

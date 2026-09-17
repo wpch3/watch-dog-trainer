@@ -1,0 +1,99 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua") --loaded global variables
+  cbox:RegisterBox("Domino/System/GetPlayerID.lua")
+  cbox:RegisterBox("Domino/System/InteractionScriptMonitor.lua")
+  cbox:RegisterBox("Domino/System/PlayerPostFXController.lua")
+end
+function export:Init(cbox)
+  local l0
+  self.Interaction = self.Interaction or "2080000000000000000"
+  self.Outfit = self.Outfit or "A_MainCharacters.char01_Aiden_CarCrash"
+  self.Pockets = self.Pockets or 0
+  self.Mask = self.Mask or 0
+  -- self.PlayerPawn = self.PlayerPawn or nil
+  self[1] = cbox:CreateBox("Domino/System/InteractionScriptMonitor.lua")
+  l0 = self[1]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.OnSuccess = DummyFunction
+  l0.OnFail = DummyFunction
+  l0.InteractionStarted = self.Swap_Model
+  l0.InteractionFinished = DummyFunction
+  l0.AnimationStarted = DummyFunction
+  l0.AnimationFinished = DummyFunction
+  self[2] = cbox:CreateBox("Domino/System/PlayerPostFXController.lua")
+  l0 = self[2]
+  l0._graph = self
+  l0.Played = self.Faded_Out
+  l0.Stopped = DummyFunction
+  self[3] = cbox:CreateBox("Domino/System/PlayerPostFXController.lua")
+  l0 = self[3]
+  l0._graph = self
+  l0.Played = self.Swap_Completed
+  l0.Stopped = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  local l0
+  ShowMissionTextMessageLocalPlayer("MissionDebug", "DefaultIcon", "WRONG USAGE", "This script is meant to be used as a function.", "", "", 5, 0, self, "OnFinished", "OnDisplayed")
+end
+function export:Disable()
+  local l0
+SetInteractionScriptState(self.Interaction, 0)
+  l0 = self[1]
+  l0.InteractionScriptEntity = self.Interaction
+  l0:Disable()
+end
+function export:Enable()
+  local l0
+SetInteractionScriptState(self.Interaction, 0) --TO DISABLE THIS FEATURE
+-- SetInteractionScriptState(self.Interaction, 1) --TO ENABLE THIS FEATURE
+  l0 = self[1]
+  l0.InteractionScriptEntity = self.Interaction
+  l0:Enable()
+end
+
+function export:Swap_Model()
+  local l0
+  self = self._graph
+  l0 = self[2]
+  l0.SequenceName = "precinematic"
+  l0:StartPostFX()
+end
+function export:Faded_Out()
+  local l0
+  self = self._graph
+self.PlayerPawn = GetLocalPlayerEntityId()
+  if Globals._CUSTOM_SCRIPTS._Current_Outfit ~= self.Outfit then
+    Globals._CUSTOM_SCRIPTS._Current_Outfit = self.Outfit
+    ChangeGraphicKitModel(self.PlayerPawn, "", self.Outfit)
+    SetHandsInPocketsAllowed(self.PlayerPawn, self.Pockets)
+    SetFaceMaskAllowed(self.PlayerPawn, self.Mask)
+  else
+    Globals._CUSTOM_SCRIPTS._Current_Outfit = "A_MainCharacters.char01_Aiden"
+    ChangeGraphicKitModel(self.PlayerPawn, "", "A_MainCharacters.char01_Aiden")
+    SetHandsInPocketsAllowed(self.PlayerPawn, 1)
+    SetFaceMaskAllowed(self.PlayerPawn, 1)
+  end
+  l0 = self[3]
+  l0.SequenceName = "postcinematic"
+  l0:StartPostFX()
+end
+function export:Swap_Completed()
+  local l0
+  self = self._graph
+self:SwapCompleted()
+end
+_compilerVersion = 4

@@ -1,0 +1,33 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua")
+  cbox:RegisterBox("Domino/System/MissionLayer_v2.lua")
+end
+function export:Init(cbox)
+  local l0
+  self[0] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[0]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  local l0
+  if Globals._CUSTOM_SCRIPTS._Addons_PixxelFDCamera ~= 0 then
+    l0 = self[0]
+    l0.LayerName = "hardVatsuki_PixxelFD"
+    l0:Reset()
+  end
+end
+_compilerVersion = 4

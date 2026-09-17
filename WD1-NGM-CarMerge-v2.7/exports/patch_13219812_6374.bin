@@ -1,0 +1,154 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua")
+  cbox:RegisterBox("Domino/System/InputListenerMonitor.lua")
+  cbox:RegisterBox("Domino/System/MissionLayer_v2.lua")
+  cbox:RegisterBox("Domino/System/Timer_v2.lua")
+end
+function export:Init(cbox)
+  local l0
+  self.Layer_Name = "custom_clock"
+  self.Reference_Entity = "2040000000000000000"
+  self.Clock_Mapicon = "2040000000000000001"
+  self.Offset_X = 0.4 -- right/left-
+  self.Offset_Y = 0.0 -- forward/backward-
+  self.Offset_Z = 1.25 -- up/down-
+  self.Loop_Delay = 0.1
+  self[1000] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[1000]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = self.Layer_Loaded
+  self[1] = cbox:CreateBox("Domino/System/InputListenerMonitor.lua")
+  l0 = self[1]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.InputReceived = self.Show_Clock
+  self[9] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[9]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Update_Clock
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[2] = cbox:CreateBox("Domino/System/InputListenerMonitor.lua")
+  l0 = self[2]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.InputReceived = self.Hide_Clock
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  local l0
+  math.randomseed(math.floor((GetEntityPosition(GetLocalPlayerEntityId(), 1)+GetGameTime())*1000))
+  math.random(); math.random(); math.random() --pop some random numbers before using them for real
+  --enabling input listener
+  l0 = self[1]
+  l0.Player = GetLocalPlayerEntityId()
+  l0.Input = "hold_pda" --requires custom inputactionmapcommon.xml
+  l0:Enable() --Show_Clock
+  l0 = self[2]
+  l0.Player = GetLocalPlayerEntityId()
+  l0.Input = "release_pda" --requires custom inputactionmapcommon.xml
+  l0:Enable() --Hide_Clock
+end
+
+
+function export:Show_Clock()
+  local l0
+  self = self._graph
+  --skip if disabled
+Globals = Globals or {}
+Globals._CUSTOM_SCRIPTS = Globals._CUSTOM_SCRIPTS or {}
+Globals._CUSTOM_SCRIPTS._Clock = Globals._CUSTOM_SCRIPTS._Clock or 1
+  if Globals._CUSTOM_SCRIPTS._Clock ~= 1 then
+    return
+  end
+  --loading custom layer
+  l0 = self[1000]
+  l0.LayerName = self.Layer_Name
+  l0:Reset() --Layer_Loaded
+end
+function export:Layer_Loaded()
+  local l0
+  self = self._graph
+--initializing clock
+RequestUseSoftware(GetLocalPlayerEntityId(), 1)
+UnBind(self.Reference_Entity)
+SetEntityPosition(self.Reference_Entity, -2000, -2500, 1)
+SetEntityAngle(self.Reference_Entity, 0, 0, 0)
+UnBind(self.Clock_Mapicon)
+SetEntityPosition(self.Clock_Mapicon, GetEntityPosition(self.Reference_Entity, 0)+self.Offset_X, GetEntityPosition(self.Reference_Entity, 1)+self.Offset_Y, GetEntityPosition(self.Reference_Entity, 2)+self.Offset_Z)
+if GetCurrentSeat(GetLocalPlayerEntityId()) == 1 and GetEntityPosition("2050000000000000000", 2) > 1 then --driving with speedometer
+  SetEntityPosition(self.Reference_Entity, GetEntityPosition(GetCurrentVehicleEntityId(GetLocalPlayerEntityId()), 0), GetEntityPosition(GetCurrentVehicleEntityId(GetLocalPlayerEntityId()), 1), GetEntityPosition(GetCurrentVehicleEntityId(GetLocalPlayerEntityId()), 2))
+  SetEntityAngle(self.Reference_Entity, GetEntityAngle(GetCurrentVehicleEntityId(GetLocalPlayerEntityId()), 0), GetEntityAngle(GetCurrentVehicleEntityId(GetLocalPlayerEntityId()), 1), GetEntityAngle(GetCurrentVehicleEntityId(GetLocalPlayerEntityId()), 2))
+  SetEntityPosition(self.Clock_Mapicon, GetEntityPosition("2050000000000000001", 0), GetEntityPosition("2050000000000000001", 1), GetEntityPosition("2050000000000000001", 2)+0.2)
+elseif GetCurrentSeat(GetLocalPlayerEntityId()) == 1 then --driving
+  SetEntityPosition(self.Clock_Mapicon, GetEntityPosition(self.Reference_Entity, 0), GetEntityPosition(self.Reference_Entity, 1)-0.5, GetEntityPosition(self.Reference_Entity, 2)+1+0.2)
+elseif string.find(GetEntityName(GetCurrentVehicleEntityId(GetLocalPlayerEntityId())), "Vehicle_Helicopter") then --helicopter passenger
+  SetEntityPosition(self.Clock_Mapicon, GetEntityPosition(self.Reference_Entity, 0)+0.1, GetEntityPosition(self.Reference_Entity, 1)-0.15, GetEntityPosition(self.Reference_Entity, 2)+0.9)
+end
+Bind(self.Reference_Entity, self.Clock_Mapicon, "", 0)
+IndicatorSetIsVisible(GetLocalPlayerId(), self.Clock_Mapicon, 1)
+  --clock loop
+  l0 = self[9]
+  l0:ClearCallback()
+  l0.Seconds = 0.1
+  l0:Start() --Update_Clock
+end
+function export:Update_Clock()
+  local l0
+  self = self._graph
+--updating clock
+UnBind(self.Reference_Entity)
+Bind(GetLocalPlayerEntityId(), self.Reference_Entity, "", 1)
+if GetCurrentSeat(GetLocalPlayerEntityId()) ~= 0 and not string.find(GetEntityName(GetCurrentVehicleEntityId(GetLocalPlayerEntityId())), "Vehicle_Helicopter") then --vehicle
+  UnBind(self.Reference_Entity)
+  Bind(GetCurrentVehicleEntityId(GetLocalPlayerEntityId()), self.Reference_Entity, "", 1)
+end
+local hour, minute, second = CDynamicEnvironmentManager_GetInstance():GetScriptedTimeOfDay()
+IndicatorSetName(GetLocalPlayerId(), self.Clock_Mapicon, string.format("%02.f:%02.f", hour, minute))
+  --clock loop
+  l0 = self[9]
+  l0.Seconds = self.Loop_Delay
+  l0:Start() --Update_Clock
+end
+
+
+function export:Hide_Clock()
+  local l0
+  self = self._graph
+  --hiding clock
+RequestUseSoftware(GetLocalPlayerEntityId(), 0)
+UnBind(self.Reference_Entity)
+SetEntityPosition(self.Reference_Entity, -2000, -2500, 1)
+SetEntityAngle(self.Reference_Entity, 0, 0, 0)
+UnBind(self.Clock_Mapicon)
+IndicatorSetIsVisible(GetLocalPlayerId(), self.Clock_Mapicon, 0)
+  l0 = self[9]
+  l0:Stop()
+  l0:ShutDown()
+  --unloading custom layer
+  l0 = self[1000]
+  l0.LayerName = self.Layer_Name
+  l0:Unload()
+end
+_compilerVersion = 4

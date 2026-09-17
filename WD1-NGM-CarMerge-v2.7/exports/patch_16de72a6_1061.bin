@@ -1,0 +1,46 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterBox("Domino/System/Timer_v2.lua")
+end
+function export:Init(cbox)
+  local l0
+  self[0] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[0]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.f_0_TimeElapsed
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:Check()
+  local l0
+  l0 = self[0]
+  l0.Seconds = 0.1
+  l0:Start()
+end
+function export:f_0_TimeElapsed()
+  local l0
+  self = self._graph
+  if CustomFunctionsCheck == nil then
+    l0 = self[0]
+    l0.Seconds = 0.1
+    l0:Start()
+    return
+  end
+  self:Out()
+end
+_compilerVersion = 4

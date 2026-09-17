@@ -1,0 +1,105 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua") --loaded global variables
+  cbox:RegisterBox("Domino/System/GetPlayerID.lua")
+  cbox:RegisterBox("Domino/System/Timer_v2.lua")
+end
+function export:Init(cbox)
+  self.This_Script = cbox:GetParentEntity()
+  local l0
+  self.ForbiddenZone = "2079957555276154924" --id of restricted area
+  self[1] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[1]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = self.Disable_ForbiddenZone
+  l0.Stopped = self.Enable_ForbiddenZone
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Count_Down
+  l0.LoopingEnded = self.Enable_ForbiddenZone
+  l0.GotTime = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  if Globals._CUSTOM_SCRIPTS._Respawn_Blocked[13] > 0 then
+    local l0
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Start_Timeout
+    l0:In()
+  end
+end
+function export:Start_Timeout()
+  local l0
+  self = self._graph
+  l0 = self[1]
+  l0.Seconds = 1 --loop gap
+  l0.Loop = 1
+  l0.nbLoop = Globals._CUSTOM_SCRIPTS._Respawn_Timeout
+  l0:Start()
+end
+function export:Disable_ForbiddenZone()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionZoneController.lua")]
+  l0.MissionZone = self.ForbiddenZone
+  l0.Red = 1.0
+  l0.Green = 1.0
+  l0.Blue = 1.0
+  l0.Alpha = 1
+  l0.Radius = nil
+  l0.DrawType = "Inside"
+  l0.ShapeType = "CMissionRegionDescriptor"
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.PropertiesUpdated = DummyFunction
+  l0.Out = DummyFunction
+  l0:Enable()
+end
+function export:Count_Down()
+  local l0
+  self = self._graph
+  Globals._CUSTOM_SCRIPTS._Respawn_Blocked[13] = Globals._CUSTOM_SCRIPTS._Respawn_Blocked[13] - 1
+  if Globals._CUSTOM_SCRIPTS._Respawn_Blocked[13] <= 0 then
+    l0 = self[1]
+    l0:Stop()
+  end
+end
+function export:Enable_ForbiddenZone()
+  local l0
+  self = self._graph
+  l0 = Boxes[PathID("Domino/System/MissionZoneController.lua")]
+  l0.MissionZone = self.ForbiddenZone
+  l0.Red = 0.82
+  l0.Green = 0.2
+  l0.Blue = 0.2
+  l0.Alpha = 1
+  l0.Radius = nil
+  l0.DrawType = "Inside"
+  l0.ShapeType = "CMissionRegionDescriptor"
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.PropertiesUpdated = DummyFunction
+  l0.Out = self.Set_False
+  l0:Enable()
+end
+function export:Set_False()
+  local l0
+  self = self._graph
+  Globals._CUSTOM_SCRIPTS._Respawn_Blocked[13] = 0
+  self:ShutDown()
+  CDominoManager_GetInstance():RemoveDominoEntity(self.This_Script)
+end
+_compilerVersion = 4

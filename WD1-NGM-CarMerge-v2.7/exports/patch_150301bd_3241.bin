@@ -1,0 +1,94 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterBox("domino/user/windycity/custom_scripts/race/function_Race.lua")
+  cbox:RegisterBox("Domino/Library/common/CinematicPrep.CinematicPrep.lua")
+  cbox:RegisterBox("Domino/System/MissionCheckpointReach.lua")
+end
+function export:Init(cbox)
+  local l0
+  self[1] = cbox:CreateBox("domino/user/windycity/custom_scripts/race/function_Race.lua")
+  l0 = self[1]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.Finished = DummyFunction
+  l0.Stopped = DummyFunction
+  self[100] = cbox:CreateBox("Domino/System/MissionCheckpointReach.lua")
+  l0 = self[100]
+  l0._graph = self
+  l0.Out = self.Savegame_Reached
+  l0.AllCheckpointsDisabled = DummyFunction
+  self[101] = cbox:CreateBox("Domino/Library/common/CinematicPrep.CinematicPrep.lua")
+  l0 = self[101]
+  l0._graph = self
+  l0.PreOut = DummyFunction
+  l0.PostOut = self.Savegame_Reached
+end
+function export:ShutDown()
+  local l0
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  local l0
+  math.randomseed(Globals._CUSTOM_SCRIPTS._Random_Seed+math.floor(GetGameTime())) --set the global variable as math seed
+  math.random(); math.random(); math.random() --pop some random numbers before using them for real
+  l0 = self[100]
+  l0.Checkpoint = "CheckPoint_0"
+  l0:In()
+end
+function export:CheckPoint_0()
+  local l0
+  self:Race()
+  l0 = self[1]
+  if type(l0.Grid_Position) == "table" then
+    RemoveEntity(self.Spawnpoint)
+    self.Spawnpoint = SpawnEntityFromArchetype("{C551D92C-84E7-60ED-7168-27138DBECB0F}", l0.Grid_Position[1], l0.Grid_Position[2], l0.Grid_Position[3], 0, 0, math.deg(l0.Grid_Position[4])) --Road.Decal.Road_Stains_01
+    TeleportEntity(GetLocalPlayerEntityId(), self.Spawnpoint, 0, 0)
+	l0.Grid_Position = nil
+  end
+  l0 = self[101]
+  l0.SkipPostFX = 0
+  l0.SkipCameraAlign = 0
+  l0:PostCinematic()
+end
+function export:Savegame_Reached()
+  local l0
+  self = self._graph
+  self:Race()
+  l0 = self[1]
+  l0:Start()
+end
+function export:Race()
+  local l0
+  l0 = self[1]
+  l0.Mission_ID = "MissionList.2949098504"
+  l0.Layer_Name = "pvp_nct_racetrack_08"
+  l0.Mission_Name = "69312" --"Mountaineers"
+  l0.Race_Laps = 1
+  l0.Grid_Position = { 1671.140, -1195.440, 94.852; -3.142 } --entGridEntity
+  l0.Race_Path = "2082124940798077380" --entGPSRouteEntity
+  l0.Checkpoints_Data = {
+    --	X	Y	Z	RADIUS	NITRO
+    { 1666.487, -1249.465, 95.001, 14, 0 },
+    { 1333.119, -1317.57, 121.355, 10, 0 },
+    { 917.06, -1613.851, 79.778, 14, 1 },
+    { 932.322, -1823.855, 79.233, 10, 0 },
+    { 1267.959, -1771.582, 94.665, 10, 0 },
+    { 1587.613, -1583.991, 66.431, 14, 0 },
+    { 1735.382, -1755.723, 67.375, 25, 1 },
+    { 1641.535, -2103.005, 77.68, 14, 0 },
+    { 1378.139, -2197.651, 64.483, 14, 0 },
+    { 1197.425, -2185.615, 67.609, 14, 1 },
+    { 1031.396, -2162.843, 86.793, 14, 0 },
+    { 867.875, -2166.116, 95.004, 14, 0 },
+    { 744.985, -2299.25, 110.231, 14, 0 },
+    { 585.081, -2388.802, 118.674, 14, 0 },
+  }
+end
+_compilerVersion = 4

@@ -1,0 +1,1674 @@
+export = {}
+function export:LuaDependencies()
+  return {}
+end
+function export:Create(cbox)
+  cbox:RegisterGlobals("Domino/User/windycity/custom_scripts/custom_scripts.globals.lua") --loaded global variables
+  cbox:RegisterBox("Domino/System/AIGeneratorController.lua")
+  cbox:RegisterBox("Domino/System/FelonyChaseMonitor.lua")
+  cbox:RegisterBox("Domino/System/FloatingVehicleBhvController.lua")
+  cbox:RegisterBox("Domino/System/GetPlayerID.lua")
+  cbox:RegisterBox("Domino/System/GridScriptController.lua")
+  cbox:RegisterBox("Domino/System/MapPointController_v3.lua")
+  cbox:RegisterBox("Domino/System/MissionLayer_v2.lua")
+  cbox:RegisterBox("Domino/System/MissionModuleBox_v3.lua")
+  cbox:RegisterBox("Domino/System/MissionModuleBoxOnline.lua")
+  cbox:RegisterBox("Domino/System/PhoneCallController.lua")
+  cbox:RegisterBox("Domino/System/PlayerPostFXController.lua")
+  cbox:RegisterBox("Domino/System/PlayDialog_v2.lua")
+  cbox:RegisterBox("Domino/System/PlaySound_v2.lua")
+  cbox:RegisterBox("Domino/System/ProximityMonitor.lua")
+  cbox:RegisterBox("Domino/System/Timer_v2.lua")
+  cbox:RegisterBox("Domino/System/VehicleBhvController.lua")
+  cbox:RegisterBox("Domino/System/VehicleMonitor_v2.lua")
+  cbox:RegisterBox("Domino/System/VehicleSpawnerControl_v2.lua")
+  cbox:LoadResource("sndres0x000deac8", "CSoundResource") --checkpoint reached sound
+  cbox:LoadResource("sndres0x0010b9ea", "CSoundResource") --music
+  cbox:LoadResource("sndres0x0010b9f1", "CSoundResource") --music
+  cbox:LoadResource("sndres0x0010b9ec", "CSoundResource") --music
+  cbox:LoadResource("sndres0x00024bb7", "CSoundResource") --music
+  cbox:LoadResource("sndres0x000fb9a0", "CSoundResource") --music
+  cbox:LoadResource("sndres0x000fb99b", "CSoundResource") --music
+  cbox:LoadResource("sndres0x000fb996", "CSoundResource") --music chase
+  cbox:LoadResource("sndres0x000e9860", "CSoundResource") --"We've got a race coming up, but it's missing something. We think that something could be you."
+  cbox:LoadResource("sndres0x000e9ca7", "CSoundResource") --"I know you like to drive and we like to watch you drive, so how about signing up for the next race?"
+  cbox:LoadResource("sndres0x000e9663", "CSoundResource") --"We need skilled drivers for an underground race and your name came up ... as usual. Interested?"
+  cbox:LoadResource("sndres0x000e9408", "CSoundResource") --"I know you're busy man, but we've got one hell of a race coming up. You in?"
+  cbox:LoadResource("sndres0x000e944a", "CSoundResource") --"Up for a challenge? We've got some skilled racers eager to drive against you."
+  cbox:LoadResource("sndres0x000e97d8", "CSoundResource") --"Time to show them how it's done. We've got a race coming up and we want to see you school the competition. What do you say?"
+  cbox:LoadResource("sndres0x000e9852", "CSoundResource") --"We're putting out a call for talented racers and your name's near the top of the list. You in?"
+  cbox:LoadResource("sndres0x000e9c24", "CSoundResource") --"One of your rivals said you'd be too afraid to race him, but we defended you. You want to prove him wrong?"
+  cbox:LoadResource("sndres0x000e975e", "CSoundResource") --"We're putting together a high-speed underground race and we need elite drivers. Are you up for it?"
+  cbox:LoadResource("sndres0x000e9726", "CSoundResource") --"Thought you'd want to know we've got a big race ready to go soon. You want a piece of the action?"
+  cbox:LoadResource("sndres0x000e99af", "CSoundResource") --"Got a chance for you to build your legend. It's a dangerous race. You know the deal. You in?"
+  cbox:LoadResource("sndres0x000e9451", "CSoundResource") --"Got a race coming up and there's one prick in particular that I need to lose. With you driving, he's gonna lose. Can you help me?"
+  cbox:LoadResource("sndres0x000e99a8", "CSoundResource") --"Just thought you might be interested ... we're setting up an underground run and we need racers who can handle it. Can you handle it?"
+  cbox:LoadResource("sndres0x000e9a7f", "CSoundResource") --"We're looking for Chicago's best racers and your name has come up several times. Do you want in?"
+  cbox:LoadResource("sndres0x000e940f", "CSoundResource") --"If you're up for a wild underground race, we've got a spot. What do you think?"
+  cbox:LoadResource("sndres0x000e94cc", "CSoundResource") --"Still got laps to go in this race."
+  cbox:LoadResource("sndres0x000e9aa2", "CSoundResource") --"Multiple laps remain, this is still anybody's race."
+  cbox:LoadResource("sndres0x000e991f", "CSoundResource") --"Only just getting started here--we've got more laps ahead."
+  cbox:LoadResource("sndres0x000e9c44", "CSoundResource") --"We've still got laps to do, which means it's anybody's guess who will win."
+  cbox:LoadResource("sndres0x000e98ae", "CSoundResource") --"You're on the final lap!"
+  cbox:LoadResource("sndres0x000e99e4", "CSoundResource") --"Go! This is your final lap!"
+  cbox:LoadResource("sndres0x000e9a71", "CSoundResource") --"You're coming into your final lap now."
+  cbox:LoadResource("sndres0x000e9710", "CSoundResource") --"This is the final lap. Better move!"
+  cbox:LoadResource("sndres0x000e9332", "CSoundResource") --"Somebody just claimed first place. Hurry up!"
+  cbox:LoadResource("sndres0x000e97d1", "CSoundResource") --"We've got a winner, who will claim the podium spots?"
+  cbox:LoadResource("sndres0x000e99c4", "CSoundResource") --"...and first place is GONE. Who's going to claim second?"
+  cbox:LoadResource("sndres0x000e9ac5", "CSoundResource") --"Sorry, but that performance doesn't even rank. Maybe next time."
+  cbox:LoadResource("sndres0x000e9460", "CSoundResource") --"Oooh. Don't know what happened there, but that was not your best showing."
+  cbox:LoadResource("sndres0x000e9839", "CSoundResource") --"Sorry, but you have to have losers if you're gonna have winners, right?"
+  cbox:LoadResource("sndres0x000e9477", "CSoundResource") --"Looks like you got smoked that time. Happens to the best of us."
+  cbox:LoadResource("sndres0x000e9a9b", "CSoundResource") --"Almost ... but not quite. A respectable run, though."
+  cbox:LoadResource("sndres0x000e98fb", "CSoundResource") --"One of the best drivers out there, but not the best time."
+  cbox:LoadResource("sndres0x000e95fa", "CSoundResource") --"I thought for sure you were gonna take it this time. Damn good showing, though."
+  cbox:LoadResource("sndres0x000e9569", "CSoundResource") --"You ran a smart race. Well done."
+  cbox:LoadResource("sndres0x000e9ca0", "CSoundResource") --"Damn! That was one hell of a run, my friend!"
+  cbox:LoadResource("sndres0x000e9b40", "CSoundResource") --"What a race! I don't think anybody was ready for you."
+  cbox:LoadResource("sndres0x000e9372", "CSoundResource") --"Jesus Christ, I wish I could drive like that. Well done."
+  cbox:LoadResource("sndres0x000e9a15", "CSoundResource") --"You blitzed them, man. They're going to feel that in the morning!"
+  cbox:LoadResource("sndres0x000e9c53", "CSoundResource") --"This will be a checkpoint race. A to B. Got it? Good. Shortcuts and dirty tactics are appreciated, but optional."
+  cbox:LoadResource("sndres0x000e9bd7", "CSoundResource") --"This will be a circuit race consisting of several laps throughout the city. I suspect your rivals will be trying to cheat, so you may want to do the same."
+  cbox:LoadResource("sndres0x000e988b", "CSoundResource") --"This is an anything-goes race to the finish line. We're not concerned about "fair play" or regulations, here - so please be creative."
+end
+function export:Init(cbox)
+  local l0
+  self.Reference_Entity = "2583000000000000000"
+  self.Objective_Marker = "2583000000000000000"
+  self.Reference_Entities = { "2583000000000000001", "2583000000000000002", "2583000000000000003", "2583000000000000004", "2583000000000000005", "2583000000000000006", "2583000000000000007", "2583000000000000008", }
+  self.Marker_Enemy = { "2583000000000000021", "2583000000000000022", "2583000000000000023", "2583000000000000024", "2583000000000000025", "2583000000000000026", "2583000000000000027", "2583000000000000028", }
+  self.Checkpoint_Normal = "2583000000000000010"
+  self.Checkpoint_Nitro = "2583000000000000011"
+  self.Checkpoint_Next = "2583000000000000012"
+  self.Checkpoint_Final = "2583000000000000013"
+  self.Driver_Generator = "2583000000000000014"
+  self.Driver_Spawner = "2583000000000000015"
+  self.Circle_Inner = "2583000000000000029"
+  self.Vehicle_Madness = "2583000000000000030"
+  self.Vehicle_Helicopter = "2583000000000000031"
+  self.Vehicles_Offroad = {
+    "2583000000000000301", --Offroad_01_AI
+    "2583000000000000302", --Offroad_02_AI
+    "2583000000000000303", --Offroad_03_AI
+    "2583000000000000304", --Offroad_04_AI
+    "2583000000000000307", --Offroad_03_AI
+    "2583000000000000308", --Offroad_04_AI
+    "2583000000000000305", --Offroad_01_AI
+    "2583000000000000306", --Offroad_02_AI
+  }
+  self.Vehicles_Traffic = {
+    "2583000000000000501", --Traffic_Large_02_AI
+    "2583000000000000502", --Traffic_Luxury_02_AI
+    "2583000000000000503", --Traffic_Luxury_03_AI
+    "2583000000000000504", --Traffic_Workvan_01_AI
+    "2583000000000000507", --Traffic_Luxury_03_AI
+    "2583000000000000508", --Traffic_Workvan_01_AI
+    "2583000000000000505", --Traffic_Large_02_AI
+    "2583000000000000506", --Traffic_Luxury_02_AI
+  }
+  self.Vehicles_Muscle = {
+    "2583000000000000203", --Muscle_03_AI
+    "2583000000000000204", --Muscle_04_AI
+    "2583000000000000205", --Muscle_Retro_01_AI
+    "2583000000000000206", --Muscle_Retro_02_AI
+    "2583000000000000207", --Muscle_Retro_03_Mobster_Militia
+    "2583000000000000202", --Muscle_02_ChicagoClub_AI
+    "2583000000000000201", --Muscle_01_MobChaser
+    "2583000000000000208", --Muscle_04_AI
+  }
+  self.Vehicles_Agile = {
+    "2583000000000000101", --Agile_01_AI
+    "2583000000000000102", --Agile_02_AI
+    "2583000000000000103", --Agile_03_AI
+    "2583000000000000104", --Agile_04_AI
+    "2583000000000000105", --Agile_06_AI
+    "2583000000000000108", --Agile_03_AI
+    "2583000000000000107", --Agile_02_AI
+    "2583000000000000106", --Agile_01_AI
+  }
+  self.Vehicles_Speed = {
+    "2583000000000000401", --Speed_02_AI
+    "2583000000000000402", --Speed_03_AI
+    "2583000000000000404", --Speed_06_AI
+    "2583000000000000403", --Speed_04_AI
+    "2583000000000000408", --Speed_06_AI
+    "2583000000000000407", --Speed_04_AI
+    "2583000000000000405", --Speed_07_AI
+    "2583000000000000406", --Speed_03_AI
+  }
+  self.Vehicles_SportBoat = {
+    "2583000000000000601", --SportBoat_01
+    "2583000000000000602", --SportBoat_01
+    "2583000000000000603", --SportBoat_01
+    "2583000000000000604", --SportBoat_01
+    "2583000000000000605", --SportBoat_01
+    "2583000000000000606", --SportBoat_01
+    "2583000000000000607", --SportBoat_01
+    "2583000000000000608", --SportBoat_01
+  }
+  self.Vehicles_FishingBoat = {
+    "2583000000000000701", --FishingBoat_01
+    "2583000000000000702", --FishingBoat_01
+    "2583000000000000703", --FishingBoat_01
+    "2583000000000000704", --FishingBoat_01
+    "2583000000000000705", --FishingBoat_01
+    "2583000000000000706", --FishingBoat_01
+    "2583000000000000707", --FishingBoat_01
+    "2583000000000000708", --FishingBoat_01
+  }
+  self.Vehicles_List = { self.Vehicles_Offroad, self.Vehicles_Traffic, self.Vehicles_Muscle, self.Vehicles_Agile, self.Vehicles_Speed, self.Vehicles_SportBoat, self.Vehicles_FishingBoat }
+  self.Checkpoint_Selected = self.Checkpoint_Normal
+  self.Checkpoint_Index = 0
+  self.Checkpoint_Indexes = { 0, 0, 0, 0, 0, 0, 0, 0, }
+  self.Lap_Index = 1
+  self.Lap_Indexes = { 1, 1, 1, 1, 1, 1, 1, 1, }
+  self.Difficulty_Cars = {
+    -- "VehicleBhvSetup.1939292184", --Fleeing.VeryEasy
+    "VehicleBhvSetup.4221001132", --Fleeing.Easy
+    "VehicleBhvSetup.4290858857", --Fleeing.Medium
+    "VehicleBhvSetup.1944115433", --Fleeing.Hard
+    "VehicleBhvSetup.2366374929", --Fleeing.Impossible
+    "VehicleBhvSetup.556724246", --Fleeing.Impossible.A01M05_CarAccident
+  }
+  self.Difficulty_Boats = {
+    -- "FloatingVehicleBhvSetup.2287831072", --BeingTailed.VeryEasy.NoGauge
+    "FloatingVehicleBhvSetup.2287831072", --BeingTailed.VeryEasy.NoGauge
+    "FloatingVehicleBhvSetup.2574786981", --BeingTailed.Easy.NoGauge
+    "FloatingVehicleBhvSetup.3199417753", --BeingTailed.Medium.NoGauge
+    "FloatingVehicleBhvSetup.3046829651", --BeingTailed.Hard.NoGauge
+    "FloatingVehicleBhvSetup.3046829651", --BeingTailed.Hard.NoGauge
+  }
+  self.Difficulty_Levels = self.Difficulty_Cars
+  self.Skill_Opponent = {}
+  self.Rewards_Hud = { 10000, 5000, 2500, 1000, 500, 100, 100, 100, 100, 100, }
+  self.Rewards_Cash = {
+    "Items.2532779827", --Cash.HardConvoyRewards (10000$)
+    "Items.2273191724", --Cash.HardConvoyRewards.MediumConvoy (5000$)
+    "Items.36690776", --Cash.HardConvoyRewards.EasyConvoy (2500$)
+    "Items.2217939846", --Cash.HardContractBronze.EasyBronze (1000$)
+    "Items.525078667", --Cash.OnlineRaces.Completion (500$)
+    "Items.666485274", --Cash.SideMissionRewardEasy (100$)
+    "Items.666485274", --Cash.SideMissionRewardEasy (100$)
+    "Items.666485274", --Cash.SideMissionRewardEasy (100$)
+    "Items.666485274", --Cash.SideMissionRewardEasy (100$)
+    "Items.666485274", --Cash.SideMissionRewardEasy (100$)
+  }
+  self.Rewards_XP = {
+    "Items.3066831865", --SideMissionXP.Difficulty.Hard (1000xp)
+    "Items.1207405678", --SideMissionXP.Lair (750xp)
+    "Items.2674701184", --SideMissionXP.Difficulty.Medium (500xp)
+    "Items.1052485308", --SideMissionXP.Difficulty.Easy (250xp)
+    "Items.486596791", --SideMissionXP.Difficulty (100xp)
+    "Items.486596791", --SideMissionXP.Difficulty (100xp)
+    "Items.486596791", --SideMissionXP.Difficulty (100xp)
+    "Items.486596791", --SideMissionXP.Difficulty (100xp)
+    "Items.486596791", --SideMissionXP.Difficulty (100xp)
+    "Items.486596791", --SideMissionXP.Difficulty (100xp)
+  }
+  self.Player_Place = 1
+  self.Initial_Phonecall = { "0x000e9860", "0x000e9ca7", "0x000e9663", "0x000e9408", "0x000e944a", "0x000e97d8", "0x000e9852", "0x000e9c24", "0x000e975e", "0x000e9726", "0x000e99af", "0x000e9451", "0x000e99a8", "0x000e9a7f", "0x000e940f", }
+  self.Music = { "0x0010b9ea", "0x0010b9f1", "0x0010b9ec", "0x00024bb7", "0x000fb9a0", "0x000fb99b", "0x000fb996", }
+  self.Grid_Sequence = { "GridScriptSequence.1877363595", "GridScriptSequence.1877363596", "GridScriptSequence.1877363597" } --pointtopoint circuit ffa
+  self.Announcer_RaceType = { "0x000e9c53", "0x000e9bd7", "0x000e988b", } --pointtopoint circuit ffa
+  self.Announcer_FirstLap = { "0x000e94cc", "0x000e9aa2", "0x000e991f", "0x000e9c44", }
+  self.Announcer_FinalLap = { "0x000e98ae", "0x000e99e4", "0x000e9a71", "0x000e9710", }
+  self.Announcer_FirstGone = { "0x000e9332", "0x000e97d1", "0x000e99c4", }
+  self.Announcer_BadRace = { "0x000e9ac5", "0x000e9460", "0x000e9839", "0x000e9477", }
+  self.Announcer_NotFirst = { "0x000e9a9b", "0x000e98fb", "0x000e95fa", }
+  self.Announcer_FirstPlace = { "0x000e9569", "0x000e9ca0", "0x000e9b40", "0x000e9372", "0x000e9a15", }
+  self.Delay_Position = 0.25 --check rank every
+  self.Loop_Delay = 0.1 --check opponent icon and boat sinking every
+  self[1000] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[1000]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = self.Layer_Loaded
+  self[0] = cbox:CreateBox("Domino/System/MissionModuleBoxOnline.lua") --start
+  l0 = self[0]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = self.Start_Phonecall
+  l0.Out = DummyFunction
+  self[10] = cbox:CreateBox("Domino/System/MissionLayer_v2.lua")
+  l0 = self[10]
+  l0._graph = self
+  l0.Loaded = DummyFunction
+  l0.Unloaded = DummyFunction
+  l0.Reseted = self.Loaded_Race
+  self[14] = cbox:CreateBox("Domino/System/PhoneCallController.lua")
+  l0 = self[14]
+  l0._graph = self
+  l0._DynamicAnchors = {SoundID = 1}
+  l0.OnShown = DummyFunction
+  l0.CallStarted = DummyFunction
+  l0.CallStopped = DummyFunction
+  l0.CallFinished = DummyFunction
+  l0.OnClosed = DummyFunction
+  l0.Out = DummyFunction
+  self[15] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua") --reach
+  l0 = self[15]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[18] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[18]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Reached_Start
+  l0.ExitRadius = DummyFunction
+  self[50] = cbox:CreateBox("Domino/System/PlayerPostFXController.lua")
+  l0 = self[50]
+  l0._graph = self
+  l0.Played = DummyFunction
+  l0.Stopped = DummyFunction
+  self[51] = cbox:CreateBox("Domino/System/PlayerPostFXController.lua")
+  l0 = self[51]
+  l0._graph = self
+  l0.Played = self.Faded_Out
+  l0.Stopped = DummyFunction
+  self[52] = cbox:CreateBox("Domino/System/PlayerPostFXController.lua")
+  l0 = self[52]
+  l0._graph = self
+  l0.Played = self.Faded_In
+  l0.Stopped = DummyFunction
+  self[63] = cbox:CreateBox("Domino/System/VehicleSpawnerControl_v2.lua")
+  l0 = self[63]
+  l0._graph = self
+  l0.Spawned = self.Spawn_Driver
+  l0.UnSpawned = DummyFunction
+  l0.AllowAutoRespawnSet = DummyFunction
+  l0.Out = DummyFunction
+  self[25] = cbox:CreateBox("Domino/System/AIGeneratorController.lua")
+  l0 = self[25]
+  l0._graph = self
+  l0.Spawned = self.Assign_Vehicle
+  l0.UnSpawned = DummyFunction
+  self[64] = cbox:CreateBox("Domino/System/VehicleSpawnerControl_v2.lua")
+  l0 = self[64]
+  l0._graph = self
+  l0.Spawned = self.Spawned_Player_Vehicle
+  l0.UnSpawned = DummyFunction
+  l0.AllowAutoRespawnSet = DummyFunction
+  l0.Out = DummyFunction
+  self[11] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[11]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Start_Race
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[12] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[12]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Countdown_Finished
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[16] = cbox:CreateBox("Domino/System/VehicleBhvController.lua")
+  l0 = self[16]
+  l0._graph = self
+  l0.StartCompleted = DummyFunction
+  l0.StopCompleted = DummyFunction
+  l0.ForcedFakeFollow = DummyFunction
+  self[17] = cbox:CreateBox("Domino/System/FloatingVehicleBhvController.lua")
+  l0 = self[17]
+  l0._graph = self
+  l0.StartCompleted = DummyFunction
+  l0.StopCompleted = DummyFunction
+  self[30] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[30]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Checkpoint_Reached
+  l0.ExitRadius = DummyFunction
+  self[1] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[1]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Checkpoint_Reached_1
+  l0.ExitRadius = DummyFunction
+  self[2] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[2]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Checkpoint_Reached_2
+  l0.ExitRadius = DummyFunction
+  self[3] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[3]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Checkpoint_Reached_3
+  l0.ExitRadius = DummyFunction
+  self[4] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[4]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Checkpoint_Reached_4
+  l0.ExitRadius = DummyFunction
+  self[5] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[5]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Checkpoint_Reached_5
+  l0.ExitRadius = DummyFunction
+  self[6] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[6]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Checkpoint_Reached_6
+  l0.ExitRadius = DummyFunction
+  self[7] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[7]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Checkpoint_Reached_7
+  l0.ExitRadius = DummyFunction
+  self[8] = cbox:CreateBox("Domino/System/ProximityMonitor.lua")
+  l0 = self[8]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.EnterRadius = self.Checkpoint_Reached_8
+  l0.ExitRadius = DummyFunction
+  self[13] = cbox:CreateBox("Domino/System/PlaySound_v2.lua")
+  l0 = self[13]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Finished = DummyFunction
+  self[71] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[71]
+  l0._graph = self
+  l0.Shown = DummyFunction
+  l0.Hidden = DummyFunction
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[72] = cbox:CreateBox("Domino/System/MapPointController_v3.lua")
+  l0 = self[72]
+  l0._graph = self
+  l0.Shown = DummyFunction
+  l0.Hidden = DummyFunction
+  l0.TextSet = DummyFunction
+  l0.TextHidden = DummyFunction
+  self[20] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua") --position
+  l0 = self[20]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[19] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua") --bonus
+  l0 = self[19]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[55] = cbox:CreateBox("Domino/System/FelonyChaseMonitor.lua")
+  l0 = self[55]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.None = DummyFunction
+  l0.DenunciatorStarted = DummyFunction
+  l0.DenunciatorInterrupted = DummyFunction
+  l0.DenunciatorFinished = DummyFunction
+  l0.ScanStarted = DummyFunction
+  l0.ScanSuccess = DummyFunction
+  l0.ScanFailure = DummyFunction
+  l0.Chasing = DummyFunction
+  l0.Searching = DummyFunction
+  l0.Evaded = self.Status_Evaded
+  l0.TargetKilled = DummyFunction
+  l0.LevelChanged = DummyFunction
+  l0.TargetArrested = DummyFunction
+  self[40] = cbox:CreateBox("Domino/System/MissionModuleBox_v3.lua") --success
+  l0 = self[40]
+  l0._graph = self
+  l0.DisplayRequested = DummyFunction
+  l0.DisplayStarted = DummyFunction
+  l0.HideRequested = DummyFunction
+  l0.DisplayFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[97] = cbox:CreateBox("Domino/System/GridScriptController.lua")
+  l0 = self[97]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.StartSuccess = DummyFunction
+  l0.StartFail = self.Sequence_Finished
+  l0.Exited = self.Sequence_Finished
+  self[98] = cbox:CreateBox("Domino/System/PlayDialog_v2.lua")
+  l0 = self[98]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.ListStarted = DummyFunction
+  l0.PriorityFailed = DummyFunction
+  l0.Interrupted = DummyFunction
+  l0.Queued = DummyFunction
+  l0.Finished = DummyFunction
+  l0.ListFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[45] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[45]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Play_Dialog
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[99] = cbox:CreateBox("Domino/System/PlayDialog_v2.lua")
+  l0 = self[99]
+  l0._graph = self
+  l0.Started = DummyFunction
+  l0.ListStarted = DummyFunction
+  l0.PriorityFailed = DummyFunction
+  l0.Interrupted = DummyFunction
+  l0.Queued = DummyFunction
+  l0.Finished = self.Unload_Layer
+  l0.ListFinished = DummyFunction
+  l0.Out = DummyFunction
+  self[27] = cbox:CreateBox("Domino/System/VehicleMonitor_v2.lua")
+  l0 = self[27]
+  l0._graph = self
+  l0.Enabled = DummyFunction
+  l0.Disabled = DummyFunction
+  l0.Enter = DummyFunction
+  l0.Entered = DummyFunction
+  l0.Leave = self.Start_Chase
+  l0.Exiting = DummyFunction
+  l0.ChangeSeat = DummyFunction
+  l0.StateChange = DummyFunction
+  l0.BailedOut = self.Start_Chase
+  l0.NoMoveTimer = self.Start_Chase
+  l0.OnMoveTimer = DummyFunction
+  l0.IsUnusable = self.Start_Chase
+  l0.BollardTakedown = DummyFunction
+  l0.SteamPipeTakedown = DummyFunction
+  l0.TrafficLightTakedown = DummyFunction
+  l0.FullTakedown = self.Start_Chase
+  l0.PartialTakedown = DummyFunction
+  l0.IsSlowEnoughToExit = DummyFunction
+  l0.IsUnderwater = self.Start_Chase
+  l0.IsPawnHiding = DummyFunction
+  l0.PawnIsNotHiding = DummyFunction
+  self[111] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[111]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Check_Place
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+  self[1111] = cbox:CreateBox("Domino/System/Timer_v2.lua")
+  l0 = self[1111]
+  l0._graph = self
+  l0.Out = DummyFunction
+  l0.Started = DummyFunction
+  l0.Stopped = DummyFunction
+  l0.Paused = DummyFunction
+  l0.Resumed = DummyFunction
+  l0.TimeElapsed = self.Check_Opponents
+  l0.LoopingEnded = DummyFunction
+  l0.GotTime = DummyFunction
+end
+function export:ShutDown()
+  for k, v in pairs(self) do
+    if type(v) == "table" and v.ShutDown ~= self.ShutDown and v ~= self._graph and v.ShutDown ~= nil then
+      v:ShutDown()
+    end
+  end
+end
+function export:In()
+  local l0
+  ShowMissionTextMessageLocalPlayer("MissionDebug", "DefaultIcon", "WRONG USAGE", "This script is meant to be used as a function.", "", "", 5, 0, self, "OnFinished", "OnDisplayed")
+end
+function export:Start()
+  local l0
+  math.randomseed(Globals._CUSTOM_SCRIPTS._Random_Seed+math.floor(GetGameTime())) --set the global variable as math seed
+  math.random(); math.random(); math.random() --pop some random numbers before using them for real
+--getting player entity id for next functions
+self.PlayerPawn = GetLocalPlayerEntityId()
+--disabling felony system
+FelonySystemEnable(0)
+--disabling reputation
+EnableReputation(0)
+  --loading custom layer
+  l0 = self[1000]
+  l0.LayerName = "custom_race"
+  l0:Reset()
+end
+function export:Layer_Loaded()
+  local l0
+  self = self._graph
+  --hide markers
+  l0 = self[72]
+  l0.MapPoint = self.Checkpoint_Normal
+  l0:Hide()
+  l0.MapPoint = self.Checkpoint_Nitro
+  l0:Hide()
+  l0.MapPoint = self.Checkpoint_Next
+  l0:Hide()
+  l0.MapPoint = self.Checkpoint_Final
+  l0:Hide()
+  for i=1, #self.Marker_Enemy do
+    l0.MapPoint = self.Marker_Enemy[i]
+    l0:Hide()
+  end
+  --using precalculated data
+  self.Race_Vehicles = Globals._CUSTOM_SCRIPTS._Race[tonumber(string.sub(self.Layer_Name, -2))].Race_Vehicles
+  self.Opponents_Amount = Globals._CUSTOM_SCRIPTS._Race[tonumber(string.sub(self.Layer_Name, -2))].Opponents_Amount
+  self.Difficulty_Level = Globals._CUSTOM_SCRIPTS._Race[tonumber(string.sub(self.Layer_Name, -2))].Difficulty_Level
+  --calculating difficulty if needed
+  if self.Difficulty_Level == nil then
+    if self.Opponents_Amount <= 2 then --if 1vs1 skip easiest
+      self.Difficulty_Level = math.random(2,3)
+    elseif self.Race_Vehicles == 7 then --if slow boat skip hardest
+      self.Difficulty_Level = math.random(1,2)
+    elseif self.Race_Vehicles > 3 then --if fast vehicles skip easiest
+      self.Difficulty_Level = math.random(2,3)
+    elseif self.Race_Vehicles < 3 then --if slow vehicles skip hardest
+      self.Difficulty_Level = math.random(1,2)
+    else
+      self.Difficulty_Level = math.random(1,3)
+    end
+  end
+  --setting appropriate data
+  if self.Opponents_Amount <= 2 then --if 1vs1 skip boss
+    self.Probability_Boss = 0
+  end
+  if self.Race_Vehicles >= #self.Vehicles_List-1 then
+    self.Probability_Chase = 0
+    self.Probability_Boss = 0
+    self.BHV_Controller = self[17]
+    self.Difficulty_Levels = self.Difficulty_Boats
+  else
+    self.BHV_Controller = self[16]
+    self.Difficulty_Levels = self.Difficulty_Cars
+  end
+-- self.Mission_ID = self.Mission_ID or nil
+-- self.Layer_Name = self.Layer_Name or nil
+  self.Mission_Name = self.Mission_Name or "195681" --"Race"
+  self.Mission_Type = self.Mission_Type or "194137" --"RACE"
+  self.Race_Laps = self.Race_Laps or 1
+-- self.Grid_Position = self.Grid_Position or nil
+-- self.Race_Path = self.Race_Path or nil
+  self.Opponents_Amount = self.Opponents_Amount or 2^math.random(1,3)-1
+  self.Difficulty_Level = self.Difficulty_Level or math.random(1,3)
+  self.Probability_Chase = self.Probability_Chase or 25
+  self.Probability_Boss = self.Probability_Boss or 25
+-- self.Checkpoints_Data = self.Checkpoints_Data or nil
+  self.Narrow_Grid = self.Narrow_Grid or 0
+  self.Race_Vehicles = self.Vehicles_List[self.Race_Vehicles] or self.Vehicles_List[math.random(1,#self.Vehicles_List-2)]
+  --validating opponents amount
+  if self.Opponents_Amount <= 2 then
+    self.Opponents_Amount = 1
+  elseif self.Opponents_Amount <= 5 or self.Narrow_Grid == 1 then
+    self.Opponents_Amount = 3
+  else
+    self.Opponents_Amount = 7
+  end
+  --validating difficulty
+  if self.Difficulty_Level < 1 then
+    self.Difficulty_Level = 1
+  elseif self.Difficulty_Level > 3 then
+    self.Difficulty_Level = 3
+  end
+  --ensuring parameters valid
+  if self.Mission_ID == nil or self.Layer_Name == nil or self.Grid_Position == nil or self.Race_Path == nil or type(self.Checkpoints_Data) ~= "table" then
+    ShowMissionTextMessageLocalPlayer("MissionDebug", "DefaultIcon", "RACE START FAILED", "Missing or invalid parameters.", "", "", 5, 0, self, "OnFinished", "OnDisplayed")
+    AbortMissionWithDbObj(self.Mission_ID)
+  else
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Race_Started
+    l0:In()
+  end
+end
+function export:Race_Started()
+  local l0
+  self = self._graph
+self:Started()
+  --displaying start message
+  l0 = self[0]
+  l0.Title = {
+    section = "MISSIONS.SIDE.OBJECTIVES.Mob_Traps.MobTraps",
+    item = "Name",
+    id = self.Mission_Type
+  }
+  l0.Text = {
+    section = "MISSIONS.SIDE.OBJECTIVES.Mob_Traps.MobTraps",
+    item = "Description",
+    id = self.Mission_Name
+  }
+  l0.Duration = 5
+  l0.Queue = 0
+  l0:Display() --Start_Phonecall
+end
+function export:Start_Phonecall()
+  local l0
+  self = self._graph
+  --displaying objective marker
+SetEntityPosition(self.Objective_Marker, self.Grid_Position[1], self.Grid_Position[2], self.Grid_Position[3])
+  l0 = self[71]
+  l0.MapPoint = self.Objective_Marker
+  l0.LocText = { id = "165448" } --"Reach"
+  l0.LocMapMarkerTitle = { id = self.Mission_Type }
+  l0.LocMapMarkerDescription = { self.Mission_Name }
+  l0:Show()
+  --playing initial phonecall
+  l0 = self[14]
+  l0.Caller = "Unknown"
+  l0.HeaderText = {
+    section = "POPUPS.Phone Calls",
+    item = "IncomingFrom",
+    id = "15198"
+  }
+  l0.LineText = {
+    section = "POPUPS.Phone Calls",
+    item = "UNKNOWN",
+    id = "17590"
+  }
+  l0.SoundIDList = { self.Initial_Phonecall[math.random(#self.Initial_Phonecall)] }
+  l0.RingToneType = "Incoming"
+  if GetDistance3D(GetLocalPlayerEntityId(), self.Objective_Marker) > 20 then
+    l0:StartCall()
+  end
+  --displaying objective message
+  l0 = self[15]
+  l0.MessageType = "MissionUpdate"
+  l0.MessageIcon = "iconRace"
+  l0.OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "196958" --"Reach the meeting location."
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "194137" --"RACE"
+  }
+  l0.Duration = -1
+  l0:Display()
+  --enabling objective radius
+  l0 = self[18]
+  l0.Entity1 = GetLocalPlayerEntityId()
+  l0.Entity2 = self.Objective_Marker
+  l0.Radius = 20
+  l0.CheckDistance3D = 1
+  l0.CheckNow = 1
+  l0:Enable() --Reached_Start
+end
+
+function export:Reached_Start()
+  local l0
+  self = self._graph
+  --stopping phonecall
+StopDominoPlayingDialog(GetLocalPlayerEntityId())
+  l0 = self[14]
+  l0:StopCall()
+  --hiding objective message
+  l0 = self[15]
+  l0.MessageType = "MissionUpdate"
+  l0.MessageIcon = "iconRace"
+  l0.OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "196958" --"Reach the meeting location."
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "194137" --"RACE"
+  }
+  l0.Duration = -1
+  l0:Hide()
+  --hiding objective marker
+  l0 = self[71]
+  l0:Hide()
+  --disabling objective radius
+  l0 = self[18]
+  l0:Disable()
+  --starting fadeout
+  l0 = self[51]
+  l0.SequenceName = "precinematic"
+  l0:StartPostFX()
+--unblocking controls
+PopPlayerActionMap("cinematic")
+end
+function export:Faded_Out()
+  local l0
+  self = self._graph
+  --starting blackscreen
+  l0 = self[50]
+  l0.SequenceName = "blackscreen_loop_nofade"
+  l0:StartPostFX()
+--blocking controls
+PushPlayerActionMap("cinematic")
+--returning projectiles
+UnspawnReleasedProjectiles(1)
+--hiding ui
+SendShowOrHideAllUIEvent(0)
+--instantly stopping player vehicle
+ForcePawnsVehicleStopFunction(GetLocalPlayerEntityId())
+  --loading vanilla layer
+  l0 = self[10]
+  l0.LayerName = self.Layer_Name
+  l0:Reset() --Loaded_Race
+end
+function export:Loaded_Race()
+  local l0
+  self = self._graph
+--clearing everything
+TriggerInitialSpawn()
+  --shuffling vehicles list
+  for i=#self.Race_Vehicles, 2, -1 do
+    local j = math.random(i)
+    self.Race_Vehicles[i], self.Race_Vehicles[j] = self.Race_Vehicles[j], self.Race_Vehicles[i]
+  end
+--calculating grid
+self.List_Opponent_Vehicles = {}
+self.List_Opponent_Drivers = {}
+self.Grid_Index = 1
+self.Grid_Positions = {}
+self.Coordinate_X = self.Grid_Position[1] + math.cos(self.Grid_Position[4]) * 3
+self.Coordinate_Y = self.Grid_Position[2] + math.sin(self.Grid_Position[4]) * 3
+table.insert(self.Grid_Positions, { self.Coordinate_X, self.Coordinate_Y }) --2
+self.Coordinate_X = self.Grid_Position[1] + math.cos(self.Grid_Position[4]) * 6
+self.Coordinate_Y = self.Grid_Position[2] + math.sin(self.Grid_Position[4]) * 6
+table.insert(self.Grid_Positions, { self.Coordinate_X, self.Coordinate_Y }) --3
+  if self.Narrow_Grid == 1 then
+    self.Coordinate_X = self.Grid_Position[1] + math.cos(self.Grid_Position[4] - math.rad(65.225)) * 7.159
+    self.Coordinate_Y = self.Grid_Position[2] + math.sin(self.Grid_Position[4] - math.rad(65.225)) * 7.159
+    table.insert(self.Grid_Positions, { self.Coordinate_X, self.Coordinate_Y }) --6
+    self.Coordinate_X = self.Grid_Position[1] + math.cos(self.Grid_Position[4] - math.rad(47.29)) * 8.846
+    self.Coordinate_Y = self.Grid_Position[2] + math.sin(self.Grid_Position[4] - math.rad(47.29)) * 8.846
+    table.insert(self.Grid_Positions, { self.Coordinate_X, self.Coordinate_Y }) --7
+    table.insert(self.Grid_Positions, { self.Grid_Position[1], self.Grid_Position[2] }) --1
+    self.Coordinate_X = self.Grid_Position[1] + math.cos(self.Grid_Position[4]) * 9
+    self.Coordinate_Y = self.Grid_Position[2] + math.sin(self.Grid_Position[4]) * 9
+    table.insert(self.Grid_Positions, { self.Coordinate_X, self.Coordinate_Y }) --4
+    self.Coordinate_X = self.Grid_Position[1] + math.cos(self.Grid_Position[4] - math.rad(90)) * 6.5
+    self.Coordinate_Y = self.Grid_Position[2] + math.sin(self.Grid_Position[4] - math.rad(90)) * 6.5
+    table.insert(self.Grid_Positions, { self.Coordinate_X, self.Coordinate_Y }) --5
+  else
+    table.insert(self.Grid_Positions, { self.Grid_Position[1], self.Grid_Position[2] }) --1
+    self.Coordinate_X = self.Grid_Position[1] + math.cos(self.Grid_Position[4]) * 9
+    self.Coordinate_Y = self.Grid_Position[2] + math.sin(self.Grid_Position[4]) * 9
+    table.insert(self.Grid_Positions, { self.Coordinate_X, self.Coordinate_Y }) --4
+    self.Coordinate_X = self.Grid_Position[1] + math.cos(self.Grid_Position[4] - math.rad(90)) * 6.5
+    self.Coordinate_Y = self.Grid_Position[2] + math.sin(self.Grid_Position[4] - math.rad(90)) * 6.5
+    table.insert(self.Grid_Positions, { self.Coordinate_X, self.Coordinate_Y }) --5
+    self.Coordinate_X = self.Grid_Position[1] + math.cos(self.Grid_Position[4] - math.rad(65.225)) * 7.159
+    self.Coordinate_Y = self.Grid_Position[2] + math.sin(self.Grid_Position[4] - math.rad(65.225)) * 7.159
+    table.insert(self.Grid_Positions, { self.Coordinate_X, self.Coordinate_Y }) --6
+    self.Coordinate_X = self.Grid_Position[1] + math.cos(self.Grid_Position[4] - math.rad(47.29)) * 8.846
+    self.Coordinate_Y = self.Grid_Position[2] + math.sin(self.Grid_Position[4] - math.rad(47.29)) * 8.846
+    table.insert(self.Grid_Positions, { self.Coordinate_X, self.Coordinate_Y }) --7
+  end
+self.Coordinate_X = self.Grid_Position[1] + math.cos(self.Grid_Position[4] - math.rad(35.838)) * 11.102
+self.Coordinate_Y = self.Grid_Position[2] + math.sin(self.Grid_Position[4] - math.rad(35.838)) * 11.102
+table.insert(self.Grid_Positions, { self.Coordinate_X, self.Coordinate_Y }) --8
+  --spawning opponents
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Spawn_Vehicle
+  l0:In()
+end
+function export:Spawn_Vehicle()
+  local l0
+  self = self._graph
+--selecting opponent vehicle
+self.Opponent_Selected = self.Race_Vehicles[self.Grid_Index]
+  --spawning enemy vehicle
+SetEntityPosition(self.Opponent_Selected, self.Grid_Positions[self.Grid_Index][1], self.Grid_Positions[self.Grid_Index][2], self.Grid_Position[3])
+SetEntityAngle(self.Opponent_Selected, 0, 0, math.ceil(math.deg(self.Grid_Position[4])))
+  l0 = self[63]
+  l0.VehicleSpawner = self.Opponent_Selected
+  l0:Spawn()
+end
+function export:Spawn_Driver()
+  local l0
+  self = self._graph
+  l0 = self[63]
+  table.insert(self.List_Opponent_Vehicles, l0.SpawnedVehicle)
+  --spawning driver
+SetEntityPosition(self.Driver_Spawner, self.Grid_Positions[self.Grid_Index][1], self.Grid_Positions[self.Grid_Index][2], self.Grid_Position[3])
+SetEntityAngle(self.Driver_Spawner, 0, 0, math.ceil(math.deg(self.Grid_Position[4])))
+  l0 = self[25]
+  l0.AIGenerator = self.Driver_Generator
+  l0:Spawn()
+end
+function export:Assign_Vehicle()
+  local l0
+  self = self._graph
+  l0 = self[25]
+  table.insert(self.List_Opponent_Drivers, l0.SpawnedEntity)
+--assigning driver to vehicle
+AssignVehicleSeat(self.List_Opponent_Vehicles[#self.List_Opponent_Vehicles], self.List_Opponent_Drivers[#self.List_Opponent_Drivers], 1, 0, 1, 0)
+  --checking if all spawned
+  if self.Grid_Index < self.Opponents_Amount then
+    self.Grid_Index = self.Grid_Index + 1
+    --continuing opponents spawn
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Spawn_Vehicle
+    l0:In()
+  elseif GetCurrentSeat(GetLocalPlayerEntityId()) == 1 then
+    self.Grid_Index = self.Grid_Index + 1
+    --starting race
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Start_Race
+    l0:In()
+  else
+    self.Grid_Index = self.Grid_Index + 1
+    --selecting player vehicle
+    self.Opponent_Selected = self.Race_Vehicles[self.Grid_Index]
+    --spawning player vehicle
+    SetEntityPosition(self.Opponent_Selected, self.Grid_Positions[self.Grid_Index][1], self.Grid_Positions[self.Grid_Index][2], self.Grid_Position[3])
+    SetEntityAngle(self.Opponent_Selected, 0, 0, math.ceil(math.deg(self.Grid_Position[4])))
+    l0 = self[64]
+    l0.VehicleSpawner = self.Opponent_Selected
+    l0:Spawn() --Spawned_Player_Vehicle
+  end
+end
+function export:Spawned_Player_Vehicle()
+  local l0
+  self = self._graph
+  l0 = self[64]
+  self.Player_Vehicle = l0.SpawnedVehicle
+--assigning player to vehicle
+PutPlayerInVehicle(GetLocalPlayerEntityId(), self.Player_Vehicle)
+  --starting race
+  l0 = self[11]
+  l0.Seconds = 0.5
+  l0:Start() --Start_Race
+end
+
+function export:Start_Race()
+  local l0
+  self = self._graph
+--instantly stopping player vehicle
+ForcePawnsVehicleStopFunction(GetLocalPlayerEntityId())
+--positioning player vehicle
+SetEntityPosition(GetCurrentVehicleEntityId(GetLocalPlayerEntityId()), self.Grid_Positions[self.Grid_Index][1], self.Grid_Positions[self.Grid_Index][2], self.Grid_Position[3])
+SetEntityAngle(GetCurrentVehicleEntityId(GetLocalPlayerEntityId()), 0, 0, math.ceil(math.deg(self.Grid_Position[4])))
+  --enabling helicopter
+  self.currentHour, self.currentMinute, self.currentSecond = CDynamicEnvironmentManager_GetInstance():GetScriptedTimeOfDay()
+  if self.currentHour > 20 or self.currentHour < 5 then
+    self.Helicopter_Enabled = 1
+    SetEntityPosition(self.Vehicle_Helicopter, self.Grid_Position[1], self.Grid_Position[2], 160)
+    SetEntityAngle(self.Vehicle_Helicopter, 0, 0, math.ceil(math.deg(self.Grid_Position[4])))
+    StartHelicopterBhv(self.Vehicle_Helicopter, GetLocalPlayerEntityId(), GetLocalPlayerEntityId(), "HelicopterBhvSetup.1179921624") --AggressiveSearch.DriveMission_Follow_normal
+    StartHelicopterBhv(self.Vehicle_Helicopter, GetLocalPlayerEntityId(), GetLocalPlayerEntityId(), "HelicopterBhvSetup.1179921625") --custom.Race
+  end
+--displaying race path
+AddOrRemoveAdditionalPath(GetLocalPlayerId(), self.Race_Path, 1)
+  --playing grid sequence
+SetEntityPosition(self.Reference_Entity, GetEntityPosition(self.Race_Path, 0), GetEntityPosition(self.Race_Path, 1), GetEntityPosition(self.Race_Path, 2))
+  l0 = self[97]
+  if self.Race_Laps <= 1 then
+    l0.EventSequence = self.Grid_Sequence[1]
+  else
+    l0.EventSequence = self.Grid_Sequence[2]
+  end
+  l0:Start() --Sequence_Finished
+end
+function export:Sequence_Finished()
+  local l0
+  self = self._graph
+--hiding race path
+AddOrRemoveAdditionalPath(GetLocalPlayerId(), self.Race_Path, 0)
+  --stopping blackscreen
+  l0 = self[50]
+  l0.SequenceName = "blackscreen_loop_nofade"
+  l0:StopPostFX()
+  --starting fadein
+  l0 = self[52]
+  l0.SequenceName = "postcinematic"
+  l0:StartPostFX()
+end
+function export:Faded_In()
+  local l0
+  self = self._graph
+--blocking controls
+PushPlayerActionMap("cinematic")
+--empty inventory
+SwitchLocalPlayerInventoryToEmpty()
+ForceRemoveItem("Items.2803193695", 2) --Weapon.Pistols.D50.07_People
+ForceRemoveItem("Items.3968788573", 2) --Weapon.Pistols.357REX.357REX_MP
+  --allowing personal nitro if not boat race
+  if GetItemCount(GetLocalPlayerEntityId(), "Items.3024689468") > 0 and self.Difficulty_Levels ~= self.Difficulty_Boats then
+    SetItem("Items.3024689468", GetItemCount(GetLocalPlayerEntityId(), "Items.3024689468"))
+    EquipItem("Items.3024689468")
+  end
+  --for all opponents
+  for i=1, #self.List_Opponent_Drivers do
+    --displaying custom icon
+    UnBind(self.Marker_Enemy[i])
+    Bind(self.List_Opponent_Drivers[i], self.Marker_Enemy[i], "", 1)
+    SendMapPointControllerEvent(self.Marker_Enemy[i], 1)
+    -- SetMapMarkerPopUpDataWithMissionId(self.Marker_Enemy[i], "228227", "217906", Globals._CUSTOM_SCRIPTS._Mission_ID)
+    -- SetIconVisible(self.List_Opponent_Drivers[i], 0)
+    SetIconVisible(self.List_Opponent_Vehicles[i], 0)
+    --setting boats indestructable because AI too dumb
+    if self.Difficulty_Levels == self.Difficulty_Boats then
+      CDominoManager_GetInstance():SendRegisteredEventToEntity(self.List_Opponent_Vehicles[i], "CVehicle_SetAsIndestructable")
+    end
+    --executing opponents checkpoint function
+    self.Opponent_Index = i
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Checkpoint_Reached_Opponent
+    l0:In()
+  end
+  --displaying checkpoint
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Checkpoint_Reached
+  l0:In()
+--playing music
+CMusicManager_GetInstance():PlayMusicFromLua(self.Music[math.random(#self.Music-1)], 0.5, GetInvalidEntityId(), 1)
+--displaying ui
+SendShowOrHideAllUIEvent(1)
+--hiding Hide In Car prompt
+RemoveAllStanceControlHelper()
+  --start countdown
+RaceCounterShowHud(1)
+  l0 = self[12]
+  l0.Seconds = 3.0
+  l0:Start()
+end
+function export:Countdown_Finished()
+  local l0
+  self = self._graph
+--unblocking controls
+PopPlayerActionMap("cinematic")
+  --for all opponents
+  for i=1, #self.List_Opponent_Drivers do
+    --enabling tagging
+    IndicatorSetIsVisible(GetLocalPlayerId(), self.List_Opponent_Drivers[i], 1)
+    -- IndicatorSetLocNameId(GetLocalPlayerId(), self.List_Opponent_Drivers[i], "212331") --"2XTheTap"
+    IndicatorSetColor(GetLocalPlayerId(), self.List_Opponent_Drivers[i], 1.0, 0.0, 0.0)
+    SetTargetTagEntity(GetLocalPlayerEntityId(), self.List_Opponent_Drivers[i], 1, 0)
+    --disabling takedown hacks otherwise too easy
+    DisableHackableIncredient(self.List_Opponent_Vehicles[i], 1, 1, 1, 0)
+    --assigning race behaviour to opponents
+    l0 = self.BHV_Controller
+    l0.VehicleMaster = self.List_Opponent_Vehicles[i]
+    l0.FloatingVehicle = l0.VehicleMaster
+    l0.VehicleTarget = GetLocalPlayerEntityId()
+    l0.Target = l0.VehicleTarget
+    l0.PathOrPos = self.Race_Path
+	if i%3 == 0 then
+      self.Skill_Opponent[i] = self.Difficulty_Level+2
+	elseif i == 7 then
+      self.Skill_Opponent[i] = self.Difficulty_Level
+    else
+      self.Skill_Opponent[i] = self.Difficulty_Level+1
+    end
+    l0.Config = self.Difficulty_Levels[self.Skill_Opponent[i]]
+    l0.StopAtEndPoint = 0
+    l0:Start()
+  end
+  --probability of gang leader
+  if math.random(100) < self.Probability_Boss then
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Activate_Boss
+    l0:In()
+  end
+--displaying hud
+DeliveryShowHud()
+DeliveryInitVehicleCount(self.Race_Laps, 0)
+UnregisterVehicleForDamageBarUpdate()
+RegisterVehicleForDamageBarUpdate(self.Vehicle_Madness, 0, self.Rewards_Hud[1+3-self.Difficulty_Level], "Vehicle Damage")
+--race start time
+self.Start_Time = GetGameTime()
+  --starting looping timer to check place
+  l0 = self[111]
+  l0.Seconds = 0.3
+  l0:Start()
+  --starting looping timer to check opponents
+  l0 = self[1111]
+  l0.Seconds = 0.2
+  l0:Start()
+end
+
+
+function export:Activate_Boss()
+  local l0
+  self = self._graph
+--disabling police chase
+self.Probability_Chase = 0
+  --displaying bonus objective
+  l0 = self[19]
+  l0.MessageType = "MissionUpdate"
+  l0.MessageIcon = "iconRace"
+  l0.OasisID_1 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "14050" --"Take out the vehicle."
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = "196610" --"Bonus objective"
+  }
+  l0.Duration = -1
+  l0:Display()
+--selecting boss
+self.Boss_Index = math.random(#self.List_Opponent_Vehicles)
+--applying boss tag
+IndicatorSetLocNameId(GetLocalPlayerId(), self.List_Opponent_Drivers[self.Boss_Index], "145879") --"Target"
+  --enabling boss monitor
+  l0 = self[27]
+  l0.Vehicle = self.List_Opponent_Vehicles[self.Boss_Index]
+  l0.Pawn = self.List_Opponent_Drivers[self.Boss_Index]
+  l0.NoMoveTime = 10
+  l0.CheckNow = 1
+  l0:Enable() --Start_Chase
+end
+function export:Start_Chase()
+  local l0
+  self = self._graph
+  --hiding bonus objective
+  l0 = self[19]
+  l0.MessageType = "MissionUpdateCompleted"
+  l0.Duration = nil
+  l0:Display()
+  --disabling boss monitor
+  l0 = self[27]
+  l0:Disable()
+  --setting appropriate faction
+  self.Index_Faction = 3 --Fixers
+  for i=1, #Globals._CUSTOM_SCRIPTS._Proximity_Zone do
+    if math.sqrt((Globals._CUSTOM_SCRIPTS._Proximity_Zone[i][1]-GetEntityPosition(GetLocalPlayerEntityId(),0))^2 + (Globals._CUSTOM_SCRIPTS._Proximity_Zone[i][2]-GetEntityPosition(GetLocalPlayerEntityId(),1))^2) < Globals._CUSTOM_SCRIPTS._Proximity_Zone[i][3] then
+	  if Globals._CUSTOM_SCRIPTS._Proximity_Zone[i][4] == "Pawnee" then
+	    self.Index_Faction = 4 --Militia
+	  elseif Globals._CUSTOM_SCRIPTS._Proximity_Zone[i][4] == "MadMile" then
+	    self.Index_Faction = 1 --Club
+	  elseif Globals._CUSTOM_SCRIPTS._Proximity_Zone[i][4] == "Wards" then
+	    self.Index_Faction = 2 --Viceroys
+	  end
+	  break
+    end
+  end
+--ensuring vehicle destroyed
+CDominoManager_GetInstance():SendRegisteredEventToEntity(self.List_Opponent_Vehicles[self.Boss_Index], "CVehicle_SetEngineBroken")
+--executing rewards
+AddReputationIncident(GetLocalPlayerEntityId(), "ReputationIncidents.3021303297") --HeatReputation.Mission_MainMissionIncrease (+50)
+ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.1267158093", 1) --Cash.HardContractGold.EasyGold (3000$)
+--playing music
+CMusicManager_GetInstance():PlayMusicFromLua(self.Music[#self.Music], 0.0, GetInvalidEntityId(), 1)
+--starting felony chase
+FelonyStartChaseObj(GetLocalPlayerEntityId(), self.Index_Faction, "ChaseLevelParameters.3910538489", "ChaseLevelParameters.2008434473", 1, 1) --MobChaseLevels.VeryHard --MobChaseLevels.VeryHard.Search.InfiniteSearch
+  --starting felony monitor
+  l0 = self[55]
+  l0.CheckNow = 0
+  l0:Start() --Status_Evaded
+end
+function export:Status_Evaded()
+  local l0
+  self = self._graph
+--playing music
+CMusicManager_GetInstance():PlayMusicFromLua(self.Music[math.random(#self.Music-1)], 1.5, GetInvalidEntityId(), 1)
+end
+
+
+function export:Checkpoint_Reached_1()
+  local l0
+  self = self._graph
+self.Opponent_Index = 1
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Checkpoint_Reached_Opponent
+  l0:In()
+end
+function export:Checkpoint_Reached_2()
+  local l0
+  self = self._graph
+self.Opponent_Index = 2
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Checkpoint_Reached_Opponent
+  l0:In()
+end
+function export:Checkpoint_Reached_3()
+  local l0
+  self = self._graph
+self.Opponent_Index = 3
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Checkpoint_Reached_Opponent
+  l0:In()
+end
+function export:Checkpoint_Reached_4()
+  local l0
+  self = self._graph
+self.Opponent_Index = 4
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Checkpoint_Reached_Opponent
+  l0:In()
+end
+function export:Checkpoint_Reached_5()
+  local l0
+  self = self._graph
+self.Opponent_Index = 5
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Checkpoint_Reached_Opponent
+  l0:In()
+end
+function export:Checkpoint_Reached_6()
+  local l0
+  self = self._graph
+self.Opponent_Index = 6
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Checkpoint_Reached_Opponent
+  l0:In()
+end
+function export:Checkpoint_Reached_7()
+  local l0
+  self = self._graph
+self.Opponent_Index = 7
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Checkpoint_Reached_Opponent
+  l0:In()
+end
+function export:Checkpoint_Reached_8()
+  local l0
+  self = self._graph
+self.Opponent_Index = 8
+  l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+  l0._graph = self
+  l0.Out = self.Checkpoint_Reached_Opponent
+  l0:In()
+end
+function export:Checkpoint_Reached_Opponent()
+  local l0
+  self = self._graph
+  --disabling checkpoint radius
+  l0 = self[self.Opponent_Index]
+  l0:Disable()
+  --checking lap
+  if self.Race_Laps > 1 and self.Lap_Indexes[self.Opponent_Index] < self.Race_Laps and self.Checkpoint_Indexes[self.Opponent_Index] == #self.Checkpoints_Data then
+    --increasing index
+    self.Lap_Indexes[self.Opponent_Index] = self.Lap_Indexes[self.Opponent_Index] + 1
+    --zeroing index
+    self.Checkpoint_Indexes[self.Opponent_Index] = 0
+  end
+  --lowering or rising opponent skill
+  l0 = self.BHV_Controller
+  l0.VehicleMaster = self.List_Opponent_Vehicles[self.Opponent_Index]
+  l0.FloatingVehicle = l0.VehicleMaster
+  if self.Lap_Indexes[self.Opponent_Index] >= self.Lap_Index and self.Checkpoint_Indexes[self.Opponent_Index]-self.Checkpoint_Index > 2 and self.Skill_Opponent[self.Opponent_Index]-1 >= 1 then
+    l0.Config = self.Difficulty_Levels[self.Skill_Opponent[self.Opponent_Index]-1]
+    l0:Start()
+  elseif self.Lap_Indexes[self.Opponent_Index] <= self.Lap_Index and self.Checkpoint_Indexes[self.Opponent_Index]-self.Checkpoint_Index < -2 and self.Skill_Opponent[self.Opponent_Index]+1 <= #self.Difficulty_Levels then
+    l0.Config = self.Difficulty_Levels[self.Skill_Opponent[self.Opponent_Index]+1]
+    l0:Start()
+  end
+  --checking if race finished
+  if self.Checkpoint_Indexes[self.Opponent_Index] < #self.Checkpoints_Data then
+    --increasing index
+    self.Checkpoint_Indexes[self.Opponent_Index] = self.Checkpoint_Indexes[self.Opponent_Index] + 1
+    --enabling checkpoint radius
+    SetEntityPosition(self.Reference_Entities[self.Opponent_Index], self.Checkpoints_Data[self.Checkpoint_Indexes[self.Opponent_Index]][1], self.Checkpoints_Data[self.Checkpoint_Indexes[self.Opponent_Index]][2], self.Checkpoints_Data[self.Checkpoint_Indexes[self.Opponent_Index]][3])
+    l0 = self[self.Opponent_Index]
+    l0.Entity1 = self.List_Opponent_Vehicles[self.Opponent_Index]
+    l0.Entity2 = self.Reference_Entities[self.Opponent_Index]
+    l0.Radius = self.Checkpoints_Data[self.Checkpoint_Indexes[self.Opponent_Index]][4]
+    l0.CheckNow = 1
+    l0:Enable()
+  elseif self.Checkpoint_Indexes[self.Opponent_Index] == #self.Checkpoints_Data then
+    --increasing index anyway to ensure distance always 0 after opponent finished
+    self.Checkpoint_Indexes[self.Opponent_Index] = self.Checkpoint_Indexes[self.Opponent_Index] + 1
+    --disabling indestructability
+    CDominoManager_GetInstance():SendRegisteredEventToEntity(self.List_Opponent_Vehicles[self.Opponent_Index], "CVehicle_SetAsDestructable")
+    --assigning flee behaviour
+    l0 = self.BHV_Controller
+    l0.VehicleMaster = self.List_Opponent_Vehicles[self.Opponent_Index]
+    l0.FloatingVehicle = l0.VehicleMaster
+    l0.VehicleTarget = GetLocalPlayerEntityId()
+    l0.Target = l0.VehicleTarget
+    l0.PathOrPos = GetLocalPlayerEntityId()
+    l0.Config = self.Difficulty_Levels[1]
+    l0.StopAtEndPoint = 0
+    l0:Start()
+    --if boss finished
+    if self.Opponent_Index == self.Boss_Index then
+      --hiding bonus objective
+      l0 = self[19]
+      l0:Hide()
+      --disabling boss monitor
+      l0 = self[27]
+      l0:Disable()
+    end
+    --playing FirstGone dialogue only once
+    if self.ONCE ~= 1 then
+      self.ONCE = 1
+      l0 = self[98]
+      l0.SoundId = self.Announcer_FirstGone[math.random(#self.Announcer_FirstGone)]
+      l0.Supersede = 1
+      l0.UseFacial = 0
+      l0:Start()
+    end
+  end
+end
+
+function export:Checkpoint_Reached()
+  local l0
+  self = self._graph
+  --hide markers
+  l0 = self[72]
+  l0.Text = string.format("%d",self.Checkpoint_Index+1).."/"..string.format("%d",#self.Checkpoints_Data)
+  l0.MapPoint = self.Checkpoint_Normal
+  l0:SetText()
+  l0:Hide()
+  l0.MapPoint = self.Checkpoint_Nitro
+  l0:Hide()
+  l0.MapPoint = self.Checkpoint_Next
+  l0:Hide()
+  l0.MapPoint = self.Checkpoint_Final
+  l0:Hide()
+  --clearing paths
+  ClearGPS3DTarget(GetLocalPlayerId())
+  --disabling checkpoint radius
+  l0 = self[30]
+  l0:Disable()
+  --probability of police chase
+  if math.random(100) < self.Probability_Chase and self.Checkpoint_Index == math.ceil(#self.Checkpoints_Data/3) and self.Lap_Index == math.ceil(self.Race_Laps/2) then
+    --playing sound
+    StartPortalHackingBar("168944", 0.1) --"AMBUSH"
+    --playing music
+    CMusicManager_GetInstance():PlayMusicFromLua(self.Music[#self.Music], 0.0, GetInvalidEntityId(), 1)
+    --setting max heat
+    FelonySetHeat(GetLocalPlayerEntityId(), 100)
+    --starting custom felony chase
+	self.Index_Faction = 0
+    if self.Player_Place > 1 then
+      FelonyStartChaseObj(GetLocalPlayerEntityId(), self.Index_Faction, "ChaseLevelParameters.756444240", "ChaseLevelParameters.258745063", 1, 1) --ChaseLevel.ChaseLevel3.A01D00_extendBudget --ChaseLevel.ChaseLevel3.Search.A04F02_SearchLVL03
+    else
+      FelonyStartChaseObj(GetLocalPlayerEntityId(), self.Index_Faction, "ChaseLevelParameters.4000759216", "ChaseLevelParameters.258745063", 1, 1) --ChaseLevel.ChaseLevel5.ChaseLevel5_Companion --ChaseLevel.ChaseLevel3.Search.A04F02_SearchLVL03
+    end
+    --starting felony monitor
+    l0 = self[55]
+    l0.CheckNow = 0
+    l0:Start() --Status_Evaded
+  end
+  --checking lap
+  if self.Race_Laps > 1 and self.Lap_Index < self.Race_Laps and self.Checkpoint_Index == #self.Checkpoints_Data then
+    --zeroing index
+    self.Checkpoint_Index = 0
+    --updating hud
+    DeliveryInitVehicleCount(self.Race_Laps, self.Lap_Index)
+    --increasing index
+    self.Lap_Index = self.Lap_Index + 1
+    --playing laps dialogues
+    if self.Lap_Index == self.Race_Laps then
+      l0 = self[98]
+      l0.SoundId = self.Announcer_FinalLap[math.random(#self.Announcer_FinalLap)]
+      l0.Supersede = 1
+      l0.UseFacial = 0
+      l0:Start()
+    elseif self.Lap_Index > 1 then
+      l0 = self[98]
+      l0.SoundId = self.Announcer_FirstLap[math.random(#self.Announcer_FirstLap)]
+      l0.Supersede = 1
+      l0.UseFacial = 0
+      l0:Start()
+    end
+  end
+  --checking if race finished
+  if self.Checkpoint_Index < #self.Checkpoints_Data then
+    --playing checkpoint sound
+    if self.Checkpoint_Index > 0 or self.Lap_Index > 1 then
+      l0 = self[13]
+      l0.SoundId = "0x000deac8"
+      l0:Play()
+    end
+    --displaying checkpoint time
+    if self.Checkpoint_Index > 0 or self.Lap_Index > 1 then
+      self.Player_Time = GetGameTime() - self.Start_Time
+	  local minutes = string.format("%02d",math.floor(self.Player_Time/60))
+	  local seconds = string.format("%02d",math.floor(self.Player_Time%60))
+	  local decimals = string.format("%02d",math.floor(self.Player_Time%1*100))
+      PushTokenString("[#VALUE]", minutes..":"..seconds.."."..decimals)
+      SendMissionChannelMessageToLocalPlayersId(Globals._CUSTOM_SCRIPTS._Mission_ID, "PlayerCentric", "113029", 3) --"Time: [#VALUE]"
+    end
+    --give nitro if appropriate
+    if self.Checkpoint_Index > 0 and self.Checkpoint_Selected == self.Checkpoint_Nitro then
+      ExecuteReward_V2(GetLocalPlayerEntityId(), "Items.3024689468", 1)
+      EquipItem("Items.3024689468")
+      RemoveAllStanceControlHelper()
+      AddStanceControlHelper("197983", "Normal", 10) --"Press [NITRO] to activate Nitro."
+    end
+    --increasing index
+    self.Checkpoint_Index = self.Checkpoint_Index + 1
+    --selecting next checkpoint type
+    if self.Checkpoint_Index >= #self.Checkpoints_Data then
+      self.Checkpoint_Selected = self.Checkpoint_Normal
+      if self.Lap_Index >= self.Race_Laps then
+        self.Checkpoint_Selected = self.Checkpoint_Final
+	    self.Checkpoint_Text = "Finish"
+      elseif self.Lap_Index+1 == self.Race_Laps then
+	    self.Checkpoint_Text = "Final Lap"
+      elseif self.Lap_Index+1 == 2 then
+	    self.Checkpoint_Text = "Second Lap"
+      elseif self.Lap_Index+1 == 3 then
+	    self.Checkpoint_Text = "Third Lap"
+      else
+	    self.Checkpoint_Text = string.format("%d",self.Lap_Index+1).."th Lap"
+      end
+    elseif self.Checkpoints_Data[self.Checkpoint_Index][5] == 1 and self.Player_Place > 1 and self.Difficulty_Levels ~= self.Difficulty_Boats then --nitro checkpoint only if not already 1st place and not boat race
+      self.Checkpoint_Selected = self.Checkpoint_Nitro
+	  self.Checkpoint_Text = "Nitro"
+    else
+      self.Checkpoint_Selected = self.Checkpoint_Normal
+	  self.Checkpoint_Text = string.format("%d",self.Checkpoint_Index).."/"..string.format("%d",#self.Checkpoints_Data)
+    end
+    --show current marker
+    SetEntityPosition(self.Checkpoint_Selected, self.Checkpoints_Data[self.Checkpoint_Index][1], self.Checkpoints_Data[self.Checkpoint_Index][2], self.Checkpoints_Data[self.Checkpoint_Index][3])
+    SetGPS3DTarget(GetLocalPlayerId(), self.Checkpoint_Selected)
+    l0 = self[72]
+    l0.MapPoint = self.Checkpoint_Selected
+    l0.Text = self.Checkpoint_Text
+    l0.LocMapMarkerTitle = { id = "195681" } --"Race"
+    l0.LocMapMarkerDescription = { id = "178371" } --"CHECKPOINT"
+    l0:Show()
+    --show next marker
+    if self.Checkpoint_Index < #self.Checkpoints_Data then
+      SetEntityPosition(self.Checkpoint_Next, self.Checkpoints_Data[self.Checkpoint_Index+1][1], self.Checkpoints_Data[self.Checkpoint_Index+1][2], self.Checkpoints_Data[self.Checkpoint_Index+1][3])
+      AddTarget(GetLocalPlayerId(), self.Checkpoint_Next, 1)
+      l0 = self[72]
+      l0.MapPoint = self.Checkpoint_Next
+      l0.Text = "" --no text
+      l0.LocMapMarkerTitle = { id = "195681" } --"Race"
+      l0.LocMapMarkerDescription = { id = "178371" } --"CHECKPOINT"
+      l0:Show()
+      IndicatorSetIsVisible(GetLocalPlayerId(), self.Checkpoint_Next, 0)
+    end
+    --enabling checkpoint radius
+    l0 = self[30]
+    l0.Entity1 = GetLocalPlayerEntityId()
+    l0.Entity2 = self.Checkpoint_Selected
+    l0.Radius = self.Checkpoints_Data[self.Checkpoint_Index][4]
+    l0.CheckNow = 1
+    l0:Enable() --Checkpoint_Reached
+  else
+    --mission completed
+    l0 = Boxes[PathID("Domino/System/GetPlayerID.lua")]
+    l0._graph = self
+    l0.Out = self.Mission_Completed
+    l0:In()
+  end
+  --hide gps path during boat races
+  if self.Difficulty_Levels == self.Difficulty_Boats then
+    ClearGPS3DTarget(GetLocalPlayerId())
+  end
+end
+
+
+function export:Mission_Completed()
+  local l0
+  self = self._graph
+  --stopping looping timer
+  l0 = self[111]
+  l0:Stop()
+  --stopping looping timer
+  l0 = self[1111]
+  l0:Stop()
+  --hiding position
+  l0 = self[20]
+  l0:Hide()
+  --hiding bonus objective
+  l0 = self[19]
+  l0:Hide()
+  --disabling boss monitor
+  l0 = self[27]
+  l0:Disable()
+  --stopping felony monitor
+  l0 = self[55]
+  l0:Stop()
+--hiding hud
+DeliveryVehicleDelivered()
+  --for all opponents
+  for i=1, #self.List_Opponent_Drivers do
+    --hiding markers
+    SendMapPointControllerEvent(self.Marker_Enemy[i], 0)
+    IndicatorSetIsVisible(GetLocalPlayerId(), self.List_Opponent_Drivers[i], 0)
+    ForceHideTagIndicator(self.List_Opponent_Drivers[i], 1)
+    ForceHideTagIndicator(self.List_Opponent_Vehicles[i], 1)
+    --disabling checkpoint radius
+    l0 = self[i]
+    l0:Disable()
+    --assigning flee behaviour
+    l0 = self.BHV_Controller
+    l0.VehicleMaster = self.List_Opponent_Vehicles[i]
+    l0.FloatingVehicle = l0.VehicleMaster
+    l0.VehicleTarget = GetLocalPlayerEntityId()
+    l0.Target = l0.VehicleTarget
+    l0.PathOrPos = GetLocalPlayerEntityId()
+    l0.Config = self.Difficulty_Levels[#self.Difficulty_Levels]
+    l0.StopAtEndPoint = 0
+    l0:Start()
+  end
+  --displaying success message
+  l0 = self[40]
+  l0.MessageType = "MissionSuccess"
+  l0.MessageIcon = "iconRace"
+  l0.OasisID_1 = {
+    section = "MISSIONS.COMMON.OBJECTIVES",
+    item = "MISSIONSUCCESS",
+    id = "14104" --"Race Finished"
+  }
+  l0.OasisID_2 = {
+    section = "MISSIONS.COMMON.OBJECTIVES",
+    item = "MISSIONSUCCESS",
+    id = self.Loc_Places[self.Player_Place]
+  }
+  l0.OasisID_3 = {
+    section = "MISSIONS.SIDE.OBJECTIVES",
+    item = "Description",
+    id = self.Mission_Name
+  }
+  l0.Duration = 10
+  l0.Queue = 0
+  l0:Display()
+--fading out music
+CMusicManager_GetInstance():StopMusicFromLua(10.0)
+--restoring player inventory
+SwitchLocalPlayerInventoryToNormal()
+  --giving appropriate rewards
+  self.Player_Time = GetGameTime() - self.Start_Time
+  local minutes = string.format("%02d",math.floor(self.Player_Time/60))
+  local seconds = string.format("%02d",math.floor(self.Player_Time%60))
+  local decimals = string.format("%02d",math.floor(self.Player_Time%1*100))
+  l0 = self[99]
+  if self.Player_Place == 1 then
+    l0.SoundId = self.Announcer_FirstPlace[math.random(#self.Announcer_FirstPlace)]
+    PushTokenOasisId("[#STRINGA]", "194106") --"1st Place Time:"
+  elseif self.Player_Place == 2 then
+    l0.SoundId = self.Announcer_NotFirst[math.random(#self.Announcer_NotFirst)]
+    PushTokenOasisId("[#STRINGA]", "194107") --"2nd Place Time:"
+  elseif self.Player_Place == 3 then
+    l0.SoundId = self.Announcer_NotFirst[math.random(#self.Announcer_NotFirst)]
+    PushTokenOasisId("[#STRINGA]", "194110") --"3rd Place Time:"
+  else
+    l0.SoundId = self.Announcer_BadRace[math.random(#self.Announcer_BadRace)]
+    PushTokenOasisId("[#STRINGA]", "14331") --"Your Time:"
+  end
+  PushTokenString("[#STRINGB]", minutes..":"..seconds.."."..decimals)
+  SendMissionChannelMessageToLocalPlayersId(Globals._CUSTOM_SCRIPTS._Mission_ID, "PlayerCentric", "15380", 10) --"[#STRINGA] [#STRINGB]"
+  --delay final dialog
+  l0 = self[45]
+  l0.Seconds = 3.0
+  l0:Start()
+  --stopping custom felony if chased (first part)
+  if PlayerFelonyState(GetLocalPlayerEntityId()) == 4 then
+    FelonySetHeat(GetLocalPlayerEntityId(), 0)
+    FelonyStartChaseObj(GetLocalPlayerEntityId(), self.Index_Faction, "ChaseLevelParameters.178170300", "ChaseLevelParameters.178170300", 1, 1) --ScriptedCop.DriveMission.EscapeIsland.Escaped_searchTimercompleted
+  end
+end
+function export:Play_Dialog()
+  local l0
+  self = self._graph
+  --stopping custom felony if chased (second part)
+  if PlayerFelonyState(GetLocalPlayerEntityId()) == 4 then
+    FelonySetHeat(GetLocalPlayerEntityId(), 0)
+    FelonyForceSearchStart(GetLocalPlayerEntityId())
+  end
+--disabling spotlight
+VehicleLightAndSiren(self.Vehicle_Helicopter, 0, 0, 0, 0, 0, 0, GetInvalidEntityId(), 0, 1)
+--executing rewards
+ExecuteReward_V2(GetLocalPlayerEntityId(), self.Rewards_XP[self.Player_Place+3-self.Difficulty_Level], 1)
+ExecuteReward_V2(GetLocalPlayerEntityId(), self.Rewards_Cash[self.Player_Place+3-self.Difficulty_Level], 1)
+--hiding hud
+UnregisterVehicleForDamageBarUpdate()
+DeliveryHideHud()
+  --playing previously set dialogue
+  l0 = self[99]
+  l0.Supersede = 1
+  l0.UseFacial = 0
+  l0:Start() --Unload_Layer
+end
+function export:Unload_Layer()
+  local l0
+  self = self._graph
+self:Finished()
+--enabling felony system
+FelonySystemEnable(1)
+--enabling reputation
+EnableReputation(1)
+  --removing all vehicles and npcs
+  for i=1, #self.List_Opponent_Drivers do
+    RemoveEntity(self.List_Opponent_Drivers[i])
+    RemoveEntity(self.List_Opponent_Vehicles[i])
+  end
+  --unloading vanilla layer
+  l0 = self[10]
+  l0.LayerName = self.Layer_Name
+  l0:Unload()
+  --unloading custom layer
+  l0 = self[1000]
+  l0.LayerName = "custom_race"
+  l0:Unload()
+--terminating mission
+Globals._CUSTOM_SCRIPTS._Race[tonumber(string.sub(self.Layer_Name, -2))].Difficulty_Level = 0
+AbortMissionWithDbObj(self.Mission_ID)
+Globals._CUSTOM_SCRIPTS._Save_Game = 1
+end
+
+
+function export:Check_Place()
+  local l0
+  self = self._graph
+--calculating player distance
+self.Player_Distance = GetDistance2D(GetLocalPlayerEntityId(), self.Checkpoint_Selected)
+  --calculating opponents distance
+  self.Opponents_Distance = {}
+  for i=1, #self.List_Opponent_Vehicles do
+    if (self.Checkpoint_Indexes[i] < self.Checkpoint_Index and self.Lap_Indexes[i] <= self.Lap_Index) or IsDead(self.List_Opponent_Drivers[i]) == 1 or GetCurrentSeat(self.List_Opponent_Drivers[i]) == 0 or GetVehicleIsDriveable(self.List_Opponent_Vehicles[i]) == 0 then
+      table.insert(self.Opponents_Distance, {i, 9999})
+    elseif (self.Checkpoint_Indexes[i] > self.Checkpoint_Index and self.Lap_Indexes[i] >= self.Lap_Index) then
+      table.insert(self.Opponents_Distance, {i, 0})
+    else
+      table.insert(self.Opponents_Distance, {i, GetDistance2D(self.List_Opponent_Vehicles[i], self.Checkpoint_Selected)})
+    end
+  end
+  table.sort(self.Opponents_Distance, function(a,b) return a[2] < b[2] end)
+  --checking player place
+  self.Player_Place = #self.Opponents_Distance+1
+  for i=1, #self.Opponents_Distance do
+    if self.Player_Distance < self.Opponents_Distance[i][2] then
+      self.Player_Place = i
+      break
+    end
+  end
+-- ShowMissionTextMessageLocalPlayer("MissionDebug", "DefaultIcon", string.format("%.2f",self.Player_Distance), string.format("%.2f",self.Opponents_Distance[1]).."\n"..string.format("%.2f",self.Opponents_Distance[2]).."\n"..string.format("%.2f",self.Opponents_Distance[3]).."\n"..string.format("%.2f",self.Opponents_Distance[4]).."\n"..string.format("%.2f",self.Opponents_Distance[5]).."\n"..string.format("%.2f",self.Opponents_Distance[6]).."\n"..string.format("%.2f",self.Opponents_Distance[7]), "", "", self.Delay_Position-0.1, 0, self, "OnFinished", "OnDisplayed")
+  --displaying new position
+self.Loc_Places = { "194114", "194115", "194116", "194111", "194108", "194112", "194109", "194113", }
+  l0 = self[20]
+  l0.MessageType = "MissionNotification"
+  l0.Duration = -1
+  l0.Queue = 0
+  l0.OasisID_1 = l0.OasisID_1 or {}
+  if l0.OasisID_1.id ~= self.Loc_Places[self.Player_Place] then
+    l0.OasisID_1.id = self.Loc_Places[self.Player_Place]
+    l0:Display()
+    --updating reward hud
+    UnregisterVehicleForDamageBarUpdate()
+    RegisterVehicleForDamageBarUpdate(self.Vehicle_Madness, 0, self.Rewards_Hud[self.Player_Place+3-self.Difficulty_Level], "Vehicle Damage")
+  end
+  --updating helicopter target
+  if self.Player_Place <= 1 then
+    self.Place_New = GetLocalPlayerEntityId()
+  else
+    self.Place_New = self.List_Opponent_Drivers[self.Opponents_Distance[1][1]]
+  end
+  if self.Helicopter_Enabled == 1 and self.Place_Old ~= self.Place_New then
+    self.Place_Old = self.Place_New
+    StartHelicopterBhv(self.Vehicle_Helicopter, self.Place_New, self.Place_New, "HelicopterBhvSetup.1179921624") --AggressiveSearch.DriveMission_Follow_normal
+    StartHelicopterBhv(self.Vehicle_Helicopter, self.Place_New, self.Place_New, "HelicopterBhvSetup.1179921625") --custom.Race
+  end
+  --restarting looping timer
+  l0 = self[111]
+  l0.Seconds = self.Delay_Position
+  l0:Start()
+end
+
+function export:Check_Opponents()
+  local l0
+  self = self._graph 
+  --hiding markers of unabled opponents and preventing boats sinking
+  for i=1, #self.List_Opponent_Drivers do
+    if (self.Checkpoint_Indexes[i] > #self.Checkpoints_Data and self.Lap_Indexes[i] >= self.Race_Laps) or IsDead(self.List_Opponent_Drivers[i]) == 1 or GetCurrentSeat(self.List_Opponent_Drivers[i]) == 0 or GetVehicleIsDriveable(self.List_Opponent_Vehicles[i]) == 0 then
+      SendMapPointControllerEvent(self.Marker_Enemy[i], 0)
+      IndicatorSetIsVisible(GetLocalPlayerId(), self.List_Opponent_Drivers[i], 0)
+    end
+    if GetDistance3D(GetLocalPlayerEntityId(), self.List_Opponent_Vehicles[i]) > 50 and GetEntityPosition(self.List_Opponent_Vehicles[i], 2) < 58 and IsDead(self.List_Opponent_Drivers[i]) ~= 1 and GetCurrentSeat(self.List_Opponent_Drivers[i]) ~= 0 and GetVehicleIsDriveable(self.List_Opponent_Vehicles[i]) ~= 0 then
+      SetEntityPosition(self.List_Opponent_Vehicles[i], GetEntityPosition(self.List_Opponent_Vehicles[i], 0), GetEntityPosition(self.List_Opponent_Vehicles[i], 1), 59)
+    end
+  end
+  --restarting looping timer
+  l0 = self[1111]
+  l0.Seconds = self.Loop_Delay
+  l0:Start()
+end
+_compilerVersion = 4
