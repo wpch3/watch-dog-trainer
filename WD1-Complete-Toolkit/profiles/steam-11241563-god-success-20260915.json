@@ -1,0 +1,27 @@
+{
+  "date": "2026-09-15",
+  "tool_version": "0.4.0-alpha",
+  "ui_revision": "UI4",
+  "game_build_observed": "11241563",
+  "feature_id": "lua.god",
+  "route": "Lua plugin God Mode checkbox (ARM gate + OnUpdate reapplied ActivateInvincibility)",
+  "verification": "USER_REPORTED_GAMEPLAY_SUCCESS",
+  "test_scenario": "Point-blank explosion of a large transformer/electrical box, a scripted guaranteed-death hazard; player survived with God Mode ticked",
+  "outcome": "PLAYER_SURVIVED_GUARANTEED_DEATH_HAZARD",
+  "persistence_after_game_restart": "NOT_TESTED (invincibility is a session effect; remove by unticking or STOP)",
+  "chain_proven_by_this_test": [
+    "UI4 payload installed and loaded (old UI2 could not drive this effect with dead callbacks)",
+    "ARM single-player gate passed",
+    "command state reachable and poll/callback path applied the toggle",
+    "ActivateInvincibility(player) works on build 11241563",
+    "OnUpdate reapplied the effect continuously under heavy hazard"
+  ],
+  "not_proven_by_this_test": [
+    "Infinite Ammo / Focus / Disable Wanted (same path, untested)",
+    "AddItem unlock batches, skill points, cash, notoriety rewards (untested)",
+    "Whether button callbacks or the poll carried the click (PING Clicks counter not reported)",
+    "Menu title readback [UI4] not explicitly reported; inferred from the working effect"
+  ],
+  "host_installed": true,
+  "previous_context": "User reported 0.3.x UI2 buttons completely unresponsive; 0.4.0 rewrote callback rebinding and added poll fallback"
+}

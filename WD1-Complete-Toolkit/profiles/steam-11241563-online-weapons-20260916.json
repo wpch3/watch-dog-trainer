@@ -1,0 +1,24 @@
+{
+  "date": "2026-09-16",
+  "tool_version": "0.4.2-alpha",
+  "ui_revision": "UI4",
+  "game_build_observed": "11241563",
+  "feature_id": "lua.unlock.online_gated_weapons",
+  "route": "Lua 04 page: Prepare all four online-reward weapons -> CONFIRM (AddItem path)",
+  "verification": "USER_REPORTED_GAMEPLAY_SUCCESS",
+  "items": [
+    "item_770883049 SG-90",
+    "item_309961700 Spec Ops Vector .45 ACP",
+    "item_2207476061 OCP-11",
+    "item_4099987261 MP-9mm"
+  ],
+  "official_requirements": [
+    "online tailing x1",
+    "online tailing x5",
+    "online hacking x1",
+    "online hacking x5"
+  ],
+  "outcome": "ALL FOUR GRANTED AND VISIBLE IN GAME (single-player only)",
+  "negative_result": "07 Progression Rewards (skill/XP/APS tokens) granted with no visible effect: counters are not inventory items; native resources path (+9C/+A0/+A8) prescribed",
+  "notification_format_bug": "numbers rendered as 1.000000 by host; fixed in 0.4.3 with %d formatting"
+}

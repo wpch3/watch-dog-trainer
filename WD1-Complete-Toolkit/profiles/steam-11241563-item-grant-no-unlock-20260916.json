@@ -1,0 +1,10 @@
+{
+  "profile": "steam-11241563-item-grant-no-unlock-20260916",
+  "date": "2026-09-16",
+  "build": "11241563",
+  "plugin": "0.4.18-alpha",
+  "mode": "campaign",
+  "result": "AddItem Items.<carkey> x148 accepted refused=0 across two batches; save+restart produced NO Car On Demand additions",
+  "conclusion": "reward-item grant does NOT govern car ownership in WD1; item path for cars is conclusively negative",
+  "next": "native crawl: UnlockAndBuyCarOnDemand (numeric/itemstr/dbid) + SetItem, exposed in host CAP probe (57 names)"
+}

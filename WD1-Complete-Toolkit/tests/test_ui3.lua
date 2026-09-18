@@ -46,7 +46,7 @@ for _,mode in ipairs({'campaign','dlc_solo'}) do
  local before=e.WD1KIT_UI2.clicks
  page.buttons['[PING] Test this button - no game changes']()
  check(e.WD1KIT_UI2.clicks>before and #calls==0,'PING records callback without game writes')
- check(table.concat(logs,'\n'):find('UI3_ENTER')~=nil and table.concat(logs,'\n'):find('UI3_ACK')~=nil,'event entry and completion visible in logs')
+ check(table.concat(logs,'\n'):find('UI4_ENTER')~=nil and table.concat(logs,'\n'):find('UI4_ACK')~=nil,'event entry and completion visible in logs')
  check(table.concat(page.text,'\n'):find('Clicks=')~=nil,'status displayed inside panel')
  page.buttons['[ARM] Enable this offline test session']();page.buttons['God Mode ON']();script:OnUpdate()
  check(c.armed and c.flags.god and calls[#calls]=='god_on','ARM/God/OnUpdate reach original guarded native call')
@@ -56,10 +56,10 @@ for _,mode in ipairs({'campaign','dlc_solo'}) do
  script:OnUnload();local n=e.WD1KIT_UI2.clicks;legacy['[STATUS] Show armed / god / script']()
  check(e.WD1KIT_UI2.clicks>n,'STATUS not silently discarded when core is dead')
  check(table.concat(logs,'\n'):find('alive=false')~=nil,'dead core is explicit in status')
- local registry=e.WD1KIT_UI3_REGISTRY;e.WD1KIT_UI3_REGISTRY=nil;legacy['[PING] Test callback only']()
+ local registry=e.WD1KIT_UI4_REGISTRY;e.WD1KIT_UI4_REGISTRY=nil;legacy['[PING] Test callback only']()
  check(table.concat(logs,'\n'):find('STATE_MISSING')~=nil,'missing callback-context state yields explicit error')
- e.WD1KIT_UI3_REGISTRY=registry;local dispatch=e.WD1KIT_UI3_DISPATCH;e.WD1KIT_UI3_DISPATCH=nil;legacy['[PING] Test callback only']()
- check(table.concat(logs,'\n'):find('UI3_DISPATCH_MISSING')~=nil,'missing global dispatcher yields direct host log')
- e.WD1KIT_UI3_DISPATCH=dispatch
+ e.WD1KIT_UI4_REGISTRY=registry;local dispatch=e.WD1KIT_UI4_DISPATCH;e.WD1KIT_UI4_DISPATCH=nil;legacy['[PING] Test callback only']()
+ check(table.concat(logs,'\n'):find("UI4_DISPATCH_MISSING")~=nil,'missing global dispatcher yields direct host log')
+ e.WD1KIT_UI4_DISPATCH=dispatch
 end
-print('UI3_ASSERTIONS='..checks)
+print('UI4_ASSERTIONS='..checks)

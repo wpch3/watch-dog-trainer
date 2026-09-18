@@ -1,0 +1,1260 @@
+PASS startup makes no writes expected=0 actual=0
+PASS not armed blocks items
+PASS not armed blocks god
+PASS refused commands make no writes expected=0 actual=0
+PASS invalid player refuses arm
+PASS missing invalid-ID getter fails closed
+PASS valid player explicit arm
+PASS arm alone changes no gameplay expected=0 actual=0
+PASS enable god
+PASS god API called expected=1 actual=1
+PASS god undone expected=1 actual=1
+PASS disabled god not reapplied expected=1 actual=1
+PASS fix upstream unconditional-focus bug expected=0 actual=0
+PASS focus only when enabled expected=2 actual=2
+PASS focus off stays off expected=2 actual=2
+PASS ammo slots 0 through 5 expected=6 actual=6
+PASS ammo slot signature 1 expected=0 actual=0
+PASS ammo argument count 1 expected=4 actual=4
+PASS ammo slot signature 2 expected=1 actual=1
+PASS ammo argument count 2 expected=4 actual=4
+PASS ammo slot signature 3 expected=2 actual=2
+PASS ammo argument count 3 expected=4 actual=4
+PASS ammo slot signature 4 expected=3 actual=3
+PASS ammo argument count 4 expected=4 actual=4
+PASS ammo slot signature 5 expected=4 actual=4
+PASS ammo argument count 5 expected=4 actual=4
+PASS ammo slot signature 6 expected=5 actual=5
+PASS ammo argument count 6 expected=4 actual=4
+PASS stop disables ammo expected=6 actual=6
+PASS police disable only once expected=1 actual=1
+PASS police disable integer expected=0 actual=0
+PASS pause restores police expected=1 actual=1
+PASS pause disarms
+PASS resume requires rearm
+PASS stage skill reward
+PASS prepare is not a write expected=0 actual=0
+PASS explicit confirmation queues
+PASS second confirmation does not duplicate
+PASS single skill item request expected=1 actual=1
+PASS WD1 AddItem takes TWO args (not WD2 entity API) expected=2 actual=2
+PASS numeric Items DB key (not display name) expected=Items.2023158576 actual=Items.2023158576
+PASS skill delta one expected=1 actual=1
+PASS does not label request as verified unlock
+PASS unknown item rejected
+PASS zero quantity rejected
+PASS large quantity rejected
+PASS fraction quantity rejected
+PASS duplicate item rejected
+PASS negative cash rejected
+PASS cash upper bound
+PASS bad input produces zero calls expected=0 actual=0
+PASS prepare cash
+PASS cash staged expected=0 actual=0
+PASS cash API name expected=GiveCash actual=GiveCash
+PASS cash arg count expected=2 actual=2
+PASS cash index zero expected=0 actual=0
+PASS cash amount expected=1000 actual=1000
+PASS invalid backup receipt refuses write
+PASS invalid receipt no calls expected=0 actual=0
+PASS invalid backup receipt refuses write
+PASS invalid receipt no calls expected=0 actual=0
+PASS invalid backup receipt refuses write
+PASS invalid receipt no calls expected=0 actual=0
+PASS invalid backup receipt refuses write
+PASS invalid receipt no calls expected=0 actual=0
+PASS invalid backup receipt refuses write
+PASS invalid receipt no calls expected=0 actual=0
+PASS invalid backup receipt refuses write
+PASS invalid receipt no calls expected=0 actual=0
+PASS invalid backup receipt refuses write
+PASS invalid receipt no calls expected=0 actual=0
+PASS invalid backup receipt refuses write
+PASS invalid receipt no calls expected=0 actual=0
+PASS invalid backup receipt refuses write
+PASS invalid receipt no calls expected=0 actual=0
+PASS no clock -> no persistent writes
+PASS temporary god independent of receipt
+PASS expiry between confirmation and execution guarded expected=0 actual=0
+PASS expired queue disarms
+PASS cancel clears pending confirmation
+PASS cancel no calls expected=0 actual=0
+PASS pause cancels partially processed batch expected=1 actual=1
+PASS cancelled queue never silently restarts expected=1 actual=1
+PASS silent player change disarms without host event expected=1 actual=1
+PASS silent player change stops state
+PASS does not touch stale entity handle expected=0 actual=0
+PASS entity change immediately before confirm guarded
+PASS rearm resets toggles
+PASS missing item API rejects
+PASS missing god API rejects
+PASS native exception halts queue
+PASS failed call not counted submitted expected=0 actual=0
+PASS explicit false native result rejected expected=0 actual=0
+PASS campaign-only car grant unavailable in DLC
+PASS shared skill reward available in DLC
+PASS bounded vehicle spawn 1
+PASS bounded vehicle spawn 2
+PASS bounded vehicle spawn 3
+PASS bounded vehicle spawn 4
+PASS bounded vehicle spawn 5
+PASS sixth spawn rejected
+PASS spawn is not an inventory unlock expected=0 actual=0
+PASS arbitrary spawn index rejected
+PASS clear heat request
+PASS FelonySetHeat two args expected=2 actual=2
+PASS heat range enforced
+PASS time call
+PASS hour bounds
+PASS minute bounds
+PASS capability probe no gameplay writes expected=0 actual=0
+PASS probe lists function names without calling
+PASS probe does not export globals or account data
+PASS host adapter registers with mock contracts
+PASS persisted god reset expected=false actual=false
+PASS persisted ammo reset expected=false actual=false
+PASS persisted focus reset expected=false actual=false
+PASS persisted police reset expected=false actual=false
+PASS menu load no native writes expected=0 actual=0
+PASS OnPause callback wired
+PASS OnResume callback wired
+PASS unload disables old callbacks
+PASS old command callback cannot rearm unloaded script
+PASS ammo needs backup because inventory may persist
+PASS temporary-only mode does not write ammo expected=0 actual=0
+PASS ammo expiry stops subsequent inventory writes expected=6 actual=6
+PASS expired ammo loop disarms
+PASS all weapons creates bounded current-mode batch
+PASS all weapons includes standard and ULC candidates
+PASS all weapons waits for explicit confirmation expected=0 actual=0
+PASS all clothes stages independently
+PASS all clothes includes shop ULC and trip rewards
+PASS all safe items stage beyond old 100 row cap
+PASS all items remain bounded for the v0.4 unlock catalog
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS all items do not silently add skill points
+PASS unknown full group rejected
+PASS one-time ammo supply works independently
+PASS one-time supplies six known slots expected=6 actual=6
+PASS one-time ammo does not enable infinite
+PASS one-time ammo not repeated expected=6 actual=6
+PASS infinite ammo still retained expected=12 actual=12
+PASS DLC all clothes supported by separate whitelist
+PASS DLC batch does not write Aiden clothing expected=11 actual=11
+LUA_FIXTURE_CHECKS=1259

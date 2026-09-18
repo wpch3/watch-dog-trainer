@@ -1,0 +1,19 @@
+{
+  "date": "2026-09-16",
+  "tool_version": "0.4.5-alpha",
+  "game_build_observed": "11241563",
+  "feature_id": "native.skill_add, native.xp_add",
+  "route": "native panel same-capture resources object (rcx+0xa0 skill / +0xa8 xp)",
+  "verification": "USER_REPORTED_SUCCESS_AND_PERSISTENCE",
+  "outcome": "skill +1 and XP increase applied, game shows new values, retained after normal save and full restart",
+  "chain_proven": [
+    "resources capture object identity correct for growth counters",
+    "i32 add write path works",
+    "values persist through save/restart"
+  ],
+  "negative_result": {
+    "feature": "lua car reward item (Livraga LE)",
+    "detail": "granted+saved+restarted, no Car On Demand unlock; item path cannot unlock delivery cars"
+  },
+  "online_mode": "inaccessible with host installed; user accepts offline-only"
+}

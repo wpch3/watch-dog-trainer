@@ -1,15 +1,20 @@
 {
-  "version": "0.3.3-alpha",
-  "date": "2026-09-14",
-  "compiler": "Mono mcs C# 7.2 + Microsoft .NET Framework 4.8 reference assemblies (explicit, no default stdlib)",
-  "environment": "Linux + Mono + Lua 5.1 + Xvfb",
-  "lua_checks": 335,
-  "core_checks": 47,
-  "native_checks": 51,
-  "image_scan_checks": 48,
-  "capture_checks": 39,
-  "ui_smoke_windows": 2,
+  "version": "0.4.0-alpha",
+  "date": "2026-09-15",
+  "compiler": "C# unchanged (0.3.3 binary reused); Lua on LuaJIT 2.1 (Lua 5.1 semantics)",
+  "environment": "Linux + LuaJIT 2.1",
+  "lua_checks": {
+    "test_plugin": 1259,
+    "test_ascii_menu": 21875,
+    "test_ui2": 142,
+    "test_ui3": 100,
+    "test_ui4": 1367
+  },
+  "catalog_entries": 2709,
+  "plan_rows": 181,
+  "validator": "PASS",
+  "core_checks": "unchanged from 0.3.3 (47)",
+  "native_checks": "unchanged from 0.3.3 (51)",
   "real_game_test": false,
-  "windows_runtime_test": false,
-  "platform_account_connection": false
+  "windows_runtime_test": false
 }

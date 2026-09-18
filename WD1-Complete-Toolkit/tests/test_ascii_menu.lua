@@ -32,8 +32,8 @@ for _,mode in ipairs({'campaign','dlc_solo'})do
  check(labels[prefix..'god']=='God Mode','God Mode label')
  check(labels[prefix..'arm']=='[ARM] I am offline and in single-player free roam','ARM translation')
  check(calls==0,'load has no native effects')
- callbacks[prefix..'arm']();states[prefix..'god']=true;callbacks[prefix..'god']();c:tick();check(calls==1,'same god callback works')
- callbacks[prefix..'stop']();check(not c.flags.god,'STOP unchanged')
+ states[prefix..'arm']=true;callbacks[prefix..'arm']();states[prefix..'arm']=false;states[prefix..'god']=true;callbacks[prefix..'god']();c:tick();check(calls==1,'same god callback works')
+ states[prefix..'stop']=true;callbacks[prefix..'stop']();states[prefix..'stop']=false;check(not c.flags.god,'STOP unchanged')
  check(not c:prepareCash(1000),'backup guard not weakened by localization')
 end
 print('ASCII_MENU_ASSERTIONS='..passed)

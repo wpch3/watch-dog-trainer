@@ -1,0 +1,10 @@
+{
+  "date": "2026-09-16",
+  "tool_version": "0.4.9-alpha",
+  "game_build_observed": "11241563",
+  "feature_id": "lua.spawn",
+  "route": "06 page SH_Entities_Spawn buttons (Speed_05LE, Speed_06, Speed_07_Reward, Bike_01, Offroad_01, Muscle_01)",
+  "verification": "USER_REPORTED_OWNERSHIP_GATE",
+  "outcome": "locked LE variants (Livraga LE, Boxberg LE, Sayonara bike) refused to spawn; 3 already-owned cars spawned successfully",
+  "conclusion": "spawn is ownership-gated by the game; spawn can never substitute for unlocks; unlock requires the reward-item grant + save + full restart path"
+}

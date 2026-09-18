@@ -1,7 +1,7 @@
 {
   "name": "WD1 Chinese In-Game Toolkit",
-  "version": "0.3.3-alpha",
-  "as_of": "2026-09-14",
+  "version": "0.4.21-alpha",
+  "as_of": "2026-09-15",
   "is_finished_trainer": false,
   "scope": "game-internal progression, resources, minigames, inventory; no platform-achievement module",
   "steam_appid_for_game_identity_only": 243470,
@@ -18,8 +18,8 @@
   "original_gameplay_acceptance_retained": "plan/original_gameplay_requirements.json",
   "infinite_and_add_are_independent": true,
   "native_candidate_controls": 24,
-  "curated_item_keys": 218,
-  "complete_plan_entries": 169,
+  "curated_item_keys": 2709,
+  "complete_plan_entries": 187,
   "unbound_entries": 112,
   "candidate_warning": "Candidate implementation is not game verification or guaranteed complete semantic coverage.",
   "runtime_dependencies": {
@@ -67,7 +67,72 @@
       "version": "0.3.3-alpha",
       "evidence": "profiles/steam-11241563-cash-success-20260914.json",
       "scope": "Queued +50000, ATM trigger; user confirmed money retained after restart. Other features remain unverified."
-    }
+    },
+    {
+      "feature": "lua.god",
+      "status": "USER_REPORTED_SUCCESS",
+      "version": "0.4.0-alpha",
+      "evidence": "profiles/steam-11241563-god-success-20260915.json",
+      "scope": "UI4 checkbox + ARM gate + OnUpdate-reapplied ActivateInvincibility survived a scripted guaranteed-death transformer explosion point-blank. Ammo/focus/police and all unlock batches remain unverified; invincibility is a session effect."
+    },
+    {
+      "feature": "native.battery_full",
+      "status": "USER_REPORTED_SUCCESS",
+      "version": "0.4.0-alpha",
+      "evidence": "user verbal report 2026-09-15",
+      "scope": "Native panel infinite battery confirmed working by user. Combined with native.cash_add and lua.god, three features are now user-verified; all other candidates remain unverified individually."
+    },
+    {
+      "feature": "lua.ping_display",
+      "status": "USER_REPORTED_PARTIAL",
+      "version": "0.4.0-alpha",
+      "scope": "PING notification appeared (proves button actions execute) but panel Clicks text did not change; host Layout likely renders once, so counters moved to the notification channel in 0.4.1."
+    },
+    {
+      "feature": "lua.unlock.online_gated_weapons",
+      "status": "USER_REPORTED_SUCCESS",
+      "version": "0.4.2-alpha",
+      "evidence": "user verbal report 2026-09-16",
+      "scope": "All four online-gated weapons (SG-90, Spec Ops Vector, OCP-11, MP-9mm) granted locally via AddItem and visible in-game. Online-gated INVENTORY unlocks are now user-verified. Progression counters (skill/XP/APS tokens) showed no visible effect via AddItem; native resources-capture path (+9C/+A0/+A8 same object) is the prescribed route."
+    },
+    {
+      "feature": "native.skill_add + native.xp_add",
+      "status": "USER_REPORTED_SUCCESS_AND_PERSISTENCE",
+      "version": "0.4.5-alpha",
+      "evidence": "user verbal report 2026-09-16",
+      "scope": "Native panel same-capture growth: skill point +1 and XP increase both applied and persisted after save+restart. Counters route is now user-proven; money_floor/skill_floor toggles on the same capture are the next candidates."
+    },
+    {
+      "feature": "lua.unlock.cars_all (Livraga LE)",
+      "status": "USER_REPORTED_NEGATIVE",
+      "version": "0.4.5-alpha",
+      "evidence": "user verbal report 2026-09-16",
+      "scope": "Reward item granted, saved, restarted: car not present in Car On Demand. Item grants do not produce delivery-car unlocks; permanent unlock requires the native path."
+    },
+    {
+      "feature": "online_mode",
+      "status": "USER_REPORTED_INACCESSIBLE_WITH_TOOL",
+      "version": "0.4.5-alpha",
+      "evidence": "user verbal report 2026-09-16",
+      "scope": "Online mode cannot be entered with the host/tool installed. User accepts offline-only usage. Safety guidance: never enter online with effects active regardless."
+    },
+    {
+      "feature": "lua.unlock.cars_all (Livraga LE)",
+      "status": "CORRECTION_PREMATURE_NEGATIVE",
+      "version": "0.4.6-alpha",
+      "evidence": "user clarification 2026-09-16",
+      "scope": "User clarified the unlock restart-check was not actually performed; the recorded negative conclusion was premature and has been reverted. 0.4.7 adds a 7-car unlock test batch (Livraga LE, Sayonara, Sayonara LE, Boxberg LE, Boxberg R1, Papavero, Papavero Stealth Edition); verdict pending the proper grant->save->restart->Car On Demand check."
+    },
+    {
+      "feature": "lua.spawn (06 page)",
+      "status": "USER_REPORTED_OWNERSHIP_GATE",
+      "version": "0.4.9-alpha",
+      "evidence": "user verbal report 2026-09-16",
+      "scope": "Spawn buttons cannot summon locked/LE cars (all refused); only 3 already-owned cars spawned. Confirms spawn is a temporary summon gated by ownership, not an unlock. Permanent unlock path remains: [ALL CARS]/CAR UNLOCK TEST -> CONFIRM -> save -> full restart -> Car On Demand check."
+    },
+    "item_grant_no_unlock: 0.4.18 live log 2026-09-16: AddItem cars batch accepted=74 then 148 total, refused=0, no Car On Demand change after restart - item path conclusively negative for car ownership",
+    "crawl_round1: 0.4.19 live log 2026-09-16 - UnlockAndBuyCarOnDemand exists and ran but returned nil for all 3 single-arg shapes; GetItemId(Items.X)=4294967296 sentinel (upstream Items.NNNN names unresolvable in host); only verified native signature family is leading-index GiveCash(0,n)",
+    "crawl2_negative: 0.4.20 live log 2026-09-16 - UnlockAndBuyCarOnDemand void for (0,key)/(0,string)/(0,key,true)/(p,key) and all 128 index args; SetItem returns 1 without effect; probe list incomplete (ActivateInvincibility works yet absent from 57-name CAP)"
   ],
   "latest_host_status": "User saw WD1 KIT menu in NexusTools; Chinese labels rendered as question marks. Lua game effects not yet verified.",
   "game_menu_display": {
@@ -76,8 +141,9 @@
     "chinese_source_preserved": "locales/zh-CN/Plugin",
     "native_executable_changed": false,
     "host_exact_font_or_conversion_cause": "not yet isolated",
-    "ui_revision": "UI2",
+    "ui_revision": "UI4",
     "previous_observed_problem": "UI1 Player/Police shows heading and STOP only; exact host exception not captured",
-    "ui2_runtime_verified": false
+    "ui2_runtime_verified": false,
+    "ui4_runtime_verified": "lua.god user-reported success 2026-09-15; other controls unverified"
   }
 }

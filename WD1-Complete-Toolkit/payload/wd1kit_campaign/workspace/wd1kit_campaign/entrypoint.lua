@@ -1,4 +1,4 @@
--- Game-only WD1KIT v0.3. No automatic enable on load.
+-- Game-only WD1KIT v0.4.8. No automatic enable on load.
 local mode="campaign"
 local folder="wd1kit_campaign/"
 if WD1KIT_ACTIVE and WD1KIT_ACTIVE.alive then

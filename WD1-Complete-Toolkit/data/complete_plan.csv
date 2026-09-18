@@ -2,8 +2,8 @@
 native.money_floor,无限金钱（最低余额）,金钱 / 成长,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
 native.skill_floor,本体 / DLC 普通技能点最低值,金钱 / 成长,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,不是蜘蛛坦克 / 疯狂 / 孤独技能树；这些独立记录尚未确定。
 native.cash_add,增加金钱,金钱 / 成长,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
-native.skill_add,增加普通技能点,金钱 / 成长,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
-native.xp_add,增加普通经验,金钱 / 成长,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+native.skill_add,增加普通技能点,金钱 / 成长,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,2026-09-16用户实测+1生效且重启持久(同捕获资源对象)
+native.xp_add,增加普通经验,金钱 / 成长,ACTION,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,2026-09-16用户实测+500生效且重启持久(同捕获资源对象)
 native.battery_full,无限电池（补到当前容量）,玩家 / 资源,TOGGLE,freeroam,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
 native.car_health,载具生命锁定,载具,TOGGLE,vehicle,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,锁定当前稳定捕获的对象。不能据此证明仅作用玩家车辆；离车前先关闭。
 native.spider_energy,蜘蛛坦克无限能量,数字之旅,TOGGLE,spider,NATIVE_CANDIDATE,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
@@ -149,15 +149,15 @@ advanced.cups,猜杯辅助,载具 / 世界 / 小游戏,ACTION,campaign,UNBOUND,U
 progress.story,主任务 / 主线依赖,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
 progress.side,支线任务 / 中间人合约,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
 progress.investigation,调查线索与最终任务,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
-progress.collectibles,收集品 / 音频 / 歌曲 / 热点,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
-progress.minigames,小游戏挑战与奖励,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
-progress.online,游戏内在线合约计数与奖励,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.collectibles,收集品 / 音频 / 歌曲 / 热点,游戏内进度,READ+ACTION,campaign+dlc_solo,LUA_CANDIDATE,UNBOUND,False,收集品/音频/歌曲奖励物品已入目录
+progress.minigames,小游戏挑战与奖励,游戏内进度,READ+ACTION,campaign+dlc_solo,LUA_CANDIDATE,UNBOUND,False,小游戏进度奖励物品已入目录(ActivityProgressionScreen)
+progress.online,游戏内在线合约计数与奖励,游戏内进度,READ+ACTION,campaign+dlc_solo,LUA_CANDIDATE,UNBOUND,False,线上合约奖励物品可本地授予; 计数与战绩不改写
 progress.hideout,帮派据点,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
-progress.convoy,犯罪车队,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.convoy,犯罪车队,游戏内进度,READ+ACTION,campaign+dlc_solo,LUA_CANDIDATE,UNBOUND,False,犯罪车队Convoy20奖励物品已入目录
 progress.crimes,犯罪侦测,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
-progress.ctos,ctOS 控制中心 / 塔 / 入侵,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.ctos,ctOS 控制中心 / 塔 / 入侵,游戏内进度,READ+ACTION,campaign+dlc_solo,LUA_CANDIDATE,UNBOUND,False,ctOS塔奖励物品已入目录
 progress.privacy,隐私入侵,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
-progress.notoriety,Notoriety / 恶名及本地奖励,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
+progress.notoriety,Notoriety / 恶名及本地奖励,游戏内进度,READ+ACTION,campaign+dlc_solo,LUA_CANDIDATE,UNBOUND,False,"纠正: 目录notoriety组=Vigilante事件配置+击杀XP, 非罪恶值perk; 在线进度由APS令牌(activity_rewards)承接; perk旗标待原生路径"
 progress.coop,Bad Blood 合作与合约进度,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
 progress.rc,Eugene 升级链 / 冷却 / 电击 / C4,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
 progress.achievements,游戏内完成项 / 进度轮（不是平台成就）,游戏内进度,READ+ACTION,campaign+dlc_solo,UNBOUND,UNBOUND,False,先读取当前状态和依赖、备份，再针对性修改；不把给予武器视为任务完成。
@@ -168,3 +168,21 @@ tool.stop,总停止 + 单项停止,便利 / 保护,UI,all,TOOL_IMPLEMENTED,IMPLE
 tool.backup,备份 / 校验 / 恢复,便利 / 保护,UI,all,TOOL_IMPLEMENTED,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
 tool.profile,构建指纹与未知版本拒绝,便利 / 保护,UI,all,TOOL_IMPLEMENTED,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
 tool.logs,逐项错误与脱敏反馈,便利 / 保护,UI,all,TOOL_IMPLEMENTED,IMPLEMENTED_CANDIDATE_NOT_GAME_VERIFIED,False,
+lua.unlock.progression_all,一键准备全部进度奖励,进度解锁,ACTION,freeroam,LUA_CANDIDATE,REWARD_ITEM_BATCH,False,需ARM+CONFIRM; 不重写任务完成计数与战绩
+lua.unlock.mission_xp,主线/支线/家族任务经验奖励包,进度解锁,ACTION,freeroam,LUA_CANDIDATE,REWARD_ITEM_BATCH,False,按组可拆分; 授予的是奖励物品
+lua.unlock.notoriety_rewards,Vigilante事件物品与击杀XP(本地),进度解锁,ACTION,freeroam,LUA_CANDIDATE,REWARD_ITEM_BATCH,False,32项: Vigilante事件配置+LethalXP/NonLethalXP; 不是罪恶值perk树
+lua.unlock.ctos_rewards,ctOS控制中心奖励物品,进度解锁,ACTION,freeroam,LUA_CANDIDATE,REWARD_ITEM_BATCH,False,5项
+lua.unlock.activity_rewards,小游戏进度奖励物品,进度解锁,ACTION,freeroam,LUA_CANDIDATE,REWARD_ITEM_BATCH,False,含DLC小游戏; 按模式过滤
+lua.unlock.cash_items,现金奖励物品(48项),金钱 / 成长,ACTION,freeroam,LUA_CANDIDATE,REWARD_ITEM_BATCH,False,与无限金钱、GiveCash互相独立
+lua.unlock.upgrades,制作与升级解锁物品,物品 / 制作,ACTION,freeroam,LUA_CANDIDATE,REWARD_ITEM_BATCH,False,91项升级/图纸
+lua.unlock.gear_all,全部材料/科技/弹药/投掷物/杂项,物品 / 制作,ACTION,freeroam,LUA_CANDIDATE,REWARD_ITEM_BATCH,False,不含任务令牌
+lua.unlock.cars_all,全部叫车解锁奖励车辆(74项),载具,ACTION,freeroam,LUA_CANDIDATE,REWARD_ITEM_BATCH,False,"纠正: 2026-09-16 Livraga""否定""结论下早了(用户未完成重启复核); 0.4.7提供7车一键测试, 结论待用户按步骤测试"
+lua.unlock.songs_all,全部歌曲奖励(48项),进度解锁,ACTION,freeroam,LUA_CANDIDATE,REWARD_ITEM_BATCH,False,
+lua.unlock.custom_weapons,特殊武器变体(Sig金/Jordi狙击等54项),武器 / 服装,ACTION,freeroam,LUA_CANDIDATE,REWARD_ITEM_BATCH,False,与基础武器批次分开
+lua.unlock.mission_tokens,任务令牌/AccessId(仅逐项1003项),进度解锁,ACTION,freeroam,LUA_CANDIDATE,REWARD_ITEM_INDIVIDUAL,False,无批量; 可能跳过任务步骤; 逐项验证
+native.spider_health,蜘蛛坦克无敌/生命锁定,蜘蛛坦克,TOGGLE,freeroam,UNBOUND,NOT_IMPLEMENTED,False,证据: LinGon +27 F12; 2026-09-16 用户提供的公开修改器功能清单
+native.one_hit_kill,一击必杀(快速击杀),玩家 / 资源,TOGGLE,freeroam,UNBOUND,NOT_IMPLEMENTED,False,证据: LinGon +27 INSERT 与 MrAntiFun +19 Fast Kill 字符串
+native.super_speed,玩家/角色超级速度,玩家 / 资源,TOGGLE,freeroam,UNBOUND,NOT_IMPLEMENTED,False,证据: LinGon +27 CTRL+H
+native.player_size,玩家体型 mega/mini,玩家 / 资源,TOGGLE,freeroam,UNBOUND,NOT_IMPLEMENTED,False,证据: LinGon +27 PAGE UP/DOWN
+native.vehicle_repair,载具即时维修,载具,ACTION,freeroam,UNBOUND,NOT_IMPLEMENTED,False,证据: LinGon +27 CTRL+J
+native.teleport,传送套件(存点/传送/回点/到航点),玩家 / 资源,ACTION,freeroam,UNBOUND,NOT_IMPLEMENTED,False,证据: LinGon +27 Ctrl+方向键/P/0

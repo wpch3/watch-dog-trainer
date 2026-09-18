@@ -1,0 +1,13 @@
+{
+  "profile": "steam-11241563-file-patch-route-20260916",
+  "date": "2026-09-16",
+  "trigger": "user located Nexus mod #7 'Ultimate Car On Demand' (patch.dat+patch.fat into data_win64) unlocking hidden/special-mode cars",
+  "mechanism": "WD1 (Dunia) auto-loads data_win64/patch.fat+.dat as override archive; Car On Demand availability lives in packed game DB, not savefile nor script-reachable state",
+  "explains": "all runtime negatives: AddItem 148x accepted-no-effect, UnlockAndBuyCarOnDemand void (single-arg, (0,x) family, 128-index sweep), SetItem no-effect, GetItemId 2^32 sentinel",
+  "next": [
+    "user installs UCOD as instant verification (police/madness cars should appear)",
+    "user uploads patch.dat/patch.fat to workspace uploads/ for binary dissection",
+    "build own full-unlock patch: all 74 catalog cars + full hidden list, integrated into installer with backup/restore"
+  ],
+  "constraints": "offline local files only; no exe bundling; fat/dat merge caveat if other archive mods present"
+}

@@ -83,7 +83,7 @@ end
 do
  local c,e,pages,legacy,calls,scripts,render=fixture({failWidgets=true,noCommands=true})
  check(#calls==0,'missing command API still starts disabled')
- legacy['[ARM] Offline free-roam test']();legacy['God Mode ON']();scripts.wd1kit_campaign:OnUpdate()
+ legacy['[ARM] Offline free-roam test [MAIN]']();legacy['God Mode ON']();scripts.wd1kit_campaign:OnUpdate()
  check(calls[1]=='god_on','legacy fallback independent of command system and layouts')
  legacy['God Mode OFF']();check(calls[2]=='god_off','legacy OFF works')
  check(not c:prepareCash(1000),'fallback preserves backup requirement')
