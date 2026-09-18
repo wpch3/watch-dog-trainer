@@ -116,7 +116,7 @@ return function(env, catalog, receipt, mode)
         if ok2 and type(tmp)=="string" and #tmp>0 then paths[#paths+1]=tmp.."\\WD1KIT_log.txt" end
         for _,p in ipairs(paths) do
             local opened=false
-            pcall(function() local f=ioenv.open(p,"a") if f then f:write(string.format("==== WD1KIT 0.4.21-exp1 session mode=%s t=%d ====",tostring(mode),fileStamp())) f:close() opened=true end end)
+            pcall(function() local f=ioenv.open(p,"a") if f then f:write(string.format("==== WD1KIT 0.4.21-exp2 session mode=%s t=%d ====",tostring(mode),fileStamp())) f:close() opened=true end end)
             if opened then fileLog=p return end
         end
     end
@@ -538,7 +538,7 @@ return function(env, catalog, receipt, mode)
         if #self.queue>0 and self.frames%4==0 then self:drainOne() end
     end
     function c:probe()
-        self:log("PROBE","version=0.4.21-exp1 mode="..self.mode.." persistent_ticket="..tostring(self:ticketValid()))
+        self:log("PROBE","version=0.4.21-exp2 mode="..self.mode.." persistent_ticket="..tostring(self:ticketValid()))
         local names={}
         for k,v in pairs(env) do
             if type(k)=="string" and type(v)=="function" and #k<100 and k:match("^[A-Za-z_][A-Za-z0-9_]*$") then
@@ -555,40 +555,88 @@ return function(env, catalog, receipt, mode)
         self:message("Read-only capability names logged. No memory scan or account data is exported.")
     end
 
-    -- ===== 0.4.21-exp1: CarHackingRewards garage experiment (user-directed) =====
-    -- The 45 hidden Car-On-Demand records ARE the game's own car hacking reward
-    -- entries. This experiment tries the OFFICIAL names (extracted from the UCOD
-    -- records) against UnlockAndBuyCarOnDemand - earlier rounds only tried item
-    -- key shapes - and against vehicle spawn primitives. Everything is pcall
-    -- wrapped and logged as UNLOCKEXP / SPAWNEXP. Offline-only, save-local.
+    -- ===== 0.4.21-exp2: CarHackingRewards garage experiment (user-directed) =====
+    -- ALL 73 CarHackingRewards records (65 real vehicles incl. Muscle_05,
+    -- Speed_06_Stealth = the pre-order car, the *_Reward progression cars,
+    -- Quinn Limo, CrispinCar, Limbik, emergency fleet, bikes) are ALREADY in
+    -- the native NGM database - no archive merging is needed for this route.
+    -- We try the OFFICIAL names against UnlockAndBuyCarOnDemand and vehicle
+    -- spawn primitives. Everything is pcall wrapped and logged as
+    -- UNLOCKEXP / SPAWNEXP. Offline-only, save-local.
     local EXP_NAMES = {
+      "CarHackingRewards.Generic.Muscle.Muscle_05",
+      "CarHackingRewards.Generic.Agile.Agile_06",
+      "CarHackingRewards.Generic.Speed.Speed_01",
+      "CarHackingRewards.Generic.Muscle.Luxury_02",
+      "CarHackingRewards.Generic.Muscle.Retro_01_Reward",
+      "CarHackingRewards.Generic.Budget.Workvan_02",
+      "CarHackingRewards.Generic.Offroad.Offroad_02",
+      "CarHackingRewards.Generic.Heavy.Heavy_Ambulance",
+      "CarHackingRewards.Generic.Budget.Large_05",
+      "CarHackingRewards.Generic.Muscle.Retro_03",
+      "CarHackingRewards.Generic.Muscle.Limo_Quinn",
+      "CarHackingRewards.Generic.Budget.Subcompact_03",
+      "CarHackingRewards.Generic.Bike.Bike_03",
+      "CarHackingRewards.Generic.Budget.Subcompact_02",
+      "CarHackingRewards.Generic.Offroad.Offroad_04",
+      "CarHackingRewards.Generic.Muscle.Muscle_02",
+      "CarHackingRewards.Generic.Budget.Crossover_01",
+      "CarHackingRewards.Generic.Speed.Speed_02",
+      "CarHackingRewards.Generic.Muscle.Retro_02",
+      "CarHackingRewards.Generic.Budget.Subcompact_01",
+      "CarHackingRewards.Generic.Bike",
+      "CarHackingRewards.Generic.Heavy.Heavy_MediaBroadcast",
+      "CarHackingRewards.Generic.Bike.Bike_02",
+      "CarHackingRewards.Generic.Muscle.Muscle_03",
+      "CarHackingRewards.Generic.Budget.Compact_03",
+      "CarHackingRewards.Generic.Speed.Speed_05",
+      "CarHackingRewards.Generic.Agile.Agile_02",
+      "CarHackingRewards.Generic.Agile",
       "CarHackingRewards.Generic.Budget.Large_01",
-      "CarHackingRewards.Generic.Budget.Large_03",
-      "CarHackingRewards.Generic.Budget.Minivan_01",
-      "CarHackingRewards.Generic.Muscle.Muscle_04",
+      "CarHackingRewards.Generic.Muscle.Luxury_02_Reward",
+      "CarHackingRewards.Generic.Bike.Bike_01",
+      "CarHackingRewards.Generic.Agile.Agile_04",
+      "CarHackingRewards.Generic.Heavy.Heavy_CementTruck",
       "CarHackingRewards.Generic.Offroad.Offroad_01",
       "CarHackingRewards.Generic.Heavy.Heavy_FlatBed",
+      "CarHackingRewards.Generic.Heavy",
+      "CarHackingRewards.Generic.Budget.Minivan_01",
       "CarHackingRewards.Generic.Heavy.Heavy_GarbageTruck",
-      "CarHackingRewards.Generic.Muscle.Muscle_02",
-      "CarHackingRewards.Generic.Muscle.Muscle_03",
-      "CarHackingRewards.Generic.Muscle.Retro_01",
-      "CarHackingRewards.Generic.Muscle.Retro_01_Reward",
-      "CarHackingRewards.Generic.Muscle.Retro_02",
-      "CarHackingRewards.Generic.Muscle.Retro_03",
-      "CarHackingRewards.Generic.Offroad.Offroad_02",
-      "CarHackingRewards.Generic.Offroad.Offroad_03",
-      "CarHackingRewards.Generic.Offroad.Offroad_04",
-      "CarHackingRewards.Generic.Speed.Speed_02",
-      "CarHackingRewards.Generic.Speed.Speed_04",
-      "CarHackingRewards.Generic.Budget.Crossover_01",
-      "CarHackingRewards.Generic.Budget.DeliveryTruck_01",
-      "CarHackingRewards.Generic.Budget.Large_02",
-      "CarHackingRewards.Generic.Muscle.Luxury_02",
+      "CarHackingRewards.Generic.Speed.Speed_05_Reward",
+      "CarHackingRewards.Generic.Speed.Speed_03",
+      "CarHackingRewards.Generic.Bike.Bike_01_Reward",
+      "CarHackingRewards.Generic.Muscle",
+      "CarHackingRewards.Generic.Speed.Speed_06",
+      "CarHackingRewards.Generic.Budget.Limo_01",
       "CarHackingRewards.Generic.Budget.Luxury_03",
+      "CarHackingRewards.Generic.Budget.Compact_01",
+      "CarHackingRewards.Generic.Offroad.Offroad_03",
       "CarHackingRewards.Generic.Budget.SUV_01",
+      "CarHackingRewards.Generic.Bike.Bike_04",
+      "CarHackingRewards.Generic.Agile.Agile_01",
+      "CarHackingRewards.Generic.Speed.Limbik",
+      "CarHackingRewards.Generic.Speed.Speed_04",
+      "CarHackingRewards.Generic.Generic",
       "CarHackingRewards.Generic.Budget.Workvan_01",
-      "CarHackingRewards.Generic.Budget.Workvan_02",
-      "CarHackingRewards.Generic.Speed.Speed_08"
+      "CarHackingRewards.Generic.Muscle.Retro_01",
+      "CarHackingRewards.Generic.Speed.Speed_06_Stealth",
+      "CarHackingRewards.Generic.Speed",
+      "CarHackingRewards.Generic.Muscle.Muscle_01",
+      "CarHackingRewards.Generic.Budget.DeliveryTruck_01",
+      "CarHackingRewards.Generic.Budget.Large_03",
+      "CarHackingRewards.Generic.Heavy.Heavy_FireTruck",
+      "CarHackingRewards.Generic.Heavy.Heavy_ArmoredTruck",
+      "CarHackingRewards.Generic.Speed.Speed_07",
+      "CarHackingRewards.Generic.Budget.Large_02",
+      "CarHackingRewards.Generic.Speed.Speed_07_Reward",
+      "CarHackingRewards.Generic.Budget.Compact_02",
+      "CarHackingRewards.Generic.Agile.Agile_05",
+      "CarHackingRewards.Generic.Offroad",
+      "CarHackingRewards.Generic.Budget",
+      "CarHackingRewards.Generic.Agile.CrispinCar",
+      "CarHackingRewards.Generic.Agile.Agile_03",
+      "CarHackingRewards.Generic.Muscle.Muscle_04",
+      "CarHackingRewards.Generic.Budget.Large_04"
     }
     function c:expCount() return #EXP_NAMES end
     function c:expName(i) return EXP_NAMES[i] or ("bad index "..tostring(i)) end
